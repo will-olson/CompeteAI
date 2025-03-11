@@ -46,38 +46,84 @@ class AdvancedFinancialAnalyzer:
             logger.error(f"Error loading metrics: {e}")
             return {}
     def convert_to_dataframe(self):
-        """
-        Convert metrics to a pandas DataFrame for analysis
-        """
         try:
             # Prepare data for DataFrame
             data = []
             for ticker, metrics in self.metrics_data.items():
-                # Clean and convert metrics
+                # Clean and convert metrics with more flexible handling
                 cleaned_metrics = {
                     'Ticker': ticker,
                     'Market Cap': self._clean_market_cap(metrics.get('Market Cap', 'N/A')),
-                    'P/E Ratio': self._clean_float(metrics.get('PE Ratio (TTM)', 'N/A')),
-                    'EPS': self._clean_float(metrics.get('EPS (TTM)', 'N/A')),
-                    'Dividend Yield': self._clean_percentage(metrics.get('Forward Dividend & Yield', 'N/A').split('(')[-1].rstrip(')') if '(' in metrics.get('Forward Dividend & Yield', 'N/A') else 'N/A'),
-                    'Current Price': self._clean_float(metrics.get('Previous Close', 'N/A'))
+                    'P/E Ratio': self._clean_float(metrics.get('PE Ratio (TTM)', 'N/A'), allow_negative=True),
+                    'EPS': self._clean_float(metrics.get('EPS (TTM)', 'N/A'), allow_negative=True),
+                    'Dividend Yield': self._clean_percentage(
+                        metrics.get('Forward Dividend & Yield', 'N/A').split('(')[-1].rstrip(')') 
+                        if '(' in metrics.get('Forward Dividend & Yield', 'N/A') 
+                        else 'N/A'
+                    ),
+                    'Current Price': self._clean_float(metrics.get('Previous Close', 'N/A')),
+                    'Beta': self._clean_float(metrics.get('Beta', 'N/A')),
+                    'Volume': self._clean_float(metrics.get('Volume', 'N/A').replace(',', '')),
+                    'Avg Volume': self._clean_float(metrics.get('Avg. Volume', 'N/A').replace(',', '')),
+                    '52 Week Low': self._extract_52_week_range(metrics.get('52 Week Range', 'N/A'), 'low'),
+                    '52 Week High': self._extract_52_week_range(metrics.get('52 Week Range', 'N/A'), 'high'),
+                    'Target Price': self._clean_float(metrics.get('1y Target Est', 'N/A'))
                 }
                 data.append(cleaned_metrics)
             
             df = pd.DataFrame(data)
             
-            # Convert columns to numeric, coercing errors to NaN
+            df['Price to Target Ratio'] = df['Target Price'] / df['Current Price']
+            df['Volume Trend'] = df['Volume'] / df['Avg Volume']
+
+            # Convert columns to numeric, with more lenient approach
             numeric_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Current Price']
             for col in numeric_columns:
                 df[col] = pd.to_numeric(df[col], errors='coerce')
             
-            # Remove rows with NaN values
-            df = df.dropna(subset=numeric_columns)
+            # Only drop rows if ALL numeric columns are NaN
+            df = df.dropna(subset=numeric_columns, how='all')
             
             return df
         except Exception as e:
             logger.error(f"Error converting to DataFrame: {e}")
             return pd.DataFrame()
+        
+    def _extract_52_week_range(self, range_str, mode='low'):
+        """
+        Extract 52-week low or high from range string
+        """
+        try:
+            if '-' not in range_str:
+                return pd.NA
+            
+            low, high = range_str.split('-')
+            return float(low.strip()) if mode == 'low' else float(high.strip())
+        except:
+            return pd.NA
+
+    def _clean_float(self, value, allow_negative=False):
+        """
+        Clean and convert to float with more flexible handling
+        """
+        try:
+            # Handle special cases
+            if value in ['N/A', '--', '']:
+                return pd.NA
+            
+            # Remove any non-numeric characters except decimal point, minus sign
+            cleaned = ''.join(char for char in str(value) if char in '0123456789.-')
+            
+            # Convert to float
+            float_value = float(cleaned)
+            
+            # Check for negative values if not allowed
+            if not allow_negative and float_value < 0:
+                return pd.NA
+            
+            return float_value
+        except (ValueError, TypeError):
+            return pd.NA
 
     def _clean_market_cap(self, value):
         """
@@ -93,21 +139,6 @@ class AdvancedFinancialAnalyzer:
             elif 'M' in value:
                 return float(value.replace('M', '')) * 1_000_000
         return pd.NA
-
-    def _clean_float(self, value):
-        """
-        Clean and convert to float
-        """
-        try:
-            # Handle special cases like '--'
-            if value in ['N/A', '--']:
-                return pd.NA
-            
-            # Remove any non-numeric characters except decimal point and minus sign
-            cleaned = ''.join(char for char in str(value) if char in '0123456789.-')
-            return float(cleaned) if cleaned else pd.NA
-        except (ValueError, TypeError):
-            return pd.NA
 
     def _clean_percentage(self, value):
         """
@@ -158,45 +189,89 @@ class AdvancedFinancialAnalyzer:
             plt.savefig('financial_analysis_charts/dividend_yield_distribution.png')
             plt.close()
 
+            # Correlation Heatmap
+            plt.figure(figsize=(12, 10))
+            correlation_matrix = self.df[['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta', 'Volume']].corr()
+            sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
+            plt.title('Financial Metrics Correlation Heatmap')
+            plt.tight_layout()
+            plt.savefig('financial_analysis_charts/correlation_heatmap.png')
+            plt.close()
+
+            # Bubble Chart: Market Cap vs EPS vs Dividend Yield
+            plt.figure(figsize=(15, 8))
+            scatter = plt.scatter(
+                self.df['Market Cap'], 
+                self.df['EPS'], 
+                s=self.df['Dividend Yield']*100, 
+                alpha=0.5
+            )
+            plt.xlabel('Market Cap')
+            plt.ylabel('EPS')
+            plt.title('Market Cap vs EPS (Bubble Size: Dividend Yield)')
+            plt.xscale('log')
+            plt.tight_layout()
+            plt.savefig('financial_analysis_charts/market_cap_eps_bubble.png')
+            plt.close()
+
             logger.info("Visualizations generated successfully")
         except Exception as e:
             logger.error(f"Error generating visualizations: {e}")
 
     def generate_advanced_analysis(self):
         """
-        Generate comprehensive financial analysis
+        Generate comprehensive financial analysis with enhanced insights
         """
         try:
-            # Prepare detailed analysis data
+            # Prepare more comprehensive analysis data
             analysis_data = {
-                "Market Cap Summary": self.df['Market Cap'].describe().to_dict(),
-                "P/E Ratio Summary": self.df['P/E Ratio'].describe().to_dict(),
-                "EPS Summary": self.df['EPS'].describe().to_dict(),
-                "Dividend Yield Summary": self.df['Dividend Yield'].describe().to_dict(),
-                
-                "Top 5 by Market Cap": self.df.nlargest(5, 'Market Cap')[['Ticker', 'Market Cap']].to_dict(orient='records'),
-                "Top 5 by EPS": self.df.nlargest(5, 'EPS')[['Ticker', 'EPS']].to_dict(orient='records'),
-                "Highest Dividend Yields": self.df.nlargest(5, 'Dividend Yield')[['Ticker', 'Dividend Yield']].to_dict(orient='records')
+                "Dataset Overview": {
+                    "Total Stocks": len(self.df),
+                    "Metrics": list(self.df.columns)
+                },
+                "Statistical Summaries": {
+                    metric: self.df[metric].describe().to_dict() 
+                    for metric in ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta']
+                },
+                "Performance Metrics": {
+                    "Top Performers": {
+                        "Highest Market Cap": self.df.nlargest(5, 'Market Cap')[['Ticker', 'Market Cap']].to_dict(orient='records'),
+                        "Highest EPS": self.df.nlargest(5, 'EPS')[['Ticker', 'EPS']].to_dict(orient='records'),
+                        "Highest Dividend Yields": self.df.nlargest(5, 'Dividend Yield')[['Ticker', 'Dividend Yield']].to_dict(orient='records')
+                    },
+                    "Risk Metrics": {
+                        "Highest Beta Stocks": self.df.nlargest(5, 'Beta')[['Ticker', 'Beta']].to_dict(orient='records'),
+                        "Lowest Beta Stocks": self.df.nsmallest(5, 'Beta')[['Ticker', 'Beta']].to_dict(orient='records')
+                    }
+                },
+                "Derived Insights": {
+                    "Price to Target Analysis": self.df.nlargest(5, 'Price to Target Ratio')[['Ticker', 'Price to Target Ratio']].to_dict(orient='records'),
+                    "Volume Trend Outliers": self.df.nlargest(5, 'Volume Trend')[['Ticker', 'Volume Trend']].to_dict(orient='records')
+                }
             }
 
-            # Prepare prompt for AI analysis
             prompt = f"""
-            Perform an advanced financial analysis based on the following comprehensive dataset:
+            Perform a multi-dimensional financial analysis with the following comprehensive dataset:
 
-            DATASET OVERVIEW:
+            DETAILED DATASET OVERVIEW:
             {json.dumps(analysis_data, indent=2)}
 
-            ANALYSIS DIRECTIVES:
-            1. Provide a deep-dive statistical analysis
-            2. Identify key financial trends and patterns
-            3. Compare performance across different financial metrics
-            4. Offer nuanced insights beyond surface-level observations
-            5. Suggest potential investment strategies based on the data
+            ADVANCED ANALYSIS DIRECTIVES:
+            1. Provide a holistic market ecosystem analysis
+            2. Identify cross-metric correlations and anomalies
+            3. Develop nuanced investment strategy recommendations
+            4. Assess potential market trends and sector dynamics
+            5. Highlight stocks with unique or contrarian characteristics
 
-            ADDITIONAL CONTEXT:
-            - Visualizations have been generated in the 'financial_analysis_charts' directory
-            - Analysis should be comprehensive and data-driven
-            - Consider both individual stock performance and comparative insights
+            ANALYTICAL FRAMEWORK:
+            - Examine relationships between market cap, profitability, and risk
+            - Identify potential undervalued or overvalued stocks
+            - Consider macroeconomic implications of the data
+            - Provide forward-looking strategic insights
+
+            VISUALIZATION CONTEXT:
+            - Correlation heatmap and bubble charts have been generated
+            - Consider visual insights in your comprehensive analysis
             """
 
             # API request configuration
@@ -238,6 +313,7 @@ class AdvancedFinancialAnalyzer:
 
         except Exception as e:
             logger.error(f"Error in advanced financial analysis: {e}")
+            logger.error(traceback.format_exc())
             return f"Error: {e}"
 
 def main():

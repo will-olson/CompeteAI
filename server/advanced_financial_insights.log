@@ -7,3 +7,8 @@
 2025-03-11 11:55:48,098 - INFO: Loaded 92 ticker metrics
 2025-03-11 11:55:48,720 - INFO: Visualizations generated successfully
 2025-03-11 11:56:18,014 - INFO: Advanced financial analysis generated successfully
+2025-03-11 13:54:42,825 - INFO: Loaded 92 ticker metrics
+2025-03-11 13:54:43,370 - ERROR: Error generating visualizations: float() argument must be a string or a number, not 'NAType'
+2025-03-11 14:23:11,432 - INFO: Loaded 92 ticker metrics
+2025-03-11 14:23:12,700 - INFO: Visualizations generated successfully
+2025-03-11 14:23:31,724 - INFO: Advanced financial analysis generated successfully

@@ -73,6 +73,14 @@ StockMarketAI is a tool designed to analyze financial metrics of stocks, scrape 
 
     This will generate the `performance_rankings_financial_insights.txt` file with the market analysis and performance rankings.
 
+3. Execute statistical analysis and produce charts:
+
+    ```bash
+    python advanced_financial_analysis.py
+    ```
+
+    This will generate the `advanced_financial_insights.txt` file with more granular statsitcal analysis across stocks.
+
 ## Features
 
 ### Data Scraping
@@ -83,12 +91,13 @@ StockMarketAI is a tool designed to analyze financial metrics of stocks, scrape 
 ### AI-Powered Insights
 
 - Uses OpenAI GPT to analyze the scraped financial data.
-- Generates performance rankings and provides recommendations for investors based on the data.
+- Generates performance rankings, generates insights, and provides recommendations for investors based on the data.
 
-### Market Performance Rankings
+### Market Analysis
 
 - Ranks stocks based on key financial metrics such as P/E ratio, market cap, and EPS.
 - Offers recommendations for different types of investors (e.g., those seeking stability or dividend income).
+- Conducts deep statistical analysis across key performance metrics to derive insights
 
 ### Customization
 
