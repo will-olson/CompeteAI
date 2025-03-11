@@ -1,0 +1,32 @@
+{
+    "tech": [
+        "AAPL", "MSFT", "GOOGL", "AMZN", "META", 
+        "NVDA", "INTC", "CSCO", "CRM",
+        "ADBE", "AVGO", "ORCL", "IBM", "UBER",
+        "SNOW", "TWLO", "OKTA", "PYPL"
+    ],
+    "finance": [
+        "JPM", "BAC", "GS", "C", "WFC", 
+        "AIG", "BLK", "MS", "SCHW", "AXP",
+        "V", "MA", "PYPL", "ADYEY", "XYZ",
+        "MKTX", "COIN", "HOOD", "SOFI", "NVDA"
+    ],
+    "healthcare": [
+        "JNJ", "UNH", "PFE", "MRK", "ABT", 
+        "BMY", "DHR", "ABBV", "GILD", "REGN",
+        "ISRG", "VRTX", "BIIB", "SRPT", "ALGN",
+        "TECH", "INCY", "NBIX", "EXAS"
+    ],
+    "energy": [
+        "XOM", "CVX", "COP", "EOG", "SLB", 
+        "OXY", "PSX", "VLO", "HAL",
+        "BP", "SHEL", "TRP", "ENB", "KMI",
+        "WMB", "ET", "EPD", "OKE", "EQT"
+    ],
+    "retail": [
+        "WMT", "TGT", "COST", "HD", "LOW", 
+        "SBUX", "AMZN", "KR", "DKS", "TJX",
+        "BURL", "ULTA", "LULU", "FIVE", "CVNA",
+        "ETSY", "ABNB", "DASH", "PTON", "ROKU"
+    ]
+}
