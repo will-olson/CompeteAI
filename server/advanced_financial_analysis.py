@@ -73,21 +73,44 @@ class AdvancedFinancialAnalyzer:
             
             df = pd.DataFrame(data)
             
+         # **Compute additional metrics**
+            df['Momentum Score'] = (df['Current Price'] - df['52 Week Low']) / (df['52 Week High'] - df['52 Week Low'])
             df['Price to Target Ratio'] = df['Target Price'] / df['Current Price']
             df['Volume Trend'] = df['Volume'] / df['Avg Volume']
 
-            # Convert columns to numeric, with more lenient approach
+            # **Convert to numeric and drop invalid rows**
             numeric_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Current Price']
-            for col in numeric_columns:
-                df[col] = pd.to_numeric(df[col], errors='coerce')
-            
-            # Only drop rows if ALL numeric columns are NaN
+            df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric, errors='coerce')
             df = df.dropna(subset=numeric_columns, how='all')
             
             return df
         except Exception as e:
             logger.error(f"Error converting to DataFrame: {e}")
             return pd.DataFrame()
+        
+    def get_top_bottom_stocks(self):
+        """
+        Generate structured stock analysis tables for easier readability.
+        """
+        if self.df.empty:
+            logger.warning("No valid stock data available for analysis.")
+            return "No valid stock data available."
+
+        tables = {
+            "Top 5 P/E Ratio Stocks": self.df.nlargest(5, "P/E Ratio")[["Ticker", "P/E Ratio", "EPS", "Market Cap"]],
+            "Bottom 5 P/E Ratio Stocks": self.df.nsmallest(5, "P/E Ratio")[["Ticker", "P/E Ratio", "EPS", "Market Cap"]],
+            "Top 5 Momentum Stocks": self.df.nlargest(5, "Momentum Score")[["Ticker", "Momentum Score", "Current Price"]],
+            "Bottom 5 Momentum Stocks": self.df.nsmallest(5, "Momentum Score")[["Ticker", "Momentum Score", "Current Price"]],
+            "Most Volatile Stocks": self.df.nlargest(5, "Beta")[["Ticker", "Beta", "Market Cap"]],
+            "Stable Stocks": self.df.nsmallest(5, "Beta")[["Ticker", "Beta", "Market Cap"]],
+            "Stocks with Negative EPS": self.df[self.df["EPS"] < 0][["Ticker", "EPS", "Market Cap"]].head(5),
+        }
+
+        # Format outputs as markdown tables for better readability
+        formatted_tables = {title: df.to_markdown() for title, df in tables.items()}
+
+        return formatted_tables
+
         
     def _extract_52_week_range(self, range_str, mode='low'):
         """
@@ -218,10 +241,50 @@ class AdvancedFinancialAnalyzer:
         except Exception as e:
             logger.error(f"Error generating visualizations: {e}")
 
+    def _generate_momentum_example(self):
+        """
+        Generate a detailed example of momentum score calculation
+        """
+        # Select a representative stock for detailed explanation
+        example_stock = self.df.nlargest(1, 'Momentum Score').iloc[0]
+        
+        return {
+            "Ticker": example_stock['Ticker'],
+            "Current Price": float(example_stock['Current Price']),
+            "52 Week Low": float(example_stock['52 Week Low']),
+            "52 Week High": float(example_stock['52 Week High']),
+            "Momentum Score": float(example_stock['Momentum Score']),
+            "Calculation": f"({example_stock['Current Price']} - {example_stock['52 Week Low']}) / ({example_stock['52 Week High']} - {example_stock['52 Week Low']}) = {example_stock['Momentum Score']:.4f}"
+        }
+    
+    @staticmethod
+    def json_serializable(obj):
+        """
+        Convert non-JSON serializable objects to JSON-friendly types
+        """
+        import numpy as np
+        import pandas as pd
+        
+        # Handle NumPy types
+        if isinstance(obj, (np.int64, np.float64, np.float32)):
+            return int(obj) if np.issubdtype(obj, np.integer) else float(obj)
+        
+        # Handle NumPy arrays
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        
+        # Handle Pandas Series
+        if isinstance(obj, pd.Series):
+            return obj.tolist()
+        
+        # Handle Pandas Categorical types
+        if hasattr(obj, 'categories'):
+            return list(obj.categories)
+        
+        # For any other non-serializable types
+        return str(obj)
+    
     def generate_advanced_analysis(self):
-            """
-            Generate comprehensive financial analysis with enhanced insights
-            """
             try:
                 # Additional derived metrics using existing pandas functionality
                 self.df['Market Cap Tier'] = pd.qcut(self.df['Market Cap'], q=5, labels=['Very Small', 'Small', 'Medium', 'Large', 'Very Large'])
@@ -241,7 +304,7 @@ class AdvancedFinancialAnalyzer:
                     errors='coerce'
                 )
 
-                # Sector-like classification based on characteristics
+                # Enhanced Stock Type Classification
                 def classify_stock_type(row):
                     if pd.isna(row['Market Cap']):
                         return 'Unclassified'
@@ -259,89 +322,58 @@ class AdvancedFinancialAnalyzer:
                 
                 self.df['Stock Type'] = self.df.apply(classify_stock_type, axis=1)
 
-                # Custom JSON serialization function
-                def json_serializable(obj):
-                    """
-                    Convert non-JSON serializable objects to JSON-friendly types
-                    """
-                    import numpy as np
-                    
-                    if isinstance(obj, (np.int64, np.float64)):
-                        return int(obj) if np.issubdtype(obj, np.integer) else float(obj)
-                    
-                    if isinstance(obj, np.ndarray):
-                        return obj.tolist()
-                    
-                    return obj
-
-                # Prepare more comprehensive analysis data
+                # Add Detailed Calculation Context
                 analysis_data = {
                     "Dataset Overview": {
-                        "Total Stocks": int(len(self.df)),  # Convert to standard int
+                        "Total Stocks": int(len(self.df)),
                         "Metrics": list(self.df.columns),
                         "Market Cap Tiers": {str(k): int(v) for k, v in dict(self.df['Market Cap Tier'].value_counts()).items()},
                         "Stock Types": {str(k): int(v) for k, v in dict(self.df['Stock Type'].value_counts()).items()}
                     },
                     "Statistical Summaries": {
                         metric: {
-                            k: json_serializable(v) 
+                            k: AdvancedFinancialAnalyzer.json_serializable(v) 
                             for k, v in self.df[metric].describe().to_dict().items()
                         } 
                         for metric in ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta', 'Price Volatility', 'Momentum Score']
                     },
-                    "Performance Metrics": {
-                        "Top Performers": {
-                            "Highest Market Cap": self.df.nlargest(5, 'Market Cap')[['Ticker', 'Market Cap', 'Stock Type']].to_dict(orient='records'),
-                            "Highest EPS": self.df.nlargest(5, 'EPS')[['Ticker', 'EPS', 'Stock Type']].to_dict(orient='records'),
-                            "Highest Dividend Yields": self.df.nlargest(5, 'Dividend Yield')[['Ticker', 'Dividend Yield', 'Stock Type']].to_dict(orient='records')
+                    "Detailed Calculations": {
+                        "Momentum Score": {
+                            "Formula": "(Current Price - 52 Week Low) / (52 Week High - 52 Week Low)",
+                            "Example Calculation": self._generate_momentum_example()
                         },
-                        "Risk Metrics": {
-                            "Highest Beta Stocks": self.df.nlargest(5, 'Beta')[['Ticker', 'Beta', 'Stock Type']].to_dict(orient='records'),
-                            "Lowest Beta Stocks": self.df.nsmallest(5, 'Beta')[['Ticker', 'Beta', 'Stock Type']].to_dict(orient='records')
-                        }
-                    },
-                    "Derived Insights": {
-                        "Price to Target Analysis": self.df.nlargest(5, 'Price to Target Ratio')[['Ticker', 'Price to Target Ratio', 'Stock Type']].to_dict(orient='records'),
-                        "Volume Trend Outliers": self.df.nlargest(5, 'Volume Trend')[['Ticker', 'Volume Trend', 'Stock Type']].to_dict(orient='records')
-                    },
-                    "Advanced Metrics": {
-                        "Volatility Analysis": {
-                            "Average Price Volatility": float(self.df['Price Volatility'].mean()),
-                            "Highest Volatility Stocks": self.df.dropna(subset=['Price Volatility']).nlargest(5, 'Price Volatility')[['Ticker', 'Price Volatility', 'Stock Type']].to_dict(orient='records')
-                        },
-                        "Momentum Insights": {
-                            "Average Momentum Score": float(self.df['Momentum Score'].mean()),
-                            "Top Momentum Stocks": self.df.dropna(subset=['Momentum Score']).nlargest(5, 'Momentum Score')[['Ticker', 'Momentum Score', 'Stock Type']].to_dict(orient='records')
+                        "Price Volatility": {
+                            "Formula": "(52 Week High - 52 Week Low) / 52 Week Low",
+                            "Statistical Summary": {
+                                "Mean": float(self.df['Price Volatility'].mean()),
+                                "Median": float(self.df['Price Volatility'].median()),
+                                "Standard Deviation": float(self.df['Price Volatility'].std())
+                            }
                         }
                     }
                 }
 
-                # Use the custom JSON serialization
+                # Modify prompt to emphasize data-driven insights
                 prompt = f"""
                 Perform an advanced multi-dimensional financial analysis with the following comprehensive dataset:
 
                 DETAILED DATASET OVERVIEW:
-                {json.dumps(analysis_data, indent=2, default=json_serializable)}
+                {json.dumps(analysis_data, indent=2, default=AdvancedFinancialAnalyzer.json_serializable)}
 
                 ADVANCED ANALYSIS DIRECTIVES:
                 1. Provide a holistic market ecosystem analysis
-                2. Identify cross-metric correlations and anomalies
-                3. Develop nuanced investment strategy recommendations
-                4. Assess potential market trends and sector dynamics
-                5. Highlight stocks with unique or contrarian characteristics
+                2. Provide in-depth insights with direct references to the data
+                3. Include specific calculations and examples from the Detailed Calculations section
+                4. Identify cross-metric correlations and anomalies
+                5. Develop nuanced investment strategy recommendations
+                6. Assess potential market trends and sector dynamics
+                7. Highlight stocks with unique or contrarian characteristics
 
                 ANALYTICAL FRAMEWORK:
+                - Use the provided calculation examples to explain metric interpretations
                 - Examine relationships between market cap, profitability, risk, and momentum
-                - Identify potential undervalued or overvalued stocks
-                - Consider macroeconomic implications of the data
-                - Provide forward-looking strategic insights with emphasis on:
-                * Market Cap Tiers
-                * Stock Type Classifications
-                * Volatility and Momentum Indicators
-
-                VISUALIZATION CONTEXT:
-                - Correlation heatmap and bubble charts have been generated
-                - Consider advanced metrics like Price Volatility and Momentum Score
+                - Provide transparent reasoning supported by numerical evidence
+                - Include specific numerical context for all major claims
                 """
 
                 # API request configuration

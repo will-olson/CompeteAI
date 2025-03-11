@@ -53,3 +53,20 @@ TypeError: Object of type int64 is not JSON serializable
 2025-03-11 15:27:53,219 - INFO: Loaded 92 ticker metrics
 2025-03-11 15:27:54,424 - INFO: Visualizations generated successfully
 2025-03-11 15:28:14,378 - INFO: Advanced financial analysis generated successfully
+2025-03-11 15:54:42,049 - INFO: Loaded 92 ticker metrics
+2025-03-11 15:54:43,286 - INFO: Visualizations generated successfully
+2025-03-11 15:54:43,290 - ERROR: Error in advanced financial analysis: name 'json_serializable' is not defined
+2025-03-11 15:54:43,290 - ERROR: Traceback (most recent call last):
+  File "advanced_financial_analysis.py", line 299, in generate_advanced_analysis
+    {json.dumps(analysis_data, indent=2, default=json_serializable)}
+NameError: name 'json_serializable' is not defined
+
+2025-03-11 16:11:41,963 - INFO: Loaded 92 ticker metrics
+2025-03-11 16:11:43,139 - INFO: Visualizations generated successfully
+2025-03-11 16:12:05,830 - INFO: Advanced financial analysis generated successfully
+2025-03-11 17:11:27,954 - INFO: Loaded 92 ticker metrics
+2025-03-11 17:11:29,173 - INFO: Visualizations generated successfully
+2025-03-11 17:11:49,051 - INFO: Advanced financial analysis generated successfully
+2025-03-11 17:15:57,420 - INFO: Loaded 92 ticker metrics
+2025-03-11 17:15:58,581 - INFO: Visualizations generated successfully
+2025-03-11 17:16:19,727 - INFO: Advanced financial analysis generated successfully
