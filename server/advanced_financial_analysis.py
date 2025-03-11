@@ -219,102 +219,172 @@ class AdvancedFinancialAnalyzer:
             logger.error(f"Error generating visualizations: {e}")
 
     def generate_advanced_analysis(self):
-        """
-        Generate comprehensive financial analysis with enhanced insights
-        """
-        try:
-            # Prepare more comprehensive analysis data
-            analysis_data = {
-                "Dataset Overview": {
-                    "Total Stocks": len(self.df),
-                    "Metrics": list(self.df.columns)
-                },
-                "Statistical Summaries": {
-                    metric: self.df[metric].describe().to_dict() 
-                    for metric in ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta']
-                },
-                "Performance Metrics": {
-                    "Top Performers": {
-                        "Highest Market Cap": self.df.nlargest(5, 'Market Cap')[['Ticker', 'Market Cap']].to_dict(orient='records'),
-                        "Highest EPS": self.df.nlargest(5, 'EPS')[['Ticker', 'EPS']].to_dict(orient='records'),
-                        "Highest Dividend Yields": self.df.nlargest(5, 'Dividend Yield')[['Ticker', 'Dividend Yield']].to_dict(orient='records')
-                    },
-                    "Risk Metrics": {
-                        "Highest Beta Stocks": self.df.nlargest(5, 'Beta')[['Ticker', 'Beta']].to_dict(orient='records'),
-                        "Lowest Beta Stocks": self.df.nsmallest(5, 'Beta')[['Ticker', 'Beta']].to_dict(orient='records')
-                    }
-                },
-                "Derived Insights": {
-                    "Price to Target Analysis": self.df.nlargest(5, 'Price to Target Ratio')[['Ticker', 'Price to Target Ratio']].to_dict(orient='records'),
-                    "Volume Trend Outliers": self.df.nlargest(5, 'Volume Trend')[['Ticker', 'Volume Trend']].to_dict(orient='records')
-                }
-            }
-
-            prompt = f"""
-            Perform a multi-dimensional financial analysis with the following comprehensive dataset:
-
-            DETAILED DATASET OVERVIEW:
-            {json.dumps(analysis_data, indent=2)}
-
-            ADVANCED ANALYSIS DIRECTIVES:
-            1. Provide a holistic market ecosystem analysis
-            2. Identify cross-metric correlations and anomalies
-            3. Develop nuanced investment strategy recommendations
-            4. Assess potential market trends and sector dynamics
-            5. Highlight stocks with unique or contrarian characteristics
-
-            ANALYTICAL FRAMEWORK:
-            - Examine relationships between market cap, profitability, and risk
-            - Identify potential undervalued or overvalued stocks
-            - Consider macroeconomic implications of the data
-            - Provide forward-looking strategic insights
-
-            VISUALIZATION CONTEXT:
-            - Correlation heatmap and bubble charts have been generated
-            - Consider visual insights in your comprehensive analysis
             """
+            Generate comprehensive financial analysis with enhanced insights
+            """
+            try:
+                # Additional derived metrics using existing pandas functionality
+                self.df['Market Cap Tier'] = pd.qcut(self.df['Market Cap'], q=5, labels=['Very Small', 'Small', 'Medium', 'Large', 'Very Large'])
+                
+                # Volatility calculation with explicit numeric conversion
+                self.df['Price Volatility'] = pd.to_numeric(
+                    (self.df['52 Week High'] - self.df['52 Week Low']) / self.df['52 Week Low'], 
+                    errors='coerce'
+                )
+                
+                # Relative valuation metrics
+                self.df['EPS Yield'] = pd.to_numeric(self.df['EPS'] / self.df['Current Price'], errors='coerce')
+                
+                # Momentum indicator with explicit numeric conversion
+                self.df['Momentum Score'] = pd.to_numeric(
+                    (self.df['Current Price'] - self.df['52 Week Low']) / (self.df['52 Week High'] - self.df['52 Week Low']), 
+                    errors='coerce'
+                )
 
-            # API request configuration
-            api_data = {
-                "model": "gpt-4",
-                "messages": [
-                    {
-                        "role": "system", 
-                        "content": "You are an elite financial analyst providing comprehensive, data-driven market insights."
+                # Sector-like classification based on characteristics
+                def classify_stock_type(row):
+                    if pd.isna(row['Market Cap']):
+                        return 'Unclassified'
+                    
+                    if row['Market Cap'] > 100_000_000_000:
+                        return 'Mega Cap'
+                    elif row['Dividend Yield'] > 3:
+                        return 'High Yield'
+                    elif row['Beta'] > 1.5:
+                        return 'High Volatility'
+                    elif row['EPS'] < 0:
+                        return 'Speculative'
+                    else:
+                        return 'Stable'
+                
+                self.df['Stock Type'] = self.df.apply(classify_stock_type, axis=1)
+
+                # Custom JSON serialization function
+                def json_serializable(obj):
+                    """
+                    Convert non-JSON serializable objects to JSON-friendly types
+                    """
+                    import numpy as np
+                    
+                    if isinstance(obj, (np.int64, np.float64)):
+                        return int(obj) if np.issubdtype(obj, np.integer) else float(obj)
+                    
+                    if isinstance(obj, np.ndarray):
+                        return obj.tolist()
+                    
+                    return obj
+
+                # Prepare more comprehensive analysis data
+                analysis_data = {
+                    "Dataset Overview": {
+                        "Total Stocks": int(len(self.df)),  # Convert to standard int
+                        "Metrics": list(self.df.columns),
+                        "Market Cap Tiers": {str(k): int(v) for k, v in dict(self.df['Market Cap Tier'].value_counts()).items()},
+                        "Stock Types": {str(k): int(v) for k, v in dict(self.df['Stock Type'].value_counts()).items()}
                     },
-                    {
-                        "role": "user", 
-                        "content": prompt
+                    "Statistical Summaries": {
+                        metric: {
+                            k: json_serializable(v) 
+                            for k, v in self.df[metric].describe().to_dict().items()
+                        } 
+                        for metric in ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta', 'Price Volatility', 'Momentum Score']
+                    },
+                    "Performance Metrics": {
+                        "Top Performers": {
+                            "Highest Market Cap": self.df.nlargest(5, 'Market Cap')[['Ticker', 'Market Cap', 'Stock Type']].to_dict(orient='records'),
+                            "Highest EPS": self.df.nlargest(5, 'EPS')[['Ticker', 'EPS', 'Stock Type']].to_dict(orient='records'),
+                            "Highest Dividend Yields": self.df.nlargest(5, 'Dividend Yield')[['Ticker', 'Dividend Yield', 'Stock Type']].to_dict(orient='records')
+                        },
+                        "Risk Metrics": {
+                            "Highest Beta Stocks": self.df.nlargest(5, 'Beta')[['Ticker', 'Beta', 'Stock Type']].to_dict(orient='records'),
+                            "Lowest Beta Stocks": self.df.nsmallest(5, 'Beta')[['Ticker', 'Beta', 'Stock Type']].to_dict(orient='records')
+                        }
+                    },
+                    "Derived Insights": {
+                        "Price to Target Analysis": self.df.nlargest(5, 'Price to Target Ratio')[['Ticker', 'Price to Target Ratio', 'Stock Type']].to_dict(orient='records'),
+                        "Volume Trend Outliers": self.df.nlargest(5, 'Volume Trend')[['Ticker', 'Volume Trend', 'Stock Type']].to_dict(orient='records')
+                    },
+                    "Advanced Metrics": {
+                        "Volatility Analysis": {
+                            "Average Price Volatility": float(self.df['Price Volatility'].mean()),
+                            "Highest Volatility Stocks": self.df.dropna(subset=['Price Volatility']).nlargest(5, 'Price Volatility')[['Ticker', 'Price Volatility', 'Stock Type']].to_dict(orient='records')
+                        },
+                        "Momentum Insights": {
+                            "Average Momentum Score": float(self.df['Momentum Score'].mean()),
+                            "Top Momentum Stocks": self.df.dropna(subset=['Momentum Score']).nlargest(5, 'Momentum Score')[['Ticker', 'Momentum Score', 'Stock Type']].to_dict(orient='records')
+                        }
                     }
-                ],
-                "temperature": 0.7,
-                "max_tokens": 4000
-            }
+                }
 
-            # Send API request
-            response = requests.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers={
-                    "Content-Type": "application/json",
-                    "Authorization": f"Bearer {self.openai_api_key}"
-                },
-                json=api_data,
-                timeout=45
-            )
+                # Use the custom JSON serialization
+                prompt = f"""
+                Perform an advanced multi-dimensional financial analysis with the following comprehensive dataset:
 
-            # Process and save insights
-            insights = response.json()['choices'][0]['message']['content'].strip()
-            
-            with open('advanced_financial_insights.txt', 'w') as f:
-                f.write(insights)
+                DETAILED DATASET OVERVIEW:
+                {json.dumps(analysis_data, indent=2, default=json_serializable)}
 
-            logger.info("Advanced financial analysis generated successfully")
-            return insights
+                ADVANCED ANALYSIS DIRECTIVES:
+                1. Provide a holistic market ecosystem analysis
+                2. Identify cross-metric correlations and anomalies
+                3. Develop nuanced investment strategy recommendations
+                4. Assess potential market trends and sector dynamics
+                5. Highlight stocks with unique or contrarian characteristics
 
-        except Exception as e:
-            logger.error(f"Error in advanced financial analysis: {e}")
-            logger.error(traceback.format_exc())
-            return f"Error: {e}"
+                ANALYTICAL FRAMEWORK:
+                - Examine relationships between market cap, profitability, risk, and momentum
+                - Identify potential undervalued or overvalued stocks
+                - Consider macroeconomic implications of the data
+                - Provide forward-looking strategic insights with emphasis on:
+                * Market Cap Tiers
+                * Stock Type Classifications
+                * Volatility and Momentum Indicators
+
+                VISUALIZATION CONTEXT:
+                - Correlation heatmap and bubble charts have been generated
+                - Consider advanced metrics like Price Volatility and Momentum Score
+                """
+
+                # API request configuration
+                api_data = {
+                    "model": "gpt-4",
+                    "messages": [
+                        {
+                            "role": "system", 
+                            "content": "You are an elite financial analyst providing comprehensive, data-driven market insights."
+                        },
+                        {
+                            "role": "user", 
+                            "content": prompt
+                        }
+                    ],
+                    "temperature": 0.7,
+                    "max_tokens": 4000
+                }
+
+                # Send API request
+                response = requests.post(
+                    "https://api.openai.com/v1/chat/completions",
+                    headers={
+                        "Content-Type": "application/json",
+                        "Authorization": f"Bearer {self.openai_api_key}"
+                    },
+                    json=api_data,
+                    timeout=45
+                )
+
+                # Process and save insights
+                insights = response.json()['choices'][0]['message']['content'].strip()
+                
+                with open('advanced_financial_insights.txt', 'w') as f:
+                    f.write(insights)
+
+                logger.info("Advanced financial analysis generated successfully")
+                return insights
+
+            except Exception as e:
+                logger.error(f"Error in advanced financial analysis: {e}")
+                logger.error(traceback.format_exc())
+                return f"Error: {e}"
 
 def main():
     # Load environment variables

@@ -12,3 +12,44 @@
 2025-03-11 14:23:11,432 - INFO: Loaded 92 ticker metrics
 2025-03-11 14:23:12,700 - INFO: Visualizations generated successfully
 2025-03-11 14:23:31,724 - INFO: Advanced financial analysis generated successfully
+2025-03-11 15:15:44,112 - INFO: Loaded 92 ticker metrics
+2025-03-11 15:15:45,319 - INFO: Visualizations generated successfully
+2025-03-11 15:15:45,332 - ERROR: Error in advanced financial analysis: Column 'Price Volatility' has dtype object, cannot use method 'nlargest' with this dtype
+2025-03-11 15:15:45,335 - ERROR: Traceback (most recent call last):
+  File "advanced_financial_analysis.py", line 283, in generate_advanced_analysis
+    "Highest Volatility Stocks": self.df.nlargest(5, 'Price Volatility')[['Ticker', 'Price Volatility', 'Stock Type']].to_dict(orient='records')
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/frame.py", line 7203, in nlargest
+    return selectn.SelectNFrame(self, n=n, keep=keep, columns=columns).nlargest()
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/methods/selectn.py", line 54, in nlargest
+    return self.compute("nlargest")
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/methods/selectn.py", line 194, in compute
+    raise TypeError(
+TypeError: Column 'Price Volatility' has dtype object, cannot use method 'nlargest' with this dtype
+
+2025-03-11 15:24:10,580 - INFO: Loaded 92 ticker metrics
+2025-03-11 15:24:11,789 - INFO: Visualizations generated successfully
+2025-03-11 15:24:11,804 - ERROR: Error in advanced financial analysis: Object of type int64 is not JSON serializable
+2025-03-11 15:24:11,806 - ERROR: Traceback (most recent call last):
+  File "advanced_financial_analysis.py", line 306, in generate_advanced_analysis
+    {json.dumps(analysis_data, indent=2)}
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/encoder.py", line 201, in encode
+    chunks = list(chunks)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/encoder.py", line 431, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type int64 is not JSON serializable
+
+2025-03-11 15:27:53,219 - INFO: Loaded 92 ticker metrics
+2025-03-11 15:27:54,424 - INFO: Visualizations generated successfully
+2025-03-11 15:28:14,378 - INFO: Advanced financial analysis generated successfully
