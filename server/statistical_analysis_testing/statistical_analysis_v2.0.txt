@@ -1,0 +1,73 @@
+(Development) willolson@MacBook-Air-3 server % python statistical_analysis.py 
+2025-03-12 00:49:19,570 - INFO: Loaded 414 ticker metrics
+2025-03-12 00:49:19,584 - INFO: Converted DataFrame: 409 rows retained
+Optional dependency scipy not found. Some advanced features will be limited.
+Could not install scipy. Skipping.
+Optional dependency scikit-learn not found. Some advanced features will be limited.
+Could not install scikit-learn. Skipping.
+
+Comprehensive Financial Metrics Analysis
+        Metric  Count       Mean     Median Standard Deviation    Minimum    Maximum      Range
+    Market Cap    408 1.0291e+11 3.0748e+10         3.0989e+11 1.6700e+07 3.3170e+12 3.3170e+12
+     P/E Ratio    358    50.9609    23.9350           170.7730     1.3300  2403.0000  2401.6700
+           EPS    408     6.1314     3.7900            12.0134   -21.3600   172.7000   194.0600
+Dividend Yield    291     2.8305     2.5300             1.9260     0.0400    16.2400    16.2000
+ Current Price    409   181.4756   102.1700           300.0065     0.1297  4451.0300  4450.9003
+          Beta    402     1.1095     1.0700             0.5059     0.0100     3.6600     3.6500
+        Volume    409 8.3218e+06 3.0762e+06         2.4005e+07  2479.0000 3.5104e+08 3.5104e+08
+Momentum Score    397     0.4419     0.4274             0.2789     0.0032     0.9908     0.9877
+2025-03-12 00:49:19,709 - INFO: Comprehensive financial analysis completed. Output saved to financial_analysis_output/comprehensive_financial_analysis.xlsx
+2025-03-12 00:49:40,508 - INFO: Advanced financial analysis generated successfully
+
+🚀 Statistical Analysis Complete 🚀
+
+Advanced Insights:
+Given the depth of data provided, here's an advanced multi-dimensional financial analysis:
+
+1. Market Ecosystem Analysis:
+The dataset comprises 409 stocks spread across market cap tiers from Very Small to Very Large, 
+and classified into types like Stable, High Yield, Mega Cap, High Volatility, Speculative, and Unclassified. 
+The average market cap is approximately $102.9 billion, indicating a diverse set of companies. 
+The mean P/E ratio is 50.96, suggesting that stocks are generally high-valued. 
+
+2. In-depth Insights:
+The mean EPS is 6.13, but with a high standard deviation of 12.02, indicating significant variability in company earnings. 
+Similarly, the average dividend yield is 2.83%, but the maximum is 16.24%, revealing a range of dividend-paying strategies among firms. 
+
+3. Calculations and Examples:
+The Momentum Score, calculated as (Current Price - 52 Week Low) / (52 Week High - 52 Week Low), has a mean of 0.44, 
+suggesting that many stocks are closer to their 52-week highs. For example, with BMY's current price of $63.11, 
+its 52-week low of $39.35, and its 52-week high of $63.33, its Momentum Score is a high 0.9908. 
+
+4. Cross-metric Correlations and Anomalies:
+There may be a correlation between a company's Beta and its Price Volatility, given the respective means of 1.11 and 0.81.
+High beta stocks generally demonstrate greater price volatility. 
+However, the dataset includes a Price Volatility maximum of 37.27, which is an anomaly considering the mean of 0.81. 
+
+5. Investment Strategy Recommendations:
+Given the varied market cap tiers and stock types, a balanced portfolio strategy would be advisable. 
+This would involve holding Mega Cap and Stable stocks for stable returns, High Yield stocks for income,
+and a select number of High Volatility and Speculative stocks for greater potential returns. 
+
+6. Significant Trends:
+- High P/E ratios suggesting a trend towards growth stocks.
+- The varied dividend yield, indicating potential for income investing.
+- High average momentum score indicating bullish market sentiment.
+- High Beta and Price Volatility indicating potential for short-term trading strategies.
+- The significant number of Mega Cap stocks suggesting a trend towards investing in large, established firms.
+
+7. Why These Trends are Significant:
+These trends indicate a market that rewards both growth and income investing. 
+The high average momentum score suggests that many stocks are experiencing positive price trends. 
+High beta and price volatility present opportunities for active traders, 
+while the presence of many Mega Cap stocks provides options for conservative, long-term investors.
+
+8. Potential Market Trends and Sector Dynamics:
+The dataset does not provide sector information, but the variety of stock types and market caps suggests a diverse market with opportunities across sectors.
+
+9. Unique or Contrarian Characteristics:
+Given the high mean P/E ratio, stocks with low P/E ratios would be contrarian picks. 
+Similarly, given the high momentum score, stocks with low momentum scores may present buying opportunities for contrarian investors.
+
+In conclusion, the dataset presents a dynamic and diverse market with opportunities for multiple investment strategies. 
+The specific stocks to be picked would depend on the investor's risk tolerance, investment horizon, and financial goals.
