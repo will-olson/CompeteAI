@@ -178,6 +178,51 @@ class AdvancedFinancialAnalyzer:
         except (ValueError, TypeError):
             return pd.NA
 
+    def generate_raw_data_and_export(self):
+        """
+        Generate the raw data table with calculated metrics and export to an Excel file
+        """
+        try:
+            # Add derived metrics to the dataframe
+            self.df['Market Cap Tier'] = pd.qcut(self.df['Market Cap'], q=5, labels=['Very Small', 'Small', 'Medium', 'Large', 'Very Large'])
+            self.df['Price Volatility'] = (self.df['52 Week High'] - self.df['52 Week Low']) / self.df['52 Week Low']
+            self.df['EPS Yield'] = self.df['EPS'] / self.df['Current Price']
+            self.df['Momentum Score'] = (self.df['Current Price'] - self.df['52 Week Low']) / (self.df['52 Week High'] - self.df['52 Week Low'])
+
+            # Save the dataframe to Excel
+            output_file = 'financial_analysis_data.xlsx'
+            self.df.to_excel(output_file, index=False)
+
+            logger.info(f"Raw data and metrics exported successfully to {output_file}")
+
+        except Exception as e:
+            logger.error(f"Error exporting raw data: {e}")
+
+    def export_key_metric_tables(self):
+            """
+            Export detailed tables for top/bottom performers in key metrics to an Excel sheet
+            """
+            try:
+                # Get the top/bottom performers for various metrics
+                top_performers = {
+                    "Top 5 P/E Ratio Stocks": self.df.nlargest(5, "P/E Ratio")[["Ticker", "P/E Ratio", "EPS", "Market Cap"]],
+                    "Bottom 5 P/E Ratio Stocks": self.df.nsmallest(5, "P/E Ratio")[["Ticker", "P/E Ratio", "EPS", "Market Cap"]],
+                    "Top 5 Momentum Stocks": self.df.nlargest(5, "Momentum Score")[["Ticker", "Momentum Score", "Current Price"]],
+                    "Bottom 5 Momentum Stocks": self.df.nsmallest(5, "Momentum Score")[["Ticker", "Momentum Score", "Current Price"]],
+                    "Most Volatile Stocks": self.df.nlargest(5, "Beta")[["Ticker", "Beta", "Market Cap"]],
+                    "Stable Stocks": self.df.nsmallest(5, "Beta")[["Ticker", "Beta", "Market Cap"]],
+                }
+
+                # Create an Excel writer to save the tables
+                with pd.ExcelWriter('key_metrics_analysis.xlsx') as writer:
+                    for sheet_name, table in top_performers.items():
+                        table.to_excel(writer, sheet_name=sheet_name, index=False)
+                
+                logger.info("Key metrics tables exported successfully to key_metrics_analysis.xlsx")
+
+            except Exception as e:
+                logger.error(f"Error exporting key metrics tables: {e}")
+
     def generate_visualizations(self):
         """
         Create insightful visualizations
@@ -431,8 +476,10 @@ def main():
     # Initialize advanced financial analyzer
     analyzer = AdvancedFinancialAnalyzer(openai_api_key)
     
-    # Generate visualizations
+    # Generate visualizations. data export, and tables
     analyzer.generate_visualizations()
+    analyzer.generate_raw_data_and_export()
+    analyzer.export_key_metric_tables()
     
     # Generate advanced analysis
     advanced_insights = analyzer.generate_advanced_analysis()

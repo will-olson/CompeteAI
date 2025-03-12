@@ -73,3 +73,11 @@ NameError: name 'json_serializable' is not defined
 2025-03-11 17:34:46,407 - INFO: Loaded 92 ticker metrics
 2025-03-11 17:34:47,597 - INFO: Visualizations generated successfully
 2025-03-11 17:35:11,034 - INFO: Advanced financial analysis generated successfully
+2025-03-11 18:04:23,699 - INFO: Loaded 92 ticker metrics
+2025-03-11 18:04:24,908 - INFO: Visualizations generated successfully
+2025-03-11 18:04:25,052 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 18:05:27,536 - INFO: Loaded 92 ticker metrics
+2025-03-11 18:05:28,695 - INFO: Visualizations generated successfully
+2025-03-11 18:05:28,814 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 18:05:28,816 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
+2025-03-11 18:05:50,409 - INFO: Advanced financial analysis generated successfully
