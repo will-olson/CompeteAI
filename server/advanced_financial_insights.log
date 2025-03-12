@@ -138,3 +138,43 @@ TypeError: boolean value of NA is ambiguous
 ValueError: Invalid character / found in sheet title
 
 2025-03-11 22:20:46,005 - INFO: Advanced financial analysis generated successfully
+2025-03-11 22:41:11,112 - INFO: Loaded 414 ticker metrics
+2025-03-11 22:41:11,125 - INFO: Converted DataFrame: 409 rows retained
+2025-03-11 22:41:12,720 - INFO: Successful Charts: ['safe_market_cap_comparison', 'safe_pe_ratio_eps_scatter', 'safe_dividend_yield_distribution', 'safe_correlation_heatmap', 'safe_market_cap_eps_bubble']
+2025-03-11 22:41:12,721 - INFO: Failed Charts: []
+2025-03-11 22:41:12,915 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 22:41:12,930 - ERROR: Critical error in exporting key metrics tables: Invalid character / found in sheet title
+2025-03-11 22:41:12,938 - ERROR: Traceback (most recent call last):
+  File "advanced_financial_analysis.py", line 329, in export_key_metric_tables
+    table.to_excel(writer, sheet_name=sheet_name, index=False)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/generic.py", line 2252, in to_excel
+    formatter.write(
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/io/formats/excel.py", line 940, in write
+    writer._write_cells(
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/io/excel/_openpyxl.py", line 477, in _write_cells
+    wks.title = sheet_name
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/openpyxl/workbook/child.py", line 93, in title
+    raise ValueError(msg)
+ValueError: Invalid character / found in sheet title
+
+2025-03-11 22:41:35,026 - INFO: Advanced financial analysis generated successfully
+2025-03-11 22:55:04,820 - INFO: Loaded 414 ticker metrics
+2025-03-11 22:55:04,834 - INFO: Converted DataFrame: 409 rows retained
+2025-03-11 22:55:06,362 - INFO: Successful Charts: ['safe_market_cap_comparison', 'safe_pe_ratio_eps_scatter', 'safe_dividend_yield_distribution', 'safe_correlation_heatmap', 'safe_market_cap_eps_bubble']
+2025-03-11 22:55:06,362 - INFO: Failed Charts: []
+2025-03-11 22:55:06,549 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 22:55:06,562 - ERROR: Critical error in exporting key metrics tables: Invalid character / found in sheet title
+2025-03-11 22:55:06,566 - ERROR: Traceback (most recent call last):
+  File "advanced_financial_analysis.py", line 329, in export_key_metric_tables
+    table.to_excel(writer, sheet_name=sheet_name, index=False)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/generic.py", line 2252, in to_excel
+    formatter.write(
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/io/formats/excel.py", line 940, in write
+    writer._write_cells(
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/io/excel/_openpyxl.py", line 477, in _write_cells
+    wks.title = sheet_name
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/openpyxl/workbook/child.py", line 93, in title
+    raise ValueError(msg)
+ValueError: Invalid character / found in sheet title
+
+2025-03-11 22:55:34,937 - INFO: Advanced financial analysis generated successfully

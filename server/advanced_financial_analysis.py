@@ -354,154 +354,184 @@ class AdvancedFinancialAnalyzer:
 
     def generate_visualizations(self):
         """
-        Create insightful visualizations
+        Create insightful visualizations with robust error handling
         """
-        try:
-            # Ensure output directory exists
-            os.makedirs('financial_analysis_charts', exist_ok=True)
+        # Ensure necessary imports
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        import numpy as np
+        import os
 
-            # 1. Market Cap Comparison
-            plt.figure(figsize=(12, 6))
-            top_market_cap = self.df.nlargest(10, 'Market Cap')
-            sns.barplot(x='Ticker', y='Market Cap', data=top_market_cap)
-            plt.title('Top 10 Stocks by Market Capitalization')
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.savefig('financial_analysis_charts/market_cap_comparison.png')
-            plt.close()
+        # Set consistent plotting style
+        plt.style.use('seaborn')
+        plt.rcParams.update({
+            'figure.figsize': (16, 10),
+            'font.size': 10,
+            'axes.labelsize': 10,
+            'axes.titlesize': 12
+        })
 
-            # 2. P/E Ratio vs EPS Scatter Plot
-            plt.figure(figsize=(12, 6))
-            sns.scatterplot(x='P/E Ratio', y='EPS', hue='Ticker', data=self.df)
-            plt.title('P/E Ratio vs Earnings Per Share')
-            plt.tight_layout()
-            plt.savefig('financial_analysis_charts/pe_ratio_vs_eps.png')
-            plt.close()
+        # Visualization methods with error handling
+        def safe_market_cap_comparison():
+            try:
+                # Ensure data is numeric and sorted
+                plot_data = self.df.copy()
+                plot_data['Market Cap'] = pd.to_numeric(plot_data['Market Cap'], errors='coerce')
+                top_market_cap = plot_data.nlargest(10, 'Market Cap')
 
-            # 3. Dividend Yield Distribution
-            plt.figure(figsize=(12, 6))
-            sns.histplot(self.df['Dividend Yield'].dropna(), kde=True)
-            plt.title('Dividend Yield Distribution')
-            plt.tight_layout()
-            plt.savefig('financial_analysis_charts/dividend_yield_distribution.png')
-            plt.close()
-
-             # Correlation Heatmap
-            plt.figure(figsize=(12, 10))
-            
-            # Select only numeric columns and drop NaN values
-            numeric_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta', 'Volume']
-            correlation_df = self.df[numeric_columns].apply(pd.to_numeric, errors='coerce')
-            correlation_matrix = correlation_df.corr()
-            
-            sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0, 
-                        square=True, linewidths=0.5, cbar_kws={"shrink": .8})
-            plt.title('Financial Metrics Correlation Heatmap')
-            plt.tight_layout()
-            plt.savefig('financial_analysis_charts/correlation_heatmap.png')
-            plt.close()
-        except Exception as e:
-            logger.error(f"Error in correlation heatmap: {e}")
-
-           # Bubble Chart: Market Cap vs EPS vs Dividend Yield
-            plt.figure(figsize=(15, 8))
-            scatter = plt.scatter(
-                 self.df['Market Cap'], 
-                 self.df['EPS'], 
-                 s=self.df['Dividend Yield']*100, 
-                 alpha=0.5
-            )
-            plt.xlabel('Market Cap')
-            plt.ylabel('EPS')
-            plt.title('Market Cap vs EPS (Bubble Size: Dividend Yield)')
-            plt.xscale('log')
-            plt.tight_layout()
-            plt.savefig('financial_analysis_charts/market_cap_eps_bubble.png')
-            plt.close()
-
-             # Sector Comparison Chart
-            plt.figure(figsize=(15, 8))
-            
-            # If sector information is not in the DataFrame, you might need to add it
-            # This could involve mapping tickers to sectors or using an external reference
-            if 'Sector' not in self.df.columns:
-                logger.warning("No sector information available. Skipping sector comparison chart.")
-            else:
-                # Ensure numeric conversion for EPS
-                self.df['EPS'] = pd.to_numeric(self.df['EPS'], errors='coerce')
-                
-                # Group by sector and calculate mean EPS
-                sector_performance = self.df.groupby('Sector')['EPS'].mean().sort_values(ascending=False)
-                
-                sns.barplot(x=sector_performance.index, y=sector_performance.values)
-                plt.title('Average EPS by Sector')
-                plt.xlabel('Sector')
-                plt.ylabel('Average EPS')
-                plt.xticks(rotation=45)
+                plt.figure(figsize=(16, 8))
+                sns.barplot(x='Ticker', y='Market Cap', data=top_market_cap)
+                plt.title('Top 10 Stocks by Market Capitalization', fontsize=15)
+                plt.xlabel('Ticker', fontsize=12)
+                plt.ylabel('Market Cap', fontsize=12)
+                plt.xticks(rotation=45, ha='right')
                 plt.tight_layout()
-                plt.savefig('financial_analysis_charts/sector_comparison.png')
+                plt.savefig('financial_analysis_charts/market_cap_comparison.png')
                 plt.close()
+                return True
+            except Exception as e:
+                logger.error(f"Market Cap Comparison Chart Error: {e}")
+                return False
 
-                # Simple Clusters Chart
-                plt.figure(figsize=(15, 8))
-
+        def safe_pe_ratio_eps_scatter():
+            try:
                 # Prepare data
-                cluster_features = ['Market Cap', 'EPS']
-                cluster_data = self.df[cluster_features].copy()
+                plot_data = self.df.copy()
+                plot_data['P/E Ratio'] = pd.to_numeric(plot_data['P/E Ratio'], errors='coerce')
+                plot_data['EPS'] = pd.to_numeric(plot_data['EPS'], errors='coerce')
+                plot_data = plot_data.dropna(subset=['P/E Ratio', 'EPS'])
 
-                # Convert to numeric and drop NaNs
-                for col in cluster_features:
-                    cluster_data[col] = pd.to_numeric(cluster_data[col], errors='coerce')
-
-                cluster_data = cluster_data.dropna()
-
-                # Create manual segments based on quantiles
-                def assign_segment(row):
-                    market_cap_quantiles = cluster_data['Market Cap'].quantile([0.33, 0.66])
-                    eps_quantiles = cluster_data['EPS'].quantile([0.33, 0.66])
-                    
-                    if row['Market Cap'] < market_cap_quantiles.iloc[0]:
-                        market_cap_segment = 'Small Cap'
-                    elif row['Market Cap'] < market_cap_quantiles.iloc[1]:
-                        market_cap_segment = 'Mid Cap'
-                    else:
-                        market_cap_segment = 'Large Cap'
-                    
-                    if row['EPS'] < eps_quantiles.iloc[0]:
-                        eps_segment = 'Low EPS'
-                    elif row['EPS'] < eps_quantiles.iloc[1]:
-                        eps_segment = 'Medium EPS'
-                    else:
-                        eps_segment = 'High EPS'
-                    
-                    return f'{market_cap_segment} - {eps_segment}'
-
-                # Add segment column
-                cluster_data['Segment'] = cluster_data.apply(assign_segment, axis=1)
-
-                # Create scatter plot with color-coded segments
-                plt.figure(figsize=(15, 8))
-                segments = cluster_data['Segment'].unique()
-                colors = plt.cm.rainbow(np.linspace(0, 1, len(segments)))
-
-                for segment, color in zip(segments, colors):
-                    segment_data = cluster_data[cluster_data['Segment'] == segment]
-                    plt.scatter(
-                        segment_data['Market Cap'], 
-                        segment_data['EPS'], 
-                        label=segment,
-                        color=color,
-                        alpha=0.7
-                    )
-
-                plt.xlabel('Market Cap')
-                plt.ylabel('EPS')
-                plt.title('Stocks Segmented by Market Cap and EPS')
-                plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-                plt.xscale('log')
+                plt.figure(figsize=(16, 10))
+                # Limit to top 50 stocks to prevent overcrowding
+                top_stocks = plot_data.nlargest(50, 'Market Cap')
+                
+                sns.scatterplot(
+                    x='P/E Ratio', 
+                    y='EPS', 
+                    hue='Ticker', 
+                    size='Market Cap',
+                    data=top_stocks,
+                    alpha=0.7
+                )
+                plt.title('P/E Ratio vs Earnings Per Share (Top 50 Stocks)', fontsize=15)
+                plt.xlabel('P/E Ratio', fontsize=12)
+                plt.ylabel('Earnings Per Share (EPS)', fontsize=12)
+                plt.xscale('log')  # Log scale to handle wide range of values
                 plt.tight_layout()
-                plt.savefig('financial_analysis_charts/simple_clusters_91.png')
+                plt.savefig('financial_analysis_charts/pe_ratio_vs_eps.png')
                 plt.close()
+                return True
+            except Exception as e:
+                logger.error(f"P/E Ratio vs EPS Scatter Plot Error: {e}")
+                return False
+
+        def safe_dividend_yield_distribution():
+            try:
+                # Prepare dividend yield data
+                dividend_data = pd.to_numeric(self.df['Dividend Yield'], errors='coerce')
+                dividend_data = dividend_data.dropna()
+
+                plt.figure(figsize=(16, 8))
+                sns.histplot(dividend_data, kde=True)
+                plt.title('Dividend Yield Distribution', fontsize=15)
+                plt.xlabel('Dividend Yield (%)', fontsize=12)
+                plt.ylabel('Frequency', fontsize=12)
+                plt.tight_layout()
+                plt.savefig('financial_analysis_charts/dividend_yield_distribution.png')
+                plt.close()
+                return True
+            except Exception as e:
+                logger.error(f"Dividend Yield Distribution Chart Error: {e}")
+                return False
+
+        def safe_correlation_heatmap():
+            try:
+                # Select and prepare numeric columns
+                numeric_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta', 'Volume']
+                correlation_df = self.df[numeric_columns].apply(pd.to_numeric, errors='coerce')
+                
+                # Compute correlation matrix
+                correlation_matrix = correlation_df.corr()
+
+                plt.figure(figsize=(16, 12))
+                sns.heatmap(
+                    correlation_matrix, 
+                    annot=True, 
+                    cmap='coolwarm', 
+                    center=0, 
+                    square=True, 
+                    linewidths=0.5, 
+                    cbar_kws={"shrink": .8},
+                    fmt=".2f"  # Limit decimal places
+                )
+                plt.title('Financial Metrics Correlation Heatmap', fontsize=15)
+                plt.tight_layout()
+                plt.savefig('financial_analysis_charts/correlation_heatmap.png')
+                plt.close()
+                return True
+            except Exception as e:
+                logger.error(f"Correlation Heatmap Error: {e}")
+                return False
+
+        def safe_market_cap_eps_bubble():
+            try:
+                # Prepare data
+                plot_data = self.df.copy()
+                plot_data['Market Cap'] = pd.to_numeric(plot_data['Market Cap'], errors='coerce')
+                plot_data['EPS'] = pd.to_numeric(plot_data['EPS'], errors='coerce')
+                plot_data['Dividend Yield'] = pd.to_numeric(plot_data['Dividend Yield'], errors='coerce')
+                plot_data = plot_data.dropna(subset=['Market Cap', 'EPS', 'Dividend Yield'])
+
+                plt.figure(figsize=(16, 10))
+                plt.scatter(
+                    plot_data['Market Cap'], 
+                    plot_data['EPS'], 
+                    s=plot_data['Dividend Yield']*100,  # Bubble size based on dividend yield
+                    alpha=0.6
+                )
+                plt.xscale('log')
+                plt.title('Market Cap vs EPS (Bubble Size: Dividend Yield)', fontsize=15)
+                plt.xlabel('Market Cap (Log Scale)', fontsize=12)
+                plt.ylabel('Earnings Per Share', fontsize=12)
+                plt.tight_layout()
+                plt.savefig('financial_analysis_charts/market_cap_eps_bubble.png')
+                plt.close()
+                return True
+            except Exception as e:
+                logger.error(f"Market Cap EPS Bubble Chart Error: {e}")
+                return False
+
+        # Ensure output directory exists
+        os.makedirs('financial_analysis_charts', exist_ok=True)
+
+        # List of visualization methods to execute
+        visualization_methods = [
+            safe_market_cap_comparison,
+            safe_pe_ratio_eps_scatter,
+            safe_dividend_yield_distribution,
+            safe_correlation_heatmap,
+            safe_market_cap_eps_bubble
+        ]
+
+        # Track successful and failed visualizations
+        successful_charts = []
+        failed_charts = []
+
+        # Execute each visualization method
+        for method in visualization_methods:
+            try:
+                result = method()
+                if result:
+                    successful_charts.append(method.__name__)
+                else:
+                    failed_charts.append(method.__name__)
+            except Exception as e:
+                logger.error(f"Unexpected error in {method.__name__}: {e}")
+                failed_charts.append(method.__name__)
+
+        # Log summary
+        logger.info(f"Successful Charts: {successful_charts}")
+        logger.info(f"Failed Charts: {failed_charts}")
 
     def _generate_momentum_example(self):
         """
@@ -631,8 +661,8 @@ class AdvancedFinancialAnalyzer:
                 3. Include specific calculations and examples from the Detailed Calculations section
                 4. Identify cross-metric correlations and anomalies
                 5. Develop nuanced investment strategy recommendations
-                6. Highlight up to 10 stocks that appear to be relatively promising investment opportunities.
-                7. Explain your the reasoning for your investment recommendations with data and relevant calculations.
+                6. Highlight up to 5 of the most significant trends to follow based on your strategic analysis of the data and the dataset
+                7. Explain why these trends are the most significant by using data and include specific calculations
                 8. Assess potential market trends and sector dynamics
                 9. Highlight stocks with unique or contrarian characteristics
 
