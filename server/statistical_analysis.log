@@ -1,0 +1,12 @@
+2025-03-11 23:54:00,880 - INFO: Loaded 414 ticker metrics
+2025-03-11 23:54:00,893 - INFO: Converted DataFrame: 409 rows retained
+2025-03-11 23:54:01,771 - WARNING: OpenAI API key not provided. Skipping AI-driven analysis.
+2025-03-11 23:58:59,663 - INFO: Loaded 414 ticker metrics
+2025-03-11 23:58:59,676 - INFO: Converted DataFrame: 409 rows retained
+2025-03-11 23:59:25,259 - INFO: Advanced financial analysis generated successfully
+2025-03-12 00:14:24,499 - INFO: Loaded 414 ticker metrics
+2025-03-12 00:14:24,514 - INFO: Converted DataFrame: 409 rows retained
+2025-03-12 00:14:47,501 - INFO: Advanced financial analysis generated successfully
+2025-03-12 00:18:58,196 - INFO: Loaded 414 ticker metrics
+2025-03-12 00:18:58,209 - INFO: Converted DataFrame: 409 rows retained
+2025-03-12 00:19:17,984 - INFO: Advanced financial analysis generated successfully

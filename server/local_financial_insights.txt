@@ -1,0 +1,86 @@
+Local Financial Analysis Insights
+
+Market Capitalization Breakdown:
+- Very Small Cap: 53 stocks
+- Small Cap: 53 stocks
+- Large Cap: 53 stocks
+- Very Large Cap: 53 stocks
+- Medium Cap: 52 stocks
+
+Stock Type Distribution:
+- Stable: 95 stocks
+- High Yield: 89 stocks
+- Mega Cap: 66 stocks
+- High Volatility: 14 stocks
+
+Key Statistical Highlights:
+
+Market Cap:
+- count: 264.0
+- mean: 127579537265.15152
+- std: 356868066667.2103
+- min: 57588000.0
+- 25%: 21431750000.0
+- 50%: 41004000000.0
+- 75%: 100407500000.0
+- max: 3317000000000.0
+
+P/E Ratio:
+- count: 264.0
+- mean: 33.57303030303031
+- std: 63.579274015346144
+- min: 1.33
+- 25%: 15.5525
+- 50%: 21.945
+- 75%: 32.03
+- max: 871.0
+
+EPS:
+- count: 264.0
+- mean: 6.808030303030303
+- std: 6.725591999260964
+- min: 0.01
+- 25%: 2.4575
+- 50%: 4.725
+- 75%: 8.3625
+- max: 40.57
+
+Dividend Yield:
+- count: 264.0
+- mean: 2.775189393939394
+- std: 1.8797756828903662
+- min: 0.04
+- 25%: 1.32
+- 50%: 2.525
+- 75%: 3.6625
+- max: 16.24
+
+Beta:
+- count: 264.0
+- mean: 1.0173863636363638
+- std: 0.43293979854819853
+- min: 0.05
+- 25%: 0.725
+- 50%: 1.01
+- 75%: 1.24
+- max: 3.27
+
+Price Volatility:
+- count: 264.0
+- mean: 0.5155327531028229
+- std: 0.33048743219509963
+- min: 0.1752866076081292
+- 25%: 0.3426933277220834
+- 50%: 0.44549722369388683
+- 75%: 0.5936053035431814
+- max: 4.04225352112676
+
+Momentum Score:
+- count: 264.0
+- mean: 0.491322271725923
+- std: 0.27850034189233613
+- min: 0.0044521873790166555
+- 25%: 0.2530780382082857
+- 50%: 0.4932525134501899
+- 75%: 0.7065448615357941
+- max: 0.9812200137080191
