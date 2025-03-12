@@ -178,3 +178,7 @@ ValueError: Invalid character / found in sheet title
 ValueError: Invalid character / found in sheet title
 
 2025-03-11 22:55:34,937 - INFO: Advanced financial analysis generated successfully
+2025-03-11 23:20:18,988 - INFO: Loaded 414 ticker metrics
+2025-03-11 23:20:19,004 - INFO: Converted DataFrame: 409 rows retained
+2025-03-11 23:32:43,384 - INFO: Loaded 414 ticker metrics
+2025-03-11 23:32:43,401 - INFO: Converted DataFrame: 409 rows retained
