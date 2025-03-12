@@ -86,3 +86,14 @@ NameError: name 'json_serializable' is not defined
 2025-03-11 18:57:56,832 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
 2025-03-11 18:57:56,834 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
 2025-03-11 18:58:17,656 - INFO: Advanced financial analysis generated successfully
+2025-03-11 19:34:55,487 - ERROR: Error loading metrics: Metrics file not found: financial_metrics.json
+2025-03-11 19:34:55,488 - ERROR: Error converting to DataFrame: 'Current Price'
+2025-03-11 19:34:55,607 - ERROR: Error in correlation heatmap: 'Market Cap'
+2025-03-11 19:39:09,965 - INFO: Loaded 229 ticker metrics
+2025-03-11 19:39:11,357 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 19:39:11,359 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
+2025-03-11 19:39:29,946 - INFO: Advanced financial analysis generated successfully
+2025-03-11 20:18:35,170 - INFO: Loaded 229 ticker metrics
+2025-03-11 20:18:36,564 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 20:18:36,566 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
+2025-03-11 20:19:03,957 - INFO: Advanced financial analysis generated successfully

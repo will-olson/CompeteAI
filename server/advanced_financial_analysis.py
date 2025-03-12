@@ -257,22 +257,30 @@ class AdvancedFinancialAnalyzer:
             plt.savefig('financial_analysis_charts/dividend_yield_distribution.png')
             plt.close()
 
-            # Correlation Heatmap
+             # Correlation Heatmap
             plt.figure(figsize=(12, 10))
-            correlation_matrix = self.df[['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta', 'Volume']].corr()
-            sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
+            
+            # Select only numeric columns and drop NaN values
+            numeric_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta', 'Volume']
+            correlation_df = self.df[numeric_columns].apply(pd.to_numeric, errors='coerce')
+            correlation_matrix = correlation_df.corr()
+            
+            sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0, 
+                        square=True, linewidths=0.5, cbar_kws={"shrink": .8})
             plt.title('Financial Metrics Correlation Heatmap')
             plt.tight_layout()
             plt.savefig('financial_analysis_charts/correlation_heatmap.png')
             plt.close()
+        except Exception as e:
+            logger.error(f"Error in correlation heatmap: {e}")
 
-            # Bubble Chart: Market Cap vs EPS vs Dividend Yield
+           # Bubble Chart: Market Cap vs EPS vs Dividend Yield
             plt.figure(figsize=(15, 8))
             scatter = plt.scatter(
-                self.df['Market Cap'], 
-                self.df['EPS'], 
-                s=self.df['Dividend Yield']*100, 
-                alpha=0.5
+                 self.df['Market Cap'], 
+                 self.df['EPS'], 
+                 s=self.df['Dividend Yield']*100, 
+                 alpha=0.5
             )
             plt.xlabel('Market Cap')
             plt.ylabel('EPS')
@@ -282,9 +290,89 @@ class AdvancedFinancialAnalyzer:
             plt.savefig('financial_analysis_charts/market_cap_eps_bubble.png')
             plt.close()
 
-            logger.info("Visualizations generated successfully")
-        except Exception as e:
-            logger.error(f"Error generating visualizations: {e}")
+             # Sector Comparison Chart
+            plt.figure(figsize=(15, 8))
+            
+            # If sector information is not in the DataFrame, you might need to add it
+            # This could involve mapping tickers to sectors or using an external reference
+            if 'Sector' not in self.df.columns:
+                logger.warning("No sector information available. Skipping sector comparison chart.")
+            else:
+                # Ensure numeric conversion for EPS
+                self.df['EPS'] = pd.to_numeric(self.df['EPS'], errors='coerce')
+                
+                # Group by sector and calculate mean EPS
+                sector_performance = self.df.groupby('Sector')['EPS'].mean().sort_values(ascending=False)
+                
+                sns.barplot(x=sector_performance.index, y=sector_performance.values)
+                plt.title('Average EPS by Sector')
+                plt.xlabel('Sector')
+                plt.ylabel('Average EPS')
+                plt.xticks(rotation=45)
+                plt.tight_layout()
+                plt.savefig('financial_analysis_charts/sector_comparison.png')
+                plt.close()
+
+                # Simple Clusters Chart
+                plt.figure(figsize=(15, 8))
+
+                # Prepare data
+                cluster_features = ['Market Cap', 'EPS']
+                cluster_data = self.df[cluster_features].copy()
+
+                # Convert to numeric and drop NaNs
+                for col in cluster_features:
+                    cluster_data[col] = pd.to_numeric(cluster_data[col], errors='coerce')
+
+                cluster_data = cluster_data.dropna()
+
+                # Create manual segments based on quantiles
+                def assign_segment(row):
+                    market_cap_quantiles = cluster_data['Market Cap'].quantile([0.33, 0.66])
+                    eps_quantiles = cluster_data['EPS'].quantile([0.33, 0.66])
+                    
+                    if row['Market Cap'] < market_cap_quantiles.iloc[0]:
+                        market_cap_segment = 'Small Cap'
+                    elif row['Market Cap'] < market_cap_quantiles.iloc[1]:
+                        market_cap_segment = 'Mid Cap'
+                    else:
+                        market_cap_segment = 'Large Cap'
+                    
+                    if row['EPS'] < eps_quantiles.iloc[0]:
+                        eps_segment = 'Low EPS'
+                    elif row['EPS'] < eps_quantiles.iloc[1]:
+                        eps_segment = 'Medium EPS'
+                    else:
+                        eps_segment = 'High EPS'
+                    
+                    return f'{market_cap_segment} - {eps_segment}'
+
+                # Add segment column
+                cluster_data['Segment'] = cluster_data.apply(assign_segment, axis=1)
+
+                # Create scatter plot with color-coded segments
+                plt.figure(figsize=(15, 8))
+                segments = cluster_data['Segment'].unique()
+                colors = plt.cm.rainbow(np.linspace(0, 1, len(segments)))
+
+                for segment, color in zip(segments, colors):
+                    segment_data = cluster_data[cluster_data['Segment'] == segment]
+                    plt.scatter(
+                        segment_data['Market Cap'], 
+                        segment_data['EPS'], 
+                        label=segment,
+                        color=color,
+                        alpha=0.7
+                    )
+
+                plt.xlabel('Market Cap')
+                plt.ylabel('EPS')
+                plt.title('Stocks Segmented by Market Cap and EPS')
+                plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+                plt.xscale('log')
+                plt.tight_layout()
+                plt.savefig('financial_analysis_charts/simple_clusters_91.png')
+                plt.close()
 
     def _generate_momentum_example(self):
         """
@@ -411,8 +499,10 @@ class AdvancedFinancialAnalyzer:
                 3. Include specific calculations and examples from the Detailed Calculations section
                 4. Identify cross-metric correlations and anomalies
                 5. Develop nuanced investment strategy recommendations
-                6. Assess potential market trends and sector dynamics
-                7. Highlight stocks with unique or contrarian characteristics
+                6. Highlight up to 10 stocks that appear to be relatively promising investment opportunities.
+                7. Explain your the reasoning for your investment recommendations with data and relevant calculations.
+                8. Assess potential market trends and sector dynamics
+                9. Highlight stocks with unique or contrarian characteristics
 
                 ANALYTICAL FRAMEWORK:
                 - Use the provided calculation examples to explain metric interpretations

@@ -3,48 +3,73 @@
         "AAPL", "MSFT", "NVDA", "ADBE", "CRM", "AVGO", "CSCO", "ORCL", "INTC", 
         "QCOM", "TXN", "AMAT", "KLAC", "LRCX", "SNPS", "CDNS", "MCHP", "ADI", 
         "PANW", "NOW", "ANSS", "PYPL", "INTU", "ADSK", "WDAY", "FTNT", "CRWD", 
-        "DELL", "HPE", "KEYS", "ZBRA", "EPAM", "CDW", "GDDY", "SMCI"
+        "DELL", "HPE", "KEYS", "ZBRA", "EPAM", "CDW", "GDDY", "SMCI", "IBM", 
+        "JNPR", "ROP", "TRMB", "VRSN", "IT", "FFIV", "GLDD", "OKTA", "SNOW", 
+        "DOCU", "SPLK", "TEAM", "WDC", "HPQ", "FICO", "GLW", "SWKS", "NXPI", 
+        "ON", "MKTX", "COUP", "DDOG", "ZS", "NET", "BILL", "SIRI", "UBER"
     ],
     "health_care": [
         "UNH", "JNJ", "PFE", "MRK", "ABT", "BMY", "DHR", "ABBV", "GILD", "REGN", 
         "ISRG", "VRTX", "BIIB", "MDT", "TECH", "IDXX", "ALGN", "DXCM", "EW", 
-        "HOLX", "PODD", "MRNA", "SGEN", "VTRS", "ZTS", "RGEN", "RVTY", "TMUS"
+        "HOLX", "PODD", "MRNA", "SGEN", "VTRS", "ZTS", "RGEN", "RVTY", "TMUS", 
+        "HCA", "SYK", "WAT", "HSIC", "COO", "ILMN", "GENZ", "INCY", "NVAX", 
+        "EXAS", "NBIX", "SRPT", "VRTX", "CERN", "JAZZ", "BMRN", "SAGE", "ALNY", 
+        "ARNA", "REGN", "VCEL", "HSKA", "KRYS", "RARE", "FOLD", "PTCT", "AKRO"
     ],
     "financials": [
         "JPM", "BAC", "GS", "C", "WFC", "AIG", "BLK", "MS", "SCHW", "AXP", 
         "V", "MA", "BRK.B", "CB", "ICE", "SPGI", "CME", "AMP", "AON", "STT", 
-        "PRU", "TROW", "MKTX", "CBOE", "NDAQ", "COIN", "HOOD"
+        "PRU", "TROW", "MKTX", "CBOE", "NDAQ", "COIN", "HOOD", "BX", "KKR", 
+        "PYPL", "WU", "TREE", "HBAN", "RF", "KEY", "MTB", "CFG", "SIVB", 
+        "FITB", "PNC", "USB", "TFC", "STI", "SCHF", "LPLA", "TCBI", "PBCT"
     ],
     "communication_services": [
         "GOOGL", "META", "NFLX", "AMZN", "CHTR", "DIS", "CMCSA", "T", "TMUS", 
-        "FOXA", "PARA", "EA", "TTWO", "ATVI", "LYV", "DISCA", "WBD", "ROKU"
+        "FOXA", "PARA", "EA", "TTWO", "ATVI", "LYV", "DISCA", "WBD", "ROKU", 
+        "SNAP", "TWTR", "PINS", "MTCH", "IAC", "SIRI", "LUMN", "VZ", "DISH"
     ],
     "consumer_discretionary": [
         "TSLA", "AMZN", "HD", "MCD", "LOW", "SBUX", "NKE", "COST", "TJX", "GM", 
-        "F", "BKNG", "MAR", "ABNB", "ULTA", "LULU", "DHI", "ORLY", "POOL", "WYND"
+        "F", "BKNG", "MAR", "ABNB", "ULTA", "LULU", "DHI", "ORLY", "POOL", "WYND", 
+        "DECK", "YETI", "WING", "PLAY", "CVNA", "CHWY", "ETSY", "PTON", "ROKU", 
+        "DASH", "DKNG", "PENN", "SBUX", "CMG", "CAKE", "TACO", "SHAK", "BJRI", 
+        "DRI", "PZZA", "RUTH", "TCOM", "BURL", "FIVE", "CPRI", "URBN", "AXON", "EXPR"
     ],
     "industrials": [
         "HON", "CAT", "UPS", "BA", "RTX", "DE", "LMT", "MMM", "GE", "CSX", 
-        "UNP", "EMR", "ITW", "NOC", "PWR", "CMI", "PCAR", "TT", "WAB", "URI"
+        "UNP", "EMR", "ITW", "NOC", "PWR", "CMI", "PCAR", "TT", "WAB", "URI", 
+        "GWW", "ROK", "TDG", "DOV", "IR", "SNA", "FAST", "EXPD", "JBHT", "ODFL", 
+        "CHRW", "TECH", "ALLE", "AME", "PH", "ROP", "WSO", "CTAS", "HUBB", 
+        "TYL", "AZPN", "MPWR", "ZBRA", "KRNY", "FORM", "HSKA", "WIRE", "BLDR", "MANT"
     ],
     "consumer_staples": [
         "PG", "KO", "PEP", "WMT", "CL", "KMB", "GIS", "MO", "ADM", "HSY", 
-        "K", "CPB", "TSN", "SJM", "KHC", "TAP", "COST", "MDLZ", "CHD"
+        "K", "CPB", "TSN", "SJM", "KHC", "TAP", "COST", "MDLZ", "CHD", "CLX", 
+        "SYY", "KR", "WBA", "MNST", "STZ", "BF.B", "LANC", "HAIN", "CALM", 
+        "INGR", "TSN", "KDP", "BYND", "BREW", "FIZZ", "COKE", "JACK", "KVUE", "DPZ"
     ],
     "energy": [
         "XOM", "CVX", "COP", "EOG", "SLB", "OXY", "PSX", "VLO", "HAL", 
-        "MRO", "DVN", "APA", "HES", "WMB", "KMI", "FANG", "OKE", "TRGP"
+        "MRO", "DVN", "APA", "HES", "WMB", "KMI", "FANG", "OKE", "TRGP", 
+        "MPC", "PXD", "CXO", "CTRA", "MTDR", "EQT", "ENLC", "VNOM", "GPOR", 
+        "HESM", "FETY", "BCEI", "ESTE", "TPL", "LLEX", "RCON", "RNGR", "SNMP"
     ],
     "materials": [
         "LIN", "SHW", "DOW", "NEM", "ECL", "APD", "ALB", "MLM", "PKG", "IFF", 
-        "NUE", "CF", "VMC", "IP", "LYB", "CTVA", "FMC", "PPG"
+        "NUE", "CF", "VMC", "IP", "LYB", "CTVA", "FMC", "PPG", "CE", "IEX", 
+        "EMN", "HUN", "CX", "STLD", "RS", "TREX", "ROCK", "USCR", "HSKA", 
+        "PATK", "BOOM", "WIRE", "PGTI", "SCHN", "BOOM", "ZEUS", "SW", "MTRN"
     ],
     "utilities": [
         "NEE", "SO", "DUK", "D", "AEP", "EXC", "WEC", "XEL", "ED", "AES", 
-        "ES", "PEG", "CNP", "SRE", "EIX", "PNW", "ETR"
+        "ES", "PEG", "CNP", "SRE", "EIX", "PNW", "ETR", "AEE", "CMS", "VST", 
+        "NI", "WR", "EVRG", "FE", "POR", "PEAK", "DTE", "WEC", "ES", "OGE", 
+        "ATO", "CL", "PSEG", "EXC", "AEP", "DUK", "NEE", "SO", "XEL"
     ],
     "real_estate": [
         "AMT", "PLD", "CCI", "EQIX", "PSA", "SPG", "DLR", "WELL", "O", "EQR", 
-        "ARE", "SBAC", "VTR", "REG", "UDR", "AVB", "MAA"
+        "ARE", "SBAC", "VTR", "REG", "UDR", "AVB", "MAA", "INVH", "VICI", "IRM", 
+        "PEAK", "EXR", "CUBE", "STOR", "WPC", "COLD", "FR", "HSKA", "REXR", 
+        "CONE", "SITC", "SELF", "GMRE", "GOOD", "LAND", "LADR", "SORL"
     ]
 }
