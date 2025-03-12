@@ -1,71 +1,73 @@
-**Data-Driven Performance Ranking of Stocks:**
+**Data-Driven Performance Ranking of Selected Stocks:**
 
-1. **Apple Inc. (AAPL)**
-   - Market Cap: $3.591T
-   - P/E Ratio: 36.11
+1. **Apple Inc. (AAPL):**
+   - Market Cap: $3.317T
+   - P/E Ratio: 35.05
    - EPS: 6.30
    - Dividend Yield: 0.44%
 
-2. **Microsoft Corporation (MSFT)**
-   - Market Cap: $2.924T
-   - P/E Ratio: 31.65
-   - EPS: 12.01
-   - Dividend Yield: 0.84%
+2. **Microsoft Corporation (MSFT):**
+   - Market Cap: $2.828T
+   - P/E Ratio: 30.71
+   - EPS: 12.39
+   - Dividend Yield: 0.87%
 
-3. **Alphabet Inc. (GOOGL)**
-   - Market Cap: $2.13T
-   - P/E Ratio: 21.65
-   - EPS: 7.66
-   - Dividend Yield: 0.46%
+3. **NVIDIA Corporation (NVDA):**
+   - Market Cap: $2.654T
+   - P/E Ratio: 36.99
+   - EPS: 2.94
+   - Dividend Yield: 0.04%
 
-4. **Amazon.com Inc. (AMZN)**
-   - Market Cap: $2.112T
-   - P/E Ratio: 35.24
-   - EPS: 5.52
+4. **Adobe Inc. (ADBE):**
+   - Market Cap: $188.597B
+   - P/E Ratio: 35.09
+   - EPS: 12.36
    - Dividend Yield: N/A
 
-5. **Meta Platforms Inc. (META)**
-   - Market Cap: $1.585T
-   - P/E Ratio: 25.06
-   - EPS: 23.86
-   - Dividend Yield: 0.35%
-
-6. **Intel Corporation (INTC)**
-   - Market Cap: $89.371B
-   - P/E Ratio: N/A
-   - EPS: -4.23
-   - Dividend Yield: 2.24%
-
-7. **Cisco Systems Inc. (CSCO)**
-   - Market Cap: $254.372B
-   - P/E Ratio: 27.22
-   - EPS: 2.28
-   - Dividend Yield: 2.64%
-
-8. **Salesforce.com Inc. (CRM)**
-   - Market Cap: $271.857B
-   - P/E Ratio: 42.91
+5. **Salesforce.com Inc. (CRM):**
+   - Market Cap: $266.245B
+   - P/E Ratio: 43.56
    - EPS: 6.36
    - Dividend Yield: 0.59%
 
-9. **Adobe Inc. (ADBE)**
-   - Market Cap: $195.443B
-   - P/E Ratio: 36.38
-   - EPS: 11.96
-   - Dividend Yield: N/A
+6. **Broadcom Inc. (AVGO):**
+   - Market Cap: $893.79B
+   - P/E Ratio: 88.00
+   - EPS: 2.16
+   - Dividend Yield: 1.28%
 
-10. **Broadcom Inc. (AVGO)**
-    - Market Cap: $916.689B
-    - P/E Ratio: 89.98
-    - EPS: 2.05
-    - Dividend Yield: 1.21%
+7. **Cisco Systems Inc. (CSCO):**
+   - Market Cap: $241.363B
+   - P/E Ratio: 26.61
+   - EPS: 2.28
+   - Dividend Yield: 2.64%
 
-**Insights & Recommendations:**
+8. **Oracle Corporation (ORCL):**
+   - Market Cap: $403.266B
+   - P/E Ratio: 33.85
+   - EPS: 4.26
+   - Dividend Yield: 1.08%
 
-- **Market Cap:** Apple leads the pack with the highest market cap, reflecting its strong position in the market.
-- **P/E Ratio & EPS:** Companies like Microsoft and Alphabet have solid earnings per share and relatively lower P/E ratios, indicating good value for investors.
-- **Dividend Yield:** Intel stands out with a high dividend yield, making it attractive for income investors.
-- **Growth Potential:** Meta Platforms has a high EPS and potential for growth, supported by its lower P/E ratio.
-- **Tech Giants:** Companies like Amazon and Salesforce continue to demonstrate strong performance but may face competition in their respective sectors.
+9. **Intel Corporation (INTC):**
+   - Market Cap: $85.647B
+   - P/E Ratio: N/A
+   - EPS: -4.38
+   - Dividend Yield: 2.24%
 
-**Recommendation:** Based on the data, investors seeking stability may consider Apple and Microsoft for long-term growth, while those interested in dividend income could look into Intel and Cisco. However, thorough research and market analysis are crucial before making investment decisions.
+10. **QUALCOMM Incorporated (QCOM):**
+    - Market Cap: $169.329B
+    - P/E Ratio: 16.52
+    - EPS: 9.27
+    - Dividend Yield: 2.19%
+
+**Insights and Recommendations:**
+- **Apple (AAPL)** stands out with the highest market cap and a relatively balanced P/E ratio, EPS, and dividend yield.
+- **Microsoft (MSFT)** follows closely with solid financial metrics across the board and a strong dividend yield.
+- **NVIDIA (NVDA)** has a high P/E ratio but a low dividend yield, indicating potential growth opportunities.
+- **Adobe (ADBE)** lacks a dividend yield but has strong profitability metrics.
+- **Intel (INTC)** has a negative EPS and no dividend yield, indicating challenges that need to be addressed.
+- **Cisco (CSCO)** and **Oracle (ORCL)** offer attractive dividend yields but may need to focus on improving other financial metrics.
+
+Overall, investors seeking stability and growth may prefer companies like Apple and Microsoft, while those looking for higher risk-reward opportunities may consider NVIDIA. Companies with strong dividend yields like Cisco and Oracle could be appealing to income-focused investors. Intel needs to address its negative earnings and dividend yield to improve investor confidence. 
+
+It's essential for investors to conduct further research, considering industry trends, competitive positioning, and future growth prospects before making investment decisions.

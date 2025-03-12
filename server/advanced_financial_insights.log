@@ -81,3 +81,8 @@ NameError: name 'json_serializable' is not defined
 2025-03-11 18:05:28,814 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
 2025-03-11 18:05:28,816 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
 2025-03-11 18:05:50,409 - INFO: Advanced financial analysis generated successfully
+2025-03-11 18:57:55,604 - INFO: Loaded 229 ticker metrics
+2025-03-11 18:57:56,683 - ERROR: Error generating visualizations: float() argument must be a string or a number, not 'NAType'
+2025-03-11 18:57:56,832 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 18:57:56,834 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
+2025-03-11 18:58:17,656 - INFO: Advanced financial analysis generated successfully
