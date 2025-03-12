@@ -269,3 +269,6 @@
 2025-03-11 18:56:57,691 - WARNING: Metrics summary truncated due to length
 2025-03-11 18:56:57,691 - INFO: Attempting to generate performance_ranking financial insights
 2025-03-11 18:57:07,001 - INFO: Successfully generated performance_ranking insights
+2025-03-11 21:56:46,839 - ERROR: JSON Parsing Error: Expecting property name enclosed in double quotes: line 6626 column 1 (char 182911)
+2025-03-11 21:56:46,845 - INFO: Attempting to generate performance_ranking financial insights
+2025-03-11 21:56:56,842 - INFO: Successfully generated performance_ranking insights

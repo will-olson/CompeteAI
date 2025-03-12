@@ -97,3 +97,44 @@ NameError: name 'json_serializable' is not defined
 2025-03-11 20:18:36,564 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
 2025-03-11 20:18:36,566 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
 2025-03-11 20:19:03,957 - INFO: Advanced financial analysis generated successfully
+2025-03-11 21:58:53,282 - ERROR: Error loading metrics: Expecting property name enclosed in double quotes: line 6626 column 1 (char 182911)
+2025-03-11 21:58:53,283 - ERROR: Error converting to DataFrame: 'Current Price'
+2025-03-11 21:58:53,384 - ERROR: Error in correlation heatmap: 'Market Cap'
+2025-03-11 22:01:46,349 - INFO: Loaded 414 ticker metrics
+2025-03-11 22:01:48,914 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 22:01:48,923 - ERROR: Error exporting key metrics tables: Column 'Momentum Score' has dtype object, cannot use method 'nlargest' with this dtype
+2025-03-11 22:01:48,928 - ERROR: Error in advanced financial analysis: boolean value of NA is ambiguous
+2025-03-11 22:01:48,932 - ERROR: Traceback (most recent call last):
+  File "advanced_financial_analysis.py", line 456, in generate_advanced_analysis
+    self.df['Stock Type'] = self.df.apply(classify_stock_type, axis=1)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/frame.py", line 9423, in apply
+    return op.apply().__finalize__(self, method="apply")
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/apply.py", line 678, in apply
+    return self.apply_standard()
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/apply.py", line 798, in apply_standard
+    results, res_index = self.apply_series_generator()
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/apply.py", line 814, in apply_series_generator
+    results[i] = self.f(v)
+  File "advanced_financial_analysis.py", line 449, in classify_stock_type
+    elif row['Beta'] > 1.5:
+  File "pandas/_libs/missing.pyx", line 388, in pandas._libs.missing.NAType.__bool__
+TypeError: boolean value of NA is ambiguous
+
+2025-03-11 22:20:18,330 - INFO: Loaded 414 ticker metrics
+2025-03-11 22:20:18,343 - INFO: Converted DataFrame: 409 rows retained
+2025-03-11 22:20:20,194 - INFO: Raw data and metrics exported successfully to financial_analysis_data.xlsx
+2025-03-11 22:20:20,206 - ERROR: Critical error in exporting key metrics tables: Invalid character / found in sheet title
+2025-03-11 22:20:20,210 - ERROR: Traceback (most recent call last):
+  File "advanced_financial_analysis.py", line 329, in export_key_metric_tables
+    table.to_excel(writer, sheet_name=sheet_name, index=False)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/generic.py", line 2252, in to_excel
+    formatter.write(
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/io/formats/excel.py", line 940, in write
+    writer._write_cells(
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/io/excel/_openpyxl.py", line 477, in _write_cells
+    wks.title = sheet_name
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/openpyxl/workbook/child.py", line 93, in title
+    raise ValueError(msg)
+ValueError: Invalid character / found in sheet title
+
+2025-03-11 22:20:46,005 - INFO: Advanced financial analysis generated successfully

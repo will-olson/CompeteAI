@@ -71,21 +71,82 @@ class AdvancedFinancialAnalyzer:
                 }
                 data.append(cleaned_metrics)
             
+            # Create DataFrame
             df = pd.DataFrame(data)
             
-         # **Compute additional metrics**
-            df['Momentum Score'] = (df['Current Price'] - df['52 Week Low']) / (df['52 Week High'] - df['52 Week Low'])
-            df['Price to Target Ratio'] = df['Target Price'] / df['Current Price']
-            df['Volume Trend'] = df['Volume'] / df['Avg Volume']
+            # **Compute additional metrics with robust error handling**
+            def safe_momentum_score(row):
+                try:
+                    current_price = row['Current Price']
+                    week_low = row['52 Week Low']
+                    week_high = row['52 Week High']
+                    
+                    # Check for valid numeric values and prevent division by zero
+                    if (pd.notna(current_price) and 
+                        pd.notna(week_low) and 
+                        pd.notna(week_high) and 
+                        week_high != week_low):
+                        return (current_price - week_low) / (week_high - week_low)
+                    return pd.NA
+                except Exception:
+                    return pd.NA
 
-            # **Convert to numeric and drop invalid rows**
-            numeric_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Current Price']
-            df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric, errors='coerce')
-            df = df.dropna(subset=numeric_columns, how='all')
+            def safe_price_to_target_ratio(row):
+                try:
+                    target_price = row['Target Price']
+                    current_price = row['Current Price']
+                    
+                    # Check for valid numeric values and prevent division by zero
+                    if (pd.notna(target_price) and 
+                        pd.notna(current_price) and 
+                        current_price != 0):
+                        return target_price / current_price
+                    return pd.NA
+                except Exception:
+                    return pd.NA
+
+            def safe_volume_trend(row):
+                try:
+                    volume = row['Volume']
+                    avg_volume = row['Avg Volume']
+                    
+                    # Check for valid numeric values and prevent division by zero
+                    if (pd.notna(volume) and 
+                        pd.notna(avg_volume) and 
+                        avg_volume != 0):
+                        return volume / avg_volume
+                    return pd.NA
+                except Exception:
+                    return pd.NA
+
+            # Apply safe calculations
+            df['Momentum Score'] = df.apply(safe_momentum_score, axis=1)
+            df['Price to Target Ratio'] = df.apply(safe_price_to_target_ratio, axis=1)
+            df['Volume Trend'] = df.apply(safe_volume_trend, axis=1)
+
+            # **Convert to numeric with comprehensive error handling**
+            numeric_columns = [
+                'Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 
+                'Current Price', 'Momentum Score', 'Price to Target Ratio', 'Volume Trend'
+            ]
+            
+            # Comprehensive numeric conversion
+            for col in numeric_columns:
+                df[col] = pd.to_numeric(df[col], errors='coerce')
+
+            # More flexible row filtering
+            # Keep rows that have at least one valid numeric value in critical columns
+            critical_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Current Price']
+            df = df[df[critical_columns].notna().any(axis=1)]
+            
+            # Optional: Log the number of rows after filtering
+            logger.info(f"Converted DataFrame: {len(df)} rows retained")
             
             return df
+        
         except Exception as e:
-            logger.error(f"Error converting to DataFrame: {e}")
+            logger.error(f"Comprehensive error in converting to DataFrame: {e}")
+            logger.error(traceback.format_exc())  # Add full traceback for debugging
             return pd.DataFrame()
         
     def get_top_bottom_stocks(self):
@@ -199,29 +260,97 @@ class AdvancedFinancialAnalyzer:
             logger.error(f"Error exporting raw data: {e}")
 
     def export_key_metric_tables(self):
-            """
-            Export detailed tables for top/bottom performers in key metrics to an Excel sheet
-            """
-            try:
-                # Get the top/bottom performers for various metrics
-                top_performers = {
-                    "Top 5 P/E Ratio Stocks": self.df.nlargest(5, "P/E Ratio")[["Ticker", "P/E Ratio", "EPS", "Market Cap"]],
-                    "Bottom 5 P/E Ratio Stocks": self.df.nsmallest(5, "P/E Ratio")[["Ticker", "P/E Ratio", "EPS", "Market Cap"]],
-                    "Top 5 Momentum Stocks": self.df.nlargest(5, "Momentum Score")[["Ticker", "Momentum Score", "Current Price"]],
-                    "Bottom 5 Momentum Stocks": self.df.nsmallest(5, "Momentum Score")[["Ticker", "Momentum Score", "Current Price"]],
-                    "Most Volatile Stocks": self.df.nlargest(5, "Beta")[["Ticker", "Beta", "Market Cap"]],
-                    "Stable Stocks": self.df.nsmallest(5, "Beta")[["Ticker", "Beta", "Market Cap"]],
-                }
+        """
+        Export detailed tables for top/bottom performers in key metrics to an Excel sheet
+        with enhanced error handling and additional insights
+        """
+        try:
+            # Ensure numeric conversion and handle potential NA values
+            metrics_to_convert = ['P/E Ratio', 'Momentum Score', 'Beta', 'EPS', 'Market Cap', 'Current Price']
+            for metric in metrics_to_convert:
+                self.df[metric] = pd.to_numeric(self.df[metric], errors='coerce')
 
-                # Create an Excel writer to save the tables
-                with pd.ExcelWriter('key_metrics_analysis.xlsx') as writer:
-                    for sheet_name, table in top_performers.items():
+            # Function to get top/bottom performers with error handling
+            def get_performers(df, metric, n=5, bottom=False):
+                try:
+                    # Filter out NA values before ranking
+                    valid_data = df[df[metric].notna()]
+                    
+                    # Select top or bottom performers
+                    if bottom:
+                        performers = valid_data.nsmallest(n, metric)
+                    else:
+                        performers = valid_data.nlargest(n, metric)
+                    
+                    # Select and format columns
+                    columns = ["Ticker", metric, "EPS", "Market Cap"]
+                    return performers[columns]
+                except Exception as e:
+                    logger.warning(f"Error getting {metric} {'bottom' if bottom else 'top'} performers: {e}")
+                    return pd.DataFrame()
+
+            # Comprehensive top/bottom performers analysis
+            top_performers = {
+                "Top 5 P/E Ratio Stocks": get_performers(self.df, "P/E Ratio"),
+                "Bottom 5 P/E Ratio Stocks": get_performers(self.df, "P/E Ratio", bottom=True),
+                "Top 5 Momentum Stocks": get_performers(self.df, "Momentum Score"),
+                "Bottom 5 Momentum Stocks": get_performers(self.df, "Momentum Score", bottom=True),
+                "Most Volatile Stocks": get_performers(self.df, "Beta"),
+                "Most Stable Stocks": get_performers(self.df, "Beta", bottom=True),
+                "Highest EPS Stocks": get_performers(self.df, "EPS"),
+                "Lowest EPS Stocks": get_performers(self.df, "EPS", bottom=True)
+            }
+
+            # Additional aggregate insights
+            insights = {
+                "Market Overview": pd.DataFrame({
+                    "Metric": [
+                        "Total Stocks", 
+                        "Avg P/E Ratio", 
+                        "Median Momentum Score", 
+                        "Avg Market Cap", 
+                        "Median Beta"
+                    ],
+                    "Value": [
+                        len(self.df),
+                        self.df['P/E Ratio'].mean(),
+                        self.df['Momentum Score'].median(),
+                        self.df['Market Cap'].mean(),
+                        self.df['Beta'].median()
+                    ]
+                })
+            }
+
+            # Create an Excel writer with multiple sheets
+            with pd.ExcelWriter('comprehensive_market_analysis.xlsx') as writer:
+                # Write performer tables
+                for sheet_name, table in top_performers.items():
+                    if not table.empty:
                         table.to_excel(writer, sheet_name=sheet_name, index=False)
                 
-                logger.info("Key metrics tables exported successfully to key_metrics_analysis.xlsx")
+                # Write insights sheet
+                for sheet_name, table in insights.items():
+                    table.to_excel(writer, sheet_name=sheet_name, index=False)
+                
+                # Optional: Add a summary statistics sheet
+                summary_stats = self.df[metrics_to_convert].describe()
+                summary_stats.to_excel(writer, sheet_name='Summary Statistics')
 
-            except Exception as e:
-                logger.error(f"Error exporting key metrics tables: {e}")
+            # Generate a detailed log of the export
+            logger.info("Comprehensive market analysis exported successfully")
+            logger.info(f"Total stocks analyzed: {len(self.df)}")
+            logger.info(f"Metrics exported: {', '.join(metrics_to_convert)}")
+
+            # Optional: Return some basic statistics for further use
+            return {
+                "total_stocks": len(self.df),
+                "metrics_exported": metrics_to_convert
+            }
+
+        except Exception as e:
+            logger.error(f"Critical error in exporting key metrics tables: {e}")
+            logger.error(traceback.format_exc())  # Full traceback for debugging
+            return {}
 
     def generate_visualizations(self):
         """
@@ -437,18 +566,21 @@ class AdvancedFinancialAnalyzer:
                     errors='coerce'
                 )
 
-                # Enhanced Stock Type Classification
                 def classify_stock_type(row):
+                    # Add explicit NA handling
+                    if pd.isna(row['Beta']):
+                        return 'Unclassified'
+                    
                     if pd.isna(row['Market Cap']):
                         return 'Unclassified'
                     
                     if row['Market Cap'] > 100_000_000_000:
                         return 'Mega Cap'
-                    elif row['Dividend Yield'] > 3:
+                    elif pd.notna(row['Dividend Yield']) and row['Dividend Yield'] > 3:
                         return 'High Yield'
                     elif row['Beta'] > 1.5:
                         return 'High Volatility'
-                    elif row['EPS'] < 0:
+                    elif pd.notna(row['EPS']) and row['EPS'] < 0:
                         return 'Speculative'
                     else:
                         return 'Stable'
