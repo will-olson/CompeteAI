@@ -41,3 +41,38 @@
 2025-03-12 01:20:42,525 - INFO: Comprehensive financial analysis completed. Output saved to financial_analysis_output/comprehensive_financial_analysis.xlsx
 2025-03-12 01:20:44,273 - INFO: Basic visualizations generated successfully
 2025-03-12 01:21:05,490 - INFO: Advanced financial analysis generated successfully
+2025-03-16 11:44:23,623 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-16 11:44:23,624 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-16 11:44:23,624 - INFO:  * Restarting with stat
+2025-03-16 11:44:23,970 - WARNING:  * Debugger is active!
+2025-03-16 11:44:23,980 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 13:06:48,556 - INFO: 127.0.0.1 - - [16/Mar/2025 13:06:48] "[33mGET /api/churn-prediction HTTP/1.1[0m" 404 -
+2025-03-16 13:06:48,557 - INFO: 127.0.0.1 - - [16/Mar/2025 13:06:48] "[33mGET /api/user-journey HTTP/1.1[0m" 404 -
+2025-03-16 13:06:48,562 - INFO: 127.0.0.1 - - [16/Mar/2025 13:06:48] "[33mGET /api/churn-prediction HTTP/1.1[0m" 404 -
+2025-03-16 13:06:48,568 - INFO: 127.0.0.1 - - [16/Mar/2025 13:06:48] "[33mGET /api/user-journey HTTP/1.1[0m" 404 -
+2025-03-16 13:06:59,490 - INFO: 127.0.0.1 - - [16/Mar/2025 13:06:59] "[33mGET /api/segments HTTP/1.1[0m" 404 -
+2025-03-16 13:06:59,509 - INFO: 127.0.0.1 - - [16/Mar/2025 13:06:59] "[33mGET /api/segments HTTP/1.1[0m" 404 -
+2025-03-16 13:07:02,282 - INFO: 127.0.0.1 - - [16/Mar/2025 13:07:02] "[33mGET /api/segments HTTP/1.1[0m" 404 -
+2025-03-16 13:07:02,290 - INFO: 127.0.0.1 - - [16/Mar/2025 13:07:02] "[33mGET /api/segments HTTP/1.1[0m" 404 -
+2025-03-16 13:11:34,016 - INFO: 127.0.0.1 - - [16/Mar/2025 13:11:34] "[33mGET /api/segments HTTP/1.1[0m" 404 -
+2025-03-16 13:11:34,019 - INFO: 127.0.0.1 - - [16/Mar/2025 13:11:34] "[33mGET /api/segments HTTP/1.1[0m" 404 -
+2025-03-16 15:53:19,268 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-16 15:53:19,268 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-16 15:53:19,273 - INFO:  * Restarting with stat
+2025-03-16 15:53:19,775 - WARNING:  * Debugger is active!
+2025-03-16 15:53:19,786 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 16:09:36,468 - INFO: 127.0.0.1 - - [16/Mar/2025 16:09:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-16 16:10:03,910 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-03-16 16:10:03,912 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:03] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 16:10:07,014 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-03-16 16:10:07,015 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:07] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 16:10:18,396 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-03-16 16:10:18,396 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:18] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 16:10:21,577 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-03-16 16:10:21,577 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:21] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 16:10:39,733 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-03-16 16:10:39,734 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:39] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 16:10:48,891 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-03-16 16:10:48,892 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:48] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
