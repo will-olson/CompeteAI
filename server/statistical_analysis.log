@@ -80,3 +80,127 @@
 2025-03-16 16:12:00,035 - INFO: 127.0.0.1 - - [16/Mar/2025 16:12:00] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
 2025-03-16 17:09:39,574 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
 2025-03-16 17:09:39,575 - INFO: 127.0.0.1 - - [16/Mar/2025 17:09:39] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 17:31:09,811 - INFO: 127.0.0.1 - - [16/Mar/2025 17:31:09] "[33mGET /api/financial-datasets HTTP/1.1[0m" 404 -
+2025-03-16 17:32:15,221 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:32:15,400 - INFO:  * Restarting with stat
+2025-03-16 17:32:16,362 - WARNING:  * Debugger is active!
+2025-03-16 17:32:16,375 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:32:18,434 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:32:18,488 - INFO:  * Restarting with stat
+2025-03-16 17:32:19,068 - WARNING:  * Debugger is active!
+2025-03-16 17:32:19,074 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:32:20,111 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:32:20,156 - INFO:  * Restarting with stat
+2025-03-16 17:32:20,629 - WARNING:  * Debugger is active!
+2025-03-16 17:32:20,633 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:33:20,104 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:33:20,157 - INFO:  * Restarting with stat
+2025-03-16 17:33:20,917 - WARNING:  * Debugger is active!
+2025-03-16 17:33:20,935 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:33:23,024 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:33:23,070 - INFO:  * Restarting with stat
+2025-03-16 17:33:23,531 - WARNING:  * Debugger is active!
+2025-03-16 17:33:23,539 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:33:27,642 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:33:27,720 - INFO:  * Restarting with stat
+2025-03-16 17:33:28,224 - WARNING:  * Debugger is active!
+2025-03-16 17:33:28,228 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:33:34,703 - INFO: 127.0.0.1 - - [16/Mar/2025 17:33:34] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:33:34,716 - INFO: 127.0.0.1 - - [16/Mar/2025 17:33:34] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:34:32,798 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:34:32,871 - INFO:  * Restarting with stat
+2025-03-16 17:34:33,565 - WARNING:  * Debugger is active!
+2025-03-16 17:34:33,574 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:34:47,983 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:34:48,050 - INFO:  * Restarting with stat
+2025-03-16 17:34:48,711 - WARNING:  * Debugger is active!
+2025-03-16 17:34:48,715 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:34:54,332 - INFO: 127.0.0.1 - - [16/Mar/2025 17:34:54] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:34:54,338 - INFO: 127.0.0.1 - - [16/Mar/2025 17:34:54] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:35:15,149 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-16 17:35:15,149 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-16 17:35:15,150 - INFO:  * Restarting with stat
+2025-03-16 17:35:15,503 - WARNING:  * Debugger is active!
+2025-03-16 17:35:15,510 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:35:24,324 - INFO: 127.0.0.1 - - [16/Mar/2025 17:35:24] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:35:24,334 - INFO: 127.0.0.1 - - [16/Mar/2025 17:35:24] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:38:17,438 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:38:17,518 - INFO:  * Restarting with stat
+2025-03-16 17:38:18,141 - WARNING:  * Debugger is active!
+2025-03-16 17:38:18,149 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:38:25,180 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:38:25,181 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:38:25,181 - ERROR: Error listing datasets: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-16 17:38:25,198 - INFO: 127.0.0.1 - - [16/Mar/2025 17:38:25] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:38:25,204 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:38:25,205 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:38:25,205 - ERROR: Error listing datasets: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-16 17:38:25,208 - INFO: 127.0.0.1 - - [16/Mar/2025 17:38:25] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:39:01,280 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:39:01,350 - INFO:  * Restarting with stat
+2025-03-16 17:39:02,097 - WARNING:  * Debugger is active!
+2025-03-16 17:39:02,112 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:39:05,211 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:39:05,284 - INFO:  * Restarting with stat
+2025-03-16 17:39:13,033 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-16 17:39:13,033 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-16 17:39:13,034 - INFO:  * Restarting with stat
+2025-03-16 17:39:13,380 - WARNING:  * Debugger is active!
+2025-03-16 17:39:13,384 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:39:28,771 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:39:28,771 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:39:28,772 - ERROR: Error listing datasets: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-16 17:39:28,772 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 224, in list_financial_datasets
+    all_files = os.listdir(full_server_path)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+
+2025-03-16 17:39:28,772 - INFO: 127.0.0.1 - - [16/Mar/2025 17:39:28] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:39:28,777 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:39:28,777 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:39:28,777 - ERROR: Error listing datasets: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-16 17:39:28,777 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 224, in list_financial_datasets
+    all_files = os.listdir(full_server_path)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+
+2025-03-16 17:39:28,777 - INFO: 127.0.0.1 - - [16/Mar/2025 17:39:28] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-16 17:42:44,974 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:42:45,042 - INFO:  * Restarting with stat
+2025-03-16 17:42:45,628 - WARNING:  * Debugger is active!
+2025-03-16 17:42:45,638 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:42:52,849 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:42:52,914 - INFO:  * Restarting with stat
+2025-03-16 17:42:53,488 - WARNING:  * Debugger is active!
+2025-03-16 17:42:53,492 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:42:54,520 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 17:42:54,601 - INFO:  * Restarting with stat
+2025-03-16 17:42:54,948 - WARNING:  * Debugger is active!
+2025-03-16 17:42:54,953 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 17:43:00,715 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:43:00,716 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:43:00,716 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', 'tickers.json', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-16 17:43:00,716 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:43:00,716 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:43:00,716 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-16 17:43:00,716 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-16 17:43:00,717 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-16 17:43:00,717 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-16 17:43:00,717 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-16 17:43:00,718 - INFO: 127.0.0.1 - - [16/Mar/2025 17:43:00] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-16 17:43:00,735 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:43:00,736 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-16 17:43:00,736 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', 'tickers.json', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-16 17:43:00,736 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:43:00,736 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-16 17:43:00,736 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-16 17:43:00,736 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-16 17:43:00,736 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-16 17:43:00,736 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-16 17:43:00,736 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-16 17:43:00,737 - INFO: 127.0.0.1 - - [16/Mar/2025 17:43:00] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-16 17:43:04,768 - INFO: 127.0.0.1 - - [16/Mar/2025 17:43:04] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 17:43:06,892 - INFO: 127.0.0.1 - - [16/Mar/2025 17:43:06] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 17:43:10,774 - INFO: 127.0.0.1 - - [16/Mar/2025 17:43:10] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -

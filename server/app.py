@@ -7,6 +7,7 @@ import json
 import logging
 from dotenv import load_dotenv
 from statistical_analysis import AdvancedStatisticalAnalyzer
+import traceback
 
 # Load environment variables
 load_dotenv()
@@ -104,35 +105,48 @@ class FinancialAnalysisService:
             'market_cap_eps_bubble': os.path.join(base_path, 'market_cap_eps_bubble.png')
         }
 
-# Flask Routes
 @app.route('/api/financial-analysis', methods=['POST'])
 def perform_financial_analysis():
     """
-    Endpoint for performing financial analysis
+    Perform financial analysis on a specific dataset
     """
     try:
         # Get request data
-        data = request.json or {}
+        data = request.json
+        data_source = data.get('data_source')
         analysis_type = data.get('type', 'comprehensive')
         
         # Validate data source
-        data_source = data.get('data_source')
         if not data_source:
             return jsonify({
-                'error': 'No data source provided',
-                'message': 'Please upload a valid CSV file or provide a data source'
+                'error': 'No data source provided'
             }), 400
         
-        # Create analysis service
-        analysis_service = FinancialAnalysisService(data_source)
+        # Load dataset
+        import pandas as pd
+        import os
         
-        # Perform analysis
-        results = analysis_service.generate_analysis(analysis_type)
+        datasets_dir = 'server'  # Adjust path as needed
+        file_path = os.path.join(datasets_dir, data_source)
+        
+        # Load JSON into DataFrame
+        df = pd.read_json(file_path)
+        
+        # Initialize analyzer
+        from statistical_analysis import AdvancedStatisticalAnalyzer
+        analyzer = AdvancedStatisticalAnalyzer(df)
+        
+        # Perform analysis based on type
+        if analysis_type == 'comprehensive':
+            results = analyzer.generate_comprehensive_report()
+        elif analysis_type == 'descriptive':
+            results = analyzer.descriptive_statistics()
+        elif analysis_type == 'advanced':
+            results = analyzer.generate_advanced_analysis()
         
         return jsonify(results)
     
     except Exception as e:
-        logger.error(f"Financial analysis error: {e}")
         return jsonify({
             'error': 'Analysis failed',
             'message': str(e)
@@ -188,6 +202,68 @@ def download_report(report_type):
         logger.error(f"Report download error: {e}")
         return jsonify({
             'error': 'Could not download report',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/financial-datasets', methods=['GET'])
+def list_financial_datasets():
+    """
+    List available financial datasets
+    """
+    try:
+        # Get current working directory
+        current_dir = os.getcwd()
+        logger.info(f"Current working directory: {current_dir}")
+
+        # Potential directories to search
+        search_paths = [
+            current_dir,
+            os.path.join(current_dir, 'server'),
+            os.path.join(current_dir, 'data'),
+            os.path.join(current_dir, 'server', 'data')
+        ]
+
+        # Collect all datasets
+        datasets = []
+
+        # Search through potential paths
+        for search_path in search_paths:
+            logger.info(f"Checking directory: {search_path}")
+            
+            try:
+                # List files in the directory
+                all_files = os.listdir(search_path)
+                logger.info(f"Files in {search_path}: {all_files}")
+
+                # Find JSON files starting with financial_metrics
+                path_datasets = [
+                    f for f in all_files 
+                    if f.endswith('.json') and f.startswith('financial_metrics')
+                ]
+
+                # Add found datasets with full path
+                datasets.extend([
+                    os.path.join(search_path, dataset) for dataset in path_datasets
+                ])
+            
+            except FileNotFoundError:
+                logger.warning(f"Directory not found: {search_path}")
+            except Exception as dir_error:
+                logger.error(f"Error searching {search_path}: {dir_error}")
+
+        # Log final datasets
+        logger.info(f"Detected datasets: {datasets}")
+
+        # Return just the filenames, not full paths
+        dataset_names = [os.path.basename(dataset) for dataset in datasets]
+
+        return jsonify(dataset_names)
+    
+    except Exception as e:
+        logger.error(f"Error listing datasets: {e}")
+        logger.error(traceback.format_exc())
+        return jsonify({
+            'error': 'Could not list datasets',
             'message': str(e)
         }), 500
 
