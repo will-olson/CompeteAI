@@ -76,3 +76,5 @@
 2025-03-16 16:10:39,734 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:39] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
 2025-03-16 16:10:48,891 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
 2025-03-16 16:10:48,892 - INFO: 127.0.0.1 - - [16/Mar/2025 16:10:48] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 16:12:00,035 - ERROR: Financial analysis error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-03-16 16:12:00,035 - INFO: 127.0.0.1 - - [16/Mar/2025 16:12:00] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
