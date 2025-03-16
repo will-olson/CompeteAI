@@ -3,6 +3,7 @@ server/.env
 # Node.js dependencies
 client/node_modules/
 client/node_modules/.cache/
+client/.cache/
 client/build/
 client/.env.local
 client/.env.development.local
