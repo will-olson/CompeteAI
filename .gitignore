@@ -3,6 +3,8 @@ server/.env
 # Node.js dependencies
 client/node_modules/
 client/node_modules/.cache/
+client/node_modules/.cache/*
+*.pack
 client/.cache/
 client/build/
 client/.env.local
