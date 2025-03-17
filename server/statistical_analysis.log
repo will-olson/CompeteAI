@@ -6722,3 +6722,880 @@ UnboundLocalError: local variable 'analysis_data' referenced before assignment
 2025-03-17 10:20:15,823 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
 2025-03-17 10:20:42,269 - INFO: Advanced financial analysis generated successfully
 2025-03-17 10:20:42,273 - INFO: 127.0.0.1 - - [17/Mar/2025 10:20:42] "POST /api/financial-analysis HTTP/1.1" 200 -
+2025-03-17 10:29:58,102 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:29:58,103 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:29:58,103 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:29:58,103 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:29:58,104 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:29:58,106 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:29:58,106 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:29:58,106 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:29:58,106 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:29:58,106 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:29:58,112 - INFO: 127.0.0.1 - - [17/Mar/2025 10:29:58] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:29:58,118 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:29:58,119 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:29:58,119 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:29:58,119 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:29:58,119 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:29:58,119 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:29:58,119 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:29:58,120 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:29:58,120 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:29:58,120 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:29:58,121 - INFO: 127.0.0.1 - - [17/Mar/2025 10:29:58] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:30:19,022 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:30:19,023 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:30:19,024 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:30:19,024 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:30:19,024 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:30:19,024 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:30:19,024 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:30:19,024 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:30:19,024 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:30:19,025 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:30:19,030 - INFO: 127.0.0.1 - - [17/Mar/2025 10:30:19] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:30:19,039 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:30:19,039 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:30:19,039 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:30:19,039 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:30:19,039 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:30:19,039 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:30:19,040 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:30:19,040 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:30:19,040 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:30:19,048 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:30:19,049 - INFO: 127.0.0.1 - - [17/Mar/2025 10:30:19] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:31:40,124 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:31:40,124 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:31:40,125 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:31:40,125 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:31:40,125 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:31:40,125 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:31:40,125 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:31:40,125 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:31:40,125 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:31:40,125 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:31:40,126 - INFO: 127.0.0.1 - - [17/Mar/2025 10:31:40] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:31:40,131 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:31:40,131 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:31:40,131 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:31:40,132 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:31:40,132 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:31:40,132 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:31:40,132 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:31:40,132 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:31:40,132 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:31:40,132 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:31:40,133 - INFO: 127.0.0.1 - - [17/Mar/2025 10:31:40] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:31:42,359 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-17 10:31:42,359 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:31:42,359 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:32:10,175 - INFO: Advanced financial analysis generated successfully
+2025-03-17 10:32:10,179 - INFO: 127.0.0.1 - - [17/Mar/2025 10:32:10] "POST /api/financial-analysis HTTP/1.1" 200 -
+2025-03-17 10:35:12,942 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:35:12,942 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:35:12,943 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:35:12,943 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:35:12,943 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:35:12,943 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:35:12,943 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:35:12,943 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:35:12,943 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:35:12,943 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:35:12,944 - INFO: 127.0.0.1 - - [17/Mar/2025 10:35:12] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:35:12,947 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:35:12,947 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:35:12,947 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:35:12,947 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:35:12,947 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:35:12,947 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:35:12,947 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:35:12,947 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:35:12,947 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:35:12,947 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:35:12,947 - INFO: 127.0.0.1 - - [17/Mar/2025 10:35:12] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:36:55,012 - INFO: 127.0.0.1 - - [17/Mar/2025 10:36:55] "[33mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 404 -
+2025-03-17 10:39:18,098 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:39:18,265 - INFO:  * Restarting with stat
+2025-03-17 10:39:18,915 - WARNING:  * Debugger is active!
+2025-03-17 10:39:18,922 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:39:19,937 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:39:20,008 - INFO:  * Restarting with stat
+2025-03-17 10:39:20,362 - WARNING:  * Debugger is active!
+2025-03-17 10:39:20,367 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:39:31,493 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:39:31,569 - INFO:  * Restarting with stat
+2025-03-17 10:39:32,101 - WARNING:  * Debugger is active!
+2025-03-17 10:39:32,105 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:41:13,290 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:41:13,368 - INFO:  * Restarting with stat
+2025-03-17 10:41:54,329 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-17 10:41:54,330 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-17 10:41:54,331 - INFO:  * Restarting with stat
+2025-03-17 10:41:54,651 - WARNING:  * Debugger is active!
+2025-03-17 10:41:54,657 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:42:07,869 - INFO: Request: GET http://localhost:5000/api/financial-datasets
+2025-03-17 10:42:07,879 - INFO: Headers: X-Forwarded-Host: localhost:3000
+X-Forwarded-Proto: http
+X-Forwarded-Port: 3000
+X-Forwarded-For: 127.0.0.1
+Cookie: ajs_anonymous_id=%228960a537-f969-4526-a20c-d7a5ecf4fdde%22
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br, zstd
+Referer: http://localhost:3000/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua: "Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"
+Accept: application/json, text/plain, */*
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+Sec-Ch-Ua-Platform: "macOS"
+Connection: close
+Host: localhost:5000
+
+
+2025-03-17 10:42:07,880 - INFO: Body: b''
+2025-03-17 10:42:07,880 - ERROR: Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-03-17 10:42:07,904 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+2025-03-17 10:42:07,908 - INFO: 127.0.0.1 - - [17/Mar/2025 10:42:07] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-17 10:42:07,915 - INFO: Request: GET http://localhost:5000/api/financial-datasets
+2025-03-17 10:42:07,915 - INFO: Headers: X-Forwarded-Host: localhost:3000
+X-Forwarded-Proto: http
+X-Forwarded-Port: 3000
+X-Forwarded-For: 127.0.0.1
+Cookie: ajs_anonymous_id=%228960a537-f969-4526-a20c-d7a5ecf4fdde%22
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br, zstd
+Referer: http://localhost:3000/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua: "Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"
+Accept: application/json, text/plain, */*
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+Sec-Ch-Ua-Platform: "macOS"
+Connection: close
+Host: localhost:5000
+
+
+2025-03-17 10:42:07,915 - INFO: Body: b''
+2025-03-17 10:42:07,915 - ERROR: Unhandled Exception: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-03-17 10:42:07,916 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+2025-03-17 10:42:07,916 - INFO: 127.0.0.1 - - [17/Mar/2025 10:42:07] "[35m[1mGET /api/financial-datasets HTTP/1.1[0m" 500 -
+2025-03-17 10:42:15,686 - INFO: Request: POST http://localhost:5000/api/financial-analysis/visual-insights
+2025-03-17 10:42:15,686 - INFO: Headers: X-Forwarded-Host: localhost:3000
+X-Forwarded-Proto: http
+X-Forwarded-Port: 3000
+X-Forwarded-For: 127.0.0.1
+Cookie: ajs_anonymous_id=%228960a537-f969-4526-a20c-d7a5ecf4fdde%22
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br, zstd
+Referer: http://localhost:3000/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Origin: http://localhost:5000
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua: "Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"
+Accept: application/json, text/plain, */*
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+Sec-Ch-Ua-Platform: "macOS"
+Content-Length: 0
+Connection: close
+Host: localhost:5000
+
+
+2025-03-17 10:42:15,686 - INFO: Body: b''
+2025-03-17 10:42:15,690 - ERROR: Unhandled Exception: Error 61 connecting to localhost:6379. Connection refused.
+2025-03-17 10:42:15,694 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 42, in wrapper
+    cached_result = redis_client.get(cache_key)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/Users/willolson/.pyenv/versions/3.8.13/lib/python3.8/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 61 connecting to localhost:6379. Connection refused.
+
+2025-03-17 10:42:15,695 - INFO: 127.0.0.1 - - [17/Mar/2025 10:42:15] "[35m[1mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 500 -
+2025-03-17 10:42:25,004 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:42:25,091 - INFO:  * Restarting with stat
+2025-03-17 10:42:25,607 - WARNING:  * Debugger is active!
+2025-03-17 10:42:25,615 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:42:26,806 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:42:26,806 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:42:26,806 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:42:26,806 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:42:26,806 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:42:26,807 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:42:26,807 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:42:26,807 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:42:26,807 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:42:26,807 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:42:26,808 - INFO: 127.0.0.1 - - [17/Mar/2025 10:42:26] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:42:26,818 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:42:26,818 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:42:26,818 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:42:26,818 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:42:26,818 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:42:26,818 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:42:26,819 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:42:26,819 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:42:26,819 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:42:26,819 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:42:26,819 - INFO: 127.0.0.1 - - [17/Mar/2025 10:42:26] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:46:18,234 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:46:18,511 - INFO:  * Restarting with stat
+2025-03-17 10:46:19,388 - WARNING:  * Debugger is active!
+2025-03-17 10:46:19,393 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:46:28,135 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-17 10:46:28,136 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/data'
+2025-03-17 10:46:28,136 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server/data'
+2025-03-17 10:46:28,137 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:28] "[33mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 404 -
+2025-03-17 10:46:30,529 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:30,529 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:30,529 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:46:30,529 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:30,529 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:30,529 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:30,529 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:30,529 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:30,530 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:30,530 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:46:30,532 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:30] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:46:30,537 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:30,537 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:30,538 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:46:30,538 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:30,538 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:30,538 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:30,538 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:30,538 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:30,538 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:30,538 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:46:30,539 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:30] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:46:31,687 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-17 10:46:31,688 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/data'
+2025-03-17 10:46:31,688 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server/data'
+2025-03-17 10:46:31,688 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:31] "[33mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 404 -
+2025-03-17 10:46:43,843 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-17 10:46:43,843 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-17 10:46:43,844 - INFO:  * Restarting with stat
+2025-03-17 10:46:44,239 - WARNING:  * Debugger is active!
+2025-03-17 10:46:44,245 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:46:46,407 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:46,407 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:46,407 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:46:46,407 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:46,407 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:46,408 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:46,408 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:46,408 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:46,408 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:46,408 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:46:46,409 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:46] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:46:46,414 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:46,414 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:46:46,415 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:46:46,415 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:46,415 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:46:46,415 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:46,415 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:46:46,415 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:46,415 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:46:46,415 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:46:46,416 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:46] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:46:48,380 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-17 10:46:48,380 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/data'
+2025-03-17 10:46:48,380 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server/data'
+2025-03-17 10:46:48,381 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:48] "[33mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 404 -
+2025-03-17 10:46:50,523 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server'
+2025-03-17 10:46:50,523 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/data'
+2025-03-17 10:46:50,523 - WARNING: Error searching path /Users/willolson/Development/StockMktAI/server/server/data: [Errno 2] No such file or directory: '/Users/willolson/Development/StockMktAI/server/server/data'
+2025-03-17 10:46:50,524 - INFO: 127.0.0.1 - - [17/Mar/2025 10:46:50] "[33mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 404 -
+2025-03-17 10:50:04,519 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:50:04,594 - INFO:  * Restarting with stat
+2025-03-17 10:50:05,189 - WARNING:  * Debugger is active!
+2025-03-17 10:50:05,195 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:50:34,564 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-17 10:50:34,564 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-17 10:50:34,565 - INFO:  * Restarting with stat
+2025-03-17 10:50:34,908 - WARNING:  * Debugger is active!
+2025-03-17 10:50:34,914 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:50:44,421 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:50:44,422 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:50:44,423 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:50:44,423 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:50:44,426 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:50:44,426 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:50:44,427 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:50:44,427 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:50:44,427 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:50:44,427 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:50:44,428 - INFO: 127.0.0.1 - - [17/Mar/2025 10:50:44] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:50:44,432 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:50:44,433 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:50:44,433 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:50:44,433 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:50:44,433 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:50:44,433 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:50:44,433 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:50:44,433 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:50:44,434 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:50:44,434 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:50:44,436 - INFO: 127.0.0.1 - - [17/Mar/2025 10:50:44] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:50:46,141 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:50:46,141 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:50:46,465 - ERROR: Visual insights generation error: name 'np' is not defined
+2025-03-17 10:50:46,466 - INFO: 127.0.0.1 - - [17/Mar/2025 10:50:46] "[35m[1mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 500 -
+2025-03-17 10:51:01,108 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:51:01,110 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:51:01,137 - ERROR: Visual insights generation error: name 'np' is not defined
+2025-03-17 10:51:01,138 - INFO: 127.0.0.1 - - [17/Mar/2025 10:51:01] "[35m[1mPOST /api/financial-analysis/visual-insights HTTP/1.1[0m" 500 -
+2025-03-17 10:52:05,971 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:52:06,096 - INFO:  * Restarting with stat
+2025-03-17 10:52:06,598 - WARNING:  * Debugger is active!
+2025-03-17 10:52:06,602 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:52:11,675 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-17 10:52:11,751 - INFO:  * Restarting with stat
+2025-03-17 10:53:19,262 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-17 10:53:19,263 - INFO: [33mPress CTRL+C to quit[0m
+2025-03-17 10:53:19,264 - INFO:  * Restarting with stat
+2025-03-17 10:53:19,685 - WARNING:  * Debugger is active!
+2025-03-17 10:53:19,689 - INFO:  * Debugger PIN: 297-482-426
+2025-03-17 10:53:27,991 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:53:27,991 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:53:27,991 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:53:27,991 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:53:27,992 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:53:27,992 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:53:27,992 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:53:27,992 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:53:27,992 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:53:27,992 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:53:27,992 - INFO: 127.0.0.1 - - [17/Mar/2025 10:53:27] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:53:27,997 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:53:27,997 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:53:27,997 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 10:53:27,997 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:53:27,997 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 10:53:27,998 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:53:27,998 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 10:53:27,998 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:53:27,998 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 10:53:27,998 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 10:53:27,998 - INFO: 127.0.0.1 - - [17/Mar/2025 10:53:27] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 10:53:29,863 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:53:29,863 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:53:30,205 - INFO: 127.0.0.1 - - [17/Mar/2025 10:53:30] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -
+2025-03-17 10:56:25,040 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:56:25,041 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:56:25,089 - INFO: 127.0.0.1 - - [17/Mar/2025 10:56:25] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -
+2025-03-17 10:58:27,851 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-17 10:58:27,852 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:58:27,852 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:58:27,874 - ERROR: Analysis generation error: Unsupported analysis type: visual
+2025-03-17 10:58:27,875 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 265, in perform_financial_analysis
+    raise ValueError(f"Unsupported analysis type: {analysis_type}")
+ValueError: Unsupported analysis type: visual
+
+2025-03-17 10:58:27,876 - INFO: 127.0.0.1 - - [17/Mar/2025 10:58:27] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-17 10:59:28,986 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 10:59:28,988 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 10:59:29,019 - INFO: 127.0.0.1 - - [17/Mar/2025 10:59:29] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -
+2025-03-17 11:03:12,438 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-17 11:03:12,439 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 11:03:12,439 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 11:03:12,460 - ERROR: Analysis generation error: Unsupported analysis type: visual
+2025-03-17 11:03:12,461 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 265, in perform_financial_analysis
+    raise ValueError(f"Unsupported analysis type: {analysis_type}")
+ValueError: Unsupported analysis type: visual
+
+2025-03-17 11:03:12,461 - INFO: 127.0.0.1 - - [17/Mar/2025 11:03:12] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-17 11:08:40,598 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:40,598 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:40,598 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:08:40,599 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:40,599 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:40,599 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:40,599 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:40,599 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:40,599 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:40,599 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:08:40,599 - INFO: 127.0.0.1 - - [17/Mar/2025 11:08:40] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:08:40,610 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:40,610 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:40,610 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:08:40,610 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:40,610 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:40,610 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:40,610 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:40,610 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:40,610 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:40,610 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:08:40,614 - INFO: 127.0.0.1 - - [17/Mar/2025 11:08:40] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:08:43,498 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:43,498 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:43,498 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:08:43,498 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:43,498 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:43,498 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:43,499 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:43,499 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:43,499 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:43,499 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:08:43,499 - INFO: 127.0.0.1 - - [17/Mar/2025 11:08:43] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:08:43,504 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:43,505 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:43,505 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:08:43,506 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:43,506 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:43,506 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:43,506 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:43,506 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:43,506 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:43,506 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:08:43,507 - INFO: 127.0.0.1 - - [17/Mar/2025 11:08:43] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:08:54,228 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:54,229 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:54,230 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:08:54,230 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:54,230 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:54,230 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:54,230 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:54,230 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:54,230 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:54,230 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:08:54,230 - INFO: 127.0.0.1 - - [17/Mar/2025 11:08:54] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:08:54,235 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:54,235 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:08:54,236 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:08:54,236 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:54,236 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:08:54,236 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:54,237 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:08:54,237 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:54,237 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:08:54,237 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:08:54,238 - INFO: 127.0.0.1 - - [17/Mar/2025 11:08:54] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:09:03,774 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:03,775 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:03,775 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:09:03,775 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:03,775 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:03,775 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:03,775 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:03,775 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:03,775 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:03,775 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:09:03,776 - INFO: 127.0.0.1 - - [17/Mar/2025 11:09:03] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:09:03,779 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:03,779 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:03,779 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:09:03,780 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:03,780 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:03,780 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:03,780 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:03,780 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:03,780 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:03,780 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:09:03,780 - INFO: 127.0.0.1 - - [17/Mar/2025 11:09:03] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:09:41,843 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:41,843 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:41,843 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:09:41,843 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:41,844 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:41,844 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:41,844 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:41,844 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:41,844 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:41,844 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:09:41,844 - INFO: 127.0.0.1 - - [17/Mar/2025 11:09:41] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:09:41,849 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:41,849 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:09:41,849 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:09:41,850 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:41,850 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:09:41,850 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:41,850 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:09:41,850 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:41,850 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:09:41,850 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:09:41,850 - INFO: 127.0.0.1 - - [17/Mar/2025 11:09:41] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:10:56,967 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:10:56,969 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:10:56,969 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:10:56,969 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:10:56,969 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:10:56,969 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:10:56,970 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:10:56,970 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:10:56,970 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:10:56,970 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:10:56,971 - INFO: 127.0.0.1 - - [17/Mar/2025 11:10:56] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:10:56,980 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:10:56,981 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:10:56,981 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:10:56,981 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:10:56,981 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:10:56,981 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:10:56,981 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:10:56,981 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:10:56,982 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:10:56,982 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:10:56,982 - INFO: 127.0.0.1 - - [17/Mar/2025 11:10:56] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:11:01,101 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:01,101 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:01,101 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:11:01,102 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:01,102 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:01,102 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:01,102 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:01,102 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:01,102 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:01,102 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:11:01,103 - INFO: 127.0.0.1 - - [17/Mar/2025 11:11:01] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:11:01,108 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:01,108 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:01,108 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:11:01,108 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:01,108 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:01,108 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:01,109 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:01,109 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:01,109 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:01,109 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:11:01,109 - INFO: 127.0.0.1 - - [17/Mar/2025 11:11:01] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:11:49,053 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:49,054 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:49,054 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:11:49,054 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:49,054 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:49,055 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:49,055 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:49,055 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:49,055 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:49,055 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:11:49,056 - INFO: 127.0.0.1 - - [17/Mar/2025 11:11:49] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:11:49,062 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:49,062 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:49,062 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:11:49,064 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:49,064 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:11:49,064 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:49,064 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:11:49,065 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:49,065 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:11:49,065 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:11:49,066 - INFO: 127.0.0.1 - - [17/Mar/2025 11:11:49] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:11:55,914 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:11:55,915 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 11:11:55,955 - INFO: 127.0.0.1 - - [17/Mar/2025 11:11:55] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -
+2025-03-17 11:14:38,018 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:38,019 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:38,020 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:14:38,020 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:38,021 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:38,021 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:38,021 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:38,021 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:38,021 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:38,021 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:14:38,023 - INFO: 127.0.0.1 - - [17/Mar/2025 11:14:38] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:14:38,035 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:38,035 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:38,035 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:14:38,035 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:38,036 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:38,036 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:38,036 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:38,036 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:38,036 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:38,036 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:14:38,037 - INFO: 127.0.0.1 - - [17/Mar/2025 11:14:38] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:14:40,623 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:40,623 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:40,624 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:14:40,624 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:40,624 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:40,624 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:40,624 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:40,624 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:40,624 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:40,624 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:14:40,630 - INFO: 127.0.0.1 - - [17/Mar/2025 11:14:40] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:14:40,637 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:40,637 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:40,637 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:14:40,637 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:40,637 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:14:40,637 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:40,637 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:14:40,638 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:40,638 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:14:40,638 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:14:40,638 - INFO: 127.0.0.1 - - [17/Mar/2025 11:14:40] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:14:43,939 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:14:43,940 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 11:14:43,991 - INFO: 127.0.0.1 - - [17/Mar/2025 11:14:43] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -
+2025-03-17 11:18:10,917 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:10,918 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:10,918 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:18:10,918 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:10,918 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:10,919 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:10,919 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:10,919 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:10,919 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:10,919 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:18:10,920 - INFO: 127.0.0.1 - - [17/Mar/2025 11:18:10] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:18:10,925 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:10,925 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:10,925 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:18:10,925 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:10,925 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:10,926 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:10,926 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:10,927 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:10,927 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:10,927 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:18:10,929 - INFO: 127.0.0.1 - - [17/Mar/2025 11:18:10] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:18:46,948 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:46,949 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:46,950 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:18:46,950 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:46,950 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:46,950 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:46,951 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:46,951 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:46,951 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:46,951 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:18:46,952 - INFO: 127.0.0.1 - - [17/Mar/2025 11:18:46] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:18:46,956 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:46,956 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:46,957 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:18:46,957 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:46,957 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:46,957 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:46,957 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:46,957 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:46,958 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:46,958 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:18:46,958 - INFO: 127.0.0.1 - - [17/Mar/2025 11:18:46] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:18:49,929 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:49,929 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:49,929 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:18:49,929 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:49,930 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:49,930 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:49,930 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:49,930 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:49,930 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:49,930 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:18:49,931 - INFO: 127.0.0.1 - - [17/Mar/2025 11:18:49] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:18:49,940 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:49,941 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:18:49,941 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:18:49,941 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:49,941 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:18:49,941 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:49,941 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:18:49,942 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:49,942 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:18:49,942 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:18:49,942 - INFO: 127.0.0.1 - - [17/Mar/2025 11:18:49] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:19:44,971 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:44,972 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:44,972 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:19:44,972 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:44,972 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:44,975 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:44,976 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:44,976 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:44,976 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:44,976 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:19:44,977 - INFO: 127.0.0.1 - - [17/Mar/2025 11:19:44] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:19:44,983 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:44,983 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:44,983 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:19:44,983 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:44,983 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:44,983 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:44,983 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:44,983 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:44,984 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:44,984 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:19:44,984 - INFO: 127.0.0.1 - - [17/Mar/2025 11:19:44] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:19:51,879 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:51,880 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:51,880 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:19:51,880 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:51,880 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:51,880 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:51,881 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:51,881 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:51,881 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:51,881 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:19:51,881 - INFO: 127.0.0.1 - - [17/Mar/2025 11:19:51] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:19:51,893 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:51,893 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:19:51,894 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:19:51,894 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:51,894 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:19:51,894 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:51,894 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:19:51,894 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:51,894 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:19:51,895 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:19:51,895 - INFO: 127.0.0.1 - - [17/Mar/2025 11:19:51] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:20:21,060 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:20:21,061 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:20:21,061 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:20:21,061 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:20:21,061 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:20:21,061 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:20:21,061 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:20:21,061 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:20:21,061 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:20:21,061 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:20:21,061 - INFO: 127.0.0.1 - - [17/Mar/2025 11:20:21] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:20:21,065 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:20:21,066 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:20:21,066 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:20:21,067 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:20:21,067 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:20:21,067 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:20:21,067 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:20:21,067 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:20:21,067 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:20:21,067 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:20:21,069 - INFO: 127.0.0.1 - - [17/Mar/2025 11:20:21] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:21:10,710 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:10,710 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:10,710 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:21:10,711 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:10,711 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:10,711 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:10,711 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:10,711 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:10,711 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:10,711 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:21:10,712 - INFO: 127.0.0.1 - - [17/Mar/2025 11:21:10] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:21:10,716 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:10,716 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:10,716 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:21:10,717 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:10,717 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:10,717 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:10,717 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:10,717 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:10,717 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:10,717 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:21:10,718 - INFO: 127.0.0.1 - - [17/Mar/2025 11:21:10] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:21:19,466 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:19,473 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:19,474 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:21:19,474 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:19,474 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:19,474 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:19,474 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:19,492 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:19,492 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:19,492 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:21:19,493 - INFO: 127.0.0.1 - - [17/Mar/2025 11:21:19] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:21:19,502 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:19,502 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:21:19,502 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:21:19,503 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:19,503 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:21:19,503 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:19,503 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:21:19,503 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:19,503 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:21:19,503 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:21:19,503 - INFO: 127.0.0.1 - - [17/Mar/2025 11:21:19] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:30:55,425 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:30:55,427 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 11:30:55,475 - INFO: 127.0.0.1 - - [17/Mar/2025 11:30:55] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -
+2025-03-17 11:36:31,593 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:36:31,599 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:36:31,599 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:36:31,600 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:36:31,600 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:36:31,600 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:36:31,600 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:36:31,600 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:36:31,601 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:36:31,601 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:36:31,602 - INFO: 127.0.0.1 - - [17/Mar/2025 11:36:31] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:36:31,608 - INFO: Current working directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:36:31,608 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:36:31,608 - INFO: Files in /Users/willolson/Development/StockMktAI/server: ['financial_metrics.xlsx', 'advanced_financial_insights.log', 'statistical_analysis.log', 'statistical_analysis_charts', 'front end report tests', 'performance_ranking_insights', 'advanced_financial_analysis.py', 'requirements.txt', 'statistical_analysis_testing', 'advanced_financial_insights', 'statistical_analysis_output_v2', '__pycache__', 'comprehensive_financial_stats.csv', 'tickers.json', 'advanced_financial_insights.txt', '.env', 'financial_analysis_output', 'statistical_analysis.py', 'financial_analysis_charts', 'financial_insights.log', 'app.py', 'financial_metrics_scraper_test.py', 'finance_metrics', 'statistical_analysis_output_v1', 'financial_metrics.json', 'financial_analysis_data', 'performance_ranking_insights_analysis.py']
+2025-03-17 11:36:31,608 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:36:31,608 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server
+2025-03-17 11:36:31,608 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:36:31,608 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/data
+2025-03-17 11:36:31,609 - INFO: Checking directory: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:36:31,609 - WARNING: Directory not found: /Users/willolson/Development/StockMktAI/server/server/data
+2025-03-17 11:36:31,609 - INFO: Detected datasets: ['/Users/willolson/Development/StockMktAI/server/financial_metrics.json']
+2025-03-17 11:36:31,609 - INFO: 127.0.0.1 - - [17/Mar/2025 11:36:31] "GET /api/financial-datasets HTTP/1.1" 200 -
+2025-03-17 11:36:47,287 - INFO: Searching in server directory: /Users/willolson/Development/StockMktAI/server
+2025-03-17 11:36:47,288 - INFO: Found most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-17 11:36:47,340 - INFO: 127.0.0.1 - - [17/Mar/2025 11:36:47] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -

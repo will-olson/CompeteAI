@@ -5,6 +5,8 @@ import json
 import logging
 import traceback
 from dotenv import load_dotenv
+import numpy as np
+import pandas as pd
 
 # Import the AdvancedStatisticalAnalyzer directly
 from statistical_analysis import AdvancedStatisticalAnalyzer
@@ -346,6 +348,124 @@ def download_report(report_type):
             'error': 'Could not download report',
             'message': str(e)
         }), 500
+    
+@app.route('/api/financial-analysis/visual-insights', methods=['POST'])
+def generate_visual_insights():
+    """
+    Generate visual insights for the most recently used dataset
+    """
+    try:
+        # Get the server directory path
+        server_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # Find the most recent JSON file
+        most_recent_file = None
+        most_recent_time = 0
+        
+        logger.info(f"Searching in server directory: {server_dir}")
+        
+        try:
+            # List files in the server directory
+            for filename in os.listdir(server_dir):
+                if filename.startswith('financial_metrics') and filename.endswith('.json'):
+                    full_path = os.path.join(server_dir, filename)
+                    file_time = os.path.getmtime(full_path)
+                    
+                    if file_time > most_recent_time:
+                        most_recent_time = file_time
+                        most_recent_file = full_path
+        except Exception as e:
+            logger.error(f"Error searching server directory: {e}")
+            return jsonify({
+                'error': 'Failed to search directory',
+                'message': str(e)
+            }), 500
+        
+        # If no file found, return error
+        if not most_recent_file:
+            # Log files in the directory for debugging
+            logger.warning("Files in server directory:")
+            for filename in os.listdir(server_dir):
+                logger.warning(filename)
+            
+            return jsonify({
+                'error': 'No financial datasets found',
+                'message': 'Please upload a financial metrics JSON file first',
+                'server_directory': server_dir
+            }), 404
+        
+        logger.info(f"Found most recent file: {most_recent_file}")
+        
+        # Load the dataset
+        df = load_financial_data(most_recent_file)
+        
+        # Initialize analyzer
+        openai_api_key = os.getenv('OPENAI_API_KEY')
+        analyzer = AdvancedStatisticalAnalyzer(df, openai_api_key)
+        
+        # Prepare distribution data
+        distribution_data = []
+        metrics = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta']
+        
+        for metric in metrics:
+            data = df[metric].dropna()
+            
+            distribution_data.append({
+                'metric': metric,
+                'mean': float(np.mean(data)) if len(data) > 0 else 0,
+                'median': float(np.median(data)) if len(data) > 0 else 0,
+                'stdDev': float(np.std(data)) if len(data) > 0 else 0
+            })
+        
+        # Prepare stock type data
+        def classify_stock_type(row):
+            if pd.isna(row['Beta']) or pd.isna(row['Market Cap']):
+                return 'Unclassified'
+            
+            if row['Market Cap'] > 100_000_000_000:
+                return 'Mega Cap'
+            elif pd.notna(row['Dividend Yield']) and row['Dividend Yield'] > 3:
+                return 'High Yield'
+            elif row['Beta'] > 1.5:
+                return 'High Volatility'
+            elif pd.notna(row['EPS']) and row['EPS'] < 0:
+                return 'Speculative'
+            else:
+                return 'Stable'
+        
+        df['Stock Type'] = df.apply(classify_stock_type, axis=1)
+        stock_type_data = df['Stock Type'].value_counts()
+        
+        stock_type_distribution = [
+            {"name": str(stock_type), "value": int(count)}
+            for stock_type, count in stock_type_data.items()
+        ]
+        
+        # Prepare market cap tiers
+        df['Market Cap Tier'] = pd.qcut(
+            df['Market Cap'], 
+            q=[0, 0.2, 0.4, 0.6, 0.8, 1.0], 
+            labels=['Very Small', 'Small', 'Medium', 'Large', 'Very Large']
+        )
+        market_cap_tiers = df['Market Cap Tier'].value_counts()
+        
+        market_cap_data = [
+            {"tier": str(tier), "count": int(count)}
+            for tier, count in market_cap_tiers.items()
+        ]
+        
+        return jsonify({
+            'distributionData': distribution_data,
+            'stockTypeData': stock_type_distribution,
+            'marketCapData': market_cap_data
+        }), 200
+    
+    except Exception as e:
+        logger.error(f"Visual insights generation error: {e}")
+        return jsonify({
+            'error': 'Failed to generate visual insights',
+            'message': str(e)
+        }), 500
 
 @app.route('/api/financial-datasets', methods=['GET'])
 def list_financial_datasets():
@@ -416,3 +536,4 @@ if __name__ == '__main__':
     
     # Run the Flask app
     app.run(debug=True, port=5000)
+

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Container } from '@mui/material';
+import Navbar from './components/Navbar';
 import FinancialAnalysisPage from './components/FinancialAnalysisPage';
 
 function App() {
   return (
-    <Container maxWidth="lg">
+    <Navbar>
       <FinancialAnalysisPage />
-    </Container>
+    </Navbar>
   );
 }
 

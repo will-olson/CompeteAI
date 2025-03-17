@@ -27,6 +27,8 @@ import {
   Visibility as VisibilityIcon
 } from '@mui/icons-material';
 
+import FinancialInsightsCharts from './FinancialInsightsCharts';
+
 const FinancialAnalysisPage = () => {
   // State Management
   const [analysisResults, setAnalysisResults] = useState(null);
@@ -227,7 +229,14 @@ const FinancialAnalysisPage = () => {
         </FormControl>
 
         {/* Analysis Buttons */}
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          gap: 2, 
+          alignItems: 'center', 
+          '& > *': { 
+            height: '40px'
+          } 
+        }}>
           <Button
             variant="contained"
             color="secondary"
@@ -237,6 +246,7 @@ const FinancialAnalysisPage = () => {
           >
             Advanced AI Insights
           </Button>
+          <FinancialInsightsCharts />
         </Box>
       </Box>
 
