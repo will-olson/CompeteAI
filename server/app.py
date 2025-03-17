@@ -48,7 +48,9 @@ def load_financial_data(file_path):
         # Convert nested dictionary to list of dictionaries
         df_data = []
         for ticker, stock_data in json_data.items():
-            stock_entry = {}
+            stock_entry = {
+                'Ticker': ticker 
+            }
             
             # Helper function to clean numeric values
             def clean_numeric_value(value):

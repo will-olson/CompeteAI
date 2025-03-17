@@ -6004,3 +6004,225 @@ UnboundLocalError: local variable 'analysis_data' referenced before assignment
 2025-03-16 19:06:21,074 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
 2025-03-16 19:06:21,074 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
 2025-03-16 19:06:21,102 - INFO: 127.0.0.1 - - [16/Mar/2025 19:06:21] "POST /api/financial-analysis HTTP/1.1" 200 -
+2025-03-16 19:07:08,457 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-16 19:07:08,458 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:07:08,458 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:07:08,485 - ERROR: Error in advanced financial analysis: 'Ticker'
+2025-03-16 19:07:08,486 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Ticker'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 429, in generate_advanced_analysis
+    "Example Calculation": self._generate_momentum_example()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 545, in _generate_momentum_example
+    "Ticker": example_stock['Ticker'],
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1007, in __getitem__
+    return self._get_value(key)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Ticker'
+
+2025-03-16 19:07:08,486 - ERROR: Analysis generation error: local variable 'analysis_data' referenced before assignment
+2025-03-16 19:07:08,486 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Ticker'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 429, in generate_advanced_analysis
+    "Example Calculation": self._generate_momentum_example()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 545, in _generate_momentum_example
+    "Ticker": example_stock['Ticker'],
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1007, in __getitem__
+    return self._get_value(key)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Ticker'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 257, in perform_financial_analysis
+    results = analyzer.generate_advanced_analysis()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 506, in generate_advanced_analysis
+    return self._generate_local_insights(analysis_data)
+UnboundLocalError: local variable 'analysis_data' referenced before assignment
+
+2025-03-16 19:07:08,487 - INFO: 127.0.0.1 - - [16/Mar/2025 19:07:08] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 19:07:16,024 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-16 19:07:16,024 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:07:16,025 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:07:16,091 - INFO: Comprehensive financial analysis completed. Output saved to financial_analysis_output/comprehensive_financial_analysis.xlsx
+2025-03-16 19:07:17,523 - INFO: Basic visualizations generated successfully
+2025-03-16 19:07:17,533 - ERROR: Error in advanced financial analysis: 'Ticker'
+2025-03-16 19:07:17,533 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Ticker'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 429, in generate_advanced_analysis
+    "Example Calculation": self._generate_momentum_example()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 545, in _generate_momentum_example
+    "Ticker": example_stock['Ticker'],
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1007, in __getitem__
+    return self._get_value(key)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Ticker'
+
+2025-03-16 19:07:17,533 - ERROR: Analysis generation error: local variable 'analysis_data' referenced before assignment
+2025-03-16 19:07:17,533 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Ticker'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 429, in generate_advanced_analysis
+    "Example Calculation": self._generate_momentum_example()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 545, in _generate_momentum_example
+    "Ticker": example_stock['Ticker'],
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1007, in __getitem__
+    return self._get_value(key)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Ticker'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 242, in perform_financial_analysis
+    ai_insights = analyzer.generate_advanced_analysis()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 506, in generate_advanced_analysis
+    return self._generate_local_insights(analysis_data)
+UnboundLocalError: local variable 'analysis_data' referenced before assignment
+
+2025-03-16 19:07:17,534 - INFO: 127.0.0.1 - - [16/Mar/2025 19:07:17] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 19:07:25,487 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-16 19:07:25,487 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:07:25,488 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:07:25,527 - ERROR: Error in advanced financial analysis: 'Ticker'
+2025-03-16 19:07:25,527 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Ticker'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 429, in generate_advanced_analysis
+    "Example Calculation": self._generate_momentum_example()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 545, in _generate_momentum_example
+    "Ticker": example_stock['Ticker'],
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1007, in __getitem__
+    return self._get_value(key)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Ticker'
+
+2025-03-16 19:07:25,527 - ERROR: Analysis generation error: local variable 'analysis_data' referenced before assignment
+2025-03-16 19:07:25,527 - ERROR: Traceback (most recent call last):
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Ticker'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 429, in generate_advanced_analysis
+    "Example Calculation": self._generate_momentum_example()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 545, in _generate_momentum_example
+    "Ticker": example_stock['Ticker'],
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1007, in __getitem__
+    return self._get_value(key)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+  File "/Users/willolson/Development/.venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Ticker'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/willolson/Development/StockMktAI/server/app.py", line 257, in perform_financial_analysis
+    results = analyzer.generate_advanced_analysis()
+  File "/Users/willolson/Development/StockMktAI/server/statistical_analysis.py", line 506, in generate_advanced_analysis
+    return self._generate_local_insights(analysis_data)
+UnboundLocalError: local variable 'analysis_data' referenced before assignment
+
+2025-03-16 19:07:25,528 - INFO: 127.0.0.1 - - [16/Mar/2025 19:07:25] "[35m[1mPOST /api/financial-analysis HTTP/1.1[0m" 500 -
+2025-03-16 19:09:36,673 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 19:09:36,830 - INFO:  * Restarting with stat
+2025-03-16 19:09:37,395 - WARNING:  * Debugger is active!
+2025-03-16 19:09:37,402 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 19:09:38,442 - INFO:  * Detected change in '/Users/willolson/Development/StockMktAI/server/app.py', reloading
+2025-03-16 19:09:38,507 - INFO:  * Restarting with stat
+2025-03-16 19:09:38,988 - WARNING:  * Debugger is active!
+2025-03-16 19:09:38,995 - INFO:  * Debugger PIN: 104-517-581
+2025-03-16 19:10:10,105 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-16 19:10:10,106 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:10:10,106 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:10:10,619 - INFO: 127.0.0.1 - - [16/Mar/2025 19:10:10] "POST /api/financial-analysis HTTP/1.1" 200 -
+2025-03-16 19:10:30,959 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-16 19:10:30,960 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:10:30,961 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:10:52,973 - INFO: 127.0.0.1 - - [16/Mar/2025 19:10:52] "[36mGET /api/download/insights HTTP/1.1[0m" 304 -
+2025-03-16 19:10:53,104 - INFO: Advanced financial analysis generated successfully
+2025-03-16 19:10:53,105 - INFO: 127.0.0.1 - - [16/Mar/2025 19:10:53] "POST /api/financial-analysis HTTP/1.1" 200 -
+2025-03-16 19:11:24,772 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-16 19:11:24,773 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:11:24,774 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:11:24,807 - INFO: 127.0.0.1 - - [16/Mar/2025 19:11:24] "POST /api/financial-analysis HTTP/1.1" 200 -
+2025-03-16 19:11:30,016 - INFO: 127.0.0.1 - - [16/Mar/2025 19:11:30] "GET /api/download/insights HTTP/1.1" 200 -
+2025-03-16 19:11:55,776 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/server/financial_metrics.json
+2025-03-16 19:11:55,776 - INFO: Checking path: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:11:55,776 - INFO: Found file at: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
+2025-03-16 19:11:55,948 - INFO: Comprehensive financial analysis completed. Output saved to financial_analysis_output/comprehensive_financial_analysis.xlsx
+2025-03-16 19:11:57,587 - INFO: Basic visualizations generated successfully
+2025-03-16 19:12:17,091 - INFO: 127.0.0.1 - - [16/Mar/2025 19:12:17] "[36mGET /api/download/insights HTTP/1.1[0m" 304 -
+2025-03-16 19:12:18,715 - INFO: Advanced financial analysis generated successfully
+2025-03-16 19:12:18,719 - INFO: 127.0.0.1 - - [16/Mar/2025 19:12:18] "POST /api/financial-analysis HTTP/1.1" 200 -

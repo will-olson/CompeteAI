@@ -95,6 +95,7 @@
   "Top Performers": {
     "Highest Momentum Stocks": [
       {
+        "Ticker": "BMY",
         "P/E Ratio": NaN,
         "EPS": -4.41,
         "Market Cap": 124823000000.0,
@@ -107,6 +108,7 @@
         "Momentum Score": 0.9908256880733946
       },
       {
+        "Ticker": "CME",
         "P/E Ratio": 26.9,
         "EPS": 9.68,
         "Market Cap": 93565000000.0,
@@ -119,6 +121,7 @@
         "Momentum Score": 0.9812200137080191
       },
       {
+        "Ticker": "K",
         "P/E Ratio": 21.19,
         "EPS": 3.88,
         "Market Cap": 28387000000.0,
@@ -131,6 +134,7 @@
         "Momentum Score": 0.9749674902470743
       },
       {
+        "Ticker": "ABBV",
         "P/E Ratio": 89.74,
         "EPS": 2.38,
         "Market Cap": 377061000000.0,
@@ -143,6 +147,7 @@
         "Momentum Score": 0.9692685925015365
       },
       {
+        "Ticker": "MO",
         "P/E Ratio": 8.89,
         "EPS": 6.54,
         "Market Cap": 98312000000.0,
@@ -155,6 +160,7 @@
         "Momentum Score": 0.964248159831756
       },
       {
+        "Ticker": "WEC",
         "P/E Ratio": 21.9,
         "EPS": 4.83,
         "Market Cap": 33609000000.0,
@@ -167,6 +173,7 @@
         "Momentum Score": 0.9630195599022007
       },
       {
+        "Ticker": "KR",
         "P/E Ratio": 18.13,
         "EPS": 3.67,
         "Market Cap": 43790000000.0,
@@ -179,6 +186,7 @@
         "Momentum Score": 0.9594247560349252
       },
       {
+        "Ticker": "VRSN",
         "P/E Ratio": 29.53,
         "EPS": 8.01,
         "Market Cap": 22377000000.0,
@@ -191,6 +199,7 @@
         "Momentum Score": 0.9573024740622509
       },
       {
+        "Ticker": "GILD",
         "P/E Ratio": 301.13,
         "EPS": 0.38,
         "Market Cap": 142505000000.0,
@@ -203,6 +212,7 @@
         "Momentum Score": 0.9524961133183624
       },
       {
+        "Ticker": "CBOE",
         "P/E Ratio": 29.29,
         "EPS": 7.21,
         "Market Cap": 22109000000.0,
@@ -217,6 +227,7 @@
     ],
     "Lowest PE Ratio Stocks": [
       {
+        "Ticker": "SITC",
         "P/E Ratio": 1.33,
         "EPS": 9.65,
         "Market Cap": 673436000.0,
@@ -229,6 +240,7 @@
         "Momentum Score": 0.0044521873790166555
       },
       {
+        "Ticker": "WU",
         "P/E Ratio": 4.01,
         "EPS": 2.74,
         "Market Cap": 3711000000.0,
@@ -241,6 +253,7 @@
         "Momentum Score": 0.39646464646464646
       },
       {
+        "Ticker": "AES",
         "P/E Ratio": 5.06,
         "EPS": 2.37,
         "Market Cap": 8536000000.0,
@@ -253,6 +266,7 @@
         "Momentum Score": 0.1540957015409569
       },
       {
+        "Ticker": "MTDR",
         "P/E Ratio": 6.58,
         "EPS": 7.14,
         "Market Cap": 5885000000.0,
@@ -265,6 +279,7 @@
         "Momentum Score": 0.04155939683707255
       },
       {
+        "Ticker": "F",
         "P/E Ratio": 6.64,
         "EPS": 1.46,
         "Market Cap": 38406000000.0,
@@ -277,6 +292,7 @@
         "Momentum Score": 0.1554404145077721
       },
       {
+        "Ticker": "CALM",
         "P/E Ratio": 6.81,
         "EPS": 12.86,
         "Market Cap": 4298000000.0,
@@ -289,6 +305,7 @@
         "Momentum Score": 0.527112848070347
       },
       {
+        "Ticker": "HPE",
         "P/E Ratio": 7.38,
         "EPS": 2.08,
         "Market Cap": 20150000000.0,
@@ -301,6 +318,7 @@
         "Momentum Score": 0.023445463812436333
       },
       {
+        "Ticker": "DVN",
         "P/E Ratio": 7.55,
         "EPS": 4.56,
         "Market Cap": 22317000000.0,
@@ -313,6 +331,7 @@
         "Momentum Score": 0.15465587044534412
       },
       {
+        "Ticker": "GM",
         "P/E Ratio": 7.58,
         "EPS": 6.37,
         "Market Cap": 48039000000.0,
@@ -325,6 +344,7 @@
         "Momentum Score": 0.40960071781067725
       },
       {
+        "Ticker": "APA",
         "P/E Ratio": 8.46,
         "EPS": 2.27,
         "Market Cap": 6990000000.0,
@@ -339,6 +359,7 @@
     ],
     "Highest Dividend Yield Stocks": [
       {
+        "Ticker": "SITC",
         "P/E Ratio": 1.33,
         "EPS": 9.65,
         "Market Cap": 673436000.0,
@@ -351,6 +372,7 @@
         "Momentum Score": 0.0044521873790166555
       },
       {
+        "Ticker": "GMRE",
         "P/E Ratio": 871.0,
         "EPS": 0.01,
         "Market Cap": 1184000000.0,
@@ -363,6 +385,7 @@
         "Momentum Score": 0.5303514376996804
       },
       {
+        "Ticker": "WBA",
         "P/E Ratio": NaN,
         "EPS": -10.24,
         "Market Cap": 9694000000.0,
@@ -375,6 +398,7 @@
         "Momentum Score": 0.22906227630637074
       },
       {
+        "Ticker": "WU",
         "P/E Ratio": 4.01,
         "EPS": 2.74,
         "Market Cap": 3711000000.0,
@@ -387,6 +411,7 @@
         "Momentum Score": 0.39646464646464646
       },
       {
+        "Ticker": "LADR",
         "P/E Ratio": 13.28,
         "EPS": 0.86,
         "Market Cap": 1452000000.0,
@@ -399,6 +424,7 @@
         "Momentum Score": 0.6563876651982373
       },
       {
+        "Ticker": "GOOD",
         "P/E Ratio": 55.63,
         "EPS": 0.27,
         "Market Cap": 670368000.0,
@@ -411,6 +437,7 @@
         "Momentum Score": 0.4990059642147118
       },
       {
+        "Ticker": "F",
         "P/E Ratio": 6.64,
         "EPS": 1.46,
         "Market Cap": 38406000000.0,
@@ -423,6 +450,7 @@
         "Momentum Score": 0.1554404145077721
       },
       {
+        "Ticker": "DOW",
         "P/E Ratio": 23.36,
         "EPS": 1.57,
         "Market Cap": 25880000000.0,
@@ -435,6 +463,7 @@
         "Momentum Score": 0.07616025386751296
       },
       {
+        "Ticker": "LYB",
         "P/E Ratio": 17.86,
         "EPS": 4.14,
         "Market Cap": 23922000000.0,
@@ -447,6 +476,7 @@
         "Momentum Score": 0.12438954323470303
       },
       {
+        "Ticker": "KRNY",
         "P/E Ratio": NaN,
         "EPS": -1.13,
         "Market Cap": 399103000.0,
@@ -461,6 +491,7 @@
     ],
     "Most Stable Stocks": [
       {
+        "Ticker": "AKRO",
         "P/E Ratio": NaN,
         "EPS": -3.75,
         "Market Cap": 3489000000.0,
@@ -473,6 +504,7 @@
         "Momentum Score": 0.5875678342377899
       },
       {
+        "Ticker": "CALM",
         "P/E Ratio": 6.81,
         "EPS": 12.86,
         "Market Cap": 4298000000.0,
@@ -485,6 +517,7 @@
         "Momentum Score": 0.527112848070347
       },
       {
+        "Ticker": "STI",
         "P/E Ratio": NaN,
         "EPS": -0.37,
         "Market Cap": 16700000.0,
@@ -497,6 +530,7 @@
         "Momentum Score": 0.00316836262719704
       },
       {
+        "Ticker": "BIIB",
         "P/E Ratio": 12.85,
         "EPS": 11.18,
         "Market Cap": 21028000000.0,
@@ -509,6 +543,7 @@
         "Momentum Score": 0.2027582427618962
       },
       {
+        "Ticker": "GIS",
         "P/E Ratio": 13.55,
         "EPS": 4.6,
         "Market Cap": 34357999999.999996,
@@ -521,6 +556,7 @@
         "Momentum Score": 0.4891566265060239
       },
       {
+        "Ticker": "CPB",
         "P/E Ratio": 23.1,
         "EPS": 1.73,
         "Market Cap": 11915000000.0,
@@ -533,6 +569,7 @@
         "Momentum Score": 0.3222152297042163
       },
       {
+        "Ticker": "GILD",
         "P/E Ratio": 301.13,
         "EPS": 0.38,
         "Market Cap": 142505000000.0,
@@ -545,6 +582,7 @@
         "Momentum Score": 0.9524961133183624
       },
       {
+        "Ticker": "CTRA",
         "P/E Ratio": 17.92,
         "EPS": 1.5,
         "Market Cap": 20540000000.0,
@@ -557,6 +595,7 @@
         "Momentum Score": 0.5816993464052288
       },
       {
+        "Ticker": "REGN",
         "P/E Ratio": 18.72,
         "EPS": 38.36,
         "Market Cap": 78513000000.0,
@@ -569,6 +608,7 @@
         "Momentum Score": 0.18065706254392136
       },
       {
+        "Ticker": "SJM",
         "P/E Ratio": NaN,
         "EPS": -2.4,
         "Market Cap": 12159000000.0,
@@ -583,6 +623,7 @@
     ],
     "Highest Market Cap Stocks": [
       {
+        "Ticker": "AAPL",
         "P/E Ratio": 35.05,
         "EPS": 6.3,
         "Market Cap": 3317000000000.0,
@@ -595,6 +636,7 @@
         "Momentum Score": 0.6602791085190582
       },
       {
+        "Ticker": "MSFT",
         "P/E Ratio": 30.71,
         "EPS": 12.39,
         "Market Cap": 2828000000000.0,
@@ -607,6 +649,7 @@
         "Momentum Score": 0.035542432195975505
       },
       {
+        "Ticker": "NVDA",
         "P/E Ratio": 36.99,
         "EPS": 2.94,
         "Market Cap": 2654000000000.0,
@@ -619,6 +662,7 @@
         "Momentum Score": 0.40466976264189897
       },
       {
+        "Ticker": "AMZN",
         "P/E Ratio": 35.61,
         "EPS": 5.52,
         "Market Cap": 2083000000000.0002,
@@ -631,6 +675,7 @@
         "Momentum Score": 0.4722252777472223
       },
       {
+        "Ticker": "GOOGL",
         "P/E Ratio": 20.4,
         "EPS": 8.04,
         "Market Cap": 2009999999999.9998,
@@ -643,6 +688,7 @@
         "Momentum Score": 0.3949456362033499
       },
       {
+        "Ticker": "META",
         "P/E Ratio": 25.39,
         "EPS": 23.86,
         "Market Cap": 1535000000000.0,
@@ -655,6 +701,7 @@
         "Momentum Score": 0.5621457675929047
       },
       {
+        "Ticker": "AVGO",
         "P/E Ratio": 88.0,
         "EPS": 2.16,
         "Market Cap": 893790000000.0,
@@ -667,6 +714,7 @@
         "Momentum Score": 0.48963063881319996
       },
       {
+        "Ticker": "TSLA",
         "P/E Ratio": 113.03,
         "EPS": 2.04,
         "Market Cap": 741665000000.0,
@@ -679,6 +727,7 @@
         "Momentum Score": 0.23831989477897864
       },
       {
+        "Ticker": "WMT",
         "P/E Ratio": 36.28,
         "EPS": 2.41,
         "Market Cap": 702440000000.0,
@@ -691,6 +740,7 @@
         "Momentum Score": 0.6260162601626015
       },
       {
+        "Ticker": "JPM",
         "P/E Ratio": 11.61,
         "EPS": 19.74,
         "Market Cap": 640701000000.0,
