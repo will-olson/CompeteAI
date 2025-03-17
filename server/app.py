@@ -7,6 +7,7 @@ import traceback
 from dotenv import load_dotenv
 import numpy as np
 import pandas as pd
+import glob
 
 # Import the AdvancedStatisticalAnalyzer directly
 from statistical_analysis import AdvancedStatisticalAnalyzer
@@ -527,6 +528,197 @@ def list_financial_datasets():
         return jsonify({
             'error': 'Could not list datasets',
             'message': str(e)
+        }), 500
+
+@app.route('/api/statistical-analysis/advanced-metrics', methods=['POST'])
+def advanced_statistical_analysis():
+    try:
+        # Find the most recent JSON file in the server directory
+        server_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # Search for financial metrics JSON files
+        json_files = glob.glob(os.path.join(server_dir, 'financial_metrics*.json'))
+        
+        # If no files found, search in data subdirectory
+        if not json_files:
+            json_files = glob.glob(os.path.join(server_dir, 'data', 'financial_metrics*.json'))
+        
+        # If still no files found, raise an error
+        if not json_files:
+            logger.error("No financial metrics JSON files found")
+            return jsonify({
+                'error': 'No financial datasets found',
+                'message': 'Please upload a financial metrics JSON file first'
+            }), 404
+        
+        # Get the most recently modified file
+        most_recent_file = max(json_files, key=os.path.getmtime)
+        
+        logger.info(f"Using most recent file: {most_recent_file}")
+        
+        # Load the dataset
+        df = load_financial_data(most_recent_file)
+        
+        # Custom statistical functions
+        def calculate_mean(data):
+            return sum(data) / len(data) if data else None
+        
+        def calculate_median(data):
+            sorted_data = sorted(data)
+            n = len(sorted_data)
+            mid = n // 2
+            return (sorted_data[mid] + sorted_data[~mid]) / 2 if n else None
+        
+        def calculate_standard_deviation(data):
+            if not data:
+                return None
+            mean = calculate_mean(data)
+            variance = sum((x - mean) ** 2 for x in data) / len(data)
+            return variance ** 0.5
+        
+        def calculate_skewness(data):
+            if not data:
+                return None
+            mean = calculate_mean(data)
+            std_dev = calculate_standard_deviation(data)
+            if std_dev == 0:
+                return 0
+            return sum(((x - mean) / std_dev) ** 3 for x in data) / len(data)
+        
+        def calculate_kurtosis(data):
+            if not data:
+                return None
+            mean = calculate_mean(data)
+            std_dev = calculate_standard_deviation(data)
+            if std_dev == 0:
+                return 0
+            return sum(((x - mean) / std_dev) ** 4 for x in data) / len(data) - 3
+        
+        def calculate_correlation(x, y):
+            if len(x) != len(y):
+                return None
+            
+            mean_x = calculate_mean(x)
+            mean_y = calculate_mean(y)
+            
+            numerator = sum((xi - mean_x) * (yi - mean_y) for xi, yi in zip(x, y))
+            denominator = (
+                sum((xi - mean_x) ** 2 for xi in x) * 
+                sum((yi - mean_y) ** 2 for yi in y)
+            ) ** 0.5
+            
+            return numerator / denominator if denominator != 0 else 0
+        
+        # Statistical Summary
+        numeric_columns = ['Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 'Beta']
+        statistical_summary = []
+        
+        for column in numeric_columns:
+            data = df[column].dropna().tolist()
+            
+            statistical_summary.append({
+                'name': column,
+                'mean': float(calculate_mean(data)) if data else None,
+                'median': float(calculate_median(data)) if data else None,
+                'stdDev': float(calculate_standard_deviation(data)) if data else None,
+                'skewness': float(calculate_skewness(data)) if data else None,
+                'kurtosis': float(calculate_kurtosis(data)) if data else None
+            })
+        
+        # Correlation Analysis
+        correlation_tests = []
+        for i in range(len(numeric_columns)):
+            for j in range(i+1, len(numeric_columns)):
+                col1, col2 = numeric_columns[i], numeric_columns[j]
+                data1 = df[col1].dropna().tolist()
+                data2 = df[col2].dropna().tolist()
+                
+                # Ensure same length
+                min_length = min(len(data1), len(data2))
+                data1 = data1[:min_length]
+                data2 = data2[:min_length]
+                
+                correlation = calculate_correlation(data1, data2)
+                
+                correlation_tests.append({
+                    'metricPair': f'{col1} vs {col2}',
+                    'correlation': float(correlation) if correlation is not None else None
+                })
+        
+        # Simple Regression Analysis (Market Cap vs P/E Ratio)
+        market_cap_data = df['Market Cap'].dropna().tolist()
+        pe_ratio_data = df['P/E Ratio'].dropna().tolist()
+        
+        # Ensure same length
+        min_length = min(len(market_cap_data), len(pe_ratio_data))
+        market_cap_data = market_cap_data[:min_length]
+        pe_ratio_data = pe_ratio_data[:min_length]
+        
+        # Simple linear regression approximation
+        def simple_linear_regression(x, y):
+            n = len(x)
+            
+            # Calculate means
+            mean_x = calculate_mean(x)
+            mean_y = calculate_mean(y)
+            
+            # Calculate slope
+            numerator = sum((xi - mean_x) * (yi - mean_y) for xi, yi in zip(x, y))
+            denominator = sum((xi - mean_x) ** 2 for xi in x)
+            
+            slope = numerator / denominator if denominator != 0 else 0
+            
+            # Calculate intercept
+            intercept = mean_y - slope * mean_x
+            
+            return slope, intercept
+        
+        slope, intercept = simple_linear_regression(market_cap_data, pe_ratio_data)
+        
+        regression_data = [
+            {'independentVar': x, 'dependentVar': y} 
+            for x, y in zip(market_cap_data, pe_ratio_data)
+        ]
+        
+        # Time Series Analysis (Momentum Score)
+        try:
+            momentum_data = df['Momentum Score'].dropna().tolist()
+            
+            # Simple time series representation
+            time_series_analysis = {
+                'metric': 'Momentum Score',
+                'data': [
+                    {'period': str(i), 'value': float(value)} 
+                    for i, value in enumerate(momentum_data)
+                ]
+            }
+        except Exception as ts_error:
+            logger.warning(f"Time series analysis failed: {ts_error}")
+            time_series_analysis = {
+                'metric': 'Momentum Score',
+                'data': []
+            }
+        
+        return jsonify({
+            'statisticalSummary': statistical_summary,
+            'correlationAnalysis': correlation_tests,
+            'regressionAnalysis': {
+                'independentVariable': 'Market Cap',
+                'dependentVariable': 'P/E Ratio',
+                'data': regression_data,
+                'slope': float(slope),
+                'intercept': float(intercept)
+            },
+            'timeSeriesAnalysis': time_series_analysis
+        }), 200
+    
+    except Exception as e:
+        logger.error(f"Statistical analysis error: {e}")
+        logger.error(traceback.format_exc())
+        return jsonify({
+            'error': 'Failed to generate statistical analysis',
+            'message': str(e),
+            'traceback': traceback.format_exc()
         }), 500
 
 # Main Execution

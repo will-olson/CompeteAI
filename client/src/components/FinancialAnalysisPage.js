@@ -24,10 +24,12 @@ import {
 import { 
   Analytics as AnalyticsIcon,
   Download as DownloadIcon,
-  Visibility as VisibilityIcon
+  Visibility as VisibilityIcon,
+  Psychology as PsychologyIcon
 } from '@mui/icons-material';
 
 import FinancialInsightsCharts from './FinancialInsightsCharts';
+import StatisticalAnalysisComponent from './StatisticalAnalysisComponent';
 
 const FinancialAnalysisPage = () => {
   // State Management
@@ -239,14 +241,23 @@ const FinancialAnalysisPage = () => {
         }}>
           <Button
             variant="contained"
-            color="secondary"
-            startIcon={<AnalyticsIcon />}
+            color="primary"
+            startIcon={<PsychologyIcon />}
+            sx={{
+              backgroundColor: '#6a1b9a',  // Custom purple
+              '&:hover': {
+                backgroundColor: '#4a148c'  // Darker shade on hover
+              },
+              boxShadow: '0 4px 6px rgba(0,0,0,0.1)',  // Optional: add some depth
+              transition: 'all 0.3s ease'  // Smooth transition
+            }}
             onClick={() => performAnalysis('advanced')}
             disabled={!selectedDataSource || loading}
           >
             Advanced AI Insights
           </Button>
           <FinancialInsightsCharts />
+          <StatisticalAnalysisComponent ></StatisticalAnalysisComponent>
         </Box>
       </Box>
 
