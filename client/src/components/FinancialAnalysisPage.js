@@ -230,15 +230,6 @@ const FinancialAnalysisPage = () => {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button
             variant="contained"
-            color="primary"
-            startIcon={<AnalyticsIcon />}
-            onClick={() => performAnalysis('comprehensive')}
-            disabled={!selectedDataSource || loading}
-          >
-            Comprehensive Analysis
-          </Button>
-          <Button
-            variant="contained"
             color="secondary"
             startIcon={<AnalyticsIcon />}
             onClick={() => performAnalysis('advanced')}
