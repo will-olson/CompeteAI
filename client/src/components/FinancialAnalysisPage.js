@@ -11,21 +11,20 @@ import {
   CircularProgress, 
   Tabs, 
   Tab,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Dialog,
   DialogTitle,
   DialogContent,
   Select,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
+  Paper,
+  Divider
 } from '@mui/material';
 import { 
-  ExpandMore as ExpandMoreIcon,
   Analytics as AnalyticsIcon,
-  Download as DownloadIcon
+  Download as DownloadIcon,
+  Visibility as VisibilityIcon
 } from '@mui/icons-material';
 
 const FinancialAnalysisPage = () => {
@@ -33,30 +32,20 @@ const FinancialAnalysisPage = () => {
   const [analysisResults, setAnalysisResults] = useState(null);
   const [visualizations, setVisualizations] = useState({});
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
-  const [expandedPanel, setExpandedPanel] = useState(false);
+  const [selectedAnalysisType, setSelectedAnalysisType] = useState(null);
   const [selectedVisualization, setSelectedVisualization] = useState(null);
   
   // New state for data source selection
   const [availableDataSources, setAvailableDataSources] = useState([]);
   const [selectedDataSource, setSelectedDataSource] = useState(null);
 
-  // Analysis Types
-  const analysisTypes = [
-    { label: 'Comprehensive', value: 'comprehensive' },
-    { label: 'Descriptive', value: 'descriptive' },
-    { label: 'Advanced', value: 'advanced' }
-  ];
-
   // Fetch Available Data Sources on Component Mount
   useEffect(() => {
     const fetchDataSources = async () => {
       try {
-        // Endpoint to list available financial datasets
         const response = await axios.get('/api/financial-datasets');
         setAvailableDataSources(response.data);
         
-        // Optionally set a default data source
         if (response.data.length > 0) {
           setSelectedDataSource(response.data[0]);
         }
@@ -69,13 +58,14 @@ const FinancialAnalysisPage = () => {
   }, []);
 
   // Perform Analysis
-  const performAnalysis = useCallback(async (analysisType = 'comprehensive') => {
+  const performAnalysis = useCallback(async (analysisType) => {
     if (!selectedDataSource) {
       alert('Please select a data source');
       return;
     }
 
     setLoading(true);
+    setSelectedAnalysisType(analysisType);
     try {
       // Perform analysis using selected data source
       const response = await axios.post('/api/financial-analysis', 
@@ -143,11 +133,75 @@ const FinancialAnalysisPage = () => {
     </Dialog>
   );
 
-  // Render Insights Section (previous implementation)
-  const renderInsightsSection = () => { /* ... */ };
+  // Render Visualizations
+  const renderVisualizations = () => (
+    <Grid container spacing={2} sx={{ mt: 2 }}>
+      {Object.entries(visualizations).map(([key, src]) => (
+        <Grid item xs={12} md={6} key={key}>
+          <Paper elevation={3} sx={{ p: 2 }}>
+            <Typography variant="h6" gutterBottom>{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Typography>
+            <img 
+              src={src} 
+              alt={key} 
+              style={{ 
+                width: '100%', 
+                maxHeight: '400px', 
+                objectFit: 'contain' 
+              }}
+              onClick={() => setSelectedVisualization(src)}
+            />
+          </Paper>
+        </Grid>
+      ))}
+    </Grid>
+  );
 
-  // Render Visualizations (previous implementation)
-  const renderVisualizations = () => { /* ... */ };
+  // Render Analysis Results
+  const renderAnalysisResults = () => {
+    if (!analysisResults) return null;
+
+    // Determine the type of analysis and render accordingly
+    if (selectedAnalysisType === 'comprehensive') {
+      return (
+        <Card sx={{ mt: 2 }}>
+          <CardContent>
+            <Typography variant="h5" gutterBottom>
+              Comprehensive Financial Analysis
+            </Typography>
+            <Typography 
+              variant="body1" 
+              component="div" 
+              sx={{ whiteSpace: 'pre-wrap' }}
+            >
+              {/* Render comprehensive analysis as a text block */}
+              {typeof analysisResults === 'string' ? (
+                analysisResults
+              ) : (
+                JSON.stringify(analysisResults, null, 2)
+              )}
+          </Typography>
+        </CardContent>
+      </Card>
+      );
+    }
+
+    if (selectedAnalysisType === 'advanced') {
+      return (
+        <Card sx={{ mt: 2 }}>
+          <CardContent>
+            <Typography variant="h5" gutterBottom>
+              Advanced AI-Driven Insights
+            </Typography>
+            <Typography variant="body1" component="div" sx={{ whiteSpace: 'pre-wrap' }}>
+              {analysisResults}
+            </Typography>
+          </CardContent>
+        </Card>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <Container maxWidth="lg">
@@ -172,50 +226,70 @@ const FinancialAnalysisPage = () => {
           </Select>
         </FormControl>
 
-        {/* Analysis Type Tabs */}
-        <Tabs 
-          value={activeTab} 
-          onChange={(e, newValue) => setActiveTab(newValue)}
-          sx={{ ml: 2 }}
-        >
-          {analysisTypes.map((type, index) => (
-            <Tab 
-              key={type.value} 
-              label={type.label}
-              onClick={() => performAnalysis(type.value)}
-            />
-          ))}
-        </Tabs>
+        {/* Analysis Buttons */}
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AnalyticsIcon />}
+            onClick={() => performAnalysis('comprehensive')}
+            disabled={!selectedDataSource || loading}
+          >
+            Comprehensive Analysis
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<AnalyticsIcon />}
+            onClick={() => performAnalysis('advanced')}
+            disabled={!selectedDataSource || loading}
+          >
+            Advanced AI Insights
+          </Button>
+        </Box>
       </Box>
 
-      {/* Rest of the component remains the same */}
+      {/* Loading Indicator */}
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
           <CircularProgress />
         </Box>
       )}
 
-      {analysisResults && renderInsightsSection()}
-      {visualizations && renderVisualizations()}
-
-      {/* Download Options */}
+      {/* Analysis Results */}
       {analysisResults && (
-        <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
-          <Button
-            variant="outlined"
-            startIcon={<DownloadIcon />}
-            onClick={() => downloadReport('excel')}
-          >
-            Download Excel Report
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<DownloadIcon />}
-            onClick={() => downloadReport('insights')}
-          >
-            Download AI Insights
-          </Button>
-        </Box>
+        <>
+          {renderAnalysisResults()}
+
+          {/* Visualizations */}
+          {Object.keys(visualizations).length > 0 && (
+            <>
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="h5" gutterBottom>
+                Financial Visualizations
+              </Typography>
+              {renderVisualizations()}
+            </>
+          )}
+
+          {/* Download Options */}
+          <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+            <Button
+              variant="outlined"
+              startIcon={<DownloadIcon />}
+              onClick={() => downloadReport('excel')}
+            >
+              Download Excel Report
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<DownloadIcon />}
+              onClick={() => downloadReport('insights')}
+            >
+              Download AI Insights
+            </Button>
+          </Box>
+        </>
       )}
 
       {/* Visualization Preview Dialog */}
