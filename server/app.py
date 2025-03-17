@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import os
-import pandas as pd
-import numpy as np
 import json
 import logging
-from dotenv import load_dotenv
-from statistical_analysis import AdvancedStatisticalAnalyzer
 import traceback
+from dotenv import load_dotenv
+
+# Import the AdvancedStatisticalAnalyzer directly
+from statistical_analysis import AdvancedStatisticalAnalyzer
 
 # Load environment variables
 load_dotenv()
@@ -19,91 +19,121 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-class FinancialAnalysisService:
-    def __init__(self, data_source=None):
-        """
-        Initialize the financial analysis service
+def load_financial_data(file_path):
+    """
+    Load and parse financial data from JSON file
+    
+    :param file_path: Path to the JSON file containing financial metrics
+    :return: Parsed financial data as a DataFrame
+    """
+    try:
+        # Load JSON data
+        with open(file_path, 'r') as f:
+            json_data = json.load(f)
         
-        :param data_source: Optional pandas DataFrame or path to CSV
-        """
-        self.openai_api_key = os.getenv('OPENAI_API_KEY')
+        # Convert nested dictionary to DataFrame
+        import pandas as pd
+        import re
         
-        # Load data
-        if data_source is None:
-            # Default to a sample dataset or raise an error
-            raise ValueError("No data source provided")
-        
-        # Handle different input types
-        if isinstance(data_source, str):
-            # Assume it's a file path
-            self.df = pd.read_csv(data_source)
-        elif isinstance(data_source, pd.DataFrame):
-            self.df = data_source
-        else:
-            raise TypeError("Data source must be a file path or pandas DataFrame")
-        
-        # Initialize analyzer
-        self.analyzer = AdvancedStatisticalAnalyzer(
-            self.df, 
-            openai_api_key=self.openai_api_key
-        )
-
-    def generate_analysis(self, analysis_type='comprehensive'):
-        """
-        Generate financial analysis based on type
-        
-        :param analysis_type: Type of analysis to perform
-        :return: Analysis results
-        """
-        try:
-            if analysis_type == 'comprehensive':
-                # Generate comprehensive report
-                report = self.analyzer.generate_comprehensive_report()
-                
-                # Generate visualizations
-                self.analyzer.generate_basic_visualizations()
-                
-                # Generate advanced AI insights
-                ai_insights = self.analyzer.generate_advanced_analysis()
-                
-                return {
-                    'report': report,
-                    'ai_insights': ai_insights,
-                    'visualizations': self._get_visualization_paths()
-                }
-            
-            elif analysis_type == 'descriptive':
-                # Generate descriptive statistics
-                return {
-                    'descriptive_stats': self.analyzer.descriptive_statistics().to_dict(orient='records')
-                }
-            
-            elif analysis_type == 'advanced':
-                # Generate advanced analysis
-                return {
-                    'advanced_insights': self.analyzer.generate_advanced_analysis()
-                }
-            
-            else:
-                raise ValueError(f"Unsupported analysis type: {analysis_type}")
-        
-        except Exception as e:
-            logger.error(f"Analysis generation error: {e}")
-            return {'error': str(e)}
-
-    def _get_visualization_paths(self):
-        """
-        Retrieve paths to generated visualizations
-        
-        :return: Dictionary of visualization file paths
-        """
-        base_path = 'financial_analysis_output/charts'
-        return {
-            'distribution_plot': os.path.join(base_path, 'distribution_plots.png'),
-            'boxplot': os.path.join(base_path, 'boxplot_metrics.png'),
-            'correlation_heatmap': os.path.join(base_path, 'correlation_heatmap.png'),
-            'market_cap_eps_bubble': os.path.join(base_path, 'market_cap_eps_bubble.png')
+        # Predefined columns with mapping
+        column_mapping = {
+            'PE Ratio (TTM)': 'P/E Ratio',
+            'EPS (TTM)': 'EPS',
+            'Market Cap': 'Market Cap',
+            'Previous Close': 'Current Price'
         }
+        
+        # Convert nested dictionary to list of dictionaries
+        df_data = []
+        for ticker, stock_data in json_data.items():
+            stock_entry = {}
+            
+            # Helper function to clean numeric values
+            def clean_numeric_value(value):
+                if not value or value == '--' or value == 'N/A':
+                    return None
+                
+                # Remove commas and handle percentage/multiplier suffixes
+                value = str(value).replace(',', '').replace('%', '')
+                
+                # Handle market cap and other suffixes
+                multipliers = {
+                    'B': 1_000_000_000,    # Billions
+                    'M': 1_000_000,        # Millions
+                    'T': 1_000_000_000_000 # Trillions
+                }
+                
+                # Check for multiplier suffix
+                if value and value[-1] in multipliers:
+                    try:
+                        return float(value[:-1]) * multipliers[value[-1]]
+                    except ValueError:
+                        return None
+                
+                # Attempt direct conversion
+                try:
+                    return float(value)
+                except ValueError:
+                    return None
+            
+            # Predefined columns to extract
+            expected_columns = [
+                'Market Cap', 'P/E Ratio', 'EPS', 'Dividend Yield', 
+                'Current Price', 'Beta', 'Volume', 'Momentum Score'
+            ]
+            
+            # Map and clean columns
+            for original_col, mapped_col in column_mapping.items():
+                if original_col in stock_data:
+                    stock_entry[mapped_col] = clean_numeric_value(stock_data[original_col])
+            
+            # Handle Dividend Yield
+            if 'Forward Dividend & Yield' in stock_data:
+                try:
+                    dividend_yield = stock_data['Forward Dividend & Yield']
+                    match = re.match(r'([\d.]+)\s*$$([\d.]+)%$$', dividend_yield)
+                    if match:
+                        stock_entry['Dividend Yield'] = float(match.group(2))
+                    else:
+                        stock_entry['Dividend Yield'] = None
+                except:
+                    stock_entry['Dividend Yield'] = None
+            
+            # Handle 52 Week Range for Momentum Score
+            if '52 Week Range' in stock_data:
+                try:
+                    low, high = stock_data['52 Week Range'].split(' - ')
+                    stock_entry['52 Week Low'] = clean_numeric_value(low)
+                    stock_entry['52 Week High'] = clean_numeric_value(high)
+                    
+                    # Calculate Momentum Score if possible
+                    if (stock_entry.get('Current Price') is not None and 
+                        stock_entry.get('52 Week Low') is not None and 
+                        stock_entry.get('52 Week High') is not None):
+                        current_price = stock_entry['Current Price']
+                        week_low = stock_entry['52 Week Low']
+                        week_high = stock_entry['52 Week High']
+                        
+                        stock_entry['Momentum Score'] = (current_price - week_low) / (week_high - week_low) if week_high != week_low else 0
+                except:
+                    pass
+            
+            # Ensure all expected columns exist
+            for col in expected_columns:
+                if col not in stock_entry:
+                    stock_entry[col] = None
+            
+            df_data.append(stock_entry)
+        
+        # Create DataFrame
+        df = pd.DataFrame(df_data)
+        
+        return df
+    
+    except Exception as e:
+        logger.error(f"Error loading financial data: {e}")
+        logger.error(traceback.format_exc())
+        raise
 
 @app.route('/api/financial-analysis', methods=['POST'])
 def perform_financial_analysis():
@@ -122,35 +152,111 @@ def perform_financial_analysis():
                 'error': 'No data source provided'
             }), 400
         
-        # Load dataset
-        import pandas as pd
-        import os
+        # Potential search paths
+        search_paths = [
+            os.path.join(os.getcwd(), 'server', data_source),
+            os.path.join(os.getcwd(), data_source),
+            os.path.join(os.getcwd(), 'data', data_source),
+            os.path.join(os.getcwd(), 'server', 'data', data_source)
+        ]
         
-        datasets_dir = 'server'  # Adjust path as needed
-        file_path = os.path.join(datasets_dir, data_source)
+        # Find the first existing file
+        file_path = None
+        for path in search_paths:
+            logger.info(f"Checking path: {path}")
+            if os.path.exists(path):
+                file_path = path
+                break
         
-        # Load JSON into DataFrame
-        df = pd.read_json(file_path)
+        # Raise error if no file found
+        if not file_path:
+            logger.error(f"Could not find file: {data_source}")
+            return jsonify({
+                'error': 'File not found',
+                'message': f'Could not locate {data_source}',
+                'searched_paths': search_paths
+            }), 404
         
-        # Initialize analyzer
-        from statistical_analysis import AdvancedStatisticalAnalyzer
-        analyzer = AdvancedStatisticalAnalyzer(df)
+        # Log found file path
+        logger.info(f"Found file at: {file_path}")
+        
+        # Load financial data
+        df = load_financial_data(file_path)
+        
+        # Check OpenAI API key
+        openai_api_key = os.getenv('OPENAI_API_KEY')
+        if not openai_api_key:
+            logger.error("OpenAI API key is not set")
+            return jsonify({
+                'error': 'OpenAI API key is not configured',
+                'message': 'Please set the OPENAI_API_KEY environment variable'
+            }), 500
+        
+        # Initialize analyzer using the method from statistical_analysis.py
+        analyzer = AdvancedStatisticalAnalyzer(df, openai_api_key=openai_api_key)
         
         # Perform analysis based on type
-        if analysis_type == 'comprehensive':
-            results = analyzer.generate_comprehensive_report()
-        elif analysis_type == 'descriptive':
-            results = analyzer.descriptive_statistics()
-        elif analysis_type == 'advanced':
-            results = analyzer.generate_advanced_analysis()
+        try:
+            if analysis_type == 'comprehensive':
+                # Generate comprehensive report
+                results = analyzer.generate_comprehensive_report()
+                
+                # Generate visualizations
+                analyzer.generate_basic_visualizations()
+                
+                # Generate advanced AI insights
+                ai_insights = analyzer.generate_advanced_analysis()
+                
+                return jsonify({
+                    'report': results,
+                    'ai_insights': ai_insights,
+                    'visualizations': _get_visualization_paths()
+                })
+            
+            elif analysis_type == 'descriptive':
+                # Generate descriptive statistics
+                results = analyzer.descriptive_statistics()
+                return jsonify(results.to_dict(orient='records'))
+            
+            elif analysis_type == 'advanced':
+                # Generate advanced analysis
+                results = analyzer.generate_advanced_analysis()
+                return jsonify(results)
+            
+            else:
+                raise ValueError(f"Unsupported analysis type: {analysis_type}")
         
-        return jsonify(results)
+        except Exception as analysis_error:
+            logger.error(f"Analysis generation error: {analysis_error}")
+            logger.error(traceback.format_exc())
+            return jsonify({
+                'error': 'Failed to generate analysis',
+                'message': str(analysis_error),
+                'traceback': traceback.format_exc()
+            }), 500
     
     except Exception as e:
+        logger.error(f"Financial analysis route error: {e}")
+        logger.error(traceback.format_exc())
         return jsonify({
             'error': 'Analysis failed',
-            'message': str(e)
+            'message': str(e),
+            'traceback': traceback.format_exc()
         }), 500
+
+def _get_visualization_paths():
+    """
+    Retrieve paths to generated visualizations
+    
+    :return: Dictionary of visualization file paths
+    """
+    base_path = 'financial_analysis_output/charts'
+    return {
+        'distribution_plot': os.path.join(base_path, 'distribution_plots.png'),
+        'boxplot': os.path.join(base_path, 'boxplot_metrics.png'),
+        'correlation_heatmap': os.path.join(base_path, 'correlation_heatmap.png'),
+        'market_cap_eps_bubble': os.path.join(base_path, 'market_cap_eps_bubble.png')
+    }
 
 @app.route('/api/visualizations/<filename>', methods=['GET'])
 def get_visualization(filename):
@@ -266,21 +372,6 @@ def list_financial_datasets():
             'error': 'Could not list datasets',
             'message': str(e)
         }), 500
-
-# Error Handling
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({
-        'error': 'Not found',
-        'message': 'The requested resource could not be found'
-    }), 404
-
-@app.errorhandler(500)
-def server_error(error):
-    return jsonify({
-        'error': 'Internal server error',
-        'message': 'An unexpected error occurred'
-    }), 500
 
 # Main Execution
 if __name__ == '__main__':

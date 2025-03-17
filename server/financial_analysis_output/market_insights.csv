@@ -1,0 +1,5 @@
+Category,Insight,Percentiles,Interpretation,Risk Assessment,Potential Overvaluation Threshold,Income Potential,High Yield Threshold,Risk Interpretation,High Volatility Threshold
+Market Capitalization,Market cap ranges from 1.6700e+07 to 3.3170e+12,"{'25th': '13,501,500,000', '50th (Median)': '30,748,500,000', '75th': '78,084,000,000'}",Indicates significant diversity in company sizes,,,,,,
+Valuation,P/E Ratio varies from 1.3300 to 2403.0000,"{'25th': '16.32', '50th (Median)': '23.94', '75th': '35.57'}",,Suggests wide range of market valuations,35.57,,,,
+Dividend Strategy,Dividend yields range from 0.0400% to 16.2400%,"{'25th': '1.32%', '50th (Median)': '2.53%', '75th': '3.74%'}",,,,Indicates diverse income generation potential,3.74%,,
+Market Risk,Beta ranges from 0.0100 to 3.6600,"{'25th': '0.80', '50th (Median)': '1.07', '75th': '1.33'}",,,,,,Indicates market sensitivity and volatility,1.33
