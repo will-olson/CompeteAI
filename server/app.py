@@ -40,7 +40,9 @@ def load_financial_data(file_path):
             'PE Ratio (TTM)': 'P/E Ratio',
             'EPS (TTM)': 'EPS',
             'Market Cap': 'Market Cap',
-            'Previous Close': 'Current Price'
+            'Previous Close': 'Current Price',
+            'Beta': 'Beta',
+            'Volume': 'Volume'
         }
         
         # Convert nested dictionary to list of dictionaries
@@ -87,16 +89,38 @@ def load_financial_data(file_path):
                 if original_col in stock_data:
                     stock_entry[mapped_col] = clean_numeric_value(stock_data[original_col])
             
-            # Handle Dividend Yield
+            # Robust Dividend Yield Extraction
             if 'Forward Dividend & Yield' in stock_data:
                 try:
                     dividend_yield = stock_data['Forward Dividend & Yield']
-                    match = re.match(r'([\d.]+)\s*$$([\d.]+)%$$', dividend_yield)
-                    if match:
-                        stock_entry['Dividend Yield'] = float(match.group(2))
+                    
+                    # Multiple extraction strategies
+                    extraction_strategies = [
+                        # Strategy 1: Extract percentage in parentheses
+                        lambda x: float(re.search(r'$$(\d+\.\d+)%$$', x).group(1)) if re.search(r'$$(\d+\.\d+)%$$', x) else None,
+                        
+                        # Strategy 2: Extract first number followed by %
+                        lambda x: float(re.search(r'(\d+\.\d+)%', x).group(1)) if re.search(r'(\d+\.\d+)%', x) else None,
+                        
+                        # Strategy 3: Split and take second part
+                        lambda x: float(x.split()[1].replace('(', '').replace(')', '').replace('%', '')) if len(x.split()) > 1 else None
+                    ]
+                    
+                    # Try each strategy until successful
+                    for strategy in extraction_strategies:
+                        try:
+                            dividend_yield_value = strategy(dividend_yield)
+                            if dividend_yield_value is not None:
+                                stock_entry['Dividend Yield'] = dividend_yield_value
+                                break
+                        except Exception:
+                            continue
                     else:
+                        # If no strategy works, set to None
                         stock_entry['Dividend Yield'] = None
-                except:
+                
+                except Exception as e:
+                    logger.warning(f"Could not process dividend yield: {e}")
                     stock_entry['Dividend Yield'] = None
             
             # Handle 52 Week Range for Momentum Score
@@ -123,10 +147,20 @@ def load_financial_data(file_path):
                 if col not in stock_entry:
                     stock_entry[col] = None
             
+            # Additional explicit handling for Volume and Beta
+            if 'Avg. Volume' in stock_data:
+                stock_entry['Volume'] = clean_numeric_value(stock_data['Avg. Volume'])
+            
             df_data.append(stock_entry)
         
         # Create DataFrame
         df = pd.DataFrame(df_data)
+        
+        # Debugging print
+        print("DataFrame Columns:", df.columns.tolist())
+        print("\nColumn Value Counts:")
+        for col in expected_columns:
+            print(f"{col} - Non-Null Count: {df[col].count()}")
         
         return df
     
