@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { APIService } from '@/utils/APIService';
-import { useScrapeStore } from '@/state/ScrapeStore';
+import { useScrapeStore, useScrapeConfiguration } from '@/state/ScrapeStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -37,6 +37,8 @@ interface ScrapingTarget {
 
 export function ScrapingControlPanel() {
   const { toast } = useToast();
+  const { addItems } = useScrapeStore();
+  const configuration = useScrapeConfiguration();
   
   // Scraping state
   const [isScraping, setIsScraping] = useState(false);
@@ -45,36 +47,16 @@ export function ScrapingControlPanel() {
   const [currentTarget, setCurrentTarget] = useState<string>('');
   const [scrapedCount, setScrapedCount] = useState(0);
   const [errorCount, setErrorCount] = useState(0);
+  const [scrapingLog, setScrapingLog] = useState<string[]>([]);
   
   // Configuration
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [config, setConfig] = useState({
-    pageLimit: 25,
-    depthLimit: 3,
-    delayBetweenRequests: 1000,
-    respectRobots: true,
-    followRedirects: true,
-    handleJavascript: true,
-    extractMetadata: true,
-    extractLinks: true,
-    extractImages: true,
-    extractTables: true,
-    filterDuplicates: true,
-    filterLowQuality: true,
-    gdprCompliance: true,
-    rateLimiting: 'adaptive'
-  });
 
-  // Sample targets for demonstration
-  const sampleTargets: ScrapingTarget[] = [
-    { company: 'OpenAI', category: 'marketing', url: 'https://openai.com', enabled: true, priority: 'high' },
-    { company: 'OpenAI', category: 'docs', url: 'https://openai.com/docs', enabled: true, priority: 'high' },
-    { company: 'Stripe', category: 'marketing', url: 'https://stripe.com', enabled: true, priority: 'high' },
-    { company: 'Notion', category: 'marketing', url: 'https://notion.so', enabled: true, priority: 'medium' }
-  ];
+  const addLogEntry = (message: string) => {
+    const timestamp = new Date().toLocaleTimeString();
+    setScrapingLog(prev => [`[${timestamp}] ${message}`, ...prev.slice(0, 99)]); // Keep last 100 entries
+  };
 
-  const { addItems } = useScrapeStore();
-  
   const startScraping = async () => {
     if (isScraping) return;
     
@@ -84,86 +66,127 @@ export function ScrapingControlPanel() {
       setScrapingProgress(0);
       setScrapedCount(0);
       setErrorCount(0);
+      setScrapingLog([]);
       
-      // Get enabled targets
-      const enabledTargets = sampleTargets.filter(t => t.enabled);
+      // Get enabled targets from configuration
+      const enabledTargets = configuration.targets.filter(t => t.enabled);
       const totalTargets = enabledTargets.length;
       
       if (totalTargets === 0) {
         toast({ 
           title: 'No targets enabled', 
-          description: 'Please enable at least one scraping target.',
+          description: 'Please go to the Targets tab and enable at least one scraping target.',
           variant: 'destructive'
         });
         setIsScraping(false);
         return;
       }
+
+      addLogEntry(`Starting scraping for ${totalTargets} targets...`);
       
-      // Start actual scraping
+      // Process each target
       for (let i = 0; i < enabledTargets.length; i++) {
-        if (isPaused) break;
-        
+        if (isPaused) {
+          addLogEntry('Scraping paused by user');
+          break;
+        }
+
         const target = enabledTargets[i];
+        const progress = ((i + 1) / totalTargets) * 100;
+        
         setCurrentTarget(`${target.company} - ${target.category}`);
-        setScrapingProgress((i / totalTargets) * 100);
+        setScrapingProgress(progress);
+        
+        addLogEntry(`Processing ${target.company} (${target.category}): ${target.url}`);
         
         try {
-          // Call backend scraping API
-          const response = await APIService.scrapeCompany({
+          // Call the backend scraping API
+          const result = await APIService.scrapeCompany({
             company: target.company,
             urls: { [target.category]: target.url },
             categories: [target.category],
-            page_limit: config.pageLimit
+            page_limit: configuration.advancedConfig.pageLimit
           });
           
-          if (response.error) {
+          if (result.error) {
+            addLogEntry(`Error scraping ${target.company}: ${result.error}`);
             setErrorCount(prev => prev + 1);
-            console.error(`Scraping failed for ${target.company}:`, response.error);
           } else {
+            addLogEntry(`Successfully scraped ${target.company} (${target.category})`);
             setScrapedCount(prev => prev + 1);
-            // Add scraped items to store
-            if (response.categories) {
-              // Process and add scraped data
-              // This would need to be implemented based on the actual API response
+            
+            // Convert backend result to ScrapedItem format and add to store
+            if (result.categories && result.categories[target.category]) {
+              const categoryData = result.categories[target.category];
+              if (categoryData.items && Array.isArray(categoryData.items)) {
+                const scrapedItems = categoryData.items.map((item: any) => ({
+                  id: item.id || `${target.company}-${target.category}-${Date.now()}`,
+                  company: target.company,
+                  category: target.category as any,
+                  url: item.url || target.url,
+                  title: item.title || '',
+                  markdown: item.content || '',
+                  html: item.content || '',
+                  scrapedAt: new Date().toISOString(),
+                  source: target.category,
+                  metadata: {
+                    word_count: item.word_count,
+                    char_count: item.char_count,
+                    link_count: item.link_count,
+                    image_count: item.image_count,
+                    content_quality: item.content_quality
+                  }
+                }));
+                
+                addItems(scrapedItems);
+                addLogEntry(`Added ${scrapedItems.length} items to store`);
+              }
             }
           }
+          
+          // Add delay between requests
+          if (i < enabledTargets.length - 1) {
+            const delay = configuration.advancedConfig.delayBetweenRequests;
+            addLogEntry(`Waiting ${delay}ms before next request...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+          }
+          
         } catch (error) {
+          addLogEntry(`Error processing ${target.company}: ${error}`);
           setErrorCount(prev => prev + 1);
-          console.error(`Scraping error for ${target.company}:`, error);
-        }
-        
-        // Respect delay between requests
-        if (i < enabledTargets.length - 1 && !isPaused) {
-          await new Promise(resolve => setTimeout(resolve, config.delayBetweenRequests));
         }
       }
       
-      setIsScraping(false);
-      setCurrentTarget('');
-      toast({ 
-        title: 'Scraping completed', 
-        description: `Successfully scraped ${scrapedCount} targets with ${errorCount} errors.` 
-      });
+      if (!isPaused) {
+        addLogEntry('Scraping completed successfully!');
+        toast({ 
+          title: 'Scraping completed', 
+          description: `Processed ${scrapedCount} targets with ${errorCount} errors.`,
+          variant: errorCount > 0 ? 'destructive' : 'default'
+        });
+      }
       
     } catch (error) {
-      console.error('Scraping failed:', error);
+      addLogEntry(`Fatal error: ${error}`);
       toast({ 
         title: 'Scraping failed', 
-        description: 'An error occurred during scraping.',
+        description: 'An unexpected error occurred during scraping.',
         variant: 'destructive'
       });
+    } finally {
       setIsScraping(false);
+      setIsPaused(false);
     }
   };
 
   const pauseScraping = () => {
     setIsPaused(true);
-    toast({ title: 'Scraping paused' });
+    addLogEntry('Scraping paused by user');
   };
 
   const resumeScraping = () => {
     setIsPaused(false);
-    toast({ title: 'Scraping resumed' });
+    addLogEntry('Scraping resumed');
   };
 
   const stopScraping = () => {
@@ -171,7 +194,7 @@ export function ScrapingControlPanel() {
     setIsPaused(false);
     setScrapingProgress(0);
     setCurrentTarget('');
-    toast({ title: 'Scraping stopped' });
+    addLogEntry('Scraping stopped by user');
   };
 
   const resetScraping = () => {
@@ -181,351 +204,189 @@ export function ScrapingControlPanel() {
     setCurrentTarget('');
     setScrapedCount(0);
     setErrorCount(0);
+    setScrapingLog([]);
   };
 
-  const getStatusColor = () => {
-    if (!isScraping) return 'bg-gray-100 text-gray-600';
-    if (isPaused) return 'bg-yellow-100 text-yellow-600';
-    return 'bg-green-100 text-green-600';
-  };
-
-  const getStatusText = () => {
-    if (!isScraping) return 'Idle';
-    if (isPaused) return 'Paused';
-    return 'Active';
-  };
+  // Get enabled targets count
+  const enabledTargetsCount = configuration.targets.filter(t => t.enabled).length;
+  const totalTargetsCount = configuration.targets.length;
 
   return (
     <div className="space-y-6">
-      {/* Scraping Control */}
+      {/* Status Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card>
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-blue-600">{totalTargetsCount}</div>
+            <div className="text-sm text-gray-600">Total Targets</div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-green-600">{enabledTargetsCount}</div>
+            <div className="text-sm text-gray-600">Enabled Targets</div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-purple-600">{scrapedCount}</div>
+            <div className="text-sm text-gray-600">Successfully Scraped</div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-red-600">{errorCount}</div>
+            <div className="text-sm text-gray-600">Errors</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Control Panel */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span className="flex items-center space-x-2">
-              <Zap className="h-5 w-5" />
-              <span>Scraping Control</span>
-            </span>
-            <Badge className={getStatusColor()}>
-              {getStatusText()}
-            </Badge>
+          <CardTitle className="flex items-center space-x-2">
+            <Zap className="h-5 w-5" />
+            <span>Scraping Controls</span>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="flex items-center space-x-4">
+        <CardContent className="space-y-4">
+          {/* Progress Bar */}
+          {isScraping && (
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Progress</span>
+                <span>{Math.round(scrapingProgress)}%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${scrapingProgress}%` }}
+                />
+              </div>
+              {currentTarget && (
+                <p className="text-sm text-gray-600">Current: {currentTarget}</p>
+              )}
+            </div>
+          )}
+
+          {/* Control Buttons */}
+          <div className="flex flex-wrap gap-2">
             {!isScraping ? (
-              <Button onClick={startScraping} size="lg" className="flex items-center space-x-2">
-                <Play className="h-5 w-5" />
-                <span>Start Scraping</span>
+              <Button 
+                onClick={startScraping}
+                disabled={enabledTargetsCount === 0}
+                className="gap-2"
+              >
+                <Play className="h-4 w-4" />
+                Start Scraping
               </Button>
             ) : (
               <>
                 {isPaused ? (
-                  <Button onClick={resumeScraping} size="lg" variant="outline" className="flex items-center space-x-2">
-                    <Play className="h-5 w-5" />
-                    <span>Resume</span>
+                  <Button onClick={resumeScraping} className="gap-2">
+                    <Play className="h-4 w-4" />
+                    Resume
                   </Button>
                 ) : (
-                  <Button onClick={pauseScraping} size="lg" variant="outline" className="flex items-center space-x-2">
-                    <Pause className="h-5 w-5" />
-                    <span>Pause</span>
+                  <Button onClick={pauseScraping} className="gap-2">
+                    <Pause className="h-4 w-4" />
+                    Pause
                   </Button>
                 )}
-                <Button onClick={stopScraping} size="lg" variant="destructive" className="flex items-center space-x-2">
-                  <Square className="h-5 w-5" />
-                  <span>Stop</span>
+                <Button onClick={stopScraping} variant="destructive" className="gap-2">
+                  <Square className="h-4 w-4" />
+                  Stop
                 </Button>
               </>
             )}
-            <Button onClick={resetScraping} variant="outline" size="lg">
-              <RefreshCw className="h-5 w-5 mr-2" />
+            
+            <Button onClick={resetScraping} variant="outline" className="gap-2">
+              <RefreshCw className="h-4 w-4" />
               Reset
             </Button>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Progress Monitoring */}
-      {isScraping && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <BarChart3 className="h-5 w-5" />
-              <span>Scraping Progress</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Progress Bar */}
+          {/* Configuration Warning */}
+          {enabledTargetsCount === 0 && (
+            <Alert>
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>No Targets Enabled</AlertTitle>
+              <AlertDescription>
+                Please go to the Targets tab and enable at least one scraping target before starting.
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* Configuration Summary */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
             <div>
-              <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>Progress</span>
-                <span>{Math.round(scrapingProgress)}%</span>
+              <h4 className="font-medium mb-2">Current Configuration</h4>
+              <div className="space-y-1 text-sm">
+                <div>Page Limit: {configuration.advancedConfig.pageLimit}</div>
+                <div>Depth Limit: {configuration.advancedConfig.depthLimit}</div>
+                <div>Delay: {configuration.advancedConfig.delayBetweenRequests}ms</div>
+                <div>Respect Robots: {configuration.advancedConfig.respectRobots ? 'Yes' : 'No'}</div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
-                <div 
-                  className="bg-blue-600 h-3 rounded-full transition-all duration-300" 
-                  style={{ width: `${scrapingProgress}%` }}
-                ></div>
-              </div>
-            </div>
-
-            {/* Current Target */}
-            {currentTarget && (
-              <div className="flex items-center space-x-2">
-                <Target className="h-4 w-4 text-blue-600" />
-                <span className="text-sm text-gray-600">Currently scraping:</span>
-                <span className="font-medium">{currentTarget}</span>
-              </div>
-            )}
-
-            {/* Statistics */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center p-3 bg-blue-50 rounded-lg">
-                <div className="text-lg font-semibold text-blue-600">{scrapedCount}</div>
-                <div className="text-xs text-blue-600">Success</div>
-              </div>
-              <div className="text-center p-3 bg-red-50 rounded-lg">
-                <div className="text-lg font-semibold text-red-600">{errorCount}</div>
-                <div className="text-xs text-red-600">Errors</div>
-              </div>
-              <div className="text-center p-3 bg-green-50 rounded-lg">
-                <div className="text-lg font-semibold text-green-600">
-                  {scrapedCount + errorCount > 0 ? Math.round((scrapedCount / (scrapedCount + errorCount)) * 100) : 0}%
-                </div>
-                <div className="text-xs text-green-600">Success Rate</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Configuration */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span className="flex items-center space-x-2">
-              <Settings className="h-5 w-5" />
-              <span>Scraping Configuration</span>
-            </span>
-            <Button
-              onClick={() => setShowAdvanced(!showAdvanced)}
-              variant="outline"
-              size="sm"
-            >
-              {showAdvanced ? 'Hide' : 'Show'} Advanced
-            </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Basic Configuration */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="page-limit">Page Limit</Label>
-              <Input
-                id="page-limit"
-                type="number"
-                value={config.pageLimit}
-                onChange={(e) => setConfig(prev => ({ ...prev, pageLimit: parseInt(e.target.value) }))}
-                min="1"
-                max="100"
-              />
-              <p className="text-xs text-gray-500 mt-1">Max pages per target</p>
             </div>
             
             <div>
-              <Label htmlFor="depth-limit">Crawl Depth</Label>
-              <Input
-                id="depth-limit"
-                type="number"
-                value={config.depthLimit}
-                onChange={(e) => setConfig(prev => ({ ...prev, depthLimit: parseInt(e.target.value) }))}
-                min="1"
-                max="5"
-              />
-              <p className="text-xs text-gray-500 mt-1">How deep to follow links</p>
-            </div>
-            
-            <div>
-              <Label htmlFor="delay">Request Delay (ms)</Label>
-              <Input
-                id="delay"
-                type="number"
-                value={config.delayBetweenRequests}
-                onChange={(e) => setConfig(prev => ({ ...prev, delayBetweenRequests: parseInt(e.target.value) }))}
-                min="100"
-                max="5000"
-                step="100"
-              />
-              <p className="text-xs text-gray-500 mt-1">Delay between requests</p>
+              <h4 className="font-medium mb-2">Target Summary</h4>
+              <div className="space-y-1 text-sm">
+                <div>Companies: {configuration.customCompanies.filter(c => c.trim()).length}</div>
+                <div>Categories: {configuration.selectedCategories.length}</div>
+                <div>Total Targets: {totalTargetsCount}</div>
+                <div>Ready: {enabledTargetsCount}</div>
+              </div>
             </div>
           </div>
-
-          {/* Advanced Configuration */}
-          {showAdvanced && (
-            <>
-              <Separator />
-              
-              {/* Content Extraction */}
-              <div>
-                <Label className="text-base font-medium">Content Extraction</Label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="extract-metadata"
-                      checked={config.extractMetadata}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, extractMetadata: checked }))}
-                    />
-                    <Label htmlFor="extract-metadata" className="text-sm">Metadata</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="extract-links"
-                      checked={config.extractLinks}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, extractLinks: checked }))}
-                    />
-                    <Label htmlFor="extract-links" className="text-sm">Links</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="extract-images"
-                      checked={config.extractImages}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, extractImages: checked }))}
-                    />
-                    <Label htmlFor="extract-images" className="text-sm">Images</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="extract-tables"
-                      checked={config.extractTables}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, extractTables: checked }))}
-                    />
-                    <Label htmlFor="extract-tables" className="text-sm">Tables</Label>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quality Filters */}
-              <div>
-                <Label className="text-base font-medium">Quality Filters</Label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="filter-duplicates"
-                      checked={config.filterDuplicates}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, filterDuplicates: checked }))}
-                    />
-                    <Label htmlFor="filter-duplicates" className="text-sm">Filter Duplicates</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="filter-low-quality"
-                      checked={config.filterLowQuality}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, filterLowQuality: checked }))}
-                    />
-                    <Label htmlFor="filter-low-quality" className="text-sm">Filter Low Quality</Label>
-                  </div>
-                </div>
-              </div>
-
-              {/* Technical Settings */}
-              <div>
-                <Label className="text-base font-medium">Technical Settings</Label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="respect-robots"
-                      checked={config.respectRobots}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, respectRobots: checked }))}
-                    />
-                    <Label htmlFor="respect-robots" className="text-sm">Respect robots.txt</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="follow-redirects"
-                      checked={config.followRedirects}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, followRedirects: checked }))}
-                    />
-                    <Label htmlFor="follow-redirects" className="text-sm">Follow Redirects</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="handle-javascript"
-                      checked={config.handleJavascript}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, handleJavascript: checked }))}
-                    />
-                    <Label htmlFor="handle-javascript" className="text-sm">Handle JavaScript</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="gdpr-compliance"
-                      checked={config.gdprCompliance}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, gdprCompliance: checked }))}
-                    />
-                    <Label htmlFor="gdpr-compliance" className="text-sm">GDPR Compliant</Label>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
         </CardContent>
       </Card>
 
-      {/* Target Overview */}
+      {/* Scraping Log */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Target className="h-5 w-5" />
-            <span>Target Overview</span>
+            <BarChart3 className="h-5 w-5" />
+            <span>Scraping Log</span>
+            <Badge variant="secondary">{scrapingLog.length} entries</Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {sampleTargets.map((target, index) => (
-              <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-3 h-3 rounded-full ${
-                    index < Math.floor(scrapingProgress / 25) ? 'bg-green-500' : 
-                    index === Math.floor(scrapingProgress / 25) && isScraping ? 'bg-blue-500 animate-pulse' : 
-                    'bg-gray-300'
-                  }`}></div>
-                  <div>
-                    <div className="font-medium">{target.company}</div>
-                    <div className="text-sm text-gray-600 capitalize">{target.category}</div>
-                  </div>
+          {scrapingLog.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              <Clock className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+              <p>No scraping activity yet.</p>
+              <p className="text-sm">Start scraping to see detailed logs.</p>
+            </div>
+          ) : (
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {scrapingLog.map((entry, index) => (
+                <div key={index} className="text-sm font-mono bg-gray-50 p-2 rounded">
+                  {entry}
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Badge variant={target.priority === 'high' ? 'destructive' : 'secondary'}>
-                    {target.priority}
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    {target.url}
-                  </Badge>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+          
+          {scrapingLog.length > 0 && (
+            <div className="mt-4 flex justify-between items-center">
+              <Button 
+                onClick={() => setScrapingLog([])} 
+                variant="outline" 
+                size="sm"
+              >
+                Clear Log
+              </Button>
+              <span className="text-sm text-gray-500">
+                Showing last {scrapingLog.length} entries
+              </span>
+            </div>
+          )}
         </CardContent>
       </Card>
-
-      {/* Status Alerts */}
-      {isScraping && (
-        <Alert>
-          <CheckCircle className="h-4 w-4" />
-          <AlertTitle>Scraping Active</AlertTitle>
-          <AlertDescription>
-            Web scraping is currently running. You can pause, resume, or stop the process at any time.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      {errorCount > 0 && (
-        <Alert variant="destructive">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Scraping Errors</AlertTitle>
-          <AlertDescription>
-            {errorCount} targets encountered errors during scraping. Check the logs for details.
-          </AlertDescription>
-        </Alert>
-      )}
     </div>
   );
 } 

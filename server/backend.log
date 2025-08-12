@@ -1,15 +1,9 @@
  * Serving Flask app 'insightforge_app'
  * Debug mode: off
-2025-08-12 15:29:41,511 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-08-12 16:06:17,561 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:3001
-2025-08-12 15:29:41,511 - INFO: [33mPress CTRL+C to quit[0m
-2025-08-12 15:29:46,790 - INFO: 127.0.0.1 - - [12/Aug/2025 15:29:46] "GET /api/health HTTP/1.1" 200 -
-2025-08-12 15:29:51,501 - INFO: 127.0.0.1 - - [12/Aug/2025 15:29:51] "GET /api/preset-groups HTTP/1.1" 200 -
-2025-08-12 15:29:58,151 - INFO: 127.0.0.1 - - [12/Aug/2025 15:29:58] "OPTIONS /api/health HTTP/1.1" 200 -
-2025-08-12 15:29:58,158 - INFO: 127.0.0.1 - - [12/Aug/2025 15:29:58] "GET /api/health HTTP/1.1" 200 -
-2025-08-12 15:29:58,162 - INFO: 127.0.0.1 - - [12/Aug/2025 15:29:58] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
-2025-08-12 15:29:58,166 - INFO: 127.0.0.1 - - [12/Aug/2025 15:29:58] "GET /api/preset-groups HTTP/1.1" 200 -
-2025-08-12 15:30:04,579 - INFO: 127.0.0.1 - - [12/Aug/2025 15:30:04] "OPTIONS /api/health HTTP/1.1" 200 -
-2025-08-12 15:30:04,581 - INFO: 127.0.0.1 - - [12/Aug/2025 15:30:04] "GET /api/health HTTP/1.1" 200 -
-2025-08-12 15:30:04,588 - INFO: 127.0.0.1 - - [12/Aug/2025 15:30:04] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
-2025-08-12 15:30:04,594 - INFO: 127.0.0.1 - - [12/Aug/2025 15:30:04] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 16:06:17,561 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-12 16:06:22,410 - INFO: 127.0.0.1 - - [12/Aug/2025 16:06:22] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 16:07:35,781 - INFO: 127.0.0.1 - - [12/Aug/2025 16:07:35] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 16:07:51,382 - INFO: 127.0.0.1 - - [12/Aug/2025 16:07:51] "[33mGET / HTTP/1.1[0m" 404 -
+2025-08-12 16:07:51,624 - INFO: 127.0.0.1 - - [12/Aug/2025 16:07:51] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -

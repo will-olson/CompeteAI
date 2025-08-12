@@ -93,18 +93,90 @@ export interface ScrapedItem {
   updated_at?: string;
 }
 
+// Configuration interfaces
+export interface ScrapingTarget {
+  company: string;
+  category: string;
+  url: string;
+  enabled: boolean;
+  priority?: 'high' | 'medium' | 'low';
+}
+
+export interface PresetGroup {
+  name: string;
+  companies: string[];
+  categories: string[];
+  company_count: number;
+  description?: string;
+}
+
+export interface ScrapingConfiguration {
+  selectedPreset: string;
+  customCompanies: string[];
+  selectedCategories: string[];
+  targets: ScrapingTarget[];
+  advancedConfig: {
+    pageLimit: number;
+    depthLimit: number;
+    delayBetweenRequests: number;
+    respectRobots: boolean;
+    followRedirects: boolean;
+    handleJavascript: boolean;
+    extractMetadata: boolean;
+    extractLinks: boolean;
+    extractImages: boolean;
+    extractTables: boolean;
+    filterDuplicates: boolean;
+    filterLowQuality: boolean;
+    gdprCompliance: boolean;
+    rateLimiting: string;
+  };
+}
+
 interface ScrapeState {
   items: ScrapedItem[];
+  configuration: ScrapingConfiguration;
+  presetGroups: Record<string, PresetGroup>;
 }
 
 type ScrapeAction =
   | { type: 'ADD_ITEMS'; payload: ScrapedItem[] }
   | { type: 'REMOVE_ITEM'; payload: string }
   | { type: 'CLEAR_ALL' }
-  | { type: 'UPDATE_ITEM'; payload: { id: string; updates: Partial<ScrapedItem> } };
+  | { type: 'UPDATE_ITEM'; payload: { id: string; updates: Partial<ScrapedItem> } }
+  | { type: 'UPDATE_CONFIGURATION'; payload: Partial<ScrapingConfiguration> }
+  | { type: 'SET_PRESET_GROUPS'; payload: Record<string, PresetGroup> }
+  | { type: 'LOAD_PRESET_GROUP'; payload: { presetKey: string; preset: PresetGroup } }
+  | { type: 'UPDATE_TARGETS'; payload: ScrapingTarget[] }
+  | { type: 'ADD_TARGET'; payload: ScrapingTarget }
+  | { type: 'REMOVE_TARGET'; payload: string }
+  | { type: 'UPDATE_TARGET'; payload: { id: string; updates: Partial<ScrapingTarget> } };
 
 const initialState: ScrapeState = {
-  items: []
+  items: [],
+  configuration: {
+    selectedPreset: '',
+    customCompanies: [''],
+    selectedCategories: ['marketing', 'docs'],
+    targets: [],
+    advancedConfig: {
+      pageLimit: 25,
+      depthLimit: 3,
+      delayBetweenRequests: 1000,
+      respectRobots: true,
+      followRedirects: true,
+      handleJavascript: true,
+      extractMetadata: true,
+      extractLinks: true,
+      extractImages: true,
+      extractTables: true,
+      filterDuplicates: true,
+      filterLowQuality: true,
+      gdprCompliance: true,
+      rateLimiting: 'adaptive'
+    }
+  },
+  presetGroups: {}
 };
 
 function scrapeReducer(state: ScrapeState, action: ScrapeAction): ScrapeState {
@@ -136,6 +208,85 @@ function scrapeReducer(state: ScrapeState, action: ScrapeAction): ScrapeState {
             : item
         )
       };
+
+    case 'UPDATE_CONFIGURATION':
+      return {
+        ...state,
+        configuration: {
+          ...state.configuration,
+          ...action.payload
+        }
+      };
+
+    case 'SET_PRESET_GROUPS':
+      return {
+        ...state,
+        presetGroups: action.payload
+      };
+
+    case 'LOAD_PRESET_GROUP':
+      const { presetKey, preset } = action.payload;
+      return {
+        ...state,
+        configuration: {
+          ...state.configuration,
+          selectedPreset: presetKey,
+          customCompanies: preset.companies,
+          selectedCategories: preset.categories,
+          targets: preset.companies.flatMap(company => 
+            preset.categories.map(category => ({
+              company,
+              category,
+              url: `https://${company.toLowerCase().replace(/\s+/g, '')}.com`,
+              enabled: true,
+              priority: 'medium' as const
+            }))
+          )
+        }
+      };
+
+    case 'UPDATE_TARGETS':
+      return {
+        ...state,
+        configuration: {
+          ...state.configuration,
+          targets: action.payload
+        }
+      };
+
+    case 'ADD_TARGET':
+      return {
+        ...state,
+        configuration: {
+          ...state.configuration,
+          targets: [...state.configuration.targets, action.payload]
+        }
+      };
+
+    case 'REMOVE_TARGET':
+      return {
+        ...state,
+        configuration: {
+          ...state.configuration,
+          targets: state.configuration.targets.filter(target => 
+            `${target.company}-${target.category}` !== action.payload
+          )
+        }
+      };
+
+    case 'UPDATE_TARGET':
+      const { id, updates } = action.payload;
+      return {
+        ...state,
+        configuration: {
+          ...state.configuration,
+          targets: state.configuration.targets.map(target =>
+            `${target.company}-${target.category}` === id
+              ? { ...target, ...updates }
+              : target
+          )
+        }
+      };
     
     default:
       return state;
@@ -148,6 +299,13 @@ interface ScrapeContextType {
   removeItem: (id: string) => void;
   clear: () => void;
   updateItem: (id: string, updates: Partial<ScrapedItem>) => void;
+  updateConfiguration: (updates: Partial<ScrapingConfiguration>) => void;
+  setPresetGroups: (groups: Record<string, PresetGroup>) => void;
+  loadPresetGroup: (presetKey: string, preset: PresetGroup) => void;
+  updateTargets: (targets: ScrapingTarget[]) => void;
+  addTarget: (target: ScrapingTarget) => void;
+  removeTarget: (id: string) => void;
+  updateTarget: (id: string, updates: Partial<ScrapingTarget>) => void;
 }
 
 const ScrapeContext = createContext<ScrapeContextType | undefined>(undefined);
@@ -171,12 +329,47 @@ export function ScrapeProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'UPDATE_ITEM', payload: { id, updates } });
   };
 
+  const updateConfiguration = (updates: Partial<ScrapingConfiguration>) => {
+    dispatch({ type: 'UPDATE_CONFIGURATION', payload: updates });
+  };
+
+  const setPresetGroups = (groups: Record<string, PresetGroup>) => {
+    dispatch({ type: 'SET_PRESET_GROUPS', payload: groups });
+  };
+
+  const loadPresetGroup = (presetKey: string, preset: PresetGroup) => {
+    dispatch({ type: 'LOAD_PRESET_GROUP', payload: { presetKey, preset } });
+  };
+
+  const updateTargets = (targets: ScrapingTarget[]) => {
+    dispatch({ type: 'UPDATE_TARGETS', payload: targets });
+  };
+
+  const addTarget = (target: ScrapingTarget) => {
+    dispatch({ type: 'ADD_TARGET', payload: target });
+  };
+
+  const removeTarget = (id: string) => {
+    dispatch({ type: 'REMOVE_TARGET', payload: id });
+  };
+
+  const updateTarget = (id: string, updates: Partial<ScrapingTarget>) => {
+    dispatch({ type: 'UPDATE_TARGET', payload: { id, updates } });
+  };
+
   const value: ScrapeContextType = {
     state,
     addItems,
     removeItem,
     clear,
-    updateItem
+    updateItem,
+    updateConfiguration,
+    setPresetGroups,
+    loadPresetGroup,
+    updateTargets,
+    addTarget,
+    removeTarget,
+    updateTarget
   };
 
   return (
@@ -200,6 +393,18 @@ export const useScrapeItems = () => {
   return context.state.items;
 };
 
+// Helper function to get configuration from context
+export const useScrapeConfiguration = () => {
+  const context = useScrapeStore();
+  return context.state.configuration;
+};
+
+// Helper function to get preset groups from context
+export const usePresetGroups = () => {
+  const context = useScrapeStore();
+  return context.state.presetGroups;
+};
+
 // Helper function to get actions from context
 export const useScrapeActions = () => {
   const context = useScrapeStore();
@@ -207,6 +412,13 @@ export const useScrapeActions = () => {
     addItems: context.addItems,
     removeItem: context.removeItem,
     clear: context.clear,
-    updateItem: context.updateItem
+    updateItem: context.updateItem,
+    updateConfiguration: context.updateConfiguration,
+    setPresetGroups: context.setPresetGroups,
+    loadPresetGroup: context.loadPresetGroup,
+    updateTargets: context.updateTargets,
+    addTarget: context.addTarget,
+    removeTarget: context.removeTarget,
+    updateTarget: context.updateTarget
   };
 };
