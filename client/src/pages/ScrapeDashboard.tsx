@@ -3,7 +3,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import React, { useMemo, useState, useEffect } from 'react';
-import { FirecrawlService } from '@/utils/FirecrawlService';
 import { APIService } from '@/utils/APIService';
 import { ScrapedItem, useScrapeStore } from '@/state/ScrapeStore';
 import { SEO } from '@/components/SEO';
@@ -13,11 +12,14 @@ import { Bar, BarChart, CartesianGrid, Legend, Pie, PieChart, ResponsiveContaine
 import Papa from 'papaparse';
 import mammoth from 'mammoth';
 import { Badge } from '@/components/ui/badge';
-import { Search, Download, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2, Server, Wifi, WifiOff, Globe, FileText, Rss, MessageCircle, Settings, Play, Filter } from 'lucide-react';
+import { Search, Download, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2, Server, Wifi, WifiOff, Globe, FileText, Rss, MessageCircle, Settings, Play, Filter, Brain, Zap, Lightbulb, TrendingUp, AlertTriangle, RefreshCw } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { databaseService, DatabaseItem } from '@/utils/DatabaseService';
+import { aiService, AIAnalysisResult } from '@/utils/AIService';
 
 const genId = () => Math.random().toString(36).slice(2);
 
@@ -148,7 +150,7 @@ export default function ScrapeDashboard() {
   // Core state
   const [isLoading, setIsLoading] = useState(false);
   const [limit, setLimit] = useState(25);
-  const [fcKey, setFcKey] = useState<string>(FirecrawlService.getApiKey() || '');
+  const [openaiKey, setOpenaiKey] = useState<string>('');
   const [backendStatus, setBackendStatus] = useState<'connected' | 'disconnected' | 'checking'>('checking');
   
   // Scraping configuration
@@ -168,50 +170,50 @@ export default function ScrapeDashboard() {
   });
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  // Enhanced analytics
+  // AI Analysis state
+  const [autoAnalysis, setAutoAnalysis] = useState(true);
+  const [analysisTone, setAnalysisTone] = useState<'neutral' | 'confident' | 'skeptical' | 'enthusiastic'>('neutral');
+  const [focusAreas, setFocusAreas] = useState('positioning, differentiation, pricing, risks, opportunities');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [aiInsights, setAiInsights] = useState<Map<string, AIAnalysisResult>>(new Map());
+  const [competitiveSummary, setCompetitiveSummary] = useState<string>('');
+
+  // Database state
+  const [dbItems, setDbItems] = useState<DatabaseItem[]>([]);
+  const [dbStats, setDbStats] = useState<any>(null);
+
+  // Enhanced analytics using database data
   const metrics = useMemo(() => {
+    if (!dbStats) return {
+      byCat: [],
+      byCompany: [],
+      trendData: [],
+      contentQuality: {
+        totalWords: 0,
+        totalCharacters: 0,
+        richContent: 0,
+        hasLinks: 0,
+        hasImages: 0,
+        hasCode: 0,
+        structuredContent: 0,
+        averageWordsPerItem: 0,
+        averageCharsPerItem: 0
+      },
+      totalItems: 0,
+      uniqueCompanies: 0
+    };
+
     const byCat: Record<string, number> = {};
     const byCompany: Record<string, number> = {};
     const timeData: Record<string, number> = {};
     
-    const contentQuality = {
-      totalWords: 0,
-      totalCharacters: 0,
-      richContent: 0,
-      hasLinks: 0,
-      hasImages: 0,
-      hasCode: 0,
-      structuredContent: 0,
-      averageWordsPerItem: 0,
-      averageCharsPerItem: 0
-    };
-    
-    items.forEach(item => {
+    dbItems.forEach(item => {
       byCat[item.category] = (byCat[item.category] || 0) + 1;
       byCompany[item.company] = (byCompany[item.company] || 0) + 1;
       
       const date = new Date(item.scrapedAt).toLocaleDateString();
       timeData[date] = (timeData[date] || 0) + 1;
-      
-      if (item.markdown) {
-        const wordCount = item.markdown.split(/\s+/).length;
-        const charCount = item.markdown.length;
-        
-        contentQuality.totalWords += wordCount;
-        contentQuality.totalCharacters += charCount;
-        
-        if (wordCount > 1000) contentQuality.richContent++;
-        if (item.markdown.includes('http')) contentQuality.hasLinks++;
-        if (item.markdown.includes('![')) contentQuality.hasImages++;
-        if (item.markdown.includes('```')) contentQuality.hasCode++;
-        if (item.markdown.includes('##')) contentQuality.structuredContent++;
-      }
     });
-    
-    if (items.length > 0) {
-      contentQuality.averageWordsPerItem = Math.round(contentQuality.totalWords / items.length);
-      contentQuality.averageCharsPerItem = Math.round(contentQuality.totalCharacters / items.length);
-    }
     
     const trendData = Object.entries(timeData)
       .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
@@ -221,18 +223,19 @@ export default function ScrapeDashboard() {
       byCat: Object.entries(byCat).map(([name, value]) => ({ name, value })),
       byCompany: Object.entries(byCompany).map(([name, value]) => ({ name, value })),
       trendData,
-      contentQuality,
-      totalItems: items.length,
-      uniqueCompanies: Object.keys(byCompany).length
+      contentQuality: dbStats.contentQuality,
+      totalItems: dbStats.totalItems,
+      uniqueCompanies: dbStats.companies.length
     };
-  }, [items]);
+  }, [dbItems, dbStats]);
 
   const filteredItems = useMemo(() => {
-    return items.filter(item => {
+    return dbItems.filter(item => {
       const matchesSearch = !filters.search || 
         item.title?.toLowerCase().includes(filters.search.toLowerCase()) ||
         item.markdown?.toLowerCase().includes(filters.search.toLowerCase()) ||
-        item.company?.toLowerCase().includes(filters.search.toLowerCase());
+        item.company?.toLowerCase().includes(filters.search.toLowerCase()) ||
+        item.ai_analysis?.toLowerCase().includes(filters.search.toLowerCase());
       
       const matchesCompany = !filters.company || item.company === filters.company;
       const matchesCategory = !filters.category || item.category === filters.category;
@@ -252,11 +255,49 @@ export default function ScrapeDashboard() {
       
       return matchesSearch && matchesCompany && matchesCategory && matchesDate;
     });
-  }, [items, filters]);
+  }, [dbItems, filters]);
 
   useEffect(() => {
     checkBackendConnection();
+    initializeDatabase();
+    loadStoredApiKey();
   }, []);
+
+  const initializeDatabase = async () => {
+    try {
+      await databaseService.init();
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+    } catch (error) {
+      console.error('Failed to initialize database:', error);
+    }
+  };
+
+  const loadStoredApiKey = () => {
+    const stored = localStorage.getItem('openai_api_key');
+    if (stored) {
+      setOpenaiKey(stored);
+      aiService.setApiKey(stored);
+    }
+  };
+
+  const loadDatabaseItems = async () => {
+    try {
+      const items = await databaseService.getAllItems();
+      setDbItems(items);
+    } catch (error) {
+      console.error('Failed to load database items:', error);
+    }
+  };
+
+  const loadDatabaseStats = async () => {
+    try {
+      const stats = await databaseService.getStats();
+      setDbStats(stats);
+    } catch (error) {
+      console.error('Failed to load database stats:', error);
+    }
+  };
 
   const checkBackendConnection = async () => {
     try {
@@ -273,9 +314,58 @@ export default function ScrapeDashboard() {
   };
 
   const onSaveKey = () => {
-    if (!fcKey) return;
-    FirecrawlService.saveApiKey(fcKey);
-    toast({ title: 'API key saved' });
+    if (!openaiKey) return;
+    aiService.setApiKey(openaiKey);
+    toast({ title: 'OpenAI API key saved' });
+  };
+
+  const analyzeScrapedContent = async (items: ScrapedItem[]) => {
+    if (!openaiKey) {
+      toast({ title: 'OpenAI API key required', description: 'Please set your OpenAI API key to enable AI analysis', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = focusAreas.split(',').map(area => area.trim());
+      const analysisResults = await aiService.analyzeBatch(items, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems(); // Refresh data
+      await loadDatabaseStats();
+      
+      toast({ title: 'AI analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('AI analysis failed:', error);
+      toast({ title: 'AI analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const generateCompetitiveSummary = async () => {
+    if (!openaiKey) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    try {
+      const companies = Array.from(new Set(dbItems.map(item => item.company)));
+      const focusAreasArray = focusAreas.split(',').map(area => area.trim());
+      
+      const summary = await aiService.generateCompetitiveSummary(companies, focusAreasArray);
+      setCompetitiveSummary(summary);
+      
+      toast({ title: 'Competitive summary generated' });
+    } catch (error) {
+      console.error('Failed to generate competitive summary:', error);
+      toast({ title: 'Summary generation failed', variant: 'destructive' });
+    }
   };
 
   const loadPresetGroup = (presetKey: string) => {
@@ -344,6 +434,7 @@ export default function ScrapeDashboard() {
     
     setIsLoading(true);
     let totalScraped = 0;
+    const scrapedItems: ScrapedItem[] = [];
     
     try {
       for (const target of targets) {
@@ -365,7 +456,7 @@ export default function ScrapeDashboard() {
           if (response.categories && response.categories[target.category]) {
             const categoryData = response.categories[target.category];
             if (categoryData.items) {
-              const scrapedItems: ScrapedItem[] = categoryData.items.map((item: any) => ({
+              const newItems: ScrapedItem[] = categoryData.items.map((item: any) => ({
                 id: item.id || genId(),
                 company: target.company,
                 category: target.category as any,
@@ -377,12 +468,28 @@ export default function ScrapeDashboard() {
                 source: new URL(target.url).host
               }));
               
-              addItems(scrapedItems);
-              totalScraped += scrapedItems.length;
+              scrapedItems.push(...newItems);
+              totalScraped += newItems.length;
             }
           }
         } catch (error) {
           console.error(`Failed to scrape ${target.category} for ${target.company}:`, error);
+        }
+      }
+      
+      // Store in database
+      if (scrapedItems.length > 0) {
+        await databaseService.addItems(scrapedItems);
+        await loadDatabaseItems();
+        await loadDatabaseStats();
+        
+        // Add to store for immediate display
+        addItems(scrapedItems);
+        
+        // Run AI analysis if enabled
+        if (autoAnalysis && openaiKey) {
+          toast({ title: 'Starting AI analysis...', description: 'Analyzing scraped content for insights' });
+          setTimeout(() => analyzeScrapedContent(scrapedItems), 1000);
         }
       }
       
@@ -394,21 +501,20 @@ export default function ScrapeDashboard() {
     }
   };
 
-  const exportCSV = () => {
-    const csv = Papa.unparse(items.map(i => ({ 
-      id: i.id, 
-      company: i.company, 
-      category: i.category, 
-      url: i.url, 
-      title: i.title, 
-      scrapedAt: i.scrapedAt 
-    })));
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'scraped_data.csv';
-    a.click();
-    URL.revokeObjectURL(a.href);
+  const exportCSV = async () => {
+    try {
+      const csv = await databaseService.exportToCSV();
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'competitive_intelligence_data.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast({ title: 'Data exported successfully' });
+    } catch (error) {
+      console.error('Export failed:', error);
+      toast({ title: 'Export failed', variant: 'destructive' });
+    }
   };
 
   const onUpload = async (file: File) => {
@@ -465,6 +571,21 @@ export default function ScrapeDashboard() {
     }
   };
 
+  const clearAllData = async () => {
+    try {
+      await databaseService.clearAll();
+      clear();
+      setDbItems([]);
+      setDbStats(null);
+      setAiInsights(new Map());
+      setCompetitiveSummary('');
+      toast({ title: 'All data cleared' });
+    } catch (error) {
+      console.error('Failed to clear data:', error);
+      toast({ title: 'Failed to clear data', variant: 'destructive' });
+    }
+  };
+
   return (
     <main className="container mx-auto py-6 px-4">
       <SEO title="Scrape Intelligence | InsightForge" description="Targeted and aggregate web scraping across marketing, docs, RSS and social sources." canonical={window.location.href} />
@@ -502,9 +623,10 @@ export default function ScrapeDashboard() {
       </Card>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="scraping">Scraping Setup</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="ai-insights">AI Insights</TabsTrigger>
           <TabsTrigger value="data">Data View</TabsTrigger>
         </TabsList>
 
@@ -515,19 +637,19 @@ export default function ScrapeDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Settings className="h-5 w-5" />
-                Scraping Configuration
+                Configuration
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <Label>Firecrawl API Key</Label>
+                  <Label>OpenAI API Key</Label>
                   <div className="flex gap-2">
                     <Input 
                       type="password" 
-                      value={fcKey} 
-                      onChange={e => setFcKey(e.target.value)} 
-                      placeholder="fc_live_..." 
+                      value={openaiKey} 
+                      onChange={e => setOpenaiKey(e.target.value)} 
+                      placeholder="sk-..." 
                     />
                     <Button onClick={onSaveKey} variant="secondary">Save</Button>
                   </div>
@@ -560,6 +682,42 @@ export default function ScrapeDashboard() {
                       <SelectItem value="social">Social Media</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+              </div>
+
+              {/* AI Analysis Configuration */}
+              <div className="border-t pt-4">
+                <h4 className="font-medium mb-3">AI Analysis Settings</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Analysis Tone</Label>
+                    <Select value={analysisTone} onValueChange={(value: any) => setAnalysisTone(value)}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="neutral">Neutral</SelectItem>
+                        <SelectItem value="confident">Confident</SelectItem>
+                        <SelectItem value="skeptical">Skeptical</SelectItem>
+                        <SelectItem value="enthusiastic">Enthusiastic</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Focus Areas</Label>
+                    <Input 
+                      value={focusAreas}
+                      onChange={(e) => setFocusAreas(e.target.value)}
+                      placeholder="positioning, differentiation, pricing, risks"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label>Auto Analysis</Label>
+                      <Switch checked={autoAnalysis} onCheckedChange={setAutoAnalysis} />
+                    </div>
+                    <p className="text-xs text-muted-foreground">Automatically analyze scraped content</p>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -836,6 +994,191 @@ export default function ScrapeDashboard() {
           </Card>
         </TabsContent>
 
+        {/* AI Insights Tab */}
+        <TabsContent value="ai-insights" className="space-y-6">
+          {/* AI Analysis Status */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Brain className="h-5 w-5" />
+                AI Analysis Status
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-primary">{aiInsights.size}</div>
+                  <div className="text-sm text-muted-foreground">Items Analyzed</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-primary">
+                    {dbItems.filter(item => item.sentiment_score !== undefined).length}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Sentiment Scores</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-primary">
+                    {dbItems.filter(item => item.key_topics && item.key_topics.length > 0).length}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Topic Analysis</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-primary">
+                    {dbItems.filter(item => item.risk_factors && item.risk_factors.length > 0).length}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Risk Assessments</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* AI Analysis Actions */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                AI Analysis Actions
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex gap-3">
+                <Button
+                  onClick={() => analyzeScrapedContent(dbItems)}
+                  disabled={isAnalyzing || !openaiKey || dbItems.length === 0}
+                  className="flex-1"
+                >
+                  {isAnalyzing ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                      Analyzing...
+                    </>
+                  ) : (
+                    <>
+                      <Brain className="h-4 w-4 mr-2" />
+                      Analyze All Content
+                    </>
+                  )}
+                </Button>
+                <Button
+                  onClick={generateCompetitiveSummary}
+                  disabled={!openaiKey || dbItems.length === 0}
+                  variant="outline"
+                >
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  Generate Summary
+                </Button>
+              </div>
+              
+              {!openaiKey && (
+                <div className="text-center py-4 text-muted-foreground">
+                  <p>OpenAI API key required for AI analysis</p>
+                  <p className="text-sm">Set your API key in the Scraping Setup tab</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Competitive Summary */}
+          {competitiveSummary && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5" />
+                  Competitive Intelligence Summary
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-wrap">{competitiveSummary}</div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* AI Analysis Results */}
+          {aiInsights.size > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5" />
+                  AI Analysis Results
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {Array.from(aiInsights.entries()).slice(0, 5).map(([itemId, analysis]) => {
+                    const item = dbItems.find(i => i.id === itemId);
+                    if (!item) return null;
+                    
+                    return (
+                      <div key={itemId} className="p-4 border rounded-lg">
+                        <div className="flex items-center gap-2 mb-3">
+                          <h4 className="font-medium">{item.title || 'Untitled'}</h4>
+                          <Badge variant="outline">{item.company}</Badge>
+                          <Badge variant="secondary">{item.category}</Badge>
+                          <Badge variant={analysis.sentiment_score > 0 ? 'default' : analysis.sentiment_score < 0 ? 'destructive' : 'outline'}>
+                            {analysis.sentiment_score > 0 ? 'Positive' : analysis.sentiment_score < 0 ? 'Negative' : 'Neutral'}
+                          </Badge>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          {analysis.ai_analysis && (
+                            <div>
+                              <h5 className="font-medium text-sm mb-1">Analysis</h5>
+                              <p className="text-sm text-muted-foreground">{analysis.ai_analysis}</p>
+                            </div>
+                          )}
+                          
+                          {analysis.key_topics && analysis.key_topics.length > 0 && (
+                            <div>
+                              <h5 className="font-medium text-sm mb-1">Key Topics</h5>
+                              <div className="flex flex-wrap gap-1">
+                                {analysis.key_topics.map((topic, index) => (
+                                  <Badge key={index} variant="outline" className="text-xs">
+                                    {topic}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {analysis.competitive_insights && (
+                            <div>
+                              <h5 className="font-medium text-sm mb-1">Competitive Insights</h5>
+                              <p className="text-sm text-muted-foreground">{analysis.competitive_insights}</p>
+                            </div>
+                          )}
+                          
+                          {analysis.risk_factors && analysis.risk_factors.length > 0 && (
+                            <div>
+                              <h5 className="font-medium text-sm mb-1">Risk Factors</h5>
+                              <div className="flex flex-wrap gap-1">
+                                {analysis.risk_factors.map((risk, index) => (
+                                  <Badge key={index} variant="destructive" className="text-xs">
+                                    <AlertTriangle className="h-3 w-3 mr-1" />
+                                    {risk}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  
+                  {aiInsights.size > 5 && (
+                    <div className="text-center py-4 text-muted-foreground">
+                      <p>Showing first 5 of {aiInsights.size} analyzed items</p>
+                      <p className="text-sm">Use the Data View tab to see all analyzed content</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
         {/* Data View Tab */}
         <TabsContent value="data" className="space-y-6">
           {/* Search and Filters */}
@@ -907,7 +1250,7 @@ export default function ScrapeDashboard() {
                     <Download className="h-4 w-4 mr-2" />
                     Export CSV
                   </Button>
-                  <Button variant="ghost" onClick={clear}>Clear All</Button>
+                  <Button variant="ghost" onClick={clearAllData}>Clear All</Button>
                 </div>
               </div>
             </CardContent>
@@ -946,14 +1289,61 @@ export default function ScrapeDashboard() {
                         <h3 className="font-medium">{item.title || 'Untitled'}</h3>
                         <Badge variant="outline">{item.company}</Badge>
                         <Badge variant="secondary">{item.category}</Badge>
+                        {item.sentiment_score !== undefined && (
+                          <Badge variant={item.sentiment_score > 0 ? 'default' : item.sentiment_score < 0 ? 'destructive' : 'outline'}>
+                            {item.sentiment_score > 0 ? '😊' : item.sentiment_score < 0 ? '😟' : '😐'}
+                          </Badge>
+                        )}
                       </div>
+                      
                       {item.markdown && (
-                        <div className="prose prose-sm max-h-32 overflow-auto">
+                        <div className="prose prose-sm max-h-32 overflow-auto mb-3">
                           <div className="whitespace-pre-wrap">
                             {item.markdown.slice(0, 300)}...
                           </div>
                         </div>
                       )}
+                      
+                      {/* AI Analysis Results */}
+                      {item.ai_analysis && (
+                        <div className="border-t pt-3 space-y-2">
+                          <h4 className="font-medium text-sm">AI Analysis</h4>
+                          <p className="text-sm text-muted-foreground">{item.ai_analysis}</p>
+                          
+                          {item.key_topics && item.key_topics.length > 0 && (
+                            <div>
+                              <span className="text-xs font-medium">Topics: </span>
+                              <div className="inline-flex flex-wrap gap-1">
+                                {item.key_topics.map((topic, index) => (
+                                  <Badge key={index} variant="outline" className="text-xs">
+                                    {topic}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {item.risk_factors && item.risk_factors.length > 0 && (
+                            <div>
+                              <span className="text-xs font-medium text-red-600">Risks: </span>
+                              <div className="inline-flex flex-wrap gap-1">
+                                {item.risk_factors.map((risk, index) => (
+                                  <Badge key={index} variant="destructive" className="text-xs">
+                                    {risk}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      <div className="text-xs text-muted-foreground mt-2">
+                        Scraped: {new Date(item.scrapedAt).toLocaleDateString()}
+                        {item.updated_at && item.updated_at !== item.scrapedAt && (
+                          <span> • Analyzed: {new Date(item.updated_at).toLocaleDateString()}</span>
+                        )}
+                      </div>
                     </div>
                   ))}
                   
