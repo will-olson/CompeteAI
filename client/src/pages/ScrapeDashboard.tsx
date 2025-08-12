@@ -8,11 +8,11 @@ import { ScrapedItem, useScrapeStore } from '@/state/ScrapeStore';
 import { SEO } from '@/components/SEO';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Bar, BarChart, CartesianGrid, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, LineChart, Line, AreaChart, Area } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, LineChart, Line, AreaChart, Area, Scatter, ScatterChart, Cell } from 'recharts';
 import Papa from 'papaparse';
 import mammoth from 'mammoth';
 import { Badge } from '@/components/ui/badge';
-import { Search, Download, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2, Server, Wifi, WifiOff, Globe, FileText, Rss, MessageCircle, Settings, Play, Filter, Brain, Zap, Lightbulb, TrendingUp, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Search, Download, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2, Server, Wifi, WifiOff, Globe, FileText, Rss, MessageCircle, Settings, Play, Filter, Brain, Zap, Lightbulb, TrendingUp, AlertTriangle, RefreshCw, Clock, Eye, BarChart4, Calendar, MapPin, Globe2, Shield, Lock, CheckCircle, XCircle, AlertCircle, Info, ChevronDown, ChevronUp, ExternalLink, Copy, Share2, BookOpen, Database, Cpu, Network, HardDrive, Monitor, Smartphone, Tablet, Languages, DollarSign, Percent, Hash, Star, Award, Trophy, Medal, Rocket, Camera, Video, Music, Headphones, Speaker, Volume2, VolumeX, PlayCircle, PauseCircle, StopCircle, SkipBack, SkipForward, RotateCcw, RotateCw, FastForward, Rewind, Shuffle, Repeat, Repeat1, Maximize, Minimize, Move, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, ArrowDownLeft, ArrowUpLeft, ArrowDownRight } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
@@ -21,8 +21,121 @@ import { Switch } from '@/components/ui/switch';
 import { databaseService, DatabaseItem } from '@/utils/DatabaseService';
 import { aiService, AIAnalysisResult } from '@/utils/AIService';
 import { linkTargetingService, LinkTarget } from '@/utils/LinkTargetingService';
+import { Progress } from '@/components/ui/progress';
+import { Slider } from '@/components/ui/slider';
+import { Separator } from '@/components/ui/separator';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Tooltip as TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar as CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const genId = () => Math.random().toString(36).slice(2);
+
+// Enhanced scraping configuration interface
+interface AdvancedScrapingConfig {
+  // Core settings
+  pageLimit: number;
+  depthLimit: number;
+  delayBetweenRequests: number;
+  
+  // Content extraction
+  extractMetadata: boolean;
+  extractLinks: boolean;
+  extractImages: boolean;
+  extractTables: boolean;
+  extractForms: boolean;
+  extractVideos: boolean;
+  extractAudio: boolean;
+  
+  // Quality filters
+  minContentLength: number;
+  maxContentLength: number;
+  minWordCount: number;
+  maxWordCount: number;
+  filterDuplicates: boolean;
+  filterLowQuality: boolean;
+  
+  // Technical settings
+  respectRobots: boolean;
+  followRedirects: boolean;
+  handleJavascript: boolean;
+  extractDynamicContent: boolean;
+  captureScreenshots: boolean;
+  
+  // Regional and localization
+  preferredLanguage: string;
+  regionalVariants: boolean;
+  currencyFormat: string;
+  dateFormat: string;
+  
+  // Compliance
+  gdprCompliance: boolean;
+  cookieHandling: string;
+  sessionPersistence: boolean;
+  rateLimiting: string;
+  
+  // Advanced features
+  semanticAnalysis: boolean;
+  entityExtraction: boolean;
+  keywordExtraction: boolean;
+  sentimentPreview: boolean;
+  topicModeling: boolean;
+}
+
+// Enhanced scraping progress tracking
+interface ScrapingProgress {
+  totalTargets: number;
+  completedTargets: number;
+  currentTarget: string;
+  currentCompany: string;
+  currentCategory: string;
+  pagesScraped: number;
+  totalPages: number;
+  errors: Array<{ target: string; error: string; timestamp: string }>;
+  warnings: Array<{ target: string; warning: string; timestamp: string }>;
+  startTime: Date;
+  estimatedTimeRemaining: number;
+  successRate: number;
+}
+
+// Enhanced data analytics interface
+interface EnhancedAnalytics {
+  contentQuality: {
+    readabilityScores: { [key: string]: number[] };
+    contentDensity: { [key: string]: number[] };
+    freshnessScores: { [key: string]: number[] };
+    authorityScores: { [key: string]: number[] };
+  };
+  sentimentAnalysis: {
+    overallSentiment: number;
+    sentimentTrends: { [key: string]: number[] };
+    sentimentByCategory: { [key: string]: number };
+    sentimentByCompany: { [key: string]: number };
+  };
+  topicAnalysis: {
+    topTopics: string[];
+    topicClusters: { [key: string]: string[] };
+    emergingTopics: string[];
+    topicTrends: { [key: string]: number[] };
+  };
+  competitiveInsights: {
+    marketPositioning: { [key: string]: string };
+    featureComparison: { [key: string]: string[] };
+    pricingAnalysis: { [key: string]: any };
+    strategyInsights: { [key: string]: string };
+  };
+  performanceMetrics: {
+    scrapingSpeed: number;
+    dataQuality: number;
+    coverageCompleteness: number;
+    analysisAccuracy: number;
+  };
+}
 
 // Dynamic industry groupings using LinkTargetingService
 const getIndustryGroupings = () => {
@@ -577,6 +690,97 @@ export default function ScrapeDashboard() {
   const [useBackendKey, setUseBackendKey] = useState(true);
   const [frontendOpenAIKey, setFrontendOpenAIKey] = useState<string>('');
   const [showTargetSelection, setShowTargetSelection] = useState(false);
+
+  // Enhanced scraping configuration and progress tracking
+  const [advancedConfig, setAdvancedConfig] = useState<AdvancedScrapingConfig>({
+    pageLimit: 25,
+    depthLimit: 3,
+    delayBetweenRequests: 1000,
+    extractMetadata: true,
+    extractLinks: true,
+    extractImages: true,
+    extractTables: true,
+    extractForms: true,
+    extractVideos: false,
+    extractAudio: false,
+    minContentLength: 100,
+    maxContentLength: 50000,
+    minWordCount: 10,
+    maxWordCount: 10000,
+    filterDuplicates: true,
+    filterLowQuality: true,
+    respectRobots: true,
+    followRedirects: true,
+    handleJavascript: true,
+    extractDynamicContent: true,
+    captureScreenshots: false,
+    preferredLanguage: 'en',
+    regionalVariants: true,
+    currencyFormat: 'auto',
+    dateFormat: 'auto',
+    gdprCompliance: true,
+    cookieHandling: 'minimal',
+    sessionPersistence: false,
+    rateLimiting: 'adaptive',
+    semanticAnalysis: true,
+    entityExtraction: true,
+    keywordExtraction: true,
+    sentimentPreview: true,
+    topicModeling: true
+  });
+
+  const [scrapingProgress, setScrapingProgress] = useState<ScrapingProgress | null>(null);
+  const [isScraping, setIsScraping] = useState(false);
+  const [scrapingHistory, setScrapingHistory] = useState<Array<{
+    id: string;
+    timestamp: Date;
+    targets: ScrapingTarget[];
+    results: { success: number; failed: number; total: number };
+    duration: number;
+    config: AdvancedScrapingConfig;
+  }>>([]);
+
+  // Enhanced analytics state
+  const [enhancedAnalytics, setEnhancedAnalytics] = useState<EnhancedAnalytics | null>(null);
+  const [showAdvancedAnalytics, setShowAdvancedAnalytics] = useState(false);
+  const [selectedTimeRange, setSelectedTimeRange] = useState<'1d' | '7d' | '30d' | '90d' | '1y' | 'all'>('30d');
+  const [selectedVisualization, setSelectedVisualization] = useState<'overview' | 'quality' | 'sentiment' | 'topics' | 'competitive' | 'performance'>('overview');
+
+  // Real-time monitoring state
+  const [realTimeUpdates, setRealTimeUpdates] = useState(false);
+  const [updateInterval, setUpdateInterval] = useState(5000); // 5 seconds
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [systemHealth, setSystemHealth] = useState<{
+    backend: 'healthy' | 'degraded' | 'unhealthy';
+    database: 'connected' | 'disconnected' | 'error';
+    scraping: 'idle' | 'active' | 'paused' | 'error';
+    ai: 'available' | 'limited' | 'unavailable';
+  }>({
+    backend: 'healthy',
+    database: 'connected',
+    scraping: 'idle',
+    ai: 'available'
+  });
+
+  // Advanced filtering and search
+  const [advancedFilters, setAdvancedFilters] = useState({
+    contentQuality: { min: 0, max: 100 },
+    sentimentRange: { min: -1, max: 1 },
+    dateRange: { start: null as Date | null, end: null as Date | null },
+    wordCountRange: { min: 0, max: 10000 },
+    hasImages: null as boolean | null,
+    hasLinks: null as boolean | null,
+    hasTables: null as boolean | null,
+    language: 'all',
+    source: 'all'
+  });
+
+  // Export and reporting state
+  const [exportFormat, setExportFormat] = useState<'csv' | 'json' | 'pdf' | 'excel'>('csv');
+  const [exportFilters, setExportFilters] = useState(false);
+  const [reportTemplate, setReportTemplate] = useState<'executive' | 'technical' | 'detailed' | 'custom'>('executive');
+  const [isExporting, setIsExporting] = useState(false);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
 
   // Enhanced analytics using database data
   const metrics = useMemo(() => {
@@ -1644,6 +1848,580 @@ export default function ScrapeDashboard() {
       toast({ title: 'Failed to clear data', variant: 'destructive' });
     }
   };
+
+  // Enhanced scraping functions
+  const runEnhancedScraping = async (targets: ScrapingTarget[]) => {
+    if (targets.length === 0) {
+      toast({ title: 'No targets selected', variant: 'destructive' });
+      return;
+    }
+
+    setIsScraping(true);
+    const startTime = new Date();
+    const progress: ScrapingProgress = {
+      totalTargets: targets.length,
+      completedTargets: 0,
+      currentTarget: '',
+      currentCompany: '',
+      currentCategory: '',
+      pagesScraped: 0,
+      totalPages: targets.length * advancedConfig.pageLimit,
+      errors: [],
+      warnings: [],
+      startTime,
+      estimatedTimeRemaining: 0,
+      successRate: 100
+    };
+
+    setScrapingProgress(progress);
+    const scrapedItems: ScrapedItem[] = [];
+    let totalScraped = 0;
+    let totalErrors = 0;
+
+    try {
+      for (let i = 0; i < targets.length; i++) {
+        const target = targets[i];
+        if (!target.enabled) continue;
+
+        // Update progress
+        progress.currentTarget = target.url;
+        progress.currentCompany = target.company;
+        progress.currentCategory = target.category;
+        progress.completedTargets = i;
+        progress.estimatedTimeRemaining = Math.max(0, 
+          ((targets.length - i) * (advancedConfig.delayBetweenRequests / 1000)) / 60
+        );
+        setScrapingProgress({ ...progress });
+
+        try {
+          // Enhanced scraping request with advanced configuration
+          const enhancedRequest = {
+            company: target.company,
+            urls: { [target.category]: target.url },
+            categories: [target.category],
+            page_limit: advancedConfig.pageLimit,
+            depth_limit: advancedConfig.depthLimit,
+            respect_robots: advancedConfig.respectRobots,
+            user_agent: 'InsightForge-WebIntelligence/2.0 (+https://insightforge.ai/bot)',
+            delay_between_requests: advancedConfig.delayBetweenRequests,
+            extract_metadata: advancedConfig.extractMetadata,
+            extract_links: advancedConfig.extractLinks,
+            extract_images: advancedConfig.extractImages,
+            extract_tables: advancedConfig.extractTables,
+            extract_forms: advancedConfig.extractForms,
+            extract_videos: advancedConfig.extractVideos,
+            extract_audio: advancedConfig.extractAudio,
+            min_content_length: advancedConfig.minContentLength,
+            max_content_length: advancedConfig.maxContentLength,
+            min_word_count: advancedConfig.minWordCount,
+            max_word_count: advancedConfig.maxWordCount,
+            filter_duplicates: advancedConfig.filterDuplicates,
+            filter_low_quality: advancedConfig.filterLowQuality,
+            follow_redirects: advancedConfig.followRedirects,
+            handle_javascript: advancedConfig.handleJavascript,
+            extract_dynamic_content: advancedConfig.extractDynamicContent,
+            capture_screenshots: advancedConfig.captureScreenshots,
+            preferred_language: advancedConfig.preferredLanguage,
+            regional_variants: advancedConfig.regionalVariants,
+            currency_format: advancedConfig.currencyFormat,
+            date_format: advancedConfig.dateFormat,
+            gdpr_compliance: advancedConfig.gdprCompliance,
+            cookie_handling: advancedConfig.cookieHandling,
+            session_persistence: advancedConfig.sessionPersistence,
+            rate_limiting: advancedConfig.rateLimiting,
+            semantic_analysis: advancedConfig.semanticAnalysis,
+            entity_extraction: advancedConfig.entityExtraction,
+            keyword_extraction: advancedConfig.keywordExtraction,
+            sentiment_preview: advancedConfig.sentimentPreview,
+            topic_modeling: advancedConfig.topicModeling
+          };
+
+          const response = await APIService.scrapeCompany(enhancedRequest);
+
+          if (response.categories && response.categories[target.category]) {
+            const categoryData = response.categories[target.category];
+            if (categoryData.items) {
+              const newItems: ScrapedItem[] = categoryData.items.map(item => ({
+                id: item.id || genId(),
+                company: target.company,
+                category: target.category,
+                url: item.url || target.url,
+                title: item.title || `Scraped ${target.category} content`,
+                markdown: item.content || item.markdown || '',
+                html: item.content_html || '',
+                scrapedAt: item.scraped_at || new Date().toISOString(),
+                source: new URL(target.url).host,
+                metadata: {
+                  word_count: item.word_count || (item.content ? item.content.split(/\s+/).length : 0),
+                  char_count: item.char_count || (item.content ? item.content.length : 0),
+                  language: item.language || 'en',
+                  readability_score: item.readability_score || null,
+                  content_density: item.content_density || null,
+                  freshness_score: item.freshness_score || null,
+                  authority_score: item.authority_score || null,
+                  http_status: item.http_status || 200,
+                  response_time: item.response_time || null,
+                  content_type: item.content_type || 'text/html',
+                  encoding: item.encoding || 'utf-8',
+                  has_images: item.has_images || false,
+                  has_tables: item.has_tables || false,
+                  has_forms: item.has_forms || false,
+                  has_videos: item.has_videos || false,
+                  internal_links: item.internal_links || [],
+                  external_links: item.external_links || [],
+                  link_count: item.link_count || 0,
+                  meta_title: item.meta_title || null,
+                  meta_description: item.meta_description || null,
+                  meta_keywords: item.meta_keywords || null,
+                  canonical_url: item.canonical_url || null,
+                  og_title: item.og_title || null,
+                  og_description: item.og_description || null,
+                  og_image: item.og_image || null,
+                  twitter_card: item.twitter_card || null,
+                  author: item.author || null,
+                  published_date: item.published_date || null,
+                  modified_date: item.modified_date || null,
+                  pricing_info: item.pricing_info || null,
+                  contact_info: item.contact_info || null,
+                  location_info: item.location_info || null,
+                  is_duplicate: item.is_duplicate || false,
+                  quality_score: item.quality_score || null,
+                  relevance_score: item.relevance_score || null,
+                  crawl_depth: item.crawl_depth || 1,
+                  parent_url: item.parent_url || null,
+                  redirect_chain: item.redirect_chain || [],
+                  region: item.region || null,
+                  currency: item.currency || null,
+                  timezone: item.timezone || null,
+                  robots_txt_respected: item.robots_txt_respected || true,
+                  gdpr_compliant: item.gdpr_compliant || true,
+                  rate_limit_respected: item.rate_limit_respected || true
+                },
+                content_summary: item.content_summary || null,
+                key_phrases: item.key_phrases || [],
+                sentiment_preview: item.sentiment_preview || null,
+                topic_tags: item.topic_tags || [],
+                target_pattern: target.url,
+                target_category: target.category,
+                target_company: target.company,
+                target_priority: target.priority || 'medium',
+                processing_time: item.processing_time || null,
+                content_size: item.content_size || null,
+                compression_ratio: item.compression_ratio || null,
+                sentiment_score: item.sentiment_score || 0,
+                ai_analysis: item.ai_analysis || '',
+                key_topics: item.key_topics || [],
+                risk_factors: item.risk_factors || [],
+                competitive_insights: item.competitive_insights || '',
+                updated_at: item.updated_at || new Date().toISOString()
+              }));
+
+              scrapedItems.push(...newItems);
+              totalScraped += newItems.length;
+              progress.pagesScraped = totalScraped;
+            }
+          }
+
+          // Add delay between requests
+          if (i < targets.length - 1) {
+            await new Promise(resolve => setTimeout(resolve, advancedConfig.delayBetweenRequests));
+          }
+
+        } catch (error) {
+          console.error(`Failed to scrape ${target.category} for ${target.company}:`, error);
+          totalErrors++;
+          
+          progress.errors.push({
+            target: target.url,
+            error: error instanceof Error ? error.message : String(error),
+            timestamp: new Date().toISOString()
+          });
+
+          // Continue with other targets
+          continue;
+        }
+      }
+
+      // Finalize progress
+      progress.completedTargets = targets.length;
+      progress.successRate = ((targets.length - totalErrors) / targets.length) * 100;
+      setScrapingProgress(progress);
+
+      // Store scraping history
+      const historyEntry = {
+        id: genId(),
+        timestamp: startTime,
+        targets,
+        results: { success: totalScraped, failed: totalErrors, total: targets.length },
+        duration: Date.now() - startTime.getTime(),
+        config: advancedConfig
+      };
+      setScrapingHistory(prev => [historyEntry, ...prev.slice(0, 9)]); // Keep last 10 entries
+
+      // Process results
+      if (scrapedItems.length > 0) {
+        const validatedItems = scrapedItems.filter(item => {
+          if (!item.url || !item.company || !item.category) return false;
+          if (!item.markdown || item.markdown.length < advancedConfig.minContentLength) return false;
+          if (!item.title || item.title.length < 5) return false;
+          
+          if (item.metadata) {
+            if (item.metadata.word_count && item.metadata.word_count < advancedConfig.minWordCount) return false;
+            if (item.metadata.content_density && item.metadata.content_density < 0.1) return false;
+          }
+          
+          return true;
+        });
+
+        if (validatedItems.length > 0) {
+          await databaseService.addItems(validatedItems);
+          await loadDatabaseItems();
+          await loadDatabaseStats();
+          addItems(validatedItems);
+
+          toast({ 
+            title: `Enhanced scraping completed successfully`, 
+            description: `Scraped ${validatedItems.length} high-quality items from ${targets.length} targets. ${scrapedItems.length - validatedItems.length} items were filtered for quality.` 
+          });
+
+          // Auto-run AI analysis if enabled
+          if (autoAnalysis && hasValidApiKey()) {
+            setTimeout(() => analyzeScrapedContent(validatedItems), 1000);
+          }
+        } else {
+          toast({ 
+            title: 'No valid content found', 
+            description: 'All scraped content failed quality validation. Please check your configuration and try again.',
+            variant: 'destructive'
+          });
+        }
+      } else {
+        toast({ 
+          title: 'No content scraped', 
+          description: 'No content was successfully scraped from the selected targets.',
+          variant: 'destructive'
+        });
+      }
+
+    } catch (error) {
+      console.error('Enhanced scraping failed:', error);
+      toast({ 
+        title: 'Enhanced scraping failed', 
+        description: 'An unexpected error occurred during scraping.',
+        variant: 'destructive' 
+      });
+    } finally {
+      setIsScraping(false);
+      setScrapingProgress(null);
+    }
+  };
+
+  // Enhanced analytics functions
+  const generateEnhancedAnalytics = useCallback(async () => {
+    if (!dbItems || dbItems.length === 0) {
+      toast({ title: 'No data available for analysis', variant: 'destructive' });
+      return;
+    }
+
+    try {
+      // Calculate content quality metrics
+      const contentQuality = {
+        readabilityScores: {} as { [key: string]: number[] },
+        contentDensity: {} as { [key: string]: number[] },
+        freshnessScores: {} as { [key: string]: number[] },
+        authorityScores: {} as { [key: string]: number[] }
+      };
+
+      // Calculate sentiment analysis
+      const sentimentAnalysis = {
+        overallSentiment: 0,
+        sentimentTrends: {} as { [key: string]: number[] },
+        sentimentByCategory: {} as { [key: string]: number },
+        sentimentByCompany: {} as { [key: string]: number }
+      };
+
+      // Calculate topic analysis
+      const topicAnalysis = {
+        topTopics: [] as string[],
+        topicClusters: {} as { [key: string]: string[] },
+        emergingTopics: [] as string[],
+        topicTrends: {} as { [key: string]: number[] }
+      };
+
+      // Calculate competitive insights
+      const competitiveInsights = {
+        marketPositioning: {} as { [key: string]: string },
+        featureComparison: {} as { [key: string]: string[] },
+        pricingAnalysis: {} as { [key: string]: any },
+        strategyInsights: {} as { [key: string]: string }
+      };
+
+      // Calculate performance metrics
+      const performanceMetrics = {
+        scrapingSpeed: 0,
+        dataQuality: 0,
+        coverageCompleteness: 0,
+        analysisAccuracy: 0
+      };
+
+      // Process each item for analytics
+      dbItems.forEach(item => {
+        // Content quality analysis
+        if (item.metadata) {
+          const category = item.category;
+          if (item.metadata.readability_score) {
+            if (!contentQuality.readabilityScores[category]) contentQuality.readabilityScores[category] = [];
+            contentQuality.readabilityScores[category].push(item.metadata.readability_score);
+          }
+          if (item.metadata.content_density) {
+            if (!contentQuality.contentDensity[category]) contentQuality.contentDensity[category] = [];
+            contentQuality.contentDensity[category].push(item.metadata.content_density);
+          }
+        }
+
+        // Sentiment analysis
+        if (item.sentiment_score !== undefined) {
+          sentimentAnalysis.overallSentiment += item.sentiment_score;
+          
+          if (!sentimentAnalysis.sentimentByCategory[item.category]) {
+            sentimentAnalysis.sentimentByCategory[item.category] = 0;
+          }
+          sentimentAnalysis.sentimentByCategory[item.category] += item.sentiment_score;
+          
+          if (!sentimentAnalysis.sentimentByCompany[item.company]) {
+            sentimentAnalysis.sentimentByCompany[item.company] = 0;
+          }
+          sentimentAnalysis.sentimentByCompany[item.company] += item.sentiment_score;
+        }
+
+        // Topic analysis
+        if (item.key_topics && item.key_topics.length > 0) {
+          item.key_topics.forEach(topic => {
+            if (!topicAnalysis.topicClusters[item.category]) {
+              topicAnalysis.topicClusters[item.category] = [];
+            }
+            if (!topicAnalysis.topicClusters[item.category].includes(topic)) {
+              topicAnalysis.topicClusters[item.category].push(topic);
+            }
+          });
+        }
+      });
+
+      // Calculate averages and finalize metrics
+      const totalItems = dbItems.length;
+      const itemsWithSentiment = dbItems.filter(i => i.sentiment_score !== undefined).length;
+      
+      if (itemsWithSentiment > 0) {
+        sentimentAnalysis.overallSentiment /= itemsWithSentiment;
+        
+        Object.keys(sentimentAnalysis.sentimentByCategory).forEach(category => {
+          const categoryItems = dbItems.filter(i => i.category === category && i.sentiment_score !== undefined);
+          if (categoryItems.length > 0) {
+            sentimentAnalysis.sentimentByCategory[category] /= categoryItems.length;
+          }
+        });
+        
+        Object.keys(sentimentAnalysis.sentimentByCompany).forEach(company => {
+          const companyItems = dbItems.filter(i => i.company === company && i.sentiment_score !== undefined);
+          if (companyItems.length > 0) {
+            sentimentAnalysis.sentimentByCompany[company] /= companyItems.length;
+          }
+        });
+      }
+
+      // Calculate content quality averages
+      Object.keys(contentQuality.readabilityScores).forEach(category => {
+        const scores = contentQuality.readabilityScores[category];
+        contentQuality.readabilityScores[category] = [scores.reduce((a, b) => a + b, 0) / scores.length];
+      });
+
+      Object.keys(contentQuality.contentDensity).forEach(category => {
+        const densities = contentQuality.contentDensity[category];
+        contentQuality.contentDensity[category] = [densities.reduce((a, b) => a + b, 0) / densities.length];
+      });
+
+      // Calculate performance metrics
+      performanceMetrics.dataQuality = (itemsWithSentiment / totalItems) * 100;
+      performanceMetrics.coverageCompleteness = (dbItems.filter(i => i.metadata && (i.metadata.has_images || i.metadata.has_tables || (i.metadata.link_count && i.metadata.link_count > 0))).length / totalItems) * 100;
+
+      const enhancedAnalyticsData: EnhancedAnalytics = {
+        contentQuality,
+        sentimentAnalysis,
+        topicAnalysis,
+        competitiveInsights,
+        performanceMetrics
+      };
+
+      setEnhancedAnalytics(enhancedAnalyticsData);
+      toast({ title: 'Enhanced analytics generated successfully' });
+
+    } catch (error) {
+      console.error('Failed to generate enhanced analytics:', error);
+      toast({ title: 'Analytics generation failed', variant: 'destructive' });
+    }
+  }, [dbItems, toast]);
+
+  // Real-time monitoring functions
+  const startRealTimeMonitoring = useCallback(() => {
+    if (realTimeUpdates) return;
+    
+    setRealTimeUpdates(true);
+    const interval = setInterval(async () => {
+      try {
+        // Update system health
+        const health = await APIService.healthCheck();
+        setSystemHealth(prev => ({
+          ...prev,
+          backend: health.status === 'healthy' ? 'healthy' : 'degraded'
+        }));
+
+        // Update database status
+        try {
+          await databaseService.getStats();
+          setSystemHealth(prev => ({ ...prev, database: 'connected' }));
+        } catch {
+          setSystemHealth(prev => ({ ...prev, database: 'error' }));
+        }
+
+        // Update scraping status
+        setSystemHealth(prev => ({
+          ...prev,
+          scraping: isScraping ? 'active' : 'idle'
+        }));
+
+        // Update AI status
+        setSystemHealth(prev => ({
+          ...prev,
+          ai: hasValidApiKey() ? 'available' : 'unavailable'
+        }));
+
+        setLastUpdate(new Date());
+      } catch (error) {
+        console.error('Real-time monitoring error:', error);
+      }
+    }, updateInterval);
+
+    return () => clearInterval(interval);
+  }, [realTimeUpdates, updateInterval, isScraping, hasValidApiKey]);
+
+  const stopRealTimeMonitoring = useCallback(() => {
+    setRealTimeUpdates(false);
+  }, []);
+
+  // Advanced export functions
+  const exportEnhancedData = async (format: 'csv' | 'json' | 'pdf' | 'excel') => {
+    setIsExporting(true);
+    try {
+      let data: string | Blob;
+      let filename: string;
+      let mimeType: string;
+
+      switch (format) {
+        case 'csv':
+          data = await databaseService.exportToCSV();
+          filename = 'enhanced_competitive_intelligence.csv';
+          mimeType = 'text/csv;charset=utf-8;';
+          break;
+        case 'json':
+          data = JSON.stringify(dbItems, null, 2);
+          filename = 'enhanced_competitive_intelligence.json';
+          mimeType = 'application/json';
+          break;
+        case 'pdf':
+          // Placeholder for PDF generation
+          data = 'PDF export not yet implemented';
+          filename = 'enhanced_competitive_intelligence.pdf';
+          mimeType = 'application/pdf';
+          break;
+        case 'excel':
+          // Placeholder for Excel generation
+          data = 'Excel export not yet implemented';
+          filename = 'enhanced_competitive_intelligence.xlsx';
+          mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+          break;
+        default:
+          throw new Error('Unsupported export format');
+      }
+
+      if (typeof data === 'string') {
+        const blob = new Blob([data], { type: mimeType });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+
+      toast({ title: `Data exported successfully as ${format.toUpperCase()}` });
+    } catch (error) {
+      console.error('Enhanced export failed:', error);
+      toast({ title: 'Export failed', variant: 'destructive' });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  // Generate comprehensive report
+  const generateComprehensiveReport = async () => {
+    setIsGeneratingReport(true);
+    try {
+      if (!enhancedAnalytics) {
+        await generateEnhancedAnalytics();
+      }
+
+      // Generate report content
+      const report = {
+        title: 'Comprehensive Competitive Intelligence Report',
+        generatedAt: new Date().toISOString(),
+        summary: {
+          totalItems: dbItems.length,
+          companies: Array.from(new Set(dbItems.map(i => i.company))),
+          categories: Array.from(new Set(dbItems.map(i => i.category))),
+          dateRange: {
+            start: dbItems.reduce((min, item) => 
+              new Date(item.scrapedAt) < min ? new Date(item.scrapedAt) : min, new Date()
+            ),
+            end: dbItems.reduce((max, item) => 
+              new Date(item.scrapedAt) > max ? new Date(item.scrapedAt) : max, new Date(0)
+            )
+          }
+        },
+        analytics: enhancedAnalytics,
+        recommendations: await generateStrategicRecommendations(),
+        exportFormat: reportTemplate
+      };
+
+      // For now, export as JSON (PDF generation would require additional libraries)
+      const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `competitive_intelligence_report_${reportTemplate}_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+
+      toast({ title: 'Comprehensive report generated successfully' });
+    } catch (error) {
+      console.error('Report generation failed:', error);
+      toast({ title: 'Report generation failed', variant: 'destructive' });
+    } finally {
+      setIsGeneratingReport(false);
+    }
+  };
+
+  // Effect for real-time monitoring
+  useEffect(() => {
+    if (realTimeUpdates) {
+      const cleanup = startRealTimeMonitoring();
+      return cleanup;
+    }
+  }, [realTimeUpdates, startRealTimeMonitoring]);
+
+  // Effect for enhanced analytics
+  useEffect(() => {
+    if (dbItems.length > 0 && !enhancedAnalytics) {
+      generateEnhancedAnalytics();
+    }
+  }, [dbItems, enhancedAnalytics, generateEnhancedAnalytics]);
 
   return (
     <main className="container mx-auto py-6 px-4">
@@ -2916,6 +3694,442 @@ export default function ScrapeDashboard() {
                   </Button>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Enhanced Scraping Configuration */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Settings className="h-5 w-5" />
+                Enhanced Scraping Configuration
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Advanced configuration for comprehensive data extraction and quality control
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Core Settings */}
+              <div className="space-y-4">
+                <h4 className="font-medium">Core Settings</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Page Limit</Label>
+                    <Input 
+                      type="number" 
+                      min={1} 
+                      max={500} 
+                      value={advancedConfig.pageLimit} 
+                      onChange={e => setAdvancedConfig(prev => ({ ...prev, pageLimit: parseInt(e.target.value) || 25 }))} 
+                    />
+                    <p className="text-xs text-muted-foreground">Max pages per target</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Depth Limit</Label>
+                    <Input 
+                      type="number" 
+                      min={1} 
+                      max={10} 
+                      value={advancedConfig.depthLimit} 
+                      onChange={e => setAdvancedConfig(prev => ({ ...prev, depthLimit: parseInt(e.target.value) || 3 }))} 
+                    />
+                    <p className="text-xs text-muted-foreground">Crawl depth</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Delay (ms)</Label>
+                    <Input 
+                      type="number" 
+                      min={100} 
+                      max={10000} 
+                      value={advancedConfig.delayBetweenRequests} 
+                      onChange={e => setAdvancedConfig(prev => ({ ...prev, delayBetweenRequests: parseInt(e.target.value) || 1000 }))} 
+                    />
+                    <p className="text-xs text-muted-foreground">Between requests</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content Extraction */}
+              <div className="space-y-4">
+                <h4 className="font-medium">Content Extraction</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractMetadata} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractMetadata: checked }))} 
+                    />
+                    <Label className="text-sm">Metadata</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractLinks} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractLinks: checked }))} 
+                    />
+                    <Label className="text-sm">Links</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractImages} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractImages: checked }))} 
+                    />
+                    <Label className="text-sm">Images</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractTables} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractTables: checked }))} 
+                    />
+                    <Label className="text-sm">Tables</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractForms} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractForms: checked }))} 
+                    />
+                    <Label className="text-sm">Forms</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractVideos} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractVideos: checked }))} 
+                    />
+                    <Label className="text-sm">Videos</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractAudio} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractAudio: checked }))} 
+                    />
+                    <Label className="text-sm">Audio</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.captureScreenshots} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, captureScreenshots: checked }))} 
+                    />
+                    <Label className="text-sm">Screenshots</Label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quality Filters */}
+              <div className="space-y-4">
+                <h4 className="font-medium">Quality Filters</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Content Length Range</Label>
+                    <div className="flex gap-2 items-center">
+                      <Input 
+                        type="number" 
+                        min={0} 
+                        value={advancedConfig.minContentLength} 
+                        onChange={e => setAdvancedConfig(prev => ({ ...prev, minContentLength: parseInt(e.target.value) || 0 }))} 
+                        className="w-20"
+                      />
+                      <span className="text-sm text-muted-foreground">to</span>
+                      <Input 
+                        type="number" 
+                        min={0} 
+                        value={advancedConfig.maxContentLength} 
+                        onChange={e => setAdvancedConfig(prev => ({ ...prev, maxContentLength: parseInt(e.target.value) || 50000 }))} 
+                        className="w-20"
+                      />
+                      <span className="text-sm text-muted-foreground">chars</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Word Count Range</Label>
+                    <div className="flex gap-2 items-center">
+                      <Input 
+                        type="number" 
+                        min={0} 
+                        value={advancedConfig.minWordCount} 
+                        onChange={e => setAdvancedConfig(prev => ({ ...prev, minWordCount: parseInt(e.target.value) || 0 }))} 
+                        className="w-20"
+                      />
+                      <span className="text-sm text-muted-foreground">to</span>
+                      <Input 
+                        type="number" 
+                        min={0} 
+                        value={advancedConfig.maxWordCount} 
+                        onChange={e => setAdvancedConfig(prev => ({ ...prev, maxWordCount: parseInt(e.target.value) || 10000 }))} 
+                        className="w-20"
+                      />
+                      <span className="text-sm text-muted-foreground">words</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.filterDuplicates} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, filterDuplicates: checked }))} 
+                    />
+                    <Label>Filter duplicates</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.filterLowQuality} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, filterLowQuality: checked }))} 
+                    />
+                    <Label>Filter low quality</Label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technical Settings */}
+              <div className="space-y-4">
+                <h4 className="font-medium">Technical Settings</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.respectRobots} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, respectRobots: checked }))} 
+                    />
+                    <Label className="text-sm">Respect robots.txt</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.followRedirects} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, followRedirects: checked }))} 
+                    />
+                    <Label className="text-sm">Follow redirects</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.handleJavascript} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, handleJavascript: checked }))} 
+                    />
+                    <Label className="text-sm">Handle JavaScript</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.extractDynamicContent} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, extractDynamicContent: checked }))} 
+                    />
+                    <Label className="text-sm">Dynamic content</Label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Advanced Features */}
+              <div className="space-y-4">
+                <h4 className="font-medium">Advanced Features</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.semanticAnalysis} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, semanticAnalysis: checked }))} 
+                    />
+                    <Label className="text-sm">Semantic analysis</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.entityExtraction} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, entityExtraction: checked }))} 
+                    />
+                    <Label className="text-sm">Entity extraction</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.keywordExtraction} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, keywordExtraction: checked }))} 
+                    />
+                    <Label className="text-sm">Keyword extraction</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={advancedConfig.sentimentPreview} 
+                      onCheckedChange={(checked) => setAdvancedConfig(prev => ({ ...prev, sentimentPreview: checked }))} 
+                    />
+                    <Label className="text-sm">Sentiment preview</Label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Enhanced Scraping Actions */}
+              <div className="space-y-4">
+                <h4 className="font-medium">Enhanced Scraping Actions</h4>
+                <div className="flex gap-3">
+                  <Button
+                    onClick={() => runEnhancedScraping(getFinalScrapingTargets())}
+                    disabled={isScraping || getSelectedTargetsCount() === 0 || backendStatus !== 'connected'}
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+                  >
+                    <Rocket className="h-4 w-4 mr-2" />
+                    {isScraping ? 'Enhanced Scraping...' : `Start Enhanced Scraping (${getSelectedTargetsCount()} targets)`}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setAdvancedConfig({
+                      pageLimit: 25,
+                      depthLimit: 3,
+                      delayBetweenRequests: 1000,
+                      extractMetadata: true,
+                      extractLinks: true,
+                      extractImages: true,
+                      extractTables: true,
+                      extractForms: true,
+                      extractVideos: false,
+                      extractAudio: false,
+                      minContentLength: 100,
+                      maxContentLength: 50000,
+                      minWordCount: 10,
+                      maxWordCount: 10000,
+                      filterDuplicates: true,
+                      filterLowQuality: true,
+                      respectRobots: true,
+                      followRedirects: true,
+                      handleJavascript: true,
+                      extractDynamicContent: true,
+                      captureScreenshots: false,
+                      preferredLanguage: 'en',
+                      regionalVariants: true,
+                      currencyFormat: 'auto',
+                      dateFormat: 'auto',
+                      gdprCompliance: true,
+                      cookieHandling: 'minimal',
+                      sessionPersistence: false,
+                      rateLimiting: 'adaptive',
+                      semanticAnalysis: true,
+                      entityExtraction: true,
+                      keywordExtraction: true,
+                      sentimentPreview: true,
+                      topicModeling: true
+                    })}
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Reset to Defaults
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Scraping Progress & History */}
+          {scrapingProgress && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Activity className="h-5 w-5" />
+                  Scraping Progress
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Progress</span>
+                    <span className="text-sm text-muted-foreground">
+                      {scrapingProgress.completedTargets} of {scrapingProgress.totalTargets} targets
+                    </span>
+                  </div>
+                  <Progress value={(scrapingProgress.completedTargets / scrapingProgress.totalTargets) * 100} />
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Current:</span>
+                      <div className="font-medium">{scrapingProgress.currentCompany}</div>
+                      <div className="text-xs text-muted-foreground">{scrapingProgress.currentCategory}</div>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Pages Scraped:</span>
+                      <div className="font-medium">{scrapingProgress.pagesScraped}</div>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Success Rate:</span>
+                      <div className="font-medium">{scrapingProgress.successRate.toFixed(1)}%</div>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Est. Time:</span>
+                      <div className="font-medium">{scrapingProgress.estimatedTimeRemaining.toFixed(1)}m</div>
+                    </div>
+                  </div>
+                </div>
+
+                {scrapingProgress.errors.length > 0 && (
+                  <div className="space-y-2">
+                    <h5 className="font-medium text-sm text-red-600">Errors ({scrapingProgress.errors.length})</h5>
+                    <div className="max-h-32 overflow-y-auto space-y-2">
+                      {scrapingProgress.errors.map((error, index) => (
+                        <div key={index} className="p-2 bg-red-50 border border-red-200 rounded text-xs">
+                          <div className="font-medium text-red-800">{error.target}</div>
+                          <div className="text-red-600">{error.error}</div>
+                          <div className="text-red-500">{new Date(error.timestamp).toLocaleTimeString()}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Scraping History */}
+          {scrapingHistory.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="h-5 w-5" />
+                  Scraping History
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Recent scraping sessions and their results
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {scrapingHistory.slice(0, 5).map((session) => (
+                    <div key={session.id} className="p-3 border rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-sm font-medium">
+                          {session.timestamp.toLocaleDateString()} at {session.timestamp.toLocaleTimeString()}
+                        </div>
+                        <div className="flex gap-2">
+                          <Badge variant="outline" className="text-xs">
+                            {session.targets.length} targets
+                          </Badge>
+                          <Badge variant={session.results.success > 0 ? 'default' : 'destructive'} className="text-xs">
+                            {session.results.success} success
+                          </Badge>
+                          {session.results.failed > 0 && (
+                            <Badge variant="destructive" className="text-xs">
+                              {session.results.failed} failed
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Duration: {Math.round(session.duration / 1000)}s • 
+                        Page Limit: {session.config.pageLimit} • 
+                        Depth: {session.config.depthLimit}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* File Upload */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Import Files
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Upload existing documents to include in your analysis
+              </p>
+            </CardHeader>
+            <CardContent>
+              <Input 
+                type="file" 
+                accept=".csv,.md,.markdown,.docx" 
+                onChange={e => { const f = e.target.files?.[0]; if (f) onUpload(f); }} 
+              />
+              <p className="text-xs text-muted-foreground mt-2">
+                Supported formats: CSV, Markdown, DOCX
+              </p>
             </CardContent>
           </Card>
         </TabsContent>
