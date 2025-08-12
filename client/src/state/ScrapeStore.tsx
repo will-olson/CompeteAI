@@ -1,51 +1,132 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-
-export type ScrapeCategory = 'marketing' | 'docs' | 'rss' | 'social' | 'aggregate' | 'upload';
+// ScrapeStore.tsx - Context for managing scraped data state
+import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 
 export interface ScrapedItem {
   id: string;
-  company: string; // user-supplied tag
-  category: ScrapeCategory;
+  company: string;
+  category: 'marketing' | 'docs' | 'rss' | 'social' | 'aggregate' | 'upload';
   url?: string;
   title?: string;
   markdown?: string;
   html?: string;
   scrapedAt: string;
-  source?: string; // domain
+  source?: string;
 }
 
-interface StoreState {
+interface ScrapeState {
   items: ScrapedItem[];
-  addItems: (items: ScrapedItem[]) => void;
-  clear: () => void;
 }
 
-const ScrapeContext = createContext<StoreState | null>(null);
-const STORAGE_KEY = 'ci_scraped_items_v1';
+type ScrapeAction =
+  | { type: 'ADD_ITEMS'; payload: ScrapedItem[] }
+  | { type: 'REMOVE_ITEM'; payload: string }
+  | { type: 'CLEAR_ALL' }
+  | { type: 'UPDATE_ITEM'; payload: { id: string; updates: Partial<ScrapedItem> } };
 
-export const ScrapeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [items, setItems] = useState<ScrapedItem[]>([]);
-
-  useEffect(() => {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      try { setItems(JSON.parse(raw)); } catch {}
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
-
-  const addItems = (newItems: ScrapedItem[]) => setItems(prev => [...newItems, ...prev]);
-  const clear = () => setItems([]);
-
-  const value = useMemo(() => ({ items, addItems, clear }), [items]);
-  return <ScrapeContext.Provider value={value}>{children}</ScrapeContext.Provider>;
+const initialState: ScrapeState = {
+  items: []
 };
 
-export const useScrapeStore = () => {
-  const ctx = useContext(ScrapeContext);
-  if (!ctx) throw new Error('useScrapeStore must be used within ScrapeProvider');
-  return ctx;
+function scrapeReducer(state: ScrapeState, action: ScrapeAction): ScrapeState {
+  switch (action.type) {
+    case 'ADD_ITEMS':
+      return {
+        ...state,
+        items: [...state.items, ...action.payload]
+      };
+    
+    case 'REMOVE_ITEM':
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.payload)
+      };
+    
+    case 'CLEAR_ALL':
+      return {
+        ...state,
+        items: []
+      };
+    
+    case 'UPDATE_ITEM':
+      return {
+        ...state,
+        items: state.items.map(item =>
+          item.id === action.payload.id
+            ? { ...item, ...action.payload.updates }
+            : item
+        )
+      };
+    
+    default:
+      return state;
+  }
+}
+
+interface ScrapeContextType {
+  state: ScrapeState;
+  addItems: (items: ScrapedItem[]) => void;
+  removeItem: (id: string) => void;
+  clear: () => void;
+  updateItem: (id: string, updates: Partial<ScrapedItem>) => void;
+}
+
+const ScrapeContext = createContext<ScrapeContextType | undefined>(undefined);
+
+export function ScrapeProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(scrapeReducer, initialState);
+
+  const addItems = (items: ScrapedItem[]) => {
+    dispatch({ type: 'ADD_ITEMS', payload: items });
+  };
+
+  const removeItem = (id: string) => {
+    dispatch({ type: 'REMOVE_ITEM', payload: id });
+  };
+
+  const clear = () => {
+    dispatch({ type: 'CLEAR_ALL' });
+  };
+
+  const updateItem = (id: string, updates: Partial<ScrapedItem>) => {
+    dispatch({ type: 'UPDATE_ITEM', payload: { id, updates } });
+  };
+
+  const value: ScrapeContextType = {
+    state,
+    addItems,
+    removeItem,
+    clear,
+    updateItem
+  };
+
+  return (
+    <ScrapeContext.Provider value={value}>
+      {children}
+    </ScrapeContext.Provider>
+  );
+}
+
+export function useScrapeStore(): ScrapeContextType {
+  const context = useContext(ScrapeContext);
+  if (context === undefined) {
+    throw new Error('useScrapeStore must be used within a ScrapeProvider');
+  }
+  return context;
+}
+
+// Helper function to get items from context
+export const useScrapeItems = () => {
+  const context = useScrapeStore();
+  return context.state.items;
+};
+
+// Helper function to get actions from context
+export const useScrapeActions = () => {
+  const context = useScrapeStore();
+  return {
+    addItems: context.addItems,
+    removeItem: context.removeItem,
+    clear: context.clear,
+    updateItem: context.updateItem
+  };
 };

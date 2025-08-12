@@ -91,6 +91,21 @@ npm run dev
 
 The frontend will be available at `http://localhost:8081/` (or next available port).
 
+### **Frontend Testing & Demo**
+The ScrapeDashboard includes comprehensive testing capabilities:
+
+- **Demo Data Generation**: Generate sample data to test analytics and visualizations
+- **Mock Scraping**: Test scraping functionality without external APIs
+- **Quick Testing**: Single-item demo for rapid testing
+- **Full Demo**: 60+ sample items across multiple companies and categories
+
+**Getting Started with Testing:**
+1. Navigate to the Scrape Dashboard
+2. Use the "Demo Data & Testing" section
+3. Click "Quick Demo" for immediate testing
+4. Use "Full Demo" for comprehensive testing
+5. Test mock scraping with the provided example URLs
+
 ### **Backend Setup**
 ```bash
 # Navigate to server directory
@@ -115,6 +130,7 @@ python insightforge_app.py
 1. **Firecrawl API**: For web scraping capabilities
    - Visit [Firecrawl](https://firecrawl.dev) to get your API key
    - Enter your key in the Scrape Dashboard settings
+   - **Note**: Frontend testing works without API keys using mock data
 
 2. **AI Provider API**: For intelligent analysis
    - **OpenAI**: Get your API key from [OpenAI Platform](https://platform.openai.com)

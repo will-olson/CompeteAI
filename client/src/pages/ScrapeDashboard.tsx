@@ -13,7 +13,7 @@ import { Bar, BarChart, CartesianGrid, Legend, Pie, PieChart, ResponsiveContaine
 import Papa from 'papaparse';
 import mammoth from 'mammoth';
 import { Badge } from '@/components/ui/badge';
-import { Search, Filter, Download, TrendingUp, TrendingDown, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2, Server, Wifi, WifiOff } from 'lucide-react';
+import { Search, Filter, Download, TrendingUp, TrendingDown, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2, Server, Wifi, WifiOff, Play } from 'lucide-react';
 
 const genId = () => Math.random().toString(36).slice(2);
 
@@ -51,10 +51,16 @@ interface CompetitorGroup {
 
 export default function ScrapeDashboard() {
   const { toast } = useToast();
-  const { items, addItems, clear } = useScrapeStore();
+  const { state, addItems, clear } = useScrapeStore();
+  const items = state.items;
 
-  const [company, setCompany] = useState('Acme Co');
-  const [urls, setUrls] = useState({ marketing: '', docs: '', rss: '', social: '' });
+  const [company, setCompany] = useState('Salesforce');
+  const [urls, setUrls] = useState({ 
+    marketing: 'https://salesforce.com', 
+    docs: 'https://docs.salesforce.com', 
+    rss: 'https://hubspot.com/blog/feed', 
+    social: 'https://slack.com/community' 
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [limit, setLimit] = useState(25);
   const [fcKey, setFcKey] = useState<string>(FirecrawlService.getApiKey() || '');
@@ -84,273 +90,6 @@ export default function ScrapeDashboard() {
     categories: ['marketing', 'docs', 'rss', 'social'],
     urls: {}
   });
-
-  // Check backend connection on component mount
-  useEffect(() => {
-    checkBackendConnection();
-  }, []);
-
-  const checkBackendConnection = async () => {
-    try {
-      setBackendStatus('checking');
-      const health = await APIService.healthCheck();
-      if (health.status === 'healthy') {
-        setBackendStatus('connected');
-        // Load preset groups from server
-        try {
-          const groups = await APIService.getPresetGroups();
-          setServerPresetGroups(groups);
-        } catch (error) {
-          console.warn('Failed to load server preset groups:', error);
-        }
-      } else {
-        setBackendStatus('disconnected');
-      }
-    } catch (error) {
-      console.warn('Backend connection failed:', error);
-      setBackendStatus('disconnected');
-    }
-  };
-
-  const onSaveKey = async () => {
-    if (!fcKey) return;
-    const ok = await FirecrawlService.testApiKey(fcKey);
-    if (!ok) {
-      toast({ title: 'Invalid Firecrawl key', variant: 'destructive' });
-      return;
-    }
-    FirecrawlService.saveApiKey(fcKey);
-    toast({ title: 'Firecrawl key saved' });
-  };
-
-  // Competitor group management
-  const createCompetitorGroup = () => {
-    if (!newGroup.name || newGroup.companies?.length === 0) {
-      toast({ title: 'Please provide group name and at least one company', variant: 'destructive' });
-      return;
-    }
-    
-    const group: CompetitorGroup = {
-      id: genId(),
-      name: newGroup.name,
-      companies: newGroup.companies?.filter(c => c.trim()) || [],
-      categories: newGroup.categories || ['marketing', 'docs', 'rss', 'social'],
-      urls: newGroup.urls || {}
-    };
-    
-    setCompetitorGroups(prev => [...prev, group]);
-    setNewGroup({ name: '', companies: [''], categories: ['marketing', 'docs', 'rss', 'social'], urls: {} });
-    setShowGroupCreator(false);
-    toast({ title: 'Competitor group created' });
-  };
-
-  const deleteCompetitorGroup = (groupId: string) => {
-    setCompetitorGroups(prev => prev.filter(g => g.id !== groupId));
-    if (selectedGroup === groupId) setSelectedGroup('');
-    toast({ title: 'Competitor group deleted' });
-  };
-
-  const loadPresetGroup = async (presetKey: string) => {
-    // Try to load from server first, fallback to local presets
-    if (backendStatus === 'connected' && serverPresetGroups[presetKey]) {
-      try {
-        const serverGroup = await APIService.loadPresetGroup(presetKey);
-        const group: CompetitorGroup = {
-          id: genId(),
-          name: serverGroup.name || presetKey,
-          companies: serverGroup.companies || [],
-          categories: serverGroup.categories || ['marketing', 'docs', 'rss', 'social'],
-          urls: {}
-        };
-        setCompetitorGroups(prev => [...prev, group]);
-        toast({ title: `Loaded ${group.name} from server` });
-        return;
-      } catch (error) {
-        console.warn('Failed to load server preset group, falling back to local:', error);
-      }
-    }
-    
-    // Fallback to local presets
-    const preset = PRESET_GROUPINGS[presetKey as keyof typeof PRESET_GROUPINGS];
-    if (!preset) return;
-    
-    const group: CompetitorGroup = {
-      id: genId(),
-      name: preset.name,
-      companies: preset.companies,
-      categories: preset.categories,
-      urls: {}
-    };
-    
-    setCompetitorGroups(prev => [...prev, group]);
-    toast({ title: `Loaded ${preset.name} preset group` });
-  };
-
-  const runBatchScrape = async (group: CompetitorGroup) => {
-    if (!group.companies.length) {
-      toast({ title: 'No companies in group', variant: 'destructive' });
-      return;
-    }
-    
-    setIsLoading(true);
-    let totalScraped = 0;
-    
-    try {
-      // Try backend scraping first if available
-      if (backendStatus === 'connected') {
-        try {
-          const backendRequest = {
-            group_name: group.name,
-            companies: group.companies.map(company => ({
-              name: company,
-              website: group.urls[company] || urls.marketing, // Use group URL or fallback
-              categories: group.categories
-            })),
-            categories: group.categories
-          };
-          
-          const backendResult = await APIService.scrapeGroup(backendRequest);
-          if (backendResult.success) {
-            toast({ title: `Backend scraping complete: ${backendResult.message}` });
-            // TODO: Process backend results and add to store
-            setIsLoading(false);
-            return;
-          }
-        } catch (error) {
-          console.warn('Backend scraping failed, falling back to frontend:', error);
-        }
-      }
-      
-      // Fallback to frontend scraping
-      for (const company of group.companies) {
-        // Use group URLs if available, otherwise use default URLs
-        const companyUrls = Object.keys(group.urls).length > 0 ? group.urls : urls;
-        
-        for (const [category, url] of Object.entries(companyUrls)) {
-          if (!url.trim()) continue;
-          
-          try {
-            const res = await FirecrawlService.crawlWebsite(url, limit);
-            if (!res.success || !res.data) continue;
-            
-            const data = (res.data as any);
-            const mapped: ScrapedItem[] = (data.data || []).map((d: any) => ({
-              id: genId(),
-              company,
-              category: category as any,
-              url: d?.metadata?.url,
-              title: d?.metadata?.title,
-              markdown: d?.markdown,
-              html: d?.html,
-              scrapedAt: new Date().toISOString(),
-              source: (() => { try { return new URL(d?.metadata?.url).host; } catch { return undefined; } })()
-            }));
-            
-            addItems(mapped);
-            totalScraped += mapped.length;
-          } catch (error) {
-            console.error(`Failed to scrape ${category} for ${company}:`, error);
-          }
-        }
-      }
-      
-      toast({ title: `Batch scrape complete: ${totalScraped} items from ${group.companies.length} companies` });
-    } catch (error) {
-      toast({ title: 'Batch scrape failed', variant: 'destructive' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const runCrawl = async (category: keyof typeof urls) => {
-    const url = urls[category].trim();
-    if (!url) return;
-    setIsLoading(true);
-    try {
-      const res = await FirecrawlService.crawlWebsite(url, limit);
-      if (!res.success || !res.data) throw new Error(res.error || 'Failed');
-      const data = (res.data as any);
-      const mapped: ScrapedItem[] = (data.data || []).map((d: any) => ({
-        id: genId(),
-        company,
-        category: category as any,
-        url: d?.metadata?.url,
-        title: d?.metadata?.title,
-        markdown: d?.markdown,
-        html: d?.html,
-        scrapedAt: new Date().toISOString(),
-        source: (() => { try { return new URL(d?.metadata?.url).host; } catch { return undefined; } })()
-      }));
-      addItems(mapped);
-      toast({ title: `Crawled ${mapped.length} pages` });
-    } catch (e: any) {
-      toast({ title: 'Crawl failed', description: e?.message, variant: 'destructive' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const runAggregate = async () => {
-    const all = Object.entries(urls).map(([k, v]) => ({ k, v: v.trim() })).filter(x => x.v);
-    if (!all.length) return;
-    setIsLoading(true);
-    try {
-      for (const { k, v } of all) {
-        const res = await FirecrawlService.crawlWebsite(v, limit);
-        if (!res.success || !res.data) continue;
-        const data = (res.data as any);
-        const mapped: ScrapedItem[] = (data.data || []).map((d: any) => ({
-          id: genId(), company, category: 'aggregate', url: d?.metadata?.url, title: d?.metadata?.title, markdown: d?.markdown, html: d?.html, scrapedAt: new Date().toISOString(), source: (() => { try { return new URL(d?.metadata?.url).host; } catch { return undefined; } })()
-        }));
-        addItems(mapped);
-      }
-      toast({ title: 'Aggregate crawl complete' });
-    } catch (e: any) {
-      toast({ title: 'Aggregate crawl error', description: e?.message, variant: 'destructive' });
-    } finally { setIsLoading(false); }
-  };
-
-  const exportCSV = () => {
-    const csv = Papa.unparse(items.map(i => ({ id: i.id, company: i.company, category: i.category, url: i.url, title: i.title, scrapedAt: i.scrapedAt })));
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'scraped_data.csv';
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
-
-  const onUpload = async (file: File) => {
-    const ext = file.name.split('.').pop()?.toLowerCase();
-    if (!ext) return;
-    if (ext === 'csv') {
-      Papa.parse(file, {
-        header: true,
-        complete: (r) => {
-          const mapped: ScrapedItem[] = r.data.filter(Boolean).map((row: any) => ({
-            id: genId(), company, category: 'upload', url: row.url, title: row.title, markdown: row.markdown || JSON.stringify(row, null, 2), scrapedAt: new Date().toISOString(), source: (() => { try { return new URL(row.url).host; } catch { return undefined; } })()
-          }));
-          addItems(mapped);
-          toast({ title: `Imported ${mapped.length} rows from CSV` });
-        },
-      });
-      return;
-    }
-    if (ext === 'md' || ext === 'markdown') {
-      const text = await file.text();
-      addItems([{ id: genId(), company, category: 'upload', title: file.name, markdown: text, scrapedAt: new Date().toISOString() }]);
-      toast({ title: 'Markdown imported' });
-      return;
-    }
-    if (ext === 'docx') {
-      const arrayBuffer = await file.arrayBuffer();
-      const result = await (mammoth as any).extractRawText({ arrayBuffer });
-      addItems([{ id: genId(), company, category: 'upload', title: file.name, markdown: result.value, scrapedAt: new Date().toISOString() }]);
-      toast({ title: 'DOCX imported' });
-      return;
-    }
-    toast({ title: 'Unsupported file', variant: 'destructive' });
-  };
 
   // Enhanced filtering and analytics
   const filteredItems = useMemo(() => {
@@ -479,9 +218,420 @@ export default function ScrapeDashboard() {
     };
   }, [items]);
 
+  // Check backend connection on component mount
+  useEffect(() => {
+    checkBackendConnection();
+  }, []);
+
+  const checkBackendConnection = async () => {
+    try {
+      setBackendStatus('checking');
+      const health = await APIService.healthCheck();
+      if (health.status === 'healthy') {
+        setBackendStatus('connected');
+        // Load preset groups from server
+        try {
+          const groups = await APIService.getPresetGroups();
+          setServerPresetGroups(groups);
+        } catch (error) {
+          console.warn('Failed to load server preset groups:', error);
+        }
+      } else {
+        setBackendStatus('disconnected');
+      }
+    } catch (error) {
+      console.warn('Backend connection failed:', error);
+      setBackendStatus('disconnected');
+    }
+  };
+
+  const onSaveKey = async () => {
+    if (!fcKey) return;
+    // For frontend testing, just save the key locally
+    FirecrawlService.saveApiKey(fcKey);
+    toast({ title: 'API key saved for testing' });
+  };
+
+  // Real scraping functions using backend API
+  const runCrawl = async (category: keyof typeof urls) => {
+    const url = urls[category].trim();
+    if (!url) return;
+    
+    setIsLoading(true);
+    try {
+      // Call backend API for real scraping
+      const response = await APIService.scrapeCompany({
+        company,
+        urls: { [category]: url },
+        categories: [category],
+        page_limit: limit
+      });
+      
+      if (response.error) {
+        throw new Error(response.error);
+      }
+      
+      // Convert backend response to ScrapedItem format
+      const scrapedItems: ScrapedItem[] = [];
+      if (response.categories && response.categories[category]) {
+        const categoryData = response.categories[category];
+        if (categoryData.items) {
+          categoryData.items.forEach((item: any) => {
+            const scrapedItem: ScrapedItem = {
+              id: item.id || genId(),
+              company: company,
+              category: category as any,
+              url: item.url || url,
+              title: item.title || `Scraped ${category} content`,
+              markdown: item.content || item.markdown || '',
+              html: item.content_html || '',
+              scrapedAt: item.scraped_at || new Date().toISOString(),
+              source: new URL(url).host
+            };
+            scrapedItems.push(scrapedItem);
+          });
+        }
+      }
+      
+      addItems(scrapedItems);
+      toast({ title: `Successfully scraped ${scrapedItems.length} items from ${category}` });
+      
+    } catch (e: any) {
+      toast({ 
+        title: 'Scraping failed', 
+        description: e?.message || 'Backend scraping error', 
+        variant: 'destructive' 
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const runAggregate = async () => {
+    const all = Object.entries(urls).map(([k, v]) => ({ k, v: v.trim() })).filter(x => x.v);
+    if (!all.length) return;
+    
+    setIsLoading(true);
+    try {
+      // Call backend API for aggregate scraping
+      const response = await APIService.scrapeCompany({
+        company,
+        urls,
+        categories: Object.keys(urls) as any[],
+        page_limit: limit
+      });
+      
+      if (response.error) {
+        throw new Error(response.error);
+      }
+      
+      // Convert backend response to ScrapedItem format
+      const scrapedItems: ScrapedItem[] = [];
+      if (response.categories) {
+        Object.entries(response.categories).forEach(([category, categoryData]: [string, any]) => {
+          if (categoryData.items) {
+            categoryData.items.forEach((item: any) => {
+              const scrapedItem: ScrapedItem = {
+                id: item.id || genId(),
+                company: company,
+                category: category as any,
+                url: item.url || urls[category as keyof typeof urls],
+                title: item.title || `Scraped ${category} content`,
+                markdown: item.content || item.markdown || '',
+                html: item.content_html || '',
+                scrapedAt: item.scraped_at || new Date().toISOString(),
+                source: new URL(urls[category as keyof typeof urls]).host
+              };
+              scrapedItems.push(scrapedItem);
+            });
+          }
+        });
+      }
+      
+      addItems(scrapedItems);
+      toast({ title: `Aggregate scraping complete: ${scrapedItems.length} items` });
+      
+    } catch (e: any) {
+      toast({ 
+        title: 'Aggregate scraping failed', 
+        description: e?.message || 'Backend scraping error', 
+        variant: 'destructive' 
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const exportCSV = () => {
+    const csv = Papa.unparse(items.map(i => ({ id: i.id, company: i.company, category: i.category, url: i.url, title: i.title, scrapedAt: i.scrapedAt })));
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'scraped_data.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  const onUpload = async (file: File) => {
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    if (!ext) return;
+    if (ext === 'csv') {
+      Papa.parse(file, {
+        header: true,
+        complete: (r) => {
+          const mapped: ScrapedItem[] = r.data.filter(Boolean).map((row: any) => ({
+            id: genId(), company, category: 'upload', url: row.url, title: row.title, markdown: row.markdown || JSON.stringify(row, null, 2), scrapedAt: new Date().toISOString(), source: (() => { try { return new URL(row.url).host; } catch { return undefined; } })()
+          }));
+          addItems(mapped);
+          toast({ title: `Imported ${mapped.length} rows from CSV` });
+        },
+      });
+      return;
+    }
+    if (ext === 'md' || ext === 'markdown') {
+      const text = await file.text();
+      addItems([{ id: genId(), company, category: 'upload', title: file.name, markdown: text, scrapedAt: new Date().toISOString() }]);
+      toast({ title: 'Markdown imported' });
+      return;
+    }
+    if (ext === 'docx') {
+      const arrayBuffer = await file.arrayBuffer();
+      const result = await (mammoth as any).extractRawText({ arrayBuffer });
+      addItems([{ id: genId(), company, category: 'upload', title: file.name, markdown: result.value, scrapedAt: new Date().toISOString() }]);
+      toast({ title: 'DOCX imported' });
+      return;
+    }
+    toast({ title: 'Unsupported file', variant: 'destructive' });
+  };
+
+  // Competitor group management
+  const createCompetitorGroup = () => {
+    if (!newGroup.name || newGroup.companies?.length === 0) {
+      toast({ title: 'Please provide group name and at least one company', variant: 'destructive' });
+      return;
+    }
+    
+    const group: CompetitorGroup = {
+      id: genId(),
+      name: newGroup.name,
+      companies: newGroup.companies?.filter(c => c.trim()) || [],
+      categories: newGroup.categories || ['marketing', 'docs', 'rss', 'social'],
+      urls: newGroup.urls || {}
+    };
+    
+    setCompetitorGroups(prev => [...prev, group]);
+    setNewGroup({ name: '', companies: [''], categories: ['marketing', 'docs', 'rss', 'social'], urls: {} });
+    setShowGroupCreator(false);
+    toast({ title: 'Competitor group created' });
+  };
+
+  const deleteCompetitorGroup = (groupId: string) => {
+    setCompetitorGroups(prev => prev.filter(g => g.id !== groupId));
+    if (selectedGroup === groupId) setSelectedGroup('');
+    toast({ title: 'Competitor group deleted' });
+  };
+
+  const loadPresetGroup = async (presetKey: string) => {
+    // Try to load from server first, fallback to local presets
+    if (backendStatus === 'connected' && serverPresetGroups[presetKey]) {
+      try {
+        const serverGroup = await APIService.loadPresetGroup(presetKey);
+        const group: CompetitorGroup = {
+          id: genId(),
+          name: serverGroup.name || presetKey,
+          companies: serverGroup.companies || [],
+          categories: serverGroup.categories || ['marketing', 'docs', 'rss', 'social'],
+          urls: {}
+        };
+        setCompetitorGroups(prev => [...prev, group]);
+        toast({ title: `Loaded ${group.name} from server` });
+        return;
+      } catch (error) {
+        console.warn('Failed to load server preset group, falling back to local:', error);
+      }
+    }
+    
+    // Fallback to local presets
+    const preset = PRESET_GROUPINGS[presetKey as keyof typeof PRESET_GROUPINGS];
+    if (!preset) return;
+    
+    const group: CompetitorGroup = {
+      id: genId(),
+      name: preset.name,
+      companies: preset.companies,
+      categories: preset.categories,
+      urls: {}
+    };
+    
+    setCompetitorGroups(prev => [...prev, group]);
+    toast({ title: `Loaded ${preset.name} preset group` });
+  };
+
+  const runBatchScrape = async (group: CompetitorGroup) => {
+    if (!group.companies.length) {
+      toast({ title: 'No companies in group', variant: 'destructive' });
+      return;
+    }
+    
+    setIsLoading(true);
+    let totalScraped = 0;
+    
+    try {
+      // Use backend API for batch scraping
+      if (backendStatus === 'connected') {
+        const backendRequest = {
+          group_name: group.name,
+          companies: group.companies.map(company => ({
+            name: company,
+            website: group.urls[company] || urls.marketing, // Use group URL or fallback
+            categories: group.categories
+          })),
+          categories: group.categories
+        };
+        
+        const backendResult = await APIService.scrapeGroup(backendRequest);
+        if (backendResult.success) {
+          toast({ title: `Backend batch scraping complete: ${backendResult.message}` });
+          
+          // Process backend results and add to store
+          if (backendResult.data && backendResult.data.companies) {
+            Object.entries(backendResult.data.companies).forEach(([companyName, companyData]: [string, any]) => {
+              if (companyData.categories) {
+                Object.entries(companyData.categories).forEach(([category, categoryData]: [string, any]) => {
+                  if (categoryData.items) {
+                    categoryData.items.forEach((item: any) => {
+                      const scrapedItem: ScrapedItem = {
+                        id: item.id || genId(),
+                        company: companyName,
+                        category: category as any,
+                        url: item.url || '',
+                        title: item.title || `Scraped ${category} content`,
+                        markdown: item.content || item.markdown || '',
+                        html: item.content_html || '',
+                        scrapedAt: item.scraped_at || new Date().toISOString(),
+                        source: companyName
+                      };
+                      addItems([scrapedItem]);
+                      totalScraped++;
+                    });
+                  }
+                });
+              }
+            });
+          }
+          
+          setIsLoading(false);
+          return;
+        }
+      }
+      
+      // Fallback: scrape companies individually if backend fails
+      toast({ title: 'Backend unavailable, using fallback scraping' });
+      
+      for (const company of group.companies) {
+        const companyUrls = Object.keys(group.urls).length > 0 ? group.urls : urls;
+        
+        for (const [category, url] of Object.entries(companyUrls)) {
+          if (!url.trim()) continue;
+          
+          try {
+            // Call individual company scraping
+            const response = await APIService.scrapeCompany({
+              company,
+              urls: { [category]: url },
+              categories: [category],
+              page_limit: limit
+            });
+            
+            if (response.categories && response.categories[category]) {
+              const categoryData = response.categories[category];
+              if (categoryData.items) {
+                categoryData.items.forEach((item: any) => {
+                  const scrapedItem: ScrapedItem = {
+                    id: item.id || genId(),
+                    company: company,
+                    category: category as any,
+                    url: item.url || url,
+                    title: item.title || `Scraped ${category} content`,
+                    markdown: item.content || item.markdown || '',
+                    html: item.content_html || '',
+                    scrapedAt: item.scraped_at || new Date().toISOString(),
+                    source: new URL(url).host
+                  };
+                  addItems([scrapedItem]);
+                  totalScraped++;
+                });
+              }
+            }
+          } catch (error) {
+            console.error(`Failed to scrape ${category} for ${company}:`, error);
+          }
+        }
+      }
+      
+      toast({ title: `Batch scrape complete: ${totalScraped} items from ${group.companies.length} companies` });
+    } catch (error) {
+      toast({ title: 'Batch scrape failed', variant: 'destructive' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <main className="container mx-auto py-8">
       <SEO title="Scrape Intelligence | InsightForge" description="Targeted and aggregate web scraping across marketing, docs, RSS and social sources." canonical={window.location.href} />
+
+      {/* Settings and Controls */}
+      <div className="grid gap-6 md:grid-cols-4 mb-8">
+        <Card className="md:col-span-4">
+          <CardHeader><CardTitle>Settings</CardTitle></CardHeader>
+          <CardContent className="grid gap-4 md:grid-cols-4">
+            <div className="space-y-2">
+              <label className="text-sm">Company Tag</label>
+              <Input value={company} onChange={e => setCompany(e.target.value)} placeholder="Acme Co" />
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-sm">Firecrawl API Key</label>
+              <div className="flex gap-2">
+                <Input type="password" value={fcKey} onChange={e => setFcKey(e.target.value)} placeholder="fc_live_..." />
+                <Button onClick={onSaveKey} variant="secondary">Save</Button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm">Page Limit</label>
+              <Input type="number" min={1} max={250} value={limit} onChange={e => setLimit(parseInt(e.target.value || '25'))} />
+            </div>
+          </CardContent>
+        </Card>
+
+        {(['marketing','docs','rss','social'] as const).map((cat) => (
+          <Card key={cat}>
+            <CardHeader>
+              <CardTitle className="capitalize">{cat} URL</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Input placeholder={`https://example.com/${cat}`} value={(urls as any)[cat]} onChange={e => setUrls(prev => ({ ...prev, [cat]: e.target.value }))} />
+              <Button onClick={() => runCrawl(cat)} disabled={isLoading}>Run {cat}</Button>
+            </CardContent>
+          </Card>
+        ))}
+
+        <Card className="md:col-span-2">
+          <CardHeader><CardTitle>Aggregate Crawl</CardTitle></CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">Run a macro crawl across all provided URLs.</p>
+            <Button variant="default" onClick={runAggregate} disabled={isLoading}>Run Aggregate</Button>
+          </CardContent>
+        </Card>
+
+        <Card className="md:col-span-2">
+          <CardHeader><CardTitle>Import Files</CardTitle></CardHeader>
+          <CardContent className="space-y-3">
+            <Input type="file" accept=".csv,.md,.markdown,.docx" onChange={e => { const f = e.target.files?.[0]; if (f) onUpload(f); }} />
+            <p className="text-xs text-muted-foreground">Upload CSV / DOCX / Markdown to include proprietary docs.</p>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Enhanced Analytics Dashboard */}
       <div className="grid gap-6 md:grid-cols-4 mb-8">
@@ -499,15 +649,15 @@ export default function ScrapeDashboard() {
                 <div className="text-sm text-muted-foreground">Total Items</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{metrics.uniqueCompanies}</div>
+                <div className="text-lg font-bold text-primary">{metrics.uniqueCompanies}</div>
                 <div className="text-sm text-muted-foreground">Companies</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{metrics.uniqueSources}</div>
+                <div className="text-lg font-bold text-primary">{metrics.uniqueSources}</div>
                 <div className="text-sm text-muted-foreground">Sources</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{filteredItems.length}</div>
+                <div className="text-lg font-bold text-primary">{filteredItems.length}</div>
                 <div className="text-sm text-muted-foreground">Filtered</div>
               </div>
             </div>
@@ -553,99 +703,247 @@ export default function ScrapeDashboard() {
             {/* Enhanced Visualizations */}
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
-                {selectedChart === 'overview' && (
-                  <BarChart data={metrics.byCat}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis allowDecimals={false} />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="value" name="Pages" fill="hsl(var(--primary))" />
-                  </BarChart>
-                )}
-                
-                {selectedChart === 'trends' && (
-                  <AreaChart data={metrics.trendData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
-                  </AreaChart>
-                )}
-                
-                {selectedChart === 'categories' && (
-                  <PieChart>
-                    <Pie
-                      data={metrics.byCat}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    />
-                    <Tooltip />
-                  </PieChart>
-                )}
-                
-                {selectedChart === 'companies' && (
-                  <BarChart data={metrics.byCompany}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis allowDecimals={false} />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="value" name="Items" fill="#82ca9d" />
-                  </BarChart>
-                )}
-                
-                {selectedChart === 'words' && (
-                  <BarChart data={metrics.topWords} layout="horizontal">
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" />
-                    <YAxis dataKey="word" type="category" width={80} />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="#ffc658" />
-                  </BarChart>
-                )}
-                
-                {selectedChart === 'sources' && (
-                  <PieChart>
-                    <Pie
-                      data={metrics.byDomain}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    />
-                    <Tooltip />
-                  </PieChart>
-                )}
+                <div>
+                  {selectedChart === 'overview' && (
+                    <BarChart data={metrics.byCat}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis allowDecimals={false} />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="value" name="Pages" fill="hsl(var(--primary))" />
+                    </BarChart>
+                  )}
+                  
+                  {selectedChart === 'trends' && (
+                    <AreaChart data={metrics.trendData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
+                    </AreaChart>
+                  )}
+                  
+                  {selectedChart === 'categories' && (
+                    <PieChart>
+                      <Pie
+                        data={metrics.byCat}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={100}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      />
+                      <Tooltip />
+                    </PieChart>
+                  )}
+                  
+                  {selectedChart === 'companies' && (
+                    <BarChart data={metrics.byCompany}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis allowDecimals={false} />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="value" name="Items" fill="#82ca9d" />
+                    </BarChart>
+                  )}
+                  
+                  {selectedChart === 'words' && (
+                    <BarChart data={metrics.topWords} layout="horizontal">
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" />
+                      <YAxis dataKey="word" type="category" width={80} />
+                      <Tooltip />
+                      <Bar dataKey="count" fill="#ffc658" />
+                    </BarChart>
+                  )}
+                  
+                  {selectedChart === 'sources' && (
+                    <PieChart>
+                      <Pie
+                        data={metrics.byDomain}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={100}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      />
+                      <Tooltip />
+                    </PieChart>
+                  )}
 
-                {selectedChart === 'quality' && (
-                  <BarChart data={[
-                    { name: 'Rich Content', value: metrics.contentQuality.richContent },
-                    { name: 'Has Links', value: metrics.contentQuality.hasLinks },
-                    { name: 'Has Images', value: metrics.contentQuality.hasImages },
-                    { name: 'Has Code', value: metrics.contentQuality.hasCode },
-                    { name: 'Structured', value: metrics.contentQuality.structuredContent }
-                  ]}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis allowDecimals={false} />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="value" name="Items" fill="#ff6b6b" />
-                  </BarChart>
-                )}
+                  {selectedChart === 'quality' && (
+                    <BarChart data={[
+                      { name: 'Rich Content', value: metrics.contentQuality.richContent },
+                      { name: 'Has Links', value: metrics.contentQuality.hasLinks },
+                      { name: 'Has Images', value: metrics.contentQuality.hasImages },
+                      { name: 'Has Code', value: metrics.contentQuality.hasCode },
+                      { name: 'Structured', value: metrics.contentQuality.structuredContent }
+                    ]}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis allowDecimals={false} />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="value" name="Items" fill="#ff6b6b" />
+                    </BarChart>
+                  )}
+                </div>
               </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Enhanced Filtering and Search */}
+      <div className="grid gap-6 md:grid-cols-4 mb-8">
+        <Card className="md:col-span-4">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Search className="h-5 w-5" />
+              Advanced Search & Filtering
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <Input
+                placeholder="Search content, titles, companies..."
+                value={filters.search}
+                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+              />
+              <select 
+                className="w-full border rounded-md h-10 px-3 bg-background"
+                value={filters.company}
+                onChange={(e) => setFilters(prev => ({ ...prev, company: e.target.value }))}
+              >
+                <option value="">All Companies</option>
+                {Array.from(new Set(items.map(i => i.company))).map(company => (
+                  <option key={company} value={company}>{company}</option>
+                ))}
+              </select>
+              <select 
+                className="w-full border rounded-md h-10 px-3 bg-background"
+                value={filters.category}
+                onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
+              >
+                <option value="">All Categories</option>
+                {Array.from(new Set(items.map(i => i.category))).map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              <select 
+                className="w-full border rounded-md h-10 px-3 bg-background"
+                value={filters.dateRange}
+                onChange={(e) => setFilters(prev => ({ ...prev, dateRange: e.target.value }))}
+              >
+                <option value="all">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Badge variant="secondary">{filteredItems.length} items</Badge>
+                <Badge variant="outline">{metrics.uniqueCompanies} companies</Badge>
+                <Badge variant="outline">{metrics.uniqueSources} sources</Badge>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={exportCSV}>
+                  <Download className="h-4 w-4 mr-2" />
+                  Export CSV
+                </Button>
+                <Button variant="ghost" onClick={clear}>Clear All</Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Simple Results Display */}
+      <Card className="md:col-span-4">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-5 w-5" />
+            Scraped Data ({items.length} items)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {items.length === 0 ? (
+            <div className="text-center py-8">
+              <div className="mb-4">
+                {backendStatus === 'connected' ? (
+                  <div className="text-muted-foreground">
+                    <p className="mb-2">No scraped data yet. Start by entering URLs and clicking the scrape buttons above.</p>
+                    <p className="text-sm">The backend Python scraper will collect real content from the specified websites.</p>
+                  </div>
+                ) : backendStatus === 'disconnected' ? (
+                  <div className="text-red-600">
+                    <p className="mb-2 font-medium">Backend not connected</p>
+                    <p className="text-sm">Real scraping requires a connected backend. Please ensure your InsightForge backend is running.</p>
+                    <Button 
+                      className="mt-3" 
+                      onClick={checkBackendConnection}
+                      variant="outline"
+                    >
+                      <Server className="h-4 w-4 mr-2" />
+                      Check Backend Connection
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="text-yellow-600">
+                    <p className="mb-2 font-medium">Checking backend connection...</p>
+                    <p className="text-sm">Please wait while we verify the backend status.</p>
+                  </div>
+                )}
+              </div>
+              
+              {backendStatus === 'connected' && (
+                <div className="text-sm text-muted-foreground">
+                  <p>Example URLs to test:</p>
+                  <div className="mt-2 space-y-1 text-xs">
+                    <p>• Marketing: https://salesforce.com</p>
+                    <p>• Documentation: https://docs.salesforce.com</p>
+                    <p>• RSS Feed: https://hubspot.com/blog/feed</p>
+                    <p>• Social: https://slack.com/community</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {items.slice(0, 5).map(item => (
+                <div key={item.id} className="p-4 border rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="font-medium">{item.title || 'Untitled'}</h3>
+                    <Badge variant="outline">{item.company}</Badge>
+                    <Badge variant="secondary">{item.category}</Badge>
+                  </div>
+                  {item.markdown && (
+                    <div className="prose prose-sm max-h-32 overflow-auto">
+                      <div className="whitespace-pre-wrap">
+                        {item.markdown.slice(0, 200)}...
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+              
+              {items.length > 5 && (
+                <div className="text-center py-4 text-muted-foreground">
+                  <p>Showing first 5 of {items.length} items</p>
+                  <p className="text-sm">Use the search and filter options above to find specific content</p>
+                </div>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Competitor Grouping & Batch Scraping */}
       <div className="grid gap-6 md:grid-cols-4 mb-8">
@@ -901,302 +1199,110 @@ export default function ScrapeDashboard() {
         </Card>
       </div>
 
-      {/* Enhanced Filtering and Search */}
+      {/* Demo Data & Testing */}
       <div className="grid gap-6 md:grid-cols-4 mb-8">
         <Card className="md:col-span-4">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Search className="h-5 w-5" />
-              Advanced Search & Filtering
+              <Play className="h-5 w-5" />
+              Real Scraping & Testing
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-              <Input
-                placeholder="Search content, titles, companies..."
-                value={filters.search}
-                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-              />
-              <select 
-                className="w-full border rounded-md h-10 px-3 bg-background"
-                value={filters.company}
-                onChange={(e) => setFilters(prev => ({ ...prev, company: e.target.value }))}
-              >
-                <option value="">All Companies</option>
-                {Array.from(new Set(items.map(i => i.company))).map(company => (
-                  <option key={company} value={company}>{company}</option>
-                ))}
-              </select>
-              <select 
-                className="w-full border rounded-md h-10 px-3 bg-background"
-                value={filters.category}
-                onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
-              >
-                <option value="">All Categories</option>
-                {Array.from(new Set(items.map(i => i.category))).map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
-              <select 
-                className="w-full border rounded-md h-10 px-3 bg-background"
-                value={filters.dateRange}
-                onChange={(e) => setFilters(prev => ({ ...prev, dateRange: e.target.value }))}
-              >
-                <option value="all">All Time</option>
-                <option value="today">Today</option>
-                <option value="week">This Week</option>
-                <option value="month">This Month</option>
-              </select>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Badge variant="secondary">{filteredItems.length} items</Badge>
-                <Badge variant="outline">{metrics.uniqueCompanies} companies</Badge>
-                <Badge variant="outline">{metrics.uniqueSources} sources</Badge>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" onClick={exportCSV}>
-                  <Download className="h-4 w-4 mr-2" />
-                  Export CSV
-                </Button>
-                <Button variant="ghost" onClick={clear}>Clear All</Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Settings and Controls */}
-      <div className="grid gap-6 md:grid-cols-4 mb-8">
-        <Card className="md:col-span-4">
-          <CardHeader>
-            <CardTitle>Settings</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-4">
-            <div className="space-y-2">
-              <label className="text-sm">Company Tag</label>
-              <Input value={company} onChange={e => setCompany(e.target.value)} placeholder="Acme Co" />
-            </div>
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-sm">Firecrawl API Key</label>
-              <div className="flex gap-2">
-                <Input type="password" value={fcKey} onChange={e => setFcKey(e.target.value)} placeholder="fc_live_..." />
-                <Button onClick={onSaveKey} variant="secondary">Save</Button>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm">Page Limit</label>
-              <Input type="number" min={1} max={250} value={limit} onChange={e => setLimit(parseInt(e.target.value || '25'))} />
-            </div>
-          </CardContent>
-        </Card>
-
-        {(['marketing','docs','rss','social'] as const).map((cat) => (
-          <Card key={cat}>
-            <CardHeader>
-              <CardTitle className="capitalize">{cat} URL</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Input placeholder={`https://example.com/${cat}`} value={(urls as any)[cat]} onChange={e => setUrls(prev => ({ ...prev, [cat]: e.target.value }))} />
-              <Button onClick={() => runCrawl(cat)} disabled={isLoading}>Run {cat}</Button>
-            </CardContent>
-          </Card>
-        ))}
-
-        <Card className="md:col-span-2">
-          <CardHeader><CardTitle>Aggregate Crawl</CardTitle></CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground">Run a macro crawl across all provided URLs.</p>
-            <Button variant="default" onClick={runAggregate} disabled={isLoading}>Run Aggregate</Button>
-          </CardContent>
-        </Card>
-
-        <Card className="md:col-span-2">
-          <CardHeader><CardTitle>Import Files</CardTitle></CardHeader>
-          <CardContent className="space-y-3">
-            <Input type="file" accept=".csv,.md,.markdown,.docx" onChange={e => { const f = e.target.files?.[0]; if (f) onUpload(f); }} />
-            <p className="text-xs text-muted-foreground">Upload CSV / DOCX / Markdown to include proprietary docs.</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Enhanced Results Display */}
-      <Card className="md:col-span-4">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5" />
-            Scraped Insights & Analysis
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {/* Quantitative Summary */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted rounded-lg">
-            <div className="text-center">
-              <div className="text-lg font-bold text-primary">{paginatedItems.length}</div>
-              <div className="text-xs text-muted-foreground">Current Page</div>
-            </div>
-            <div className="text-center">
-              <div className="text-lg font-bold text-primary">
-                {paginatedItems.reduce((acc, item) => acc + (item.markdown?.length || 0), 0).toLocaleString()}
-              </div>
-              <div className="text-xs text-muted-foreground">Total Characters</div>
-            </div>
-            <div className="text-center">
-              <div className="text-lg font-bold text-primary">
-                {paginatedItems.reduce((acc, item) => acc + (item.markdown?.split(/\s+/).length || 0), 0).toLocaleString()}
-              </div>
-              <div className="text-xs text-muted-foreground">Total Words</div>
-            </div>
-            <div className="text-center">
-              <div className="text-lg font-bold text-primary">
-                {paginatedItems.filter(item => item.markdown && item.markdown.length > 1000).length}
-              </div>
-              <div className="text-xs text-muted-foreground">Rich Content</div>
-            </div>
-          </div>
-
-          {/* Content Quality Indicators */}
-          <div className="mb-6">
-            <h3 className="font-semibold mb-3">Content Quality Analysis</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {paginatedItems.slice(0, 3).map(item => {
-                const wordCount = item.markdown?.split(/\s+/).length || 0;
-                const charCount = item.markdown?.length || 0;
-                const hasLinks = item.markdown?.includes('http') || false;
-                const hasImages = item.markdown?.includes('![') || false;
-                const hasCode = item.markdown?.includes('```') || false;
-                
-                return (
-                  <div key={item.id} className="p-3 border rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-sm truncate">{item.title || 'Untitled'}</h4>
-                      <Badge variant={wordCount > 500 ? "default" : "secondary"}>
-                        {wordCount > 500 ? 'Rich' : 'Basic'}
-                      </Badge>
-                    </div>
-                    <div className="space-y-1 text-xs">
-                      <div className="flex justify-between">
-                        <span>Words:</span>
-                        <span className="font-medium">{wordCount}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Characters:</span>
-                        <span className="font-medium">{charCount.toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Links:</span>
-                        <span className={hasLinks ? "text-green-600" : "text-gray-400"}>
-                          {hasLinks ? "✓" : "✗"}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Images:</span>
-                        <span className={hasImages ? "text-green-600" : "text-gray-400"}>
-                          {hasImages ? "✓" : "✗"}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Code:</span>
-                        <span className={hasCode ? "text-green-600" : "text-gray-400"}>
-                          {hasCode ? "✓" : "✗"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Enhanced Results List */}
-          <div className="space-y-4">
-            {paginatedItems.map(i => (
-              <article key={i.id} className="rounded-lg border p-4 hover:shadow-md transition-shadow">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-medium">{i.title || i.url || 'Document'}</h3>
-                      <Badge variant="outline">{i.company}</Badge>
-                      <Badge variant="secondary">{i.category}</Badge>
-                      {i.source && <Badge variant="outline">{i.source}</Badge>}
-                    </div>
-                    
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                      <span>{new Date(i.scrapedAt).toLocaleDateString()}</span>
-                      {i.markdown && (
-                        <>
-                          <span>•</span>
-                          <span>{i.markdown.split(/\s+/).length} words</span>
-                          <span>•</span>
-                          <span>{i.markdown.length.toLocaleString()} characters</span>
-                        </>
-                      )}
-                    </div>
-
-                    {i.markdown && (
-                      <div className="space-y-3">
-                        {/* Content Preview with Enhanced Formatting */}
-                        <div className="prose prose-sm dark:prose-invert max-h-48 overflow-auto">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>{i.markdown.slice(0, 1200)}</ReactMarkdown>
-                        </div>
-                        
-                        {/* Content Insights */}
-                        <div className="flex flex-wrap gap-2 pt-2 border-t">
-                          {i.markdown.includes('http') && (
-                            <Badge variant="outline" className="text-xs">Contains Links</Badge>
-                          )}
-                          {i.markdown.includes('![') && (
-                            <Badge variant="outline" className="text-xs">Contains Images</Badge>
-                          )}
-                          {i.markdown.includes('```') && (
-                            <Badge variant="outline" className="text-xs">Contains Code</Badge>
-                          )}
-                          {i.markdown.includes('##') && (
-                            <Badge variant="outline" className="text-xs">Structured Content</Badge>
-                          )}
-                          {i.markdown.length > 2000 && (
-                            <Badge variant="default" className="text-xs">Long-form Content</Badge>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-4">
+                <h3 className="font-semibold">Backend Status</h3>
+                <div className="flex items-center gap-2 p-3 border rounded-lg">
+                  {backendStatus === 'connected' && (
+                    <>
+                      <Wifi className="h-6 w-6 text-green-500" />
+                      <span className="text-sm font-medium text-green-600">Backend Connected</span>
+                    </>
+                  )}
+                  {backendStatus === 'disconnected' && (
+                    <>
+                      <WifiOff className="h-6 w-6 text-red-500" />
+                      <span className="text-sm font-medium text-red-600">Backend Disconnected</span>
+                    </>
+                  )}
+                  {backendStatus === 'checking' && (
+                    <>
+                      <Wifi className="h-6 w-6 text-yellow-500 animate-spin" />
+                      <span className="text-sm font-medium text-yellow-600">Checking Backend...</span>
+                    </>
+                  )}
                 </div>
-              </article>
-            ))}
-            
-            {paginatedItems.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
-                {items.length === 0 ? 'No data yet. Enter URLs and run a crawl or import a file.' : 'No items match your current filters'}
+                <p className="text-sm text-muted-foreground">
+                  Real scraping requires a connected backend. The backend runs Python scrapers that can access web content and return structured data.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={checkBackendConnection}
+                  disabled={backendStatus === 'checking'}
+                >
+                  <Server className="h-4 w-4 mr-2" />
+                  {backendStatus === 'checking' ? 'Checking...' : 'Test Connection'}
+                </Button>
               </div>
-            )}
-          </div>
-          
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 mt-6">
-              <Button
-                variant="outline"
-                onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                disabled={page === 1}
-              >
-                Previous
-              </Button>
-              <span className="text-sm">
-                Page {page} of {totalPages}
-              </span>
-              <Button
-                variant="outline"
-                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
-                disabled={page === totalPages}
-              >
-                Next
-              </Button>
+              
+              <div className="space-y-4">
+                <h3 className="font-semibold">Real Scraping Test</h3>
+                <p className="text-sm text-muted-foreground">
+                  Test the real scraping functionality with actual URLs. This will call the backend Python scraper.
+                </p>
+                <div className="space-y-2">
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    onClick={() => runCrawl('marketing')}
+                    disabled={isLoading || backendStatus !== 'connected'}
+                  >
+                    <Target className="h-4 w-4 mr-2" />
+                    Test Marketing Scrape
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    onClick={() => runCrawl('docs')}
+                    disabled={isLoading || backendStatus !== 'connected'}
+                  >
+                    <Target className="h-4 w-4 mr-2" />
+                    Test Docs Scrape
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="font-semibold">Data Management</h3>
+                <p className="text-sm text-muted-foreground">
+                  Manage your scraped data and prepare for analysis. Export data for further processing.
+                </p>
+                <div className="space-y-2">
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    onClick={exportCSV}
+                    disabled={items.length === 0}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export All Data
+                  </Button>
+                  <Button 
+                    variant="destructive" 
+                    className="w-full" 
+                    onClick={clear}
+                    disabled={items.length === 0}
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Clear All Data
+                  </Button>
+                </div>
+              </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </main>
   );
 }

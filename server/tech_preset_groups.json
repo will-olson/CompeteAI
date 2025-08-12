@@ -1,0 +1,161 @@
+{
+    "enterprise_saas": {
+        "name": "Enterprise SaaS Leaders",
+        "description": "Leading enterprise software-as-a-service companies",
+        "company_count": 8,
+        "companies": [
+            "Salesforce",
+            "Oracle",
+            "SAP",
+            "Microsoft",
+            "Adobe",
+            "Workday",
+            "ServiceNow",
+            "Atlassian"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://docs.{company}.com",
+            "rss": "https://{company}.com/blog/feed",
+            "social": "https://{company}.com/community"
+        }
+    },
+    "bi_analytics": {
+        "name": "Business Intelligence & Analytics",
+        "description": "Top business intelligence and data analytics platforms",
+        "company_count": 6,
+        "companies": [
+            "Tableau",
+            "PowerBI",
+            "Qlik",
+            "Looker",
+            "Domo",
+            "Sisense"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://help.{company}.com",
+            "rss": "https://{company}.com/blog/feed",
+            "social": "https://{company}.com/community"
+        }
+    },
+    "cloud_platforms": {
+        "name": "Cloud Computing Platforms",
+        "description": "Major cloud infrastructure and platform providers",
+        "company_count": 5,
+        "companies": [
+            "AWS",
+            "Microsoft_Azure",
+            "Google_Cloud",
+            "IBM_Cloud",
+            "Oracle_Cloud"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://docs.{company}.com",
+            "rss": "https://{company}.com/news/feed",
+            "social": "https://{company}.com/community"
+        }
+    },
+    "ai_ml_platforms": {
+        "name": "AI & Machine Learning",
+        "description": "Leading artificial intelligence and ML platforms",
+        "company_count": 6,
+        "companies": [
+            "OpenAI",
+            "Anthropic",
+            "Google_AI",
+            "Microsoft_AI",
+            "NVIDIA",
+            "Databricks"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://docs.{company}.com",
+            "rss": "https://{company}.com/blog/feed",
+            "social": "https://{company}.com/community"
+        }
+    },
+    "collaboration_tools": {
+        "name": "Collaboration & Productivity",
+        "description": "Team collaboration and productivity tools",
+        "company_count": 6,
+        "companies": [
+            "Slack",
+            "Notion",
+            "Figma",
+            "Airtable",
+            "Asana",
+            "Monday"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://help.{company}.com",
+            "rss": "https://{company}.com/blog/feed",
+            "social": "https://{company}.com/community"
+        }
+    },
+    "developer_tools": {
+        "name": "Developer Tools & Platforms",
+        "description": "Essential tools for software development",
+        "company_count": 6,
+        "companies": [
+            "GitHub",
+            "GitLab",
+            "JetBrains",
+            "Docker",
+            "Kubernetes",
+            "Terraform"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://docs.{company}.com",
+            "rss": "https://{company}.com/blog/feed",
+            "social": "https://{company}.com/community"
+        }
+    },
+    "data_warehousing": {
+        "name": "Data Warehousing & Analytics",
+        "description": "Modern data warehousing and analytics platforms",
+        "company_count": 5,
+        "companies": [
+            "Snowflake",
+            "Amazon_Redshift",
+            "Google_BigQuery",
+            "Azure_Synapse",
+            "Databricks"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://docs.{company}.com",
+            "rss": "https://{company}.com/blog/feed",
+            "social": "https://{company}.com/community"
+        }
+    },
+    "security_platforms": {
+        "name": "Cybersecurity & Security Platforms",
+        "description": "Leading cybersecurity and security management platforms",
+        "company_count": 5,
+        "companies": [
+            "CrowdStrike",
+            "SentinelOne",
+            "Carbon_Black",
+            "Sophos",
+            "Trend_Micro"
+        ],
+        "categories": ["marketing", "docs", "rss", "social"],
+        "url_patterns": {
+            "marketing": "https://{company}.com",
+            "docs": "https://docs.{company}.com",
+            "rss": "https://{company}.com/blog/feed",
+            "social": "https://{company}.com/community"
+        }
+    }
+} 

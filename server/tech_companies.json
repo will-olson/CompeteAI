@@ -1,0 +1,81 @@
+{
+    "enterprise_software": [
+        "Salesforce", "Oracle", "SAP", "Microsoft", "Adobe", "Workday", "ServiceNow", 
+        "Atlassian", "Slack", "Notion", "Figma", "Airtable", "Asana", "Monday", 
+        "ClickUp", "Trello", "Basecamp", "Jira", "Confluence", "Bitbucket", 
+        "GitHub", "GitLab", "CircleCI", "Jenkins", "Docker", "Kubernetes", 
+        "Terraform", "Ansible", "Chef", "Puppet", "Nagios", "Zabbix", "Grafana", 
+        "Kibana", "Elasticsearch", "Logstash", "Beats", "Prometheus", "InfluxDB"
+    ],
+    "business_intelligence": [
+        "Tableau", "PowerBI", "Qlik", "Looker", "Domo", "Sisense", "MicroStrategy", 
+        "IBM_Cognos", "SAS", "Alteryx", "Databricks", "Snowflake", "Sigma", "Omni", 
+        "Palantir", "ThoughtSpot", "Mode", "Metabase", "Apache_Superset", "Grafana", 
+        "Kibana", "Elasticsearch", "Splunk", "New_Relic", "DataDog", "AppDynamics", 
+        "Dynatrace", "Sumo_Logic", "LogRhythm", "Rapid7", "Qualys", "Tenable"
+    ],
+    "cloud_platforms": [
+        "AWS", "Microsoft_Azure", "Google_Cloud", "IBM_Cloud", "Oracle_Cloud", 
+        "Alibaba_Cloud", "DigitalOcean", "Heroku", "Vercel", "Netlify", "Cloudflare", 
+        "Fastly", "Akamai", "Linode", "Vultr", "Scaleway", "OVHcloud", "Rackspace", 
+        "CenturyLink", "NTT", "Fujitsu", "Cisco", "VMware", "Red_Hat", "Canonical"
+    ],
+    "data_warehousing": [
+        "Snowflake", "Amazon_Redshift", "Google_BigQuery", "Azure_Synapse", 
+        "IBM_Db2_Warehouse", "Oracle_Autonomous_Data_Warehouse", "Teradata", 
+        "Vertica", "Exasol", "ClickHouse", "Apache_Druid", "Apache_Kylin", 
+        "Greenplum", "Yellowbrick", "Actian", "SAP_HANA", "MariaDB", "PostgreSQL"
+    ],
+    "ai_ml_platforms": [
+        "OpenAI", "Anthropic", "Google_AI", "Microsoft_AI", "Meta_AI", "NVIDIA", 
+        "Intel_AI", "IBM_Watson", "Amazon_SageMaker", "Azure_ML", "Google_Vertex_AI", 
+        "Databricks_ML", "DataRobot", "H2O_ai", "RapidMiner", "KNIME", "Weka", 
+        "Orange", "BigML", "PredictionIO", "Apache_Spark_ML", "TensorFlow", "PyTorch"
+    ],
+    "customer_relationship": [
+        "Salesforce_CRM", "HubSpot", "Pipedrive", "Zoho_CRM", "Freshworks", 
+        "Zendesk", "Intercom", "Drift", "Calendly", "Calendly", "Acuity_Scheduling", 
+        "SimplyBook", "BookLikeABoss", "Appointy", "Setmore", "Square_Appointments", 
+        "Mindbody", "WellnessLiving", "Glofox", "TeamUp", "Zen_Planner", "FitSW"
+    ],
+    "marketing_automation": [
+        "HubSpot_Marketing", "Mailchimp", "Constant_Contact", "ConvertKit", 
+        "ActiveCampaign", "Drip", "Klaviyo", "Omnisend", "SendinBlue", "GetResponse", 
+        "AWeber", "Campaign_Monitor", "Emma", "Vertical_Response", "Benchmark_Email", 
+        "MailerLite", "SendPulse", "Sendlane", "Autopilot", "Customer_io", "Intercom"
+    ],
+    "project_management": [
+        "Asana", "Monday", "ClickUp", "Trello", "Basecamp", "Jira", "Confluence", 
+        "Notion", "Airtable", "Smartsheet", "Wrike", "TeamGantt", "GanttPRO", 
+        "ProjectManager", "LiquidPlanner", "Scoro", "Teamwork", "ProofHub", 
+        "Zoho_Projects", "Redbooth", "MeisterTask", "Flow", "Todoist", "Things"
+    ],
+    "collaboration_tools": [
+        "Slack", "Microsoft_Teams", "Discord", "Zoom", "Google_Meet", "Skype", 
+        "Webex", "BlueJeans", "GoToMeeting", "JoinMe", "TeamViewer", "AnyDesk", 
+        "Chrome_Remote_Desktop", "VNC", "RDP", "SSH", "FTP", "SFTP", "SCP", "rsync"
+    ],
+    "developer_tools": [
+        "GitHub", "GitLab", "Bitbucket", "Atlassian", "JetBrains", "Visual_Studio", 
+        "VS_Code", "Sublime_Text", "Atom", "Vim", "Emacs", "Eclipse", "IntelliJ", 
+        "PyCharm", "WebStorm", "PhpStorm", "Rider", "CLion", "GoLand", "DataGrip"
+    ],
+    "security_platforms": [
+        "CrowdStrike", "SentinelOne", "Carbon_Black", "Cylance", "Sophos", 
+        "Trend_Micro", "Kaspersky", "McAfee", "Symantec", "Bitdefender", 
+        "Malwarebytes", "ESET", "Avast", "AVG", "Panda", "F-Secure", "Emsisoft", 
+        "Webroot", "VIPRE", "Comodo", "Avira", "K7", "Quick_Heal", "Total_AV"
+    ],
+    "database_management": [
+        "Oracle", "Microsoft_SQL_Server", "MySQL", "PostgreSQL", "MongoDB", 
+        "Redis", "Cassandra", "CouchDB", "Neo4j", "InfluxDB", "TimescaleDB", 
+        "CockroachDB", "YugabyteDB", "SingleStore", "MemSQL", "ScyllaDB", 
+        "RethinkDB", "ArangoDB", "OrientDB", "MarkLogic", "Couchbase", "RavenDB"
+    ],
+    "integration_platforms": [
+        "Zapier", "IFTTT", "Integromat", "Make", "n8n", "Node-RED", "Apache_NiFi", 
+        "Talend", "Informatica", "MuleSoft", "Boomi", "Jitterbit", "SnapLogic", 
+        "Workato", "Tray", "Pipedream", "Huginn", "Apache_Camel", "Spring_Integration", 
+        "Mule_ESB", "WSO2", "TIBCO", "IBM_App_Connect", "Microsoft_Power_Automate"
+    ]
+} 
