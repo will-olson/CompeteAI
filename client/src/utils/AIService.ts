@@ -187,18 +187,20 @@ Focus on extracting actionable intelligence that would be valuable for competiti
       throw new Error('OpenAI API key not set');
     }
 
-    const prompt = `Generate a competitive intelligence summary for the following companies: ${companies.join(', ')}.
-    
-Focus Areas: ${focusAreas?.join(', ') || 'market positioning, competitive advantages, strategic moves, risks and opportunities'}
+    const prompt = `Analyze the competitive landscape for the following companies: ${companies.join(', ')}.
 
-Please provide a comprehensive analysis that includes:
-1. Market positioning comparison
-2. Key competitive differentiators
-3. Strategic insights and recommendations
-4. Risk assessment
-5. Opportunities for competitive advantage
+Focus Areas: ${focusAreas?.join(', ') || 'competitive positioning, differentiation, pricing, risks, opportunities'}
 
-Format the response in clear, actionable bullet points.`;
+Please provide a comprehensive competitive intelligence summary covering:
+
+1. **Market Positioning**: How these companies position themselves relative to each other
+2. **Key Differentiators**: What makes each company unique
+3. **Competitive Advantages**: Strengths and weaknesses of each player
+4. **Market Trends**: Emerging patterns and opportunities
+5. **Risk Factors**: Potential threats and challenges
+6. **Strategic Recommendations**: Actionable insights for competitive analysis
+
+Format your response as a clear, structured analysis that would be valuable for strategic decision-making.`;
 
     try {
       const response = await fetch(`${this.baseUrl}/chat/completions`, {
@@ -212,7 +214,7 @@ Format the response in clear, actionable bullet points.`;
           messages: [
             {
               role: 'system',
-              content: 'You are an expert competitive intelligence analyst specializing in market analysis and strategic insights.'
+              content: `You are an expert competitive intelligence analyst. Provide clear, actionable insights about competitive landscapes and market positioning.`
             },
             {
               role: 'user',
@@ -220,7 +222,7 @@ Format the response in clear, actionable bullet points.`;
             }
           ],
           temperature: 0.3,
-          max_tokens: 1500
+          max_tokens: 2000
         })
       });
 
@@ -231,7 +233,7 @@ Format the response in clear, actionable bullet points.`;
       const data = await response.json();
       return data.choices[0]?.message?.content || 'Failed to generate competitive summary';
     } catch (error) {
-      console.error('Competitive summary generation failed:', error);
+      console.error('Failed to generate competitive summary:', error);
       throw error;
     }
   }

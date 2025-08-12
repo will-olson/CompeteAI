@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { APIService } from '@/utils/APIService';
 import { ScrapedItem, useScrapeStore } from '@/state/ScrapeStore';
 import { SEO } from '@/components/SEO';
@@ -20,112 +20,101 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { databaseService, DatabaseItem } from '@/utils/DatabaseService';
 import { aiService, AIAnalysisResult } from '@/utils/AIService';
+import { linkTargetingService, LinkTarget } from '@/utils/LinkTargetingService';
 
 const genId = () => Math.random().toString(36).slice(2);
 
-// Enhanced preset competitor groupings
-const PRESET_GROUPINGS = {
-  'tech-saas': {
-    name: 'Tech SaaS',
-    companies: ['Salesforce', 'HubSpot', 'Slack', 'Notion', 'Figma', 'Airtable'],
-    categories: ['marketing', 'docs', 'rss', 'social'],
-    defaultUrls: {
-      'Salesforce': {
-        marketing: 'https://salesforce.com',
-        docs: 'https://docs.salesforce.com',
-        rss: 'https://salesforce.com/blog/feed',
-        social: 'https://twitter.com/salesforce'
-      },
-      'HubSpot': {
-        marketing: 'https://hubspot.com',
-        docs: 'https://developers.hubspot.com',
-        rss: 'https://blog.hubspot.com/feed',
-        social: 'https://twitter.com/HubSpot'
-      },
-      'Slack': {
-        marketing: 'https://slack.com',
-        docs: 'https://api.slack.com/docs',
-        rss: 'https://slack.com/blog/feed',
-        social: 'https://twitter.com/SlackHQ'
+// Dynamic industry groupings using LinkTargetingService
+const getIndustryGroupings = () => {
+  const profiles = linkTargetingService.getAllCompanyProfiles();
+  const groupings: Record<string, { name: string; companies: string[]; categories: string[]; description: string; linkPatterns: Record<string, string[]> }> = {};
+  
+  // Enhanced preset groups with common link patterns
+  const enhancedGroupings = {
+    'tech-saas': {
+      name: 'Tech SaaS Companies',
+      companies: ['OpenAI', 'Stripe', 'Notion', 'Figma', 'Linear', 'Vercel', 'Supabase', 'PlanetScale'],
+      categories: ['marketing', 'docs', 'api', 'blog', 'community'],
+      description: 'Software-as-a-Service companies with developer-focused content',
+      linkPatterns: {
+        marketing: ['', '/features', '/pricing', '/about', '/customers', '/security'],
+        docs: ['/docs', '/help', '/guides', '/tutorials', '/api', '/reference'],
+        api: ['/api', '/docs/api', '/developers', '/integrations', '/sdk'],
+        blog: ['/blog', '/news', '/updates', '/changelog', '/insights'],
+        community: ['/community', '/forum', '/discord', '/slack', '/github']
+      }
+    },
+    'fintech': {
+      name: 'Fintech & Payments',
+      companies: ['Stripe', 'Plaid', 'Square', 'Coinbase', 'Robinhood', 'Chime', 'Affirm', 'Klarna'],
+      categories: ['marketing', 'docs', 'api', 'compliance', 'security'],
+      description: 'Financial technology and payment processing companies',
+      linkPatterns: {
+        marketing: ['', '/solutions', '/pricing', '/enterprise', '/partners'],
+        docs: ['/docs', '/guides', '/api', '/support', '/knowledge-base'],
+        api: ['/api', '/docs/api', '/developers', '/integrations', '/webhooks'],
+        compliance: ['/compliance', '/security', '/privacy', '/regulatory', '/audit'],
+        security: ['/security', '/trust', '/compliance', '/certifications']
+      }
+    },
+    'ai-ml': {
+      name: 'AI & Machine Learning',
+      companies: ['OpenAI', 'Anthropic', 'Google AI', 'Microsoft AI', 'Hugging Face', 'Stability AI', 'Cohere', 'Scale AI'],
+      categories: ['marketing', 'docs', 'api', 'research', 'models'],
+      description: 'Artificial intelligence and machine learning companies',
+      linkPatterns: {
+        marketing: ['', '/products', '/solutions', '/enterprise', '/research'],
+        docs: ['/docs', '/guides', '/tutorials', '/examples', '/best-practices'],
+        api: ['/api', '/docs/api', '/playground', '/models', '/endpoints'],
+        research: ['/research', '/papers', '/blog', '/publications', '/insights'],
+        models: ['/models', '/gallery', '/showcase', '/examples', '/benchmarks']
+      }
+    },
+    'ecommerce': {
+      name: 'E-commerce & Retail',
+      companies: ['Shopify', 'WooCommerce', 'BigCommerce', 'Magento', 'Salesforce Commerce', 'Adobe Commerce'],
+      categories: ['marketing', 'docs', 'api', 'templates', 'apps'],
+      description: 'E-commerce platforms and retail technology',
+      linkPatterns: {
+        marketing: ['', '/features', '/pricing', '/templates', '/showcase'],
+        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference'],
+        api: ['/api', '/docs/api', '/webhooks', '/integrations', '/apps'],
+        templates: ['/templates', '/themes', '/designs', '/showcase', '/examples'],
+        apps: ['/apps', '/extensions', '/plugins', '/integrations', '/marketplace']
+      }
+    },
+    'developer-tools': {
+      name: 'Developer Tools',
+      companies: ['GitHub', 'GitLab', 'Bitbucket', 'JetBrains', 'VS Code', 'Postman', 'Docker', 'Kubernetes'],
+      categories: ['marketing', 'docs', 'api', 'downloads', 'community'],
+      description: 'Tools and platforms for software developers',
+      linkPatterns: {
+        marketing: ['', '/features', '/pricing', '/enterprise', '/teams'],
+        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference'],
+        api: ['/api', '/docs/api', '/webhooks', '/integrations', '/sdk'],
+        downloads: ['/download', '/releases', '/versions', '/changelog', '/updates'],
+        community: ['/community', '/forum', '/discussions', '/support', '/help']
+      }
+    },
+    'data-analytics': {
+      name: 'Data & Analytics',
+      companies: ['Tableau', 'Power BI', 'Looker', 'Mode', 'Amplitude', 'Mixpanel', 'Segment', 'Snowflake'],
+      categories: ['marketing', 'docs', 'api', 'templates', 'resources'],
+      description: 'Data visualization and analytics platforms',
+      linkPatterns: {
+        marketing: ['', '/solutions', '/pricing', '/enterprise', '/industries'],
+        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference'],
+        api: ['/api', '/docs/api', '/integrations', '/webhooks', '/sdk'],
+        templates: ['/templates', '/dashboards', '/examples', '/gallery', '/showcase'],
+        resources: ['/resources', '/blog', '/webinars', '/events', '/training']
       }
     }
-  },
-  'fintech': {
-    name: 'Fintech',
-    companies: ['Stripe', 'Plaid', 'Coinbase', 'Robinhood', 'Chime', 'Affirm'],
-    categories: ['marketing', 'docs', 'rss', 'social'],
-    defaultUrls: {
-      'Stripe': {
-        marketing: 'https://stripe.com',
-        docs: 'https://stripe.com/docs',
-        rss: 'https://stripe.com/blog/feed',
-        social: 'https://twitter.com/stripe'
-      },
-      'Plaid': {
-        marketing: 'https://plaid.com',
-        docs: 'https://plaid.com/docs',
-        rss: 'https://plaid.com/blog/feed',
-        social: 'https://twitter.com/Plaid'
-      },
-      'Coinbase': {
-        marketing: 'https://coinbase.com',
-        docs: 'https://docs.cloud.coinbase.com',
-        rss: 'https://blog.coinbase.com/feed',
-        social: 'https://twitter.com/coinbase'
-      }
-    }
-  },
-  'ecommerce': {
-    name: 'E-commerce',
-    companies: ['Shopify', 'Amazon', 'Etsy', 'WooCommerce', 'BigCommerce', 'Magento'],
-    categories: ['marketing', 'docs', 'rss', 'social'],
-    defaultUrls: {
-      'Shopify': {
-        marketing: 'https://shopify.com',
-        docs: 'https://shopify.dev',
-        rss: 'https://shopify.com/blog/feed',
-        social: 'https://twitter.com/Shopify'
-      },
-      'Amazon': {
-        marketing: 'https://amazon.com',
-        docs: 'https://developer.amazon.com',
-        rss: 'https://amazon.com/blog/feed',
-        social: 'https://twitter.com/amazon'
-      },
-      'Etsy': {
-        marketing: 'https://etsy.com',
-        docs: 'https://developer.etsy.com',
-        rss: 'https://etsy.com/blog/feed',
-        social: 'https://twitter.com/Etsy'
-      }
-    }
-  },
-  'ai-ml': {
-    name: 'AI/ML',
-    companies: ['OpenAI', 'Anthropic', 'Google AI', 'Microsoft AI', 'Meta AI', 'NVIDIA'],
-    categories: ['marketing', 'docs', 'rss', 'social'],
-    defaultUrls: {
-      'OpenAI': {
-        marketing: 'https://openai.com',
-        docs: 'https://platform.openai.com/docs',
-        rss: 'https://openai.com/blog/feed',
-        social: 'https://twitter.com/OpenAI'
-      },
-      'Anthropic': {
-        marketing: 'https://anthropic.com',
-        docs: 'https://docs.anthropic.com',
-        rss: 'https://anthropic.com/blog/feed',
-        social: 'https://twitter.com/AnthropicAI'
-      },
-      'Google AI': {
-        marketing: 'https://ai.google',
-        docs: 'https://ai.google.dev',
-        rss: 'https://ai.google/blog/feed',
-        social: 'https://twitter.com/GoogleAI'
-      }
-    }
-  }
+  };
+  
+  return enhancedGroupings;
 };
+
+const INDUSTRY_GROUPINGS = getIndustryGroupings();
 
 interface CompetitorGroup {
   id: string;
@@ -180,7 +169,27 @@ export default function ScrapeDashboard() {
 
   // Database state
   const [dbItems, setDbItems] = useState<DatabaseItem[]>([]);
-  const [dbStats, setDbStats] = useState<any>(null);
+  const [dbStats, setDbStats] = useState<{
+    totalItems?: number;
+    companies?: string[];
+    contentQuality?: {
+      totalWords: number;
+      totalCharacters: number;
+      richContent: number;
+      hasLinks: number;
+      hasImages: number;
+      hasCode: number;
+      structuredContent: number;
+      averageWordsPerItem: number;
+      averageCharsPerItem: number;
+    };
+  } | null>(null);
+
+  // Enhanced scraping setup state
+  const [selectedTargets, setSelectedTargets] = useState<Map<string, Set<string>>>(new Map());
+  const [useBackendKey, setUseBackendKey] = useState(true);
+  const [frontendOpenAIKey, setFrontendOpenAIKey] = useState<string>('');
+  const [showTargetSelection, setShowTargetSelection] = useState(false);
 
   // Enhanced analytics using database data
   const metrics = useMemo(() => {
@@ -219,13 +228,27 @@ export default function ScrapeDashboard() {
       .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
       .map(([date, count]) => ({ date, count }));
     
+    // Calculate content quality metrics
+    const totalWords = dbItems.reduce((acc, item) => acc + (item.markdown?.split(/\s+/).length || 0), 0);
+    const totalCharacters = dbItems.reduce((acc, item) => acc + (item.markdown?.length || 0), 0);
+    
     return {
       byCat: Object.entries(byCat).map(([name, value]) => ({ name, value })),
       byCompany: Object.entries(byCompany).map(([name, value]) => ({ name, value })),
       trendData,
-      contentQuality: dbStats.contentQuality,
-      totalItems: dbStats.totalItems,
-      uniqueCompanies: dbStats.companies.length
+      contentQuality: {
+        totalWords: dbStats.contentQuality?.totalWords || 0,
+        totalCharacters: dbStats.contentQuality?.totalCharacters || 0,
+        richContent: dbStats.contentQuality?.richContent || 0,
+        hasLinks: dbStats.contentQuality?.hasLinks || 0,
+        hasImages: dbStats.contentQuality?.hasImages || 0,
+        hasCode: dbStats.contentQuality?.hasCode || 0,
+        structuredContent: dbStats.contentQuality?.structuredContent || 0,
+        averageWordsPerItem: dbStats.contentQuality?.averageWordsPerItem || 0,
+        averageCharsPerItem: dbStats.contentQuality?.averageCharsPerItem || 0
+      },
+      totalItems: dbStats.totalItems || dbItems.length,
+      uniqueCompanies: dbStats.companies?.length || Object.keys(byCompany).length
     };
   }, [dbItems, dbStats]);
 
@@ -263,7 +286,7 @@ export default function ScrapeDashboard() {
     loadStoredApiKey();
   }, []);
 
-  const initializeDatabase = async () => {
+  const initializeDatabase = useCallback(async () => {
     try {
       await databaseService.init();
       await loadDatabaseItems();
@@ -271,7 +294,11 @@ export default function ScrapeDashboard() {
     } catch (error) {
       console.error('Failed to initialize database:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    initializeDatabase();
+  }, [initializeDatabase]);
 
   const loadStoredApiKey = () => {
     const stored = localStorage.getItem('openai_api_key');
@@ -293,7 +320,24 @@ export default function ScrapeDashboard() {
   const loadDatabaseStats = async () => {
     try {
       const stats = await databaseService.getStats();
-      setDbStats(stats);
+      // Calculate additional content quality metrics
+      const allItems = await databaseService.getAllItems();
+      const contentQuality = {
+        totalWords: allItems.reduce((acc, item) => acc + (item.markdown?.split(/\s+/).length || 0), 0),
+        totalCharacters: allItems.reduce((acc, item) => acc + (item.markdown?.length || 0), 0),
+        richContent: stats.contentQuality?.richContent || 0,
+        hasLinks: stats.contentQuality?.hasLinks || 0,
+        hasImages: stats.contentQuality?.hasImages || 0,
+        hasCode: stats.contentQuality?.hasCode || 0,
+        structuredContent: stats.contentQuality?.structuredContent || 0,
+        averageWordsPerItem: allItems.length > 0 ? Math.round(allItems.reduce((acc, item) => acc + (item.markdown?.split(/\s+/).length || 0), 0) / allItems.length) : 0,
+        averageCharsPerItem: allItems.length > 0 ? Math.round(allItems.reduce((acc, item) => acc + (item.markdown?.length || 0), 0) / allItems.length) : 0
+      };
+      
+      setDbStats({
+        ...stats,
+        contentQuality
+      });
     } catch (error) {
       console.error('Failed to load database stats:', error);
     }
@@ -369,19 +413,257 @@ export default function ScrapeDashboard() {
   };
 
   const loadPresetGroup = (presetKey: string) => {
-    const preset = PRESET_GROUPINGS[presetKey as keyof typeof PRESET_GROUPINGS];
+    const preset = INDUSTRY_GROUPINGS[presetKey as keyof typeof INDUSTRY_GROUPINGS];
     if (!preset) return;
     
     setCustomCompanies(preset.companies);
     setSelectedCategories(preset.categories);
-    setCompanyUrls(preset.defaultUrls);
-    setSelectedPreset(presetKey);
     
-    toast({ title: `Loaded ${preset.name} preset` });
+    // Generate URLs using enhanced patterns
+    const newCompanyUrls: Record<string, Record<string, string>> = {};
+    preset.companies.forEach(company => {
+      const baseDomain = `${company.toLowerCase().replace(/\s+/g, '')}.com`;
+      newCompanyUrls[company] = {};
+      
+      preset.categories.forEach(category => {
+        if (preset.linkPatterns[category]) {
+          const patterns = preset.linkPatterns[category];
+          // Generate multiple URLs for each category using different patterns
+          newCompanyUrls[company][category] = `https://www.${baseDomain}${patterns[0]}`;
+        } else {
+          newCompanyUrls[company][category] = `https://www.${baseDomain}/${category}`;
+        }
+      });
+    });
+    
+    setCompanyUrls(newCompanyUrls);
+    setSelectedPreset(presetKey);
+
+    // Automatically select all targets for all companies
+    setTimeout(() => {
+      const newMap = new Map();
+      preset.companies.forEach(company => {
+        newMap.set(company, new Set(preset.categories));
+      });
+      setSelectedTargets(newMap);
+      setShowTargetSelection(true);
+    }, 100);
+    
+    toast({ 
+      title: `Loaded ${preset.name} preset`, 
+      description: `Configured ${preset.companies.length} companies with ${preset.categories.length} categories. All targets selected automatically.` 
+    });
   };
 
   const addCustomCompany = () => {
     setCustomCompanies(prev => [...prev, '']);
+  };
+
+  const addCompanyWithUrls = (companyName: string) => {
+    if (!companyName.trim()) return;
+    
+    // Add company to list
+    setCustomCompanies(prev => [...prev, companyName.trim()]);
+    
+    // Generate URLs using enhanced patterns
+    const newUrls: Record<string, string> = {};
+    const baseDomain = `${companyName.toLowerCase().replace(/\s+/g, '')}.com`;
+    
+    // Generate URLs for each selected category with common patterns
+    selectedCategories.forEach(category => {
+      let url = '';
+      
+      // Try to find a matching preset pattern
+      const preset = Object.values(INDUSTRY_GROUPINGS).find(p => 
+        p.companies.some(c => c.toLowerCase() === companyName.toLowerCase())
+      );
+      
+      if (preset && preset.linkPatterns[category]) {
+        // Use preset patterns
+        const patterns = preset.linkPatterns[category];
+        url = `https://www.${baseDomain}${patterns[0]}`; // Use first pattern as default
+      } else {
+        // Fallback to common patterns
+        const commonPatterns: Record<string, string[]> = {
+          marketing: ['', '/features', '/pricing', '/about', '/solutions'],
+          docs: ['/docs', '/help', '/guides', '/tutorials', '/support'],
+          api: ['/api', '/docs/api', '/developers', '/integrations'],
+          blog: ['/blog', '/news', '/updates', '/insights', '/articles'],
+          community: ['/community', '/forum', '/discussions', '/support'],
+          news: ['/news', '/blog', '/press', '/updates', '/announcements'],
+          social: ['/twitter', '/linkedin', '/facebook', '/youtube'],
+          rss: ['/feed', '/rss', '/blog/feed', '/news/feed']
+        };
+        
+        if (commonPatterns[category]) {
+          url = `https://www.${baseDomain}${commonPatterns[category][0]}`;
+        } else {
+          url = `https://www.${baseDomain}/${category}`;
+        }
+      }
+      
+      newUrls[category] = url;
+    });
+    
+    setCompanyUrls(prev => ({
+      ...prev,
+      [companyName.trim()]: newUrls
+    }));
+
+    // Automatically select all targets for the new company
+    setTimeout(() => {
+      const allCategories = new Set(selectedCategories);
+      setSelectedTargets(prev => {
+        const newMap = new Map(prev);
+        newMap.set(companyName.trim(), allCategories);
+        return newMap;
+      });
+      setShowTargetSelection(true);
+    }, 100);
+    
+    toast({ 
+      title: `Added ${companyName}`, 
+      description: `Generated ${Object.keys(newUrls).length} URLs and selected all targets automatically` 
+    });
+  };
+
+  // Enhanced helper functions for improved scraping setup
+  const toggleTargetSelection = (company: string, category: string) => {
+    setSelectedTargets(prev => {
+      const newMap = new Map(prev);
+      if (!newMap.has(company)) {
+        newMap.set(company, new Set());
+      }
+      const companyTargets = new Set(newMap.get(company)!);
+      
+      if (companyTargets.has(category)) {
+        companyTargets.delete(category);
+      } else {
+        companyTargets.add(category);
+      }
+      
+      newMap.set(company, companyTargets);
+      return newMap;
+    });
+  };
+
+  const isTargetSelected = (company: string, category: string) => {
+    return selectedTargets.get(company)?.has(category) || false;
+  };
+
+  const getSelectedTargetsCount = () => {
+    let count = 0;
+    selectedTargets.forEach(targets => {
+      count += targets.size;
+    });
+    return count;
+  };
+
+  const selectAllTargetsForCompany = (company: string) => {
+    const targets = linkTargetingService.generateLinkTargets(company, selectedCategories);
+    const allCategories = new Set(targets.map(t => t.category));
+    setSelectedTargets(prev => {
+      const newMap = new Map(prev);
+      newMap.set(company, allCategories);
+      return newMap;
+    });
+  };
+
+  const clearAllTargetsForCompany = (company: string) => {
+    setSelectedTargets(prev => {
+      const newMap = new Map(prev);
+      newMap.set(company, new Set());
+      return newMap;
+    });
+  };
+
+  const selectAllTargets = () => {
+    const newMap = new Map();
+    customCompanies.filter(c => c.trim()).forEach(company => {
+      const targets = linkTargetingService.generateLinkTargets(company, selectedCategories);
+      const allCategories = new Set(targets.map(t => t.category));
+      newMap.set(company, allCategories);
+    });
+    setSelectedTargets(newMap);
+  };
+
+  const clearAllTargets = () => {
+    setSelectedTargets(new Map());
+  };
+
+  const generateAllTargets = () => {
+    const allTargets: Record<string, LinkTarget[]> = {};
+    
+    customCompanies.filter(c => c.trim()).forEach(company => {
+      const targets = linkTargetingService.generateLinkTargets(company, selectedCategories);
+      allTargets[company] = targets;
+    });
+    
+    return allTargets;
+  };
+
+  const updateTargetUrl = (company: string, category: string, url: string) => {
+    setCompanyUrls(prev => ({
+      ...prev,
+      [company]: {
+        ...prev[company],
+        [category]: url
+      }
+    }));
+  };
+
+  const getFinalScrapingTargets = (): ScrapingTarget[] => {
+    const targets: ScrapingTarget[] = [];
+    
+    selectedTargets.forEach((categories, company) => {
+      categories.forEach(category => {
+        const url = companyUrls[company]?.[category] || '';
+        if (url.trim()) {
+          targets.push({
+            company,
+            category,
+            url: url.trim(),
+            enabled: true
+          });
+        }
+      });
+    });
+    
+    return targets;
+  };
+
+  const runAIAnalysis = async () => {
+    if (!useBackendKey && !frontendOpenAIKey) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    // Set the appropriate API key
+    if (!useBackendKey) {
+      aiService.setApiKey(frontendOpenAIKey);
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = focusAreas.split(',').map(area => area.trim());
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'AI analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('AI analysis failed:', error);
+      toast({ title: 'AI analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   const removeCustomCompany = (index: number) => {
@@ -411,7 +693,18 @@ export default function ScrapeDashboard() {
       if (!company.trim()) return;
       
       selectedCategories.forEach(category => {
-        const url = companyUrls[company]?.[category] || '';
+        // First try to get URLs from companyUrls (user-configured)
+        let url = companyUrls[company]?.[category] || '';
+        
+        // If no user URL, generate from LinkTargetingService
+        if (!url.trim()) {
+          const linkTargets = linkTargetingService.generateLinkTargets(company, [category]);
+          const highPriorityTarget = linkTargets.find(target => target.priority === 'high');
+          if (highPriorityTarget) {
+            url = highPriorityTarget.url;
+          }
+        }
+        
         if (url.trim()) {
           targets.push({
             company: company.trim(),
@@ -456,10 +749,10 @@ export default function ScrapeDashboard() {
           if (response.categories && response.categories[target.category]) {
             const categoryData = response.categories[target.category];
             if (categoryData.items) {
-              const newItems: ScrapedItem[] = categoryData.items.map((item: any) => ({
+              const newItems: ScrapedItem[] = categoryData.items.map((item: { id?: string; url?: string; title?: string; content?: string; markdown?: string; content_html?: string; scraped_at?: string }) => ({
                 id: item.id || genId(),
                 company: target.company,
-                category: target.category as any,
+                category: target.category as 'marketing' | 'docs' | 'rss' | 'social' | 'news' | 'api' | 'community',
                 url: item.url || target.url,
                 title: item.title || `Scraped ${target.category} content`,
                 markdown: item.content || item.markdown || '',
@@ -526,7 +819,7 @@ export default function ScrapeDashboard() {
         Papa.parse(file, {
           header: true,
           complete: (r) => {
-            const mapped: ScrapedItem[] = r.data.filter(Boolean).map((row: any) => ({
+            const mapped: ScrapedItem[] = r.data.filter(Boolean).map((row: { company?: string; category?: string; url: string; title: string; markdown?: string }) => ({
               id: genId(), 
               company: row.company || 'upload', 
               category: row.category || 'upload', 
@@ -553,7 +846,7 @@ export default function ScrapeDashboard() {
         toast({ title: 'Markdown imported' });
       } else if (ext === 'docx') {
         const arrayBuffer = await file.arrayBuffer();
-        const result = await (mammoth as any).extractRawText({ arrayBuffer });
+        const result = await (mammoth as { extractRawText: (options: { arrayBuffer: ArrayBuffer }) => Promise<{ value: string }> }).extractRawText({ arrayBuffer });
         addItems([{ 
           id: genId(), 
           company: 'upload', 
@@ -632,28 +925,16 @@ export default function ScrapeDashboard() {
 
         {/* Scraping Setup Tab */}
         <TabsContent value="scraping" className="space-y-6">
-          {/* Settings */}
+          {/* Basic Configuration */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Settings className="h-5 w-5" />
-                Configuration
+                Basic Configuration
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label>OpenAI API Key</Label>
-                  <div className="flex gap-2">
-                    <Input 
-                      type="password" 
-                      value={openaiKey} 
-                      onChange={e => setOpenaiKey(e.target.value)} 
-                      placeholder="sk-..." 
-                    />
-                    <Button onClick={onSaveKey} variant="secondary">Save</Button>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Page Limit</Label>
                   <Input 
@@ -663,9 +944,10 @@ export default function ScrapeDashboard() {
                     value={limit} 
                     onChange={e => setLimit(parseInt(e.target.value || '25'))} 
                   />
+                  <p className="text-xs text-muted-foreground">Maximum pages to scrape per target</p>
                 </div>
                 <div className="space-y-2">
-                  <Label>Categories</Label>
+                  <Label>Content Categories</Label>
                   <Select 
                     value={selectedCategories.join(',')} 
                     onValueChange={(value) => setSelectedCategories(value.split(','))}
@@ -674,24 +956,497 @@ export default function ScrapeDashboard() {
                       <SelectValue placeholder="Select categories" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="marketing,docs,rss,social">All Categories</SelectItem>
-                      <SelectItem value="marketing,docs">Marketing & Docs</SelectItem>
+                      <SelectItem value="marketing,docs,rss,social,news,api,community">All Categories</SelectItem>
+                      <SelectItem value="marketing,docs">Marketing & Documentation</SelectItem>
+                      <SelectItem value="marketing,social">Marketing & Social</SelectItem>
+                      <SelectItem value="docs,api">Documentation & API</SelectItem>
+                      <SelectItem value="rss,news">News & RSS Feeds</SelectItem>
                       <SelectItem value="marketing">Marketing Only</SelectItem>
                       <SelectItem value="docs">Documentation Only</SelectItem>
-                      <SelectItem value="rss">RSS Feeds</SelectItem>
-                      <SelectItem value="social">Social Media</SelectItem>
+                      <SelectItem value="social">Social Media Only</SelectItem>
                     </SelectContent>
                   </Select>
+                  <p className="text-xs text-muted-foreground">Types of content to scrape</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Industry Preset Groups */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Building2 className="h-5 w-5" />
+                Industry Preset Groups
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Quick setup with pre-configured companies and categories for different industries
+              </p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {Object.entries(INDUSTRY_GROUPINGS).map(([key, preset]) => (
+                  <div key={key} className="border rounded-lg p-4 hover:border-primary/50 transition-colors">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium">{preset.name}</h4>
+                      <Badge variant="outline">{preset.companies.length} companies</Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {preset.description}
+                    </p>
+                    <div className="flex gap-2">
+                      <Button
+                        variant={selectedPreset === key ? 'default' : 'outline'}
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => loadPresetGroup(key)}
+                      >
+                        {selectedPreset === key ? 'Selected' : 'Use Preset'}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setCustomCompanies(preset.companies);
+                          setSelectedCategories(preset.categories);
+                          setShowTargetSelection(true);
+                        }}
+                      >
+                        Preview
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Custom Companies */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Custom Companies
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Add your own companies or competitors to monitor
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* Quick Add Section */}
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Enter company name (e.g., OpenAI, Stripe, Notion)"
+                  className="flex-1"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
+                      addCompanyWithUrls(e.currentTarget.value.trim());
+                      e.currentTarget.value = '';
+                    }
+                  }}
+                />
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    const input = document.querySelector('input[placeholder*="Enter company name"]') as HTMLInputElement;
+                    if (input?.value.trim()) {
+                      addCompanyWithUrls(input.value.trim());
+                      input.value = '';
+                    }
+                  }}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Company
+                </Button>
+              </div>
+              
+              {/* Company List */}
+              {customCompanies.filter(c => c.trim()).length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="font-medium text-sm">Companies to Monitor</h4>
+                  {customCompanies.map((company, index) => (
+                    <div key={index} className="flex gap-3 items-center p-3 border rounded-lg bg-muted/30">
+                      <div className="flex-1">
+                        <Input
+                          placeholder="Company name"
+                          value={company}
+                          onChange={(e) => updateCompanyName(index, e.target.value)}
+                        />
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          if (company.trim()) {
+                            setShowTargetSelection(true);
+                          }
+                        }}
+                        disabled={!company.trim()}
+                      >
+                        <Target className="h-4 w-4 mr-2" />
+                        Configure Targets
+                      </Button>
+                      {customCompanies.length > 1 && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => removeCustomCompany(index)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {customCompanies.filter(c => c.trim()).length === 0 && (
+                <div className="text-center py-8 text-muted-foreground">
+                  <Users className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                  <p>No companies added yet</p>
+                  <p className="text-sm">Use the input above to add companies or select an industry preset</p>
+                </div>
+              )}
+              
+              <Button
+                variant="outline"
+                onClick={addCustomCompany}
+                className="w-full"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Company
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Target Selection and Configuration */}
+          {showTargetSelection && customCompanies.filter(c => c.trim()).length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="h-5 w-5" />
+                  Target Selection & Configuration
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Review and customize the generated link targets for each company
+                </p>
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    onClick={selectAllTargets}
+                    size="sm"
+                    variant="outline"
+                  >
+                    <Target className="h-4 w-4 mr-2" />
+                    Select All Companies
+                  </Button>
+                  <Button
+                    onClick={clearAllTargets}
+                    size="sm"
+                    variant="outline"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Clear All Companies
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Summary Section */}
+                <div className="bg-muted/50 p-4 rounded-lg border">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-medium">Scraping Summary</h4>
+                    <Badge variant="default">{getSelectedTargetsCount()} targets selected</Badge>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="font-medium">Companies:</span> {customCompanies.filter(c => c.trim()).length}
+                    </div>
+                    <div>
+                      <span className="font-medium">Categories:</span> {selectedCategories.length}
+                    </div>
+                    <div>
+                      <span className="font-medium">Estimated Pages:</span> {getSelectedTargetsCount() * limit}
+                    </div>
+                    <div>
+                      <span className="font-medium">Status:</span> 
+                      <Badge variant="outline" className="ml-2">
+                        {getSelectedTargetsCount() > 0 ? 'Ready to Scrape' : 'No Targets Selected'}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+
+                {customCompanies.filter(c => c.trim()).map((company) => {
+                  const targets = linkTargetingService.generateLinkTargets(company, selectedCategories);
+                  const companySelectedTargets = selectedTargets.get(company) || new Set();
+                  
+                  return (
+                    <div key={company} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="font-medium text-lg">{company}</h4>
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline">
+                            {companySelectedTargets.size} of {targets.length} selected
+                          </Badge>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => selectAllTargetsForCompany(company)}
+                          >
+                            Select All
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => clearAllTargetsForCompany(company)}
+                          >
+                            Clear All
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {targets.map((target, index) => {
+                          const isSelected = isTargetSelected(company, target.category);
+                          const currentUrl = companyUrls[company]?.[target.category] || target.url;
+                          
+                          return (
+                            <div 
+                              key={index} 
+                              className={`p-4 border rounded-lg transition-all cursor-pointer hover:shadow-md ${
+                                isSelected 
+                                  ? 'border-primary bg-primary/5 shadow-sm' 
+                                  : 'border-border hover:border-primary/30'
+                              }`}
+                              onClick={() => toggleTargetSelection(company, target.category)}
+                            >
+                              <div className="flex items-center justify-between mb-3">
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="checkbox"
+                                    checked={isSelected}
+                                    onChange={() => toggleTargetSelection(company, target.category)}
+                                    className="rounded border-gray-300 text-primary focus:ring-primary"
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
+                                  <span className="font-medium text-sm capitalize">{target.category}</span>
+                                </div>
+                                <Badge variant={target.priority === 'high' ? 'default' : target.priority === 'medium' ? 'secondary' : 'outline'} className="text-xs">
+                                  {target.priority}
+                                </Badge>
+                              </div>
+                              
+                              <div className="space-y-3">
+                                <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
+                                  {target.description}
+                                </div>
+                                
+                                <div className="space-y-2">
+                                  <Label className="text-xs font-medium">URL</Label>
+                                  <Input
+                                    value={currentUrl}
+                                    onChange={(e) => updateTargetUrl(company, target.category, e.target.value)}
+                                    placeholder="URL"
+                                    className="text-xs h-8"
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
+                                </div>
+                                
+                                <div className="flex gap-2">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="text-xs h-6 px-2"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      window.open(target.url, '_blank');
+                                    }}
+                                  >
+                                    Test Original
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="text-xs h-6 px-2"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      if (currentUrl !== target.url) {
+                                        updateTargetUrl(company, target.category, target.url);
+                                      }
+                                    }}
+                                  >
+                                    Reset
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      
+                      {targets.length === 0 && (
+                        <div className="text-center py-4 text-muted-foreground">
+                          <p>No targets generated for {company}</p>
+                          <p className="text-sm">Try selecting different categories</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Scraping Actions */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Play className="h-5 w-5" />
+                Start Scraping
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-muted p-4 rounded-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-medium">Scraping Summary</h4>
+                  <Badge variant="default">{getSelectedTargetsCount()} targets selected</Badge>
+                </div>
+                
+                {getSelectedTargetsCount() > 0 ? (
+                  <div className="space-y-2 max-h-32 overflow-y-auto">
+                    {Array.from(selectedTargets.entries()).map(([company, categories]) => (
+                      <div key={company} className="flex items-center gap-2 text-sm">
+                        <Badge variant="outline">{company}</Badge>
+                        <span className="text-muted-foreground">→</span>
+                        <div className="flex flex-wrap gap-1">
+                          {Array.from(categories).map(category => (
+                            <Badge key={category} variant="secondary" className="text-xs">
+                              {category}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground text-sm">
+                    No targets selected. Configure companies and select targets above.
+                  </p>
+                )}
+              </div>
+              
+              <div className="flex gap-3">
+                <Button
+                  onClick={() => runScraping(getFinalScrapingTargets())}
+                  disabled={isLoading || getSelectedTargetsCount() === 0 || backendStatus !== 'connected'}
+                  className="flex-1"
+                >
+                  <Play className="h-4 w-4 mr-2" />
+                  {isLoading ? 'Scraping...' : `Start Scraping (${getSelectedTargetsCount()} targets)`}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={selectAllTargets}
+                  disabled={getSelectedTargetsCount() === 0}
+                >
+                  <Target className="h-4 w-4 mr-2" />
+                  Select All Companies
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={clearAllTargets}
+                  disabled={getSelectedTargetsCount() === 0}
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Clear All Companies
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={exportCSV} 
+                  disabled={dbItems.length === 0}
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Export CSV
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* File Upload */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Import Files
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Upload existing documents to include in your analysis
+              </p>
+            </CardHeader>
+            <CardContent>
+              <Input 
+                type="file" 
+                accept=".csv,.md,.markdown,.docx" 
+                onChange={e => { const f = e.target.files?.[0]; if (f) onUpload(f); }} 
+              />
+              <p className="text-xs text-muted-foreground mt-2">
+                Supported formats: CSV, Markdown, DOCX
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* AI Analysis Configuration */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Brain className="h-5 w-5" />
+                AI Analysis Configuration
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Configure AI analysis to run after scraping is complete
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* API Key Configuration */}
+              <div className="space-y-4">
+                <h4 className="font-medium">OpenAI API Configuration</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Switch 
+                      checked={useBackendKey} 
+                      onCheckedChange={setUseBackendKey} 
+                    />
+                    <Label>Use backend API key (recommended)</Label>
+                  </div>
+                  
+                  {!useBackendKey && (
+                    <div className="space-y-2">
+                      <Label>Frontend OpenAI API Key</Label>
+                      <div className="flex gap-2">
+                        <Input 
+                          type="password" 
+                          value={frontendOpenAIKey} 
+                          onChange={e => setFrontendOpenAIKey(e.target.value)} 
+                          placeholder="sk-..." 
+                        />
+                        <Button onClick={() => aiService.setApiKey(frontendOpenAIKey)} variant="secondary">
+                          Save
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Your API key will be stored locally in the browser
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* AI Analysis Configuration */}
-              <div className="border-t pt-4">
-                <h4 className="font-medium mb-3">AI Analysis Settings</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Analysis Settings */}
+              <div className="space-y-4">
+                <h4 className="font-medium">Analysis Settings</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Analysis Tone</Label>
-                    <Select value={analysisTone} onValueChange={(value: any) => setAnalysisTone(value)}>
+                    <Select value={analysisTone} onValueChange={(value: 'neutral' | 'confident' | 'skeptical' | 'enthusiastic') => setAnalysisTone(value)}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
@@ -711,175 +1466,263 @@ export default function ScrapeDashboard() {
                       placeholder="positioning, differentiation, pricing, risks"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Label>Auto Analysis</Label>
-                      <Switch checked={autoAnalysis} onCheckedChange={setAutoAnalysis} />
-                    </div>
-                    <p className="text-xs text-muted-foreground">Automatically analyze scraped content</p>
-                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <Switch checked={autoAnalysis} onCheckedChange={setAutoAnalysis} />
+                  <Label>Automatically run AI analysis after scraping</Label>
                 </div>
               </div>
-            </CardContent>
-          </Card>
 
-          {/* Preset Groups */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Building2 className="h-5 w-5" />
-                Industry Preset Groups
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {Object.entries(PRESET_GROUPINGS).map(([key, preset]) => (
-                  <Button
-                    key={key}
-                    variant={selectedPreset === key ? 'default' : 'outline'}
-                    className="h-auto p-3 flex-col"
-                    onClick={() => loadPresetGroup(key)}
-                  >
-                    <span className="font-medium">{preset.name}</span>
-                    <span className="text-xs text-muted-foreground">{preset.companies.length} companies</span>
-                  </Button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Custom Companies */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                Custom Companies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {customCompanies.map((company, index) => (
-                <div key={index} className="flex gap-3 items-start">
-                  <div className="flex-1">
-                    <Input
-                      placeholder="Company name"
-                      value={company}
-                      onChange={(e) => updateCompanyName(index, e.target.value)}
-                    />
-                  </div>
-                  {customCompanies.length > 1 && (
+              {/* AI Analysis Actions */}
+              {dbItems.length > 0 && (
+                <div className="space-y-4">
+                  <h4 className="font-medium">Run AI Analysis</h4>
+                  <div className="flex gap-3">
                     <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => removeCustomCompany(index)}
+                      onClick={runAIAnalysis}
+                      disabled={isAnalyzing || (useBackendKey && !openaiKey) || (!useBackendKey && !frontendOpenAIKey)}
+                      className="flex-1"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      {isAnalyzing ? (
+                        <>
+                          <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                          Analyzing...
+                        </>
+                      ) : (
+                        <>
+                          <Brain className="h-4 w-4 mr-2" />
+                          Analyze All Content
+                        </>
+                      )}
                     </Button>
+                    <Button
+                      onClick={generateCompetitiveSummary}
+                      disabled={!openaiKey && !frontendOpenAIKey}
+                      variant="outline"
+                    >
+                      <TrendingUp className="h-4 w-4 mr-2" />
+                      Generate Summary
+                    </Button>
+                  </div>
+                  
+                  {!useBackendKey && !frontendOpenAIKey && (
+                    <div className="text-center py-4 text-muted-foreground">
+                      <p>OpenAI API key required for AI analysis</p>
+                      <p className="text-sm">Enter your API key above or enable backend key usage</p>
+                    </div>
                   )}
                 </div>
-              ))}
-              <Button
-                variant="outline"
-                onClick={addCustomCompany}
-                className="w-full"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Company
-              </Button>
+              )}
             </CardContent>
           </Card>
 
-          {/* URL Configuration */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Globe className="h-5 w-5" />
-                URL Configuration
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {customCompanies.filter(c => c.trim()).map((company) => (
-                  <div key={company} className="space-y-3">
-                    <h4 className="font-medium text-sm">{company}</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {selectedCategories.map((category) => (
-                        <div key={category} className="space-y-2">
-                          <Label className="text-xs capitalize">{category}</Label>
-                          <Input
-                            placeholder={`https://${company.toLowerCase()}.com/${category}`}
-                            value={companyUrls[company]?.[category] || ''}
-                            onChange={(e) => updateCompanyUrl(company, category, e.target.value)}
-                          />
+          {/* Real-Time Data Insights & AI Analysis */}
+          {dbItems.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5" />
+                  Real-Time Market Intelligence
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Live insights from your scraped data with AI-powered analysis
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Data Overview */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center p-4 border rounded-lg bg-muted/30">
+                    <div className="text-2xl font-bold text-primary">{dbItems.length}</div>
+                    <div className="text-sm text-muted-foreground">Total Pages</div>
+                  </div>
+                  <div className="text-center p-4 border rounded-lg bg-muted/30">
+                    <div className="text-2xl font-bold text-primary">
+                      {Array.from(new Set(dbItems.map(i => i.company))).length}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Companies</div>
+                  </div>
+                  <div className="text-center p-4 border rounded-lg bg-muted/30">
+                    <div className="text-2xl font-bold text-primary">
+                      {Array.from(new Set(dbItems.map(i => i.category))).length}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Categories</div>
+                  </div>
+                  <div className="text-center p-4 border rounded-lg bg-muted/30">
+                    <div className="text-2xl font-bold text-primary">
+                      {dbItems.filter(i => i.sentiment_score !== undefined).length}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Analyzed</div>
+                  </div>
+                </div>
+
+                {/* Company Performance Summary */}
+                <div className="space-y-4">
+                  <h4 className="font-medium">Company Performance Summary</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {Array.from(new Set(dbItems.map(i => i.company))).slice(0, 6).map(company => {
+                      const companyItems = dbItems.filter(i => i.company === company);
+                      const categories = Array.from(new Set(companyItems.map(i => i.category)));
+                      const avgSentiment = companyItems
+                        .filter(i => i.sentiment_score !== undefined)
+                        .reduce((acc, i) => acc + (i.sentiment_score || 0), 0) / 
+                        companyItems.filter(i => i.sentiment_score !== undefined).length;
+                      
+                      return (
+                        <div key={company} className="p-4 border rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <h5 className="font-medium">{company}</h5>
+                            <Badge variant="outline">{companyItems.length} pages</Badge>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex flex-wrap gap-1">
+                              {categories.map(cat => (
+                                <Badge key={cat} variant="secondary" className="text-xs">
+                                  {cat}
+                                </Badge>
+                              ))}
+                            </div>
+                            {!isNaN(avgSentiment) && (
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm text-muted-foreground">Avg Sentiment:</span>
+                                <Badge variant={avgSentiment > 0.1 ? 'default' : avgSentiment < -0.1 ? 'destructive' : 'outline'}>
+                                  {avgSentiment > 0.1 ? '😊' : avgSentiment < -0.1 ? '😟' : '😐'} {avgSentiment.toFixed(2)}
+                                </Badge>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      ))}
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Content Analysis */}
+                <div className="space-y-4">
+                  <h4 className="font-medium">Content Analysis & Insights</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 border rounded-lg">
+                      <h5 className="font-medium mb-3">Category Distribution</h5>
+                      <div className="space-y-2">
+                        {Object.entries(
+                          dbItems.reduce((acc, item) => {
+                            acc[item.category] = (acc[item.category] || 0) + 1;
+                            return acc;
+                          }, {} as Record<string, number>)
+                        )
+                        .sort(([,a], [,b]) => b - a)
+                        .slice(0, 5)
+                        .map(([category, count]) => (
+                          <div key={category} className="flex items-center justify-between">
+                            <span className="text-sm capitalize">{category}</span>
+                            <Badge variant="outline">{count}</Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 border rounded-lg">
+                      <h5 className="font-medium mb-3">Recent Activity</h5>
+                      <div className="space-y-2">
+                        {dbItems
+                          .sort((a, b) => new Date(b.scrapedAt).getTime() - new Date(a.scrapedAt).getTime())
+                          .slice(0, 5)
+                          .map(item => (
+                            <div key={item.id} className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">{item.company}</Badge>
+                                <span className="text-muted-foreground capitalize">{item.category}</span>
+                              </div>
+                              <span className="text-xs text-muted-foreground">
+                                {new Date(item.scrapedAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                          ))}
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Scraping Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5" />
-                Start Scraping
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-medium mb-2">Scraping Targets</h4>
-                <div className="space-y-2">
-                  {getScrapingTargets().map((target, index) => (
-                    <div key={index} className="flex items-center gap-3 text-sm">
-                      <Badge variant="outline">{target.company}</Badge>
-                      <Badge variant="secondary">{target.category}</Badge>
-                      <span className="text-muted-foreground truncate">{target.url}</span>
-                    </div>
-                  ))}
                 </div>
-                {getScrapingTargets().length === 0 && (
-                  <p className="text-muted-foreground text-sm">No valid scraping targets configured</p>
-                )}
-              </div>
-              
-              <div className="flex gap-3">
-                <Button
-                  onClick={() => runScraping(getScrapingTargets())}
-                  disabled={isLoading || getScrapingTargets().length === 0 || backendStatus !== 'connected'}
-                  className="flex-1"
-                >
-                  <Play className="h-4 w-4 mr-2" />
-                  {isLoading ? 'Scraping...' : 'Start Scraping'}
-                </Button>
-                <Button variant="outline" onClick={exportCSV} disabled={items.length === 0}>
-                  <Download className="h-4 w-4 mr-2" />
-                  Export CSV
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* File Upload */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Import Files
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Input 
-                type="file" 
-                accept=".csv,.md,.markdown,.docx" 
-                onChange={e => { const f = e.target.files?.[0]; if (f) onUpload(f); }} 
-              />
-              <p className="text-xs text-muted-foreground mt-2">
-                Upload CSV, DOCX, or Markdown files to include proprietary documents
-              </p>
-            </CardContent>
-          </Card>
+                {/* AI-Powered Market Analysis */}
+                <div className="space-y-4">
+                  <h4 className="font-medium">AI-Powered Market Analysis</h4>
+                  <div className="p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-purple-50">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Brain className="h-5 w-5 text-blue-600" />
+                      <span className="font-medium text-blue-900">Intelligent Market Insights</span>
+                    </div>
+                    
+                    {competitiveSummary ? (
+                      <div className="space-y-3">
+                        <div className="prose prose-sm max-w-none">
+                          <div className="whitespace-pre-wrap bg-white p-3 rounded border">{competitiveSummary}</div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => runAIAnalysis()}
+                            disabled={isAnalyzing || (useBackendKey && !openaiKey) || (!useBackendKey && !frontendOpenAIKey)}
+                            size="sm"
+                          >
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                            Refresh Analysis
+                          </Button>
+                          <Button
+                            onClick={() => setCompetitiveSummary('')}
+                            variant="outline"
+                            size="sm"
+                          >
+                            Clear
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <p className="text-sm text-blue-800">
+                          Generate AI-powered insights from your scraped data to understand market trends, 
+                          competitive positioning, and strategic opportunities.
+                        </p>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={generateCompetitiveSummary}
+                            disabled={!openaiKey && !frontendOpenAIKey}
+                            size="sm"
+                          >
+                            <Brain className="h-4 w-4 mr-2" />
+                            Generate Market Analysis
+                          </Button>
+                          <Button
+                            onClick={() => runAIAnalysis()}
+                            disabled={isAnalyzing || (useBackendKey && !openaiKey) || (!useBackendKey && !frontendOpenAIKey)}
+                            variant="outline"
+                            size="sm"
+                          >
+                            <Zap className="h-4 w-4 mr-2" />
+                            Analyze All Content
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Export & Share */}
+                <div className="flex gap-3 pt-4 border-t">
+                  <Button onClick={exportCSV} variant="outline" className="flex-1">
+                    <Download className="h-4 w-4 mr-2" />
+                    Export All Data (CSV)
+                  </Button>
+                  <Button 
+                    onClick={clearAllData} 
+                    variant="ghost"
+                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Clear All Data
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
 
         {/* Analytics Tab */}
@@ -940,54 +1783,73 @@ export default function ScrapeDashboard() {
               
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
-                  <div>
-                    {selectedChart === 'overview' && (
-                      <BarChart data={metrics.byCat}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis allowDecimals={false} />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="value" name="Pages" fill="hsl(var(--primary))" />
-                      </BarChart>
-                    )}
+                  {(() => {
+                    if (selectedChart === 'overview' && metrics.byCat.length > 0) {
+                      return (
+                        <BarChart data={metrics.byCat}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis allowDecimals={false} />
+                          <Tooltip />
+                          <Legend />
+                          <Bar dataKey="value" name="Pages" fill="hsl(var(--primary))" />
+                        </BarChart>
+                      );
+                    }
                     
-                    {selectedChart === 'trends' && (
-                      <AreaChart data={metrics.trendData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip />
-                        <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
-                      </AreaChart>
-                    )}
+                    if (selectedChart === 'trends' && metrics.trendData.length > 0) {
+                      return (
+                        <AreaChart data={metrics.trendData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="date" />
+                          <YAxis />
+                          <Tooltip />
+                          <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
+                        </AreaChart>
+                      );
+                    }
                     
-                    {selectedChart === 'categories' && (
-                      <PieChart>
-                        <Pie
-                          data={metrics.byCat}
-                          cx="50%"
-                          cy="50%"
-                          outerRadius={100}
-                          fill="#8884d8"
-                          dataKey="value"
-                          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                        />
-                        <Tooltip />
-                      </PieChart>
-                    )}
+                    if (selectedChart === 'categories' && metrics.byCat.length > 0) {
+                      return (
+                        <PieChart>
+                          <Pie
+                            data={metrics.byCat}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={100}
+                            fill="#8884d8"
+                            dataKey="value"
+                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                          />
+                          <Tooltip />
+                        </PieChart>
+                      );
+                    }
                     
-                    {selectedChart === 'companies' && (
-                      <BarChart data={metrics.byCompany}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis allowDecimals={false} />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="value" name="Items" fill="#82ca9d" />
-                      </BarChart>
-                    )}
-                  </div>
+                    if (selectedChart === 'companies' && metrics.byCompany.length > 0) {
+                      return (
+                        <BarChart data={metrics.byCompany}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis allowDecimals={false} />
+                          <Tooltip />
+                          <Legend />
+                          <Bar dataKey="value" name="Items" fill="#82ca9d" />
+                        </BarChart>
+                      );
+                    }
+                    
+                    // Fallback for empty data
+                    return (
+                      <div className="flex items-center justify-center h-full text-muted-foreground">
+                        <div className="text-center">
+                          <BarChart3 className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                          <p>No data available for this chart</p>
+                          <p className="text-sm">Scrape some data first to see visualizations</p>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </ResponsiveContainer>
               </div>
             </CardContent>
@@ -1031,69 +1893,6 @@ export default function ScrapeDashboard() {
               </div>
             </CardContent>
           </Card>
-
-          {/* AI Analysis Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Zap className="h-5 w-5" />
-                AI Analysis Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex gap-3">
-                <Button
-                  onClick={() => analyzeScrapedContent(dbItems)}
-                  disabled={isAnalyzing || !openaiKey || dbItems.length === 0}
-                  className="flex-1"
-                >
-                  {isAnalyzing ? (
-                    <>
-                      <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                      Analyzing...
-                    </>
-                  ) : (
-                    <>
-                      <Brain className="h-4 w-4 mr-2" />
-                      Analyze All Content
-                    </>
-                  )}
-                </Button>
-                <Button
-                  onClick={generateCompetitiveSummary}
-                  disabled={!openaiKey || dbItems.length === 0}
-                  variant="outline"
-                >
-                  <TrendingUp className="h-4 w-4 mr-2" />
-                  Generate Summary
-                </Button>
-              </div>
-              
-              {!openaiKey && (
-                <div className="text-center py-4 text-muted-foreground">
-                  <p>OpenAI API key required for AI analysis</p>
-                  <p className="text-sm">Set your API key in the Scraping Setup tab</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Competitive Summary */}
-          {competitiveSummary && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Lightbulb className="h-5 w-5" />
-                  Competitive Intelligence Summary
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="prose prose-sm max-w-none">
-                  <div className="whitespace-pre-wrap">{competitiveSummary}</div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
 
           {/* AI Analysis Results */}
           {aiInsights.size > 0 && (
@@ -1205,7 +2004,7 @@ export default function ScrapeDashboard() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="">All Companies</SelectItem>
-                    {Array.from(new Set(items.map(i => i.company))).map(company => (
+                    {Array.from(new Set(dbItems.map(i => i.company))).map(company => (
                       <SelectItem key={company} value={company}>{company}</SelectItem>
                     ))}
                   </SelectContent>
@@ -1219,7 +2018,7 @@ export default function ScrapeDashboard() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="">All Categories</SelectItem>
-                    {Array.from(new Set(items.map(i => i.category))).map(cat => (
+                    {Array.from(new Set(dbItems.map(i => i.category))).map(cat => (
                       <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                     ))}
                   </SelectContent>
@@ -1261,11 +2060,11 @@ export default function ScrapeDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
-                Scraped Data ({items.length} items)
+                Scraped Data ({dbItems.length} items)
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {items.length === 0 ? (
+              {dbItems.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="mb-4">
                     {backendStatus === 'connected' ? (
