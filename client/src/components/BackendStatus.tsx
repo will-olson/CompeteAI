@@ -108,7 +108,7 @@ export function BackendStatus() {
         </Button>
 
         <p className="text-xs text-muted-foreground text-center">
-          Testing connection to InsightForge API on localhost:5001
+          Testing connection to InsightForge API on localhost:3001
         </p>
       </CardContent>
     </Card>
