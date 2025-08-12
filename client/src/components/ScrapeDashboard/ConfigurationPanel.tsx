@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { APIService } from '@/utils/APIService';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -56,37 +57,40 @@ export function ConfigurationPanel({}: ConfigurationPanelProps) {
     rateLimiting: 'adaptive'
   });
 
-  // Preset groups
-  const presetGroups = {
-    'tech-saas': {
-      name: 'Tech SaaS Companies',
-      description: 'Software-as-a-Service companies with developer-focused content',
-      companies: ['OpenAI', 'Stripe', 'Notion', 'Figma', 'Linear', 'Vercel', 'Supabase'],
-      categories: ['marketing', 'docs', 'api', 'blog', 'pricing', 'security']
-    },
-    'fintech': {
-      name: 'Fintech & Payments',
-      description: 'Financial technology and payment processing companies',
-      companies: ['Stripe', 'Plaid', 'Square', 'Coinbase', 'Robinhood', 'Chime'],
-      categories: ['marketing', 'docs', 'api', 'compliance', 'security', 'pricing']
-    },
-    'ai-ml': {
-      name: 'AI & Machine Learning',
-      description: 'Artificial intelligence and machine learning companies',
-      companies: ['OpenAI', 'Anthropic', 'Google AI', 'Microsoft AI', 'Hugging Face'],
-      categories: ['marketing', 'docs', 'api', 'research', 'models', 'pricing']
-    },
-    'ecommerce': {
-      name: 'E-commerce & Retail',
-      description: 'E-commerce platforms and retail technology',
-      companies: ['Shopify', 'WooCommerce', 'BigCommerce', 'Magento', 'Salesforce Commerce'],
-      categories: ['marketing', 'docs', 'api', 'templates', 'apps', 'pricing']
-    }
-  };
+  // Preset groups - will be loaded from backend
+  const [presetGroups, setPresetGroups] = useState<Record<string, any>>({});
+  const [isLoadingPresets, setIsLoadingPresets] = useState(false);
 
   useEffect(() => {
     loadStoredApiKey();
+    loadPresetGroups();
   }, []);
+
+  const loadPresetGroups = async () => {
+    try {
+      setIsLoadingPresets(true);
+      const groups = await APIService.getPresetGroups();
+      setPresetGroups(groups);
+    } catch (error) {
+      console.error('Failed to load preset groups:', error);
+      toast({ 
+        title: 'Failed to load preset groups', 
+        description: 'Using fallback data',
+        variant: 'destructive'
+      });
+      // Fallback to basic groups if API fails
+      setPresetGroups({
+        'tech-saas': {
+          name: 'Tech SaaS Companies',
+          description: 'Software-as-a-Service companies with developer-focused content',
+          companies: ['OpenAI', 'Stripe', 'Notion', 'Figma', 'Linear', 'Vercel', 'Supabase'],
+          categories: ['marketing', 'docs', 'api', 'blog', 'pricing', 'security']
+        }
+      });
+    } finally {
+      setIsLoadingPresets(false);
+    }
+  };
 
   const loadStoredApiKey = () => {
     const stored = localStorage.getItem('openai_api_key');

@@ -18,7 +18,7 @@ import { AIAnalysisPanel } from '@/components/ScrapeDashboard/AIAnalysisPanel';
 import { ExportPanel } from '@/components/ScrapeDashboard/ExportPanel';
 
 // Types
-interface BackendStatus {
+interface BackendStatusType {
   status: 'connected' | 'disconnected' | 'checking';
   services?: {
     scraper: string;
@@ -33,7 +33,7 @@ export default function ScrapeDashboard() {
   const items = state.items;
 
   // Core state
-  const [backendStatus, setBackendStatus] = useState<BackendStatus>({ status: 'checking' });
+  const [backendStatus, setBackendStatus] = useState<BackendStatusType>({ status: 'checking' });
   const [activeTab, setActiveTab] = useState('configuration');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,7 +49,11 @@ export default function ScrapeDashboard() {
       if (health.status === 'healthy') {
         setBackendStatus({ 
           status: 'connected',
-          services: health.services
+          services: {
+            scraper: health.services?.scraper || 'unknown',
+            ai_analyzer: health.services?.ai_analyzer || 'unknown',
+            enterprise_analyzer: health.services?.enterprise_analyzer || 'unknown'
+          }
         });
       } else {
         setBackendStatus({ status: 'disconnected' });
@@ -79,7 +83,7 @@ export default function ScrapeDashboard() {
           </div>
           
           <div className="flex items-center space-x-4">
-            <BackendStatus status={backendStatus.status} />
+            <BackendStatus />
             <Badge variant={items.length > 0 ? 'default' : 'secondary'}>
               {items.length} items scraped
             </Badge>
@@ -103,10 +107,7 @@ export default function ScrapeDashboard() {
 
           {/* Configuration Tab - Initial Setup */}
           <TabsContent value="configuration" className="space-y-6">
-            <ConfigurationPanel 
-              backendStatus={backendStatus}
-              onStatusChange={setBackendStatus}
-            />
+                        <ConfigurationPanel />
           </TabsContent>
 
           {/* Target Selection Tab */}

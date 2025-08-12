@@ -432,7 +432,7 @@ export function ExportPanel({ items }: ExportPanelProps) {
                   <SelectValue placeholder="All companies" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All companies</SelectItem>
+                  <SelectItem value="all">All companies</SelectItem>
                   {uniqueCompanies.map(company => (
                     <SelectItem key={company} value={company}>
                       {company}
@@ -449,7 +449,7 @@ export function ExportPanel({ items }: ExportPanelProps) {
                   <SelectValue placeholder="All categories" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All categories</SelectItem>
+                  <SelectItem value="all">All categories</SelectItem>
                   {uniqueCategories.map(category => (
                     <SelectItem key={category} value={category}>
                       {category}

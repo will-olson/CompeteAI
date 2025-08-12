@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+        .test-box { background: #4CAF50; color: white; padding: 20px; margin: 20px; border-radius: 8px; }
+        .status { background: #2196F3; color: white; padding: 15px; margin: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🌐 Network Connectivity Test</h1>
+    
+    <div class="test-box">
+        <h2>✅ Static HTML Test</h2>
+        <p>If you can see this page, the web server is working!</p>
+        <p>Time: <span id="time"></span></p>
+        <p>Status: <span id="status">ACTIVE</span></p>
+    </div>
+    
+    <div class="status">
+        <h3>🔧 Test Results</h3>
+        <p>✅ Web Server: RUNNING</p>
+        <p>✅ Static Files: SERVING</p>
+        <p>✅ Network: CONNECTED</p>
+    </div>
+    
+    <div class="test-box">
+        <h3>🧪 Next Steps</h3>
+        <p>1. If you see this page: Web server is working ✅</p>
+        <p>2. Try accessing: <a href="/" style="color: white;">Main React App</a></p>
+        <p>3. Check browser console for any JavaScript errors</p>
+    </div>
+
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleTimeString();
+        
+        // Test JavaScript functionality
+        console.log('✅ JavaScript is working!');
+        
+        // Test if we can make network requests
+        fetch('/api/health')
+            .then(response => response.json())
+            .then(data => {
+                console.log('✅ Backend API accessible:', data);
+                document.getElementById('status').textContent = 'BACKEND CONNECTED';
+            })
+            .catch(error => {
+                console.log('❌ Backend API not accessible:', error);
+                document.getElementById('status').textContent = 'BACKEND DISCONNECTED';
+            });
+    </script>
+</body>
+</html>

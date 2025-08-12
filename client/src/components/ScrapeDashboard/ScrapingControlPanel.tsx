@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { APIService } from '@/utils/APIService';
+import { useScrapeStore } from '@/state/ScrapeStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -71,46 +73,87 @@ export function ScrapingControlPanel() {
     { company: 'Notion', category: 'marketing', url: 'https://notion.so', enabled: true, priority: 'medium' }
   ];
 
+  const { addItems } = useScrapeStore();
+  
   const startScraping = async () => {
     if (isScraping) return;
     
-    setIsScraping(true);
-    setIsPaused(false);
-    setScrapingProgress(0);
-    setScrapedCount(0);
-    setErrorCount(0);
-    
-    // Simulate scraping progress
-    const totalTargets = sampleTargets.length;
-    let currentIndex = 0;
-    
-    const scrapingInterval = setInterval(() => {
-      if (isPaused) return;
+    try {
+      setIsScraping(true);
+      setIsPaused(false);
+      setScrapingProgress(0);
+      setScrapedCount(0);
+      setErrorCount(0);
       
-      if (currentIndex < totalTargets) {
-        const target = sampleTargets[currentIndex];
-        setCurrentTarget(`${target.company} - ${target.category}`);
-        setScrapingProgress((currentIndex / totalTargets) * 100);
+      // Get enabled targets
+      const enabledTargets = sampleTargets.filter(t => t.enabled);
+      const totalTargets = enabledTargets.length;
+      
+      if (totalTargets === 0) {
+        toast({ 
+          title: 'No targets enabled', 
+          description: 'Please enable at least one scraping target.',
+          variant: 'destructive'
+        });
+        setIsScraping(false);
+        return;
+      }
+      
+      // Start actual scraping
+      for (let i = 0; i < enabledTargets.length; i++) {
+        if (isPaused) break;
         
-        // Simulate success/failure
-        if (Math.random() > 0.2) { // 80% success rate
-          setScrapedCount(prev => prev + 1);
-        } else {
+        const target = enabledTargets[i];
+        setCurrentTarget(`${target.company} - ${target.category}`);
+        setScrapingProgress((i / totalTargets) * 100);
+        
+        try {
+          // Call backend scraping API
+          const response = await APIService.scrapeCompany({
+            company: target.company,
+            urls: { [target.category]: target.url },
+            categories: [target.category],
+            page_limit: config.pageLimit
+          });
+          
+          if (response.error) {
+            setErrorCount(prev => prev + 1);
+            console.error(`Scraping failed for ${target.company}:`, response.error);
+          } else {
+            setScrapedCount(prev => prev + 1);
+            // Add scraped items to store
+            if (response.categories) {
+              // Process and add scraped data
+              // This would need to be implemented based on the actual API response
+            }
+          }
+        } catch (error) {
           setErrorCount(prev => prev + 1);
+          console.error(`Scraping error for ${target.company}:`, error);
         }
         
-        currentIndex++;
-      } else {
-        // Scraping complete
-        clearInterval(scrapingInterval);
-        setIsScraping(false);
-        setCurrentTarget('');
-        toast({ 
-          title: 'Scraping completed', 
-          description: `Successfully scraped ${scrapedCount} targets with ${errorCount} errors.` 
-        });
+        // Respect delay between requests
+        if (i < enabledTargets.length - 1 && !isPaused) {
+          await new Promise(resolve => setTimeout(resolve, config.delayBetweenRequests));
+        }
       }
-    }, 2000); // 2 second intervals for demo
+      
+      setIsScraping(false);
+      setCurrentTarget('');
+      toast({ 
+        title: 'Scraping completed', 
+        description: `Successfully scraped ${scrapedCount} targets with ${errorCount} errors.` 
+      });
+      
+    } catch (error) {
+      console.error('Scraping failed:', error);
+      toast({ 
+        title: 'Scraping failed', 
+        description: 'An error occurred during scraping.',
+        variant: 'destructive'
+      });
+      setIsScraping(false);
+    }
   };
 
   const pauseScraping = () => {

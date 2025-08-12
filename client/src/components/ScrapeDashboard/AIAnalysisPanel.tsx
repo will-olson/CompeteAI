@@ -26,7 +26,8 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  Settings
+  Settings,
+  Lightbulb
 } from 'lucide-react';
 import { ScrapedItem } from '@/state/ScrapeStore';
 import ReactMarkdown from 'react-markdown';
