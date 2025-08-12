@@ -7,18 +7,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { BackendStatus } from '@/components/BackendStatus';
 
-// Import refactored sub-components
-import { ConfigurationPanel } from '@/components/ScrapeDashboard/ConfigurationPanel';
-import { TargetSelectionPanel } from '@/components/ScrapeDashboard/TargetSelectionPanel';
-import { ScrapingControlPanel } from '@/components/ScrapeDashboard/ScrapingControlPanel';
-import { ProgressMonitoringPanel } from '@/components/ScrapeDashboard/ProgressMonitoringPanel';
-import { DataViewPanel } from '@/components/ScrapeDashboard/DataViewPanel';
-import { AnalyticsPanel } from '@/components/ScrapeDashboard/AnalyticsPanel';
-import { AIAnalysisPanel } from '@/components/ScrapeDashboard/AIAnalysisPanel';
-import { ExportPanel } from '@/components/ScrapeDashboard/ExportPanel';
+// Import sub-components
+import { ConfigurationPanel } from './ConfigurationPanel';
+import { TargetSelectionPanel } from './TargetSelectionPanel';
+import { ScrapingControlPanel } from './ScrapingControlPanel';
+import { ProgressMonitoringPanel } from './ProgressMonitoringPanel';
+import { DataViewPanel } from './DataViewPanel';
+import { AnalyticsPanel } from './AnalyticsPanel';
+import { AIAnalysisPanel } from './AIAnalysisPanel';
+import { ExportPanel } from './ExportPanel';
 
 // Types
-interface BackendStatus {
+interface BackendStatusType {
   status: 'connected' | 'disconnected' | 'checking';
   services?: {
     scraper: string;
@@ -33,31 +33,8 @@ export default function ScrapeDashboard() {
   const items = state.items;
 
   // Core state
-  const [backendStatus, setBackendStatus] = useState<BackendStatus>({ status: 'checking' });
   const [activeTab, setActiveTab] = useState('configuration');
   const [isLoading, setIsLoading] = useState(false);
-
-  // Check backend connection on mount
-  useEffect(() => {
-    checkBackendConnection();
-  }, []);
-
-  const checkBackendConnection = async () => {
-    try {
-      setBackendStatus({ status: 'checking' });
-      const health = await APIService.healthCheck();
-      if (health.status === 'healthy') {
-        setBackendStatus({ 
-          status: 'connected',
-          services: health.services
-        });
-      } else {
-        setBackendStatus({ status: 'disconnected' });
-      }
-    } catch (error) {
-      setBackendStatus({ status: 'disconnected' });
-    }
-  };
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -79,7 +56,7 @@ export default function ScrapeDashboard() {
           </div>
           
           <div className="flex items-center space-x-4">
-            <BackendStatus status={backendStatus.status} />
+            <BackendStatus />
             <Badge variant={items.length > 0 ? 'default' : 'secondary'}>
               {items.length} items scraped
             </Badge>
@@ -103,10 +80,7 @@ export default function ScrapeDashboard() {
 
           {/* Configuration Tab - Initial Setup */}
           <TabsContent value="configuration" className="space-y-6">
-            <ConfigurationPanel 
-              backendStatus={backendStatus}
-              onStatusChange={setBackendStatus}
-            />
+            <ConfigurationPanel />
           </TabsContent>
 
           {/* Target Selection Tab */}
@@ -157,4 +131,4 @@ export default function ScrapeDashboard() {
       )}
     </div>
   );
-}
+} 

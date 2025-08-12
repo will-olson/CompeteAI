@@ -564,7 +564,7 @@ def search_content():
                                     'item': item,
                                     'company': company,
                                     'category': category,
-                                    'relevance_score': self._calculate_relevance_score(query, title, content, company_name)
+                                    'relevance_score': _calculate_relevance_score(query, title, content, company_name)
                                 })
         
         # Sort by relevance score
@@ -583,7 +583,7 @@ def search_content():
             'message': str(e)
         }), 500
 
-def _calculate_relevance_score(self, query: str, title: str, content: str, company: str) -> float:
+def _calculate_relevance_score(query: str, title: str, content: str, company: str) -> float:
     """Calculate relevance score for search results"""
     score = 0.0
     

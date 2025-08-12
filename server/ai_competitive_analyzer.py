@@ -400,6 +400,62 @@ class AICompetitiveAnalyzer:
             logger.error(f"Error preparing data for analysis: {str(e)}")
             return str(data)
     
+    def _extract_content_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract content-related metrics and data for analysis"""
+        content_metrics = {
+            'content_summary': {},
+            'company_content': {},
+            'category_breakdown': {},
+            'content_quality': {}
+        }
+        
+        try:
+            # Extract overall content summary
+            content_metrics['content_summary'] = {
+                'total_companies': data.get('summary', {}).get('total_companies', 0),
+                'total_items': data.get('summary', {}).get('total_items', 0),
+                'total_words': data.get('summary', {}).get('total_words', 0),
+                'total_links': data.get('summary', {}).get('total_links', 0),
+                'total_images': data.get('summary', {}).get('total_images', 0),
+                'rich_content_count': data.get('summary', {}).get('rich_content_count', 0)
+            }
+            
+            # Extract company-specific content data
+            companies = data.get('companies', {})
+            for company, company_data in companies.items():
+                if isinstance(company_data, dict) and 'error' not in company_data:
+                    content_metrics['company_content'][company] = {
+                        'total_items': company_data.get('summary', {}).get('total_items', 0),
+                        'total_words': company_data.get('summary', {}).get('total_words', 0),
+                        'categories': list(company_data.get('categories', {}).keys())
+                    }
+                    
+                    # Extract category breakdown
+                    for category, category_data in company_data.get('categories', {}).items():
+                        if isinstance(category_data, dict) and 'error' not in category_data:
+                            if category not in content_metrics['category_breakdown']:
+                                content_metrics['category_breakdown'][category] = {
+                                    'total_items': 0,
+                                    'total_words': 0,
+                                    'companies': set()
+                                }
+                            
+                            content_metrics['category_breakdown'][category]['total_items'] += len(category_data.get('items', []))
+                            content_metrics['category_breakdown'][category]['total_words'] += category_data.get('total_words', 0)
+                            content_metrics['category_breakdown'][category]['companies'].add(company)
+            
+            # Convert sets to lists for JSON serialization
+            for category in content_metrics['category_breakdown']:
+                content_metrics['category_breakdown'][category]['companies'] = list(content_metrics['category_breakdown'][category]['companies'])
+            
+            # Extract content quality metrics
+            content_metrics['content_quality'] = self._extract_content_quality_metrics(data)
+            
+        except Exception as e:
+            logger.error(f"Error extracting content metrics: {str(e)}")
+        
+        return content_metrics
+
     def _extract_content_quality_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract content quality metrics from data"""
         metrics = {

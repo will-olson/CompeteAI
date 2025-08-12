@@ -1371,3 +1371,101 @@
 2025-08-12 00:15:35,118 - INFO: 127.0.0.1 - - [12/Aug/2025 00:15:35] "GET /api/health HTTP/1.1" 200 -
 2025-08-12 00:16:30,798 - INFO: 127.0.0.1 - - [12/Aug/2025 00:16:30] "OPTIONS /api/health HTTP/1.1" 200 -
 2025-08-12 00:16:30,806 - INFO: 127.0.0.1 - - [12/Aug/2025 00:16:30] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 00:41:23,410 - INFO: 127.0.0.1 - - [12/Aug/2025 00:41:23] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 00:41:23,423 - INFO: 127.0.0.1 - - [12/Aug/2025 00:41:23] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 00:41:25,621 - INFO: 127.0.0.1 - - [12/Aug/2025 00:41:25] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 00:42:11,393 - INFO: 127.0.0.1 - - [12/Aug/2025 00:42:11] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 00:42:11,398 - INFO: 127.0.0.1 - - [12/Aug/2025 00:42:11] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 00:43:21,840 - INFO: 127.0.0.1 - - [12/Aug/2025 00:43:21] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 00:43:21,846 - INFO: 127.0.0.1 - - [12/Aug/2025 00:43:21] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 00:43:28,930 - INFO: 127.0.0.1 - - [12/Aug/2025 00:43:28] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 00:43:28,932 - INFO: 127.0.0.1 - - [12/Aug/2025 00:43:28] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 00:59:46,588 - INFO: 127.0.0.1 - - [12/Aug/2025 00:59:46] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 00:59:51,768 - INFO: 127.0.0.1 - - [12/Aug/2025 00:59:51] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 01:00:40,187 - INFO: 127.0.0.1 - - [12/Aug/2025 01:00:40] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 06:20:12,674 - INFO: Scraping marketing for OpenAI
+2025-08-12 06:20:12,839 - ERROR: Error in basic scraping: 403 Client Error: Forbidden for url: https://openai.com/
+2025-08-12 06:20:14,844 - INFO: Scraping docs for OpenAI
+2025-08-12 06:20:14,967 - ERROR: Error in basic scraping: 403 Client Error: Forbidden for url: https://openai.com/docs
+2025-08-12 06:20:25,598 - ERROR: Error in AI analysis: 400 Bad Request: Failed to decode JSON object: Expecting ',' delimiter: line 1 column 517 (char 516)
+2025-08-12 06:20:25,599 - INFO: 127.0.0.1 - - [12/Aug/2025 06:20:25] "[35m[1mPOST /api/ai/analyze HTTP/1.1[0m" 500 -
+2025-08-12 06:20:48,538 - INFO: 127.0.0.1 - - [12/Aug/2025 06:20:48] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 06:21:20,778 - INFO: 127.0.0.1 - - [12/Aug/2025 06:21:20] "GET /api/preset-groups/tech_saas HTTP/1.1" 200 -
+2025-08-12 06:21:31,317 - INFO: 127.0.0.1 - - [12/Aug/2025 06:21:31] "POST /api/analytics/summary HTTP/1.1" 200 -
+2025-08-12 06:21:38,512 - ERROR: Error searching content: name 'self' is not defined
+2025-08-12 06:21:38,512 - INFO: 127.0.0.1 - - [12/Aug/2025 06:21:38] "[35m[1mPOST /api/search/content HTTP/1.1[0m" 500 -
+2025-08-12 06:22:00,996 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/insightforge_app.py', reloading
+2025-08-12 06:22:01,268 - INFO:  * Restarting with stat
+2025-08-12 06:22:02,162 - WARNING:  * Debugger is active!
+2025-08-12 06:22:02,171 - INFO:  * Debugger PIN: 121-403-977
+2025-08-12 06:22:07,287 - INFO: 127.0.0.1 - - [12/Aug/2025 06:22:07] "POST /api/search/content HTTP/1.1" 200 -
+2025-08-12 06:22:13,540 - INFO: 127.0.0.1 - - [12/Aug/2025 06:22:13] "POST /api/enterprise/analyze-category HTTP/1.1" 200 -
+2025-08-12 06:22:41,683 - INFO: Data exported successfully to: test_export.json
+2025-08-12 06:22:41,685 - INFO: 127.0.0.1 - - [12/Aug/2025 06:22:41] "POST /api/export/data HTTP/1.1" 200 -
+2025-08-12 06:22:54,679 - INFO: 127.0.0.1 - - [12/Aug/2025 06:22:54] "POST /api/import/file HTTP/1.1" 200 -
+2025-08-12 06:23:13,944 - INFO: 127.0.0.1 - - [12/Aug/2025 06:23:13] "POST /api/ai/battlecard HTTP/1.1" 200 -
+2025-08-12 06:23:22,472 - ERROR: Error in content strategy analysis: 'AICompetitiveAnalyzer' object has no attribute '_extract_content_metrics'
+2025-08-12 06:23:22,473 - INFO: 127.0.0.1 - - [12/Aug/2025 06:23:22] "POST /api/ai/content-strategy HTTP/1.1" 200 -
+2025-08-12 06:24:34,791 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/ai_competitive_analyzer.py', reloading
+2025-08-12 06:24:34,879 - INFO:  * Restarting with stat
+2025-08-12 06:24:35,859 - WARNING:  * Debugger is active!
+2025-08-12 06:24:35,872 - INFO:  * Debugger PIN: 121-403-977
+2025-08-12 06:24:55,117 - INFO: 127.0.0.1 - - [12/Aug/2025 06:24:55] "POST /api/ai/content-strategy HTTP/1.1" 200 -
+2025-08-12 06:25:13,550 - INFO: 127.0.0.1 - - [12/Aug/2025 06:25:13] "POST /api/ai/competitive-moves HTTP/1.1" 200 -
+2025-08-12 06:25:22,965 - INFO: 127.0.0.1 - - [12/Aug/2025 06:25:22] "POST /api/enterprise/generate-battlecard HTTP/1.1" 200 -
+2025-08-12 06:31:56,263 - INFO: 127.0.0.1 - - [12/Aug/2025 06:31:56] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:31:56,266 - INFO: 127.0.0.1 - - [12/Aug/2025 06:31:56] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:31:56,271 - INFO: 127.0.0.1 - - [12/Aug/2025 06:31:56] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:31:56,290 - INFO: 127.0.0.1 - - [12/Aug/2025 06:31:56] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:31:56,295 - INFO: 127.0.0.1 - - [12/Aug/2025 06:31:56] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:31:56,298 - INFO: 127.0.0.1 - - [12/Aug/2025 06:31:56] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:33:23,767 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:23] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:23,771 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:23] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:23,772 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:23] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:23,773 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:23] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:23,843 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:23] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:33:23,846 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:23] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:33:31,587 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:31,589 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:31,590 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:31] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:31,594 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:31] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:31,676 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:31] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:33:31,679 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:31] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:33:35,567 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:35] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:35,569 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:35] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:35,649 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:35] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:33:41,865 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:41] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:41,867 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:41] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:41,868 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:41] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:41,873 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:41] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:33:41,883 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:41] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:33:41,885 - INFO: 127.0.0.1 - - [12/Aug/2025 06:33:41] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:44:11,725 - INFO: 127.0.0.1 - - [12/Aug/2025 06:44:11] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:44:11,726 - INFO: 127.0.0.1 - - [12/Aug/2025 06:44:11] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 06:44:11,733 - INFO: 127.0.0.1 - - [12/Aug/2025 06:44:11] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:44:11,735 - INFO: 127.0.0.1 - - [12/Aug/2025 06:44:11] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 06:44:11,899 - INFO: 127.0.0.1 - - [12/Aug/2025 06:44:11] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 06:44:11,900 - INFO: 127.0.0.1 - - [12/Aug/2025 06:44:11] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:16:52,060 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:52] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 07:16:52,061 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:52] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 07:16:52,066 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:52] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:16:52,068 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:52] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:16:52,072 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:52] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:16:52,075 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:52] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:16:55,089 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:55] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:16:55,095 - INFO: 127.0.0.1 - - [12/Aug/2025 07:16:55] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:18:38,862 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:38] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:38,863 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:38] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:38,986 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:38] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:39,021 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:39] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:39,043 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:39] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:18:39,051 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:39] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:18:42,437 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:42] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:42,439 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:42] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:42,471 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:42] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:18:49,874 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:49] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:49,875 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:49] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:49,878 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:49] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:49,881 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:49] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 07:18:49,891 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:49] "OPTIONS /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 07:18:49,909 - INFO: 127.0.0.1 - - [12/Aug/2025 07:18:49] "GET /api/preset-groups HTTP/1.1" 200 -
