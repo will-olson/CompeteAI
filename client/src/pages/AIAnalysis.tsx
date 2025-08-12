@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
 import { useState, useMemo, useEffect } from 'react';
 import { LLMService, type LLMProvider } from '@/utils/LLMService';
+import { APIService } from '@/utils/APIService';
 import { useScrapeStore } from '@/state/ScrapeStore';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -20,13 +21,15 @@ import {
   TrendingUp, 
   AlertTriangle, 
   Target, 
-  AutoPilot,
+  Settings,
   Play,
   Pause,
-  Settings,
   BarChart3,
   Lightbulb,
-  RefreshCw
+  RefreshCw,
+  Server,
+  Wifi,
+  WifiOff
 } from 'lucide-react';
 
 export default function AIAnalysis() {
@@ -41,6 +44,10 @@ export default function AIAnalysis() {
   const [focus, setFocus] = useState('positioning, differentiation, pricing, risks');
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Backend connection state
+  const [backendStatus, setBackendStatus] = useState<'connected' | 'disconnected' | 'checking'>('checking');
+  const [useBackend, setUseBackend] = useState(false);
   
   // Advanced AI workflow automation state
   const [autoAnalysis, setAutoAnalysis] = useState(false);
@@ -61,6 +68,26 @@ export default function AIAnalysis() {
   }>>([]);
 
   const corpus = useMemo(() => items.map(i => `# ${i.company} | ${i.title || i.url}\n\n${i.markdown || ''}`).join('\n\n---\n\n'), [items]);
+
+  // Check backend connection on component mount
+  useEffect(() => {
+    checkBackendConnection();
+  }, []);
+
+  const checkBackendConnection = async () => {
+    try {
+      setBackendStatus('checking');
+      const health = await APIService.healthCheck();
+      if (health.status === 'healthy') {
+        setBackendStatus('connected');
+      } else {
+        setBackendStatus('disconnected');
+      }
+    } catch (error) {
+      console.warn('Backend connection failed:', error);
+      setBackendStatus('disconnected');
+    }
+  };
 
   // Enhanced analytics and insights
   const insights = useMemo(() => {
@@ -142,6 +169,49 @@ export default function AIAnalysis() {
     } catch (e: any) {
       toast({ title: 'Analysis failed', description: e?.message, variant: 'destructive' });
     } finally { setIsLoading(false); }
+  };
+
+  const analyzeWithBackend = async () => {
+    if (!corpus.trim()) {
+      toast({ title: 'No content to analyze', variant: 'destructive' });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const request = {
+        content: corpus,
+        analysis_type: 'competitive',
+        options: {
+          tone,
+          focus_areas: focus.split(',').map(s => s.trim()),
+          format
+        }
+      };
+
+      const result = await APIService.analyzeWithAI(request);
+      
+      if (result.success) {
+        setOutput(result.analysis || result.message || 'Analysis completed');
+        toast({ title: 'Backend analysis complete' });
+        
+        // Add to workflow history
+        const newWorkflow = {
+          id: Date.now().toString(),
+          type: 'backend',
+          timestamp: new Date(),
+          insights: [result.analysis || result.message || 'Analysis completed'],
+          status: 'completed' as const
+        };
+        setWorkflowHistory(prev => [newWorkflow, ...prev]);
+      } else {
+        throw new Error(result.error || 'Backend analysis failed');
+      }
+    } catch (error: any) {
+      toast({ title: 'Backend analysis failed', description: error?.message, variant: 'destructive' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const runAutoAnalysis = async () => {
@@ -238,7 +308,7 @@ export default function AIAnalysis() {
         <Card className="md:col-span-3">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <AutoPilot className="h-5 w-5" />
+              <Settings className="h-5 w-5" />
               AI Workflow Automation
             </CardTitle>
           </CardHeader>
@@ -474,6 +544,93 @@ export default function AIAnalysis() {
 
       {/* Manual Analysis Controls */}
       <div className="grid gap-6 md:grid-cols-3">
+        {/* Backend Status and Analysis Options */}
+        <Card className="md:col-span-3">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Server className="h-5 w-5" />
+              Backend Analysis Options
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Backend Connection Status */}
+            <div className="flex items-center justify-between p-3 border rounded-lg">
+              <div className="flex items-center gap-2">
+                {backendStatus === 'connected' && (
+                  <>
+                    <Wifi className="h-5 w-5 text-green-500" />
+                    <span className="text-sm font-medium text-green-600">InsightForge Backend Connected</span>
+                  </>
+                )}
+                {backendStatus === 'disconnected' && (
+                  <>
+                    <WifiOff className="h-5 w-5 text-red-500" />
+                    <span className="text-sm font-medium text-red-600">InsightForge Backend Disconnected</span>
+                  </>
+                )}
+                {backendStatus === 'checking' && (
+                  <>
+                    <Wifi className="h-5 w-5 text-yellow-500 animate-spin" />
+                    <span className="text-sm font-medium text-yellow-600">Checking Backend Connection...</span>
+                  </>
+                )}
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={checkBackendConnection}
+                disabled={backendStatus === 'checking'}
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh
+              </Button>
+            </div>
+
+            {/* Backend Analysis Controls */}
+            {backendStatus === 'connected' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="use-backend">Use Backend Analysis</Label>
+                  <Switch
+                    id="use-backend"
+                    checked={useBackend}
+                    onCheckedChange={setUseBackend}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Use InsightForge backend for enhanced analysis capabilities
+                  </p>
+                </div>
+                
+                {useBackend && (
+                  <div className="space-y-2">
+                    <Button 
+                      onClick={analyzeWithBackend} 
+                      disabled={isLoading || !corpus.trim()} 
+                      className="w-full"
+                      variant="default"
+                    >
+                      <Server className="h-4 w-4 mr-2" />
+                      {isLoading ? 'Analyzing...' : 'Run Backend Analysis'}
+                    </Button>
+                    <p className="text-xs text-muted-foreground">
+                      Leverage InsightForge's competitive intelligence analysis
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {backendStatus === 'disconnected' && (
+              <div className="p-3 bg-muted rounded-lg">
+                <p className="text-sm text-muted-foreground">
+                  Backend analysis requires InsightForge API connection. 
+                  Please ensure the backend service is running on port 5001.
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         <Card className="md:col-span-3">
           <CardHeader><CardTitle>Model Settings</CardTitle></CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-5">

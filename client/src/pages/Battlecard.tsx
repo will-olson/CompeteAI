@@ -17,13 +17,17 @@ import {
   AlertTriangle, 
   Lightbulb,
   Brain,
-  AutoPilot,
+  Settings,
   BarChart3,
   Zap,
   Clock,
-  Star
+  Star,
+  Server,
+  Wifi,
+  WifiOff
 } from 'lucide-react';
 import { LLMService, type LLMProvider } from '@/utils/LLMService';
+import { APIService } from '@/utils/APIService';
 import { useToast } from '@/hooks/use-toast';
 
 const downloadMarkdown = (content: string, filename: string) => {
@@ -53,10 +57,34 @@ export default function Battlecard() {
   const [apiKey, setApiKey] = useState<string>('');
   const [insightType, setInsightType] = useState<'competitive' | 'positioning' | 'risks' | 'opportunities'>('competitive');
 
+  // Backend connection state
+  const [backendStatus, setBackendStatus] = useState<'connected' | 'disconnected' | 'checking'>('checking');
+  const [useBackend, setUseBackend] = useState(false);
+
   const data = useMemo(() => ({
     A: items.filter(i => i.company === a),
     B: items.filter(i => i.company === b),
   }), [items, a, b]);
+
+  // Check backend connection on component mount
+  useEffect(() => {
+    checkBackendConnection();
+  }, []);
+
+  const checkBackendConnection = async () => {
+    try {
+      setBackendStatus('checking');
+      const health = await APIService.healthCheck();
+      if (health.status === 'healthy') {
+        setBackendStatus('connected');
+      } else {
+        setBackendStatus('disconnected');
+      }
+    } catch (error) {
+      console.warn('Backend connection failed:', error);
+      setBackendStatus('disconnected');
+    }
+  };
 
   const summarize = (docs: typeof items) => {
     const titles = docs.map(d => d.title || d.url).slice(0, 8).join(', ');
@@ -165,6 +193,57 @@ export default function Battlecard() {
     }
   };
 
+  // Generate backend battlecard
+  const generateBackendBattlecard = async () => {
+    if (!a || !b || data.A.length === 0 || data.B.length === 0) {
+      toast({ title: 'Please select two companies with data', variant: 'destructive' });
+      return;
+    }
+    
+    setIsGenerating(true);
+    try {
+      const request = {
+        company_a: {
+          name: a,
+          data: data.A.map(d => ({
+            title: d.title || d.url,
+            content: d.markdown || '',
+            category: d.category,
+            url: d.url
+          }))
+        },
+        company_b: {
+          name: b,
+          data: data.B.map(d => ({
+            title: d.title || d.url,
+            content: d.markdown || '',
+            category: d.category,
+            url: d.url
+          }))
+        },
+        analysis_type: 'battlecard',
+        options: {
+          focus_areas: [insightType],
+          include_visuals: true,
+          format: 'structured'
+        }
+      };
+
+      const result = await APIService.generateBattlecard(request);
+      
+      if (result.success) {
+        setAiInsights(result.battlecard || result.message || 'Backend battlecard generated');
+        toast({ title: 'Backend battlecard generated successfully' });
+      } else {
+        throw new Error(result.error || 'Backend battlecard generation failed');
+      }
+    } catch (error: any) {
+      toast({ title: 'Failed to generate backend battlecard', description: error.message, variant: 'destructive' });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   // Auto-update effect
   useEffect(() => {
     if (!autoUpdates || !a || !b) return;
@@ -217,11 +296,66 @@ export default function Battlecard() {
         <Card className="md:col-span-3">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <AutoPilot className="h-5 w-5" />
+              <Settings className="h-5 w-5" />
               AI-Powered Battlecard Generation
             </CardTitle>
           </CardHeader>
           <CardContent>
+            {/* Backend Status */}
+            <div className="mb-6 p-4 border rounded-lg">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="font-medium">Backend Connection Status</h4>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={checkBackendConnection}
+                  disabled={backendStatus === 'checking'}
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Refresh
+                </Button>
+              </div>
+              
+              <div className="flex items-center gap-2 mb-3">
+                {backendStatus === 'connected' && (
+                  <>
+                    <Wifi className="h-5 w-5 text-green-500" />
+                    <span className="text-sm font-medium text-green-600">InsightForge Backend Connected</span>
+                  </>
+                )}
+                {backendStatus === 'disconnected' && (
+                  <>
+                    <WifiOff className="h-5 w-5 text-red-500" />
+                    <span className="text-sm font-medium text-red-600">InsightForge Backend Disconnected</span>
+                  </>
+                )}
+                {backendStatus === 'checking' && (
+                  <>
+                    <Wifi className="h-5 w-5 text-yellow-500 animate-spin" />
+                    <span className="text-sm font-medium text-yellow-600">Checking Backend Connection...</span>
+                  </>
+                )}
+              </div>
+
+              {backendStatus === 'connected' && (
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="use-backend"
+                    checked={useBackend}
+                    onCheckedChange={setUseBackend}
+                  />
+                  <Label htmlFor="use-backend">Use Backend Battlecard Generation</Label>
+                </div>
+              )}
+
+              {backendStatus === 'disconnected' && (
+                <p className="text-sm text-muted-foreground">
+                  Backend battlecard generation requires InsightForge API connection. 
+                  Please ensure the backend service is running on port 5001.
+                </p>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* AI Settings */}
               <div className="space-y-4">
@@ -269,6 +403,18 @@ export default function Battlecard() {
                   <Brain className="h-4 w-4 mr-2" />
                   {isGenerating ? 'Generating...' : 'Generate AI Insights'}
                 </Button>
+
+                {useBackend && backendStatus === 'connected' && (
+                  <Button 
+                    onClick={generateBackendBattlecard} 
+                    disabled={isGenerating || !a || !b || data.A.length === 0 || data.B.length === 0}
+                    className="w-full"
+                    variant="default"
+                  >
+                    <Server className="h-4 w-4 mr-2" />
+                    {isGenerating ? 'Generating...' : 'Generate Backend Battlecard'}
+                  </Button>
+                )}
               </div>
               
               {/* Automation Controls */}

@@ -5,3 +5,9 @@ seaborn
 scikit-learn
 requests
 python-dotenv
+flask
+flask-cors
+beautifulsoup4
+feedparser
+python-docx
+markdown

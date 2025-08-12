@@ -2,8 +2,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { FirecrawlService } from '@/utils/FirecrawlService';
+import { APIService } from '@/utils/APIService';
 import { ScrapedItem, useScrapeStore } from '@/state/ScrapeStore';
 import { SEO } from '@/components/SEO';
 import ReactMarkdown from 'react-markdown';
@@ -12,11 +13,11 @@ import { Bar, BarChart, CartesianGrid, Legend, Pie, PieChart, ResponsiveContaine
 import Papa from 'papaparse';
 import mammoth from 'mammoth';
 import { Badge } from '@/components/ui/badge';
-import { Search, Filter, Download, TrendingUp, TrendingDown, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2 } from 'lucide-react';
+import { Search, Filter, Download, TrendingUp, TrendingDown, Activity, BarChart3, PieChart as PieChartIcon, LineChart as LineChartIcon, Users, Building2, Target, Plus, Trash2, Server, Wifi, WifiOff } from 'lucide-react';
 
 const genId = () => Math.random().toString(36).slice(2);
 
-// Preset competitor groupings
+// Preset competitor groupings (fallback if backend is not available)
 const PRESET_GROUPINGS = {
   'tech-saas': {
     name: 'Tech SaaS',
@@ -58,6 +59,10 @@ export default function ScrapeDashboard() {
   const [limit, setLimit] = useState(25);
   const [fcKey, setFcKey] = useState<string>(FirecrawlService.getApiKey() || '');
   
+  // Backend connection state
+  const [backendStatus, setBackendStatus] = useState<'connected' | 'disconnected' | 'checking'>('checking');
+  const [serverPresetGroups, setServerPresetGroups] = useState<Record<string, any>>({});
+  
   // Enhanced analytics state
   const [selectedChart, setSelectedChart] = useState('overview');
   const [filters, setFilters] = useState({
@@ -79,6 +84,33 @@ export default function ScrapeDashboard() {
     categories: ['marketing', 'docs', 'rss', 'social'],
     urls: {}
   });
+
+  // Check backend connection on component mount
+  useEffect(() => {
+    checkBackendConnection();
+  }, []);
+
+  const checkBackendConnection = async () => {
+    try {
+      setBackendStatus('checking');
+      const health = await APIService.healthCheck();
+      if (health.status === 'healthy') {
+        setBackendStatus('connected');
+        // Load preset groups from server
+        try {
+          const groups = await APIService.getPresetGroups();
+          setServerPresetGroups(groups);
+        } catch (error) {
+          console.warn('Failed to load server preset groups:', error);
+        }
+      } else {
+        setBackendStatus('disconnected');
+      }
+    } catch (error) {
+      console.warn('Backend connection failed:', error);
+      setBackendStatus('disconnected');
+    }
+  };
 
   const onSaveKey = async () => {
     if (!fcKey) return;
@@ -118,7 +150,27 @@ export default function ScrapeDashboard() {
     toast({ title: 'Competitor group deleted' });
   };
 
-  const loadPresetGroup = (presetKey: string) => {
+  const loadPresetGroup = async (presetKey: string) => {
+    // Try to load from server first, fallback to local presets
+    if (backendStatus === 'connected' && serverPresetGroups[presetKey]) {
+      try {
+        const serverGroup = await APIService.loadPresetGroup(presetKey);
+        const group: CompetitorGroup = {
+          id: genId(),
+          name: serverGroup.name || presetKey,
+          companies: serverGroup.companies || [],
+          categories: serverGroup.categories || ['marketing', 'docs', 'rss', 'social'],
+          urls: {}
+        };
+        setCompetitorGroups(prev => [...prev, group]);
+        toast({ title: `Loaded ${group.name} from server` });
+        return;
+      } catch (error) {
+        console.warn('Failed to load server preset group, falling back to local:', error);
+      }
+    }
+    
+    // Fallback to local presets
     const preset = PRESET_GROUPINGS[presetKey as keyof typeof PRESET_GROUPINGS];
     if (!preset) return;
     
@@ -144,6 +196,32 @@ export default function ScrapeDashboard() {
     let totalScraped = 0;
     
     try {
+      // Try backend scraping first if available
+      if (backendStatus === 'connected') {
+        try {
+          const backendRequest = {
+            group_name: group.name,
+            companies: group.companies.map(company => ({
+              name: company,
+              website: group.urls[company] || urls.marketing, // Use group URL or fallback
+              categories: group.categories
+            })),
+            categories: group.categories
+          };
+          
+          const backendResult = await APIService.scrapeGroup(backendRequest);
+          if (backendResult.success) {
+            toast({ title: `Backend scraping complete: ${backendResult.message}` });
+            // TODO: Process backend results and add to store
+            setIsLoading(false);
+            return;
+          }
+        } catch (error) {
+          console.warn('Backend scraping failed, falling back to frontend:', error);
+        }
+      }
+      
+      // Fallback to frontend scraping
       for (const company of group.companies) {
         // Use group URLs if available, otherwise use default URLs
         const companyUrls = Object.keys(group.urls).length > 0 ? group.urls : urls;
@@ -580,13 +658,97 @@ export default function ScrapeDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Backend Status */}
+              <div className="space-y-4">
+                <h3 className="font-semibold">Backend Status</h3>
+                <div className="flex items-center gap-2 p-3 border rounded-lg">
+                  {backendStatus === 'connected' && (
+                    <>
+                      <Wifi className="h-6 w-6 text-green-500" />
+                      <span className="text-sm font-medium text-green-600">Connected to InsightForge API</span>
+                    </>
+                  )}
+                  {backendStatus === 'disconnected' && (
+                    <>
+                      <WifiOff className="h-6 w-6 text-red-500" />
+                      <span className="text-sm font-medium text-red-600">Disconnected from InsightForge API</span>
+                    </>
+                  )}
+                  {backendStatus === 'checking' && (
+                    <>
+                      <Wifi className="h-6 w-6 text-yellow-500 animate-spin" />
+                      <span className="text-sm font-medium text-yellow-600">Checking InsightForge API...</span>
+                    </>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  InsightForge API is required for backend scraping and preset group loading.
+                  Please ensure your API key is set and the service is running.
+                </p>
+              </div>
+
               {/* Preset Groups */}
               <div className="space-y-4">
-                <h3 className="font-semibold">Preset Industry Groups</h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">Preset Industry Groups</h3>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={checkBackendConnection}
+                    disabled={backendStatus === 'checking'}
+                  >
+                    <Server className="h-4 w-4 mr-2" />
+                    {backendStatus === 'checking' ? 'Checking...' : 
+                     backendStatus === 'connected' ? 'Refresh' : 'Reconnect'}
+                  </Button>
+                </div>
+                
+                {/* Backend Status Indicator */}
+                <div className="flex items-center gap-2 p-2 border rounded-lg">
+                  {backendStatus === 'connected' && (
+                    <>
+                      <Wifi className="h-4 w-4 text-green-500" />
+                      <span className="text-sm text-green-600">Backend API Connected</span>
+                    </>
+                  )}
+                  {backendStatus === 'disconnected' && (
+                    <>
+                      <WifiOff className="h-4 w-4 text-red-500" />
+                      <span className="text-sm text-red-600">Backend API Disconnected</span>
+                    </>
+                  )}
+                  {backendStatus === 'checking' && (
+                    <>
+                      <Wifi className="h-4 w-4 text-yellow-500 animate-spin" />
+                      <span className="text-sm text-yellow-600">Checking Backend API...</span>
+                    </>
+                  )}
+                </div>
+
+                {/* Server Preset Groups (when available) */}
+                {backendStatus === 'connected' && Object.keys(serverPresetGroups).length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium text-muted-foreground">Server Groups</h4>
+                    {Object.entries(serverPresetGroups).map(([key, preset]) => (
+                      <Button
+                        key={`server-${key}`}
+                        variant="outline"
+                        className="w-full justify-start"
+                        onClick={() => loadPresetGroup(key)}
+                      >
+                        <Server className="h-4 w-4 mr-2" />
+                        {preset.name} ({preset.company_count} companies)
+                      </Button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Local Preset Groups (fallback) */}
                 <div className="space-y-2">
+                  <h4 className="text-sm font-medium text-muted-foreground">Local Groups</h4>
                   {Object.entries(PRESET_GROUPINGS).map(([key, preset]) => (
                     <Button
-                      key={key}
+                      key={`local-${key}`}
                       variant="outline"
                       className="w-full justify-start"
                       onClick={() => loadPresetGroup(key)}
