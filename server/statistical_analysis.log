@@ -8023,3 +8023,15 @@ NameError: name 'most_recent_file' is not defined
 2025-03-17 12:34:59,424 - INFO: 127.0.0.1 - - [17/Mar/2025 12:34:59] "POST /api/financial-analysis/visual-insights HTTP/1.1" 200 -
 2025-03-17 12:35:03,875 - INFO: Using most recent file: /Users/willolson/Development/StockMktAI/server/financial_metrics.json
 2025-03-17 12:35:03,909 - INFO: 127.0.0.1 - - [17/Mar/2025 12:35:03] "POST /api/statistical-analysis/advanced-metrics HTTP/1.1" 200 -
+2025-08-12 09:18:41,107 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-08-12 09:18:41,107 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-12 09:18:41,108 - INFO:  * Restarting with stat
+2025-08-12 09:18:41,464 - WARNING:  * Debugger is active!
+2025-08-12 09:18:41,474 - INFO:  * Debugger PIN: 121-403-977
+2025-08-12 09:32:50,449 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-08-12 09:32:50,449 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-12 09:32:50,450 - INFO:  * Restarting with stat
+2025-08-12 09:32:50,822 - WARNING:  * Debugger is active!
+2025-08-12 09:32:50,829 - INFO:  * Debugger PIN: 121-403-977
