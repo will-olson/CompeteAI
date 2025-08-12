@@ -627,3 +627,427 @@
 2025-08-11 22:35:49,760 - INFO: 127.0.0.1 - - [11/Aug/2025 22:35:49] "POST /api/scrape/company HTTP/1.1" 200 -
 2025-08-11 22:37:03,917 - INFO: 127.0.0.1 - - [11/Aug/2025 22:37:03] "OPTIONS /api/health HTTP/1.1" 200 -
 2025-08-11 22:37:03,928 - INFO: 127.0.0.1 - - [11/Aug/2025 22:37:03] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:43:45,639 - INFO: 127.0.0.1 - - [11/Aug/2025 22:43:45] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:43:45,662 - INFO: 127.0.0.1 - - [11/Aug/2025 22:43:45] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:04,699 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:04] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:04,702 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:04] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:05,731 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:05] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:05,983 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:05] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:16,135 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:16] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:16,136 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:16] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:19,710 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:19] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:45:20,642 - INFO: 127.0.0.1 - - [11/Aug/2025 22:45:20] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:46:15,127 - INFO: 127.0.0.1 - - [11/Aug/2025 22:46:15] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:46:15,129 - INFO: 127.0.0.1 - - [11/Aug/2025 22:46:15] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:46:55,783 - INFO: 127.0.0.1 - - [11/Aug/2025 22:46:55] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:46:55,787 - INFO: 127.0.0.1 - - [11/Aug/2025 22:46:55] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:46:56,345 - INFO: 127.0.0.1 - - [11/Aug/2025 22:46:56] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:02,536 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:02] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:02,544 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:02] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:14,144 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:14] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:14,147 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:14] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:19,094 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:19] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:27,445 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:27] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:27,447 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:27] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:30,831 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:30] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:31,071 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:31] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:40,523 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:40] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:40,527 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:40] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:43,717 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:43] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:44,095 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:44] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:44,535 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:44] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:49,777 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:49] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:49,780 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:49] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:53,231 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:53] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:55,004 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:55] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:47:55,009 - INFO: 127.0.0.1 - - [11/Aug/2025 22:47:55] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:48:15,232 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:15] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:15,236 - INFO: Scraping docs for Stripe
+2025-08-11 22:48:18,255 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:18] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:18,262 - INFO: Scraping compliance for Stripe
+2025-08-11 22:48:20,264 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:20] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:20,268 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:20] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:20,271 - INFO: Scraping security for Stripe
+2025-08-11 22:48:22,278 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:22] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:22,286 - INFO: Scraping marketing for Plaid
+2025-08-11 22:48:24,789 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:24] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:24,805 - INFO: Scraping api for Plaid
+2025-08-11 22:48:26,811 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:26] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:26,817 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:26] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:26,820 - INFO: Scraping compliance for Plaid
+2025-08-11 22:48:28,827 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:28] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:28,836 - INFO: Scraping marketing for Square
+2025-08-11 22:48:31,831 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:31] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:31,838 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:31] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:31,843 - INFO: Scraping api for Square
+2025-08-11 22:48:33,847 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:33] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:33,850 - INFO: Scraping compliance for Square
+2025-08-11 22:48:35,857 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:35] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:35,862 - INFO: Scraping security for Square
+2025-08-11 22:48:37,867 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:37] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:37,872 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:37] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:37,875 - INFO: Scraping docs for Coinbase
+2025-08-11 22:48:38,048 - ERROR: Error in basic scraping: 403 Client Error: Forbidden for url: https://www.coinbase.com/docs
+2025-08-11 22:48:40,052 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:40] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:40,058 - INFO: Scraping api for Coinbase
+2025-08-11 22:48:42,060 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:42] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:42,067 - INFO: Scraping compliance for Coinbase
+2025-08-11 22:48:44,074 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:44] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:44,080 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:44] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:44,085 - INFO: Scraping marketing for Robinhood
+2025-08-11 22:48:46,904 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:46] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:46,912 - INFO: Scraping docs for Robinhood
+2025-08-11 22:48:49,202 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:49] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:49,208 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:49] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:49,211 - INFO: Scraping compliance for Robinhood
+2025-08-11 22:48:51,216 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:51] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:51,221 - INFO: Scraping security for Robinhood
+2025-08-11 22:48:53,227 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:53] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:53,232 - INFO: Scraping docs for Chime
+2025-08-11 22:48:53,539 - ERROR: Error in basic scraping: 403 Client Error: Forbidden for url: https://www.chime.com/docs
+2025-08-11 22:48:55,544 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:55,551 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:55] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:55,555 - INFO: Scraping api for Chime
+2025-08-11 22:48:57,557 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:57,562 - INFO: Scraping compliance for Chime
+2025-08-11 22:48:59,564 - INFO: 127.0.0.1 - - [11/Aug/2025 22:48:59] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:48:59,570 - INFO: Scraping security for Chime
+2025-08-11 22:49:01,576 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:01] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:01,582 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:01] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:01,585 - INFO: Scraping marketing for Affirm
+2025-08-11 22:49:03,886 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:03] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:03,893 - INFO: Scraping docs for Affirm
+2025-08-11 22:49:06,235 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:06] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:06,243 - INFO: Scraping api for Affirm
+2025-08-11 22:49:08,249 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:08] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:08,253 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:08] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:08,254 - INFO: Scraping security for Affirm
+2025-08-11 22:49:10,262 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:10] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:10,271 - INFO: Scraping marketing for Klarna
+2025-08-11 22:49:13,138 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:13] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:13,145 - INFO: Scraping docs for Klarna
+2025-08-11 22:49:13,911 - ERROR: Error in basic scraping: 404 Client Error: Not Found for url: https://www.klarna.com/us/docs/?grs=%2Fdocs%2F&grr=empty
+2025-08-11 22:49:15,918 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:15] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:15,923 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:15] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:15,925 - INFO: Scraping api for Klarna
+2025-08-11 22:49:17,929 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:17] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:17,933 - INFO: Scraping compliance for Klarna
+2025-08-11 22:49:19,937 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:19] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:19,946 - INFO: Scraping security for Klarna
+2025-08-11 22:49:21,949 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:21] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 22:49:53,428 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:53] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:49:53,432 - INFO: 127.0.0.1 - - [11/Aug/2025 22:49:53] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:54:06,446 - INFO: 127.0.0.1 - - [11/Aug/2025 22:54:06] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:54:06,450 - INFO: 127.0.0.1 - - [11/Aug/2025 22:54:06] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:54:20,528 - INFO: 127.0.0.1 - - [11/Aug/2025 22:54:20] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:54:20,530 - INFO: 127.0.0.1 - - [11/Aug/2025 22:54:20] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:54:56,214 - INFO: 127.0.0.1 - - [11/Aug/2025 22:54:56] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:54:56,217 - INFO: 127.0.0.1 - - [11/Aug/2025 22:54:56] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 22:58:15,208 - INFO: 127.0.0.1 - - [11/Aug/2025 22:58:15] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 22:58:15,212 - INFO: 127.0.0.1 - - [11/Aug/2025 22:58:15] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:00:31,534 - INFO: 127.0.0.1 - - [11/Aug/2025 23:00:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:00:31,538 - INFO: 127.0.0.1 - - [11/Aug/2025 23:00:31] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:00:32,854 - INFO: 127.0.0.1 - - [11/Aug/2025 23:00:32] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:01:51,086 - INFO: 127.0.0.1 - - [11/Aug/2025 23:01:51] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:01:51,096 - INFO: 127.0.0.1 - - [11/Aug/2025 23:01:51] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:01:51,770 - INFO: 127.0.0.1 - - [11/Aug/2025 23:01:51] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:01:53,526 - INFO: 127.0.0.1 - - [11/Aug/2025 23:01:53] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:02:48,220 - INFO: 127.0.0.1 - - [11/Aug/2025 23:02:48] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:02:48,223 - INFO: 127.0.0.1 - - [11/Aug/2025 23:02:48] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:03:21,604 - INFO: 127.0.0.1 - - [11/Aug/2025 23:03:21] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:03:21,605 - INFO: 127.0.0.1 - - [11/Aug/2025 23:03:21] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:03:32,701 - INFO: 127.0.0.1 - - [11/Aug/2025 23:03:32] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:03:32,704 - INFO: 127.0.0.1 - - [11/Aug/2025 23:03:32] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:05:02,246 - INFO: 127.0.0.1 - - [11/Aug/2025 23:05:02] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:05:02,320 - INFO: 127.0.0.1 - - [11/Aug/2025 23:05:02] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:05:16,686 - INFO: 127.0.0.1 - - [11/Aug/2025 23:05:16] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:05:16,689 - INFO: 127.0.0.1 - - [11/Aug/2025 23:05:16] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:08:25,537 - INFO: 127.0.0.1 - - [11/Aug/2025 23:08:25] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:08:25,544 - INFO: 127.0.0.1 - - [11/Aug/2025 23:08:25] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:17:57,000 - INFO: 127.0.0.1 - - [11/Aug/2025 23:17:57] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:17:57,003 - INFO: 127.0.0.1 - - [11/Aug/2025 23:17:57] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:23:37,741 - INFO: 127.0.0.1 - - [11/Aug/2025 23:23:37] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:23:37,750 - INFO: 127.0.0.1 - - [11/Aug/2025 23:23:37] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:23:41,186 - INFO: 127.0.0.1 - - [11/Aug/2025 23:23:41] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:24:33,749 - INFO: 127.0.0.1 - - [11/Aug/2025 23:24:33] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:24:33,752 - INFO: 127.0.0.1 - - [11/Aug/2025 23:24:33] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:24:41,760 - INFO: 127.0.0.1 - - [11/Aug/2025 23:24:41] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:24:41,832 - INFO: 127.0.0.1 - - [11/Aug/2025 23:24:41] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:24:45,821 - INFO: 127.0.0.1 - - [11/Aug/2025 23:24:45] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:24:46,687 - INFO: 127.0.0.1 - - [11/Aug/2025 23:24:46] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:25:37,717 - INFO: 127.0.0.1 - - [11/Aug/2025 23:25:37] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:25:37,720 - INFO: 127.0.0.1 - - [11/Aug/2025 23:25:37] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:25:44,213 - INFO: 127.0.0.1 - - [11/Aug/2025 23:25:44] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:25:44,220 - INFO: 127.0.0.1 - - [11/Aug/2025 23:25:44] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:25:51,676 - INFO: 127.0.0.1 - - [11/Aug/2025 23:25:51] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:25:51,680 - INFO: 127.0.0.1 - - [11/Aug/2025 23:25:51] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:25:52,674 - INFO: 127.0.0.1 - - [11/Aug/2025 23:25:52] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:26:31,660 - INFO: 127.0.0.1 - - [11/Aug/2025 23:26:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:26:31,666 - INFO: 127.0.0.1 - - [11/Aug/2025 23:26:31] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:26:41,642 - INFO: 127.0.0.1 - - [11/Aug/2025 23:26:41] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:26:41,644 - INFO: 127.0.0.1 - - [11/Aug/2025 23:26:41] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:26:45,668 - INFO: 127.0.0.1 - - [11/Aug/2025 23:26:45] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:03,676 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:03] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:03,677 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:03] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:09,776 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:09] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:09,779 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:09] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:13,288 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:13] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:15,678 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:15] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:15,679 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:15] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:38,535 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:38] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:38,538 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:38] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:27:40,488 - INFO: 127.0.0.1 - - [11/Aug/2025 23:27:40] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:28:16,656 - INFO: 127.0.0.1 - - [11/Aug/2025 23:28:16] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:28:16,660 - INFO: 127.0.0.1 - - [11/Aug/2025 23:28:16] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:28:21,665 - INFO: 127.0.0.1 - - [11/Aug/2025 23:28:21] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:28:21,668 - INFO: 127.0.0.1 - - [11/Aug/2025 23:28:21] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:11,724 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:11] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:11,728 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:11] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:43,931 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:43] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:43,935 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:43] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:49,736 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:49] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:49,743 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:49] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:51,868 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:51] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:29:52,934 - INFO: 127.0.0.1 - - [11/Aug/2025 23:29:52] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:02,689 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:02] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:02,692 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:02] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:09,708 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:09] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:09,712 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:09] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:17,681 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:17] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:17,688 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:17] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:31,659 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:31,667 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:31] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:41,664 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:41] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:41,669 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:41] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:49,669 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:49] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:30:49,671 - INFO: 127.0.0.1 - - [11/Aug/2025 23:30:49] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:31:22,713 - INFO: 127.0.0.1 - - [11/Aug/2025 23:31:22] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:31:22,715 - INFO: 127.0.0.1 - - [11/Aug/2025 23:31:22] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:33:16,991 - INFO: 127.0.0.1 - - [11/Aug/2025 23:33:16] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:33:17,005 - INFO: 127.0.0.1 - - [11/Aug/2025 23:33:17] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:33:17,495 - INFO: 127.0.0.1 - - [11/Aug/2025 23:33:17] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:52:53,785 - INFO: 127.0.0.1 - - [11/Aug/2025 23:52:53] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:52:53,793 - INFO: 127.0.0.1 - - [11/Aug/2025 23:52:53] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:55:21,200 - INFO: 127.0.0.1 - - [11/Aug/2025 23:55:21] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:55:21,208 - INFO: 127.0.0.1 - - [11/Aug/2025 23:55:21] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:55:24,868 - INFO: 127.0.0.1 - - [11/Aug/2025 23:55:24] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:56:40,074 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:40] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:40,084 - INFO: Scraping api for Stripe
+2025-08-11 23:56:42,093 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:42] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:42,101 - INFO: Scraping compliance for Stripe
+2025-08-11 23:56:44,106 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:44] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:44,112 - INFO: Scraping security for Stripe
+2025-08-11 23:56:46,117 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:46] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:46,122 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:46] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:46,124 - INFO: Scraping pricing for Stripe
+2025-08-11 23:56:48,229 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:48] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:48,285 - INFO: Scraping enterprise for Stripe
+2025-08-11 23:56:50,299 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:50] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:50,315 - INFO: Scraping partners for Stripe
+2025-08-11 23:56:52,320 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:52] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:52,327 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:52] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:52,334 - INFO: Scraping developers for Stripe
+2025-08-11 23:56:54,341 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:54] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:54,349 - INFO: Scraping support for Stripe
+2025-08-11 23:56:56,353 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:56] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:56,357 - INFO: Scraping resources for Stripe
+2025-08-11 23:56:58,359 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:58] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:58,367 - INFO: 127.0.0.1 - - [11/Aug/2025 23:56:58] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:56:58,371 - INFO: Scraping marketing for Plaid
+2025-08-11 23:57:01,289 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:01] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:01,296 - INFO: Scraping api for Plaid
+2025-08-11 23:57:03,310 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:03] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:03,318 - INFO: Scraping compliance for Plaid
+2025-08-11 23:57:05,325 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:05] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:05,329 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:05] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:05,331 - INFO: Scraping security for Plaid
+2025-08-11 23:57:07,336 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:07] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:07,344 - INFO: Scraping pricing for Plaid
+2025-08-11 23:57:09,348 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:09] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:09,356 - INFO: Scraping enterprise for Plaid
+2025-08-11 23:57:11,363 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:11] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:11,368 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:11] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:11,371 - INFO: Scraping partners for Plaid
+2025-08-11 23:57:13,378 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:13] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:13,386 - INFO: Scraping developers for Plaid
+2025-08-11 23:57:15,393 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:15] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:15,400 - INFO: Scraping support for Plaid
+2025-08-11 23:57:17,408 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:17] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:17,416 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:17] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:17,420 - INFO: Scraping resources for Plaid
+2025-08-11 23:57:19,425 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:19] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:19,434 - INFO: Scraping marketing for Square
+2025-08-11 23:57:29,494 - ERROR: Error in basic scraping: HTTPSConnectionPool(host='www.square.com', port=443): Read timed out. (read timeout=10)
+2025-08-11 23:57:31,498 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:31] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:31,502 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:31] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:31,505 - INFO: Scraping docs for Square
+2025-08-11 23:57:41,774 - ERROR: Error in basic scraping: HTTPSConnectionPool(host='squareup.com', port=443): Read timed out. (read timeout=10)
+2025-08-11 23:57:43,782 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:43] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:43,790 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:43] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:43,794 - INFO: Scraping api for Square
+2025-08-11 23:57:45,800 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:45] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:45,805 - INFO: Scraping compliance for Square
+2025-08-11 23:57:47,810 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:47] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:47,833 - INFO: Scraping security for Square
+2025-08-11 23:57:49,842 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:49] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:49,862 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:49] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:49,864 - INFO: Scraping pricing for Square
+2025-08-11 23:57:51,871 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:51] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:51,879 - INFO: Scraping enterprise for Square
+2025-08-11 23:57:53,886 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:53] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:53,894 - INFO: Scraping partners for Square
+2025-08-11 23:57:55,903 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:55,927 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:55] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:55,930 - INFO: Scraping developers for Square
+2025-08-11 23:57:57,932 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:57,961 - INFO: Scraping support for Square
+2025-08-11 23:57:59,968 - INFO: 127.0.0.1 - - [11/Aug/2025 23:57:59] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:57:59,977 - INFO: Scraping resources for Square
+2025-08-11 23:58:01,983 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:01] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:01,992 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:01] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:01,996 - INFO: Scraping marketing for Coinbase
+2025-08-11 23:58:02,150 - ERROR: Error in basic scraping: 403 Client Error: Forbidden for url: https://www.coinbase.com/
+2025-08-11 23:58:04,156 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:04] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:04,163 - INFO: Scraping docs for Coinbase
+2025-08-11 23:58:04,263 - ERROR: Error in basic scraping: 403 Client Error: Forbidden for url: https://www.coinbase.com/docs
+2025-08-11 23:58:06,270 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:06] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:06,278 - INFO: Scraping api for Coinbase
+2025-08-11 23:58:08,285 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:08] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:08,294 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:08] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:08,298 - INFO: Scraping compliance for Coinbase
+2025-08-11 23:58:10,303 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:10] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:10,310 - INFO: Scraping security for Coinbase
+2025-08-11 23:58:12,317 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:12] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:12,326 - INFO: Scraping pricing for Coinbase
+2025-08-11 23:58:14,330 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:14] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:14,339 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:14] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:14,343 - INFO: Scraping enterprise for Coinbase
+2025-08-11 23:58:16,350 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:16] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:16,359 - INFO: Scraping partners for Coinbase
+2025-08-11 23:58:18,364 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:18] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:18,369 - INFO: Scraping developers for Coinbase
+2025-08-11 23:58:19,652 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:19] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-08-11 23:58:19,655 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:19] "GET /api/health HTTP/1.1" 200 -
+2025-08-11 23:58:20,374 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:20] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:20,381 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:20] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:20,383 - INFO: Scraping support for Coinbase
+2025-08-11 23:58:22,388 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:22] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:22,395 - INFO: Scraping resources for Coinbase
+2025-08-11 23:58:24,402 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:24] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:24,410 - INFO: Scraping marketing for Robinhood
+2025-08-11 23:58:27,097 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:27] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:27,102 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:27] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:27,106 - INFO: Scraping docs for Robinhood
+2025-08-11 23:58:29,549 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:29] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:29,554 - INFO: Scraping api for Robinhood
+2025-08-11 23:58:31,560 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:31] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:31,569 - INFO: Scraping compliance for Robinhood
+2025-08-11 23:58:33,571 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:33] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:33,578 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:33] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:33,581 - INFO: Scraping security for Robinhood
+2025-08-11 23:58:35,583 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:35] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:35,587 - INFO: Scraping enterprise for Robinhood
+2025-08-11 23:58:37,594 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:37] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:37,602 - INFO: Scraping developers for Robinhood
+2025-08-11 23:58:39,607 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:39] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:39,612 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:39] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:39,615 - INFO: Scraping support for Robinhood
+2025-08-11 23:58:41,619 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:41] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:41,623 - INFO: Scraping resources for Robinhood
+2025-08-11 23:58:43,628 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:43] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:43,636 - INFO: Scraping marketing for Chime
+2025-08-11 23:58:53,690 - ERROR: Error in basic scraping: HTTPSConnectionPool(host='www.chime.com', port=443): Read timed out. (read timeout=10)
+2025-08-11 23:58:55,695 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:55,782 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:55] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:55,784 - INFO: Scraping docs for Chime
+2025-08-11 23:58:56,098 - ERROR: Error in basic scraping: 403 Client Error: Forbidden for url: https://www.chime.com/docs
+2025-08-11 23:58:58,105 - INFO: 127.0.0.1 - - [11/Aug/2025 23:58:58] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:58:58,112 - INFO: Scraping api for Chime
+2025-08-11 23:59:00,119 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:00] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:00,127 - INFO: Scraping security for Chime
+2025-08-11 23:59:02,133 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:02] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:02,138 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:02] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:02,141 - INFO: Scraping pricing for Chime
+2025-08-11 23:59:04,148 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:04] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:04,155 - INFO: Scraping enterprise for Chime
+2025-08-11 23:59:06,159 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:06] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:06,163 - INFO: Scraping resources for Chime
+2025-08-11 23:59:08,165 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:08] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:08,167 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:08] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:08,168 - INFO: Scraping docs for Affirm
+2025-08-11 23:59:10,625 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:10] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:10,631 - INFO: Scraping api for Affirm
+2025-08-11 23:59:12,639 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:12] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:12,656 - INFO: Scraping security for Affirm
+2025-08-11 23:59:14,661 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:14] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:14,672 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:14] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:14,673 - INFO: Scraping pricing for Affirm
+2025-08-11 23:59:16,680 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:16] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:16,686 - INFO: Scraping partners for Affirm
+2025-08-11 23:59:18,688 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:18] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:18,693 - INFO: Scraping developers for Affirm
+2025-08-11 23:59:20,695 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:20] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:20,701 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:20] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:20,704 - INFO: Scraping support for Affirm
+2025-08-11 23:59:22,706 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:22] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:22,712 - INFO: Scraping resources for Affirm
+2025-08-11 23:59:24,718 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:24] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:24,721 - INFO: Scraping marketing for Klarna
+2025-08-11 23:59:27,473 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:27] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:27,479 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:27] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:27,482 - INFO: Scraping docs for Klarna
+2025-08-11 23:59:28,329 - ERROR: Error in basic scraping: 404 Client Error: Not Found for url: https://www.klarna.com/us/docs/?grs=%2Fdocs%2F&grr=empty
+2025-08-11 23:59:30,335 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:30] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:30,340 - INFO: Scraping api for Klarna
+2025-08-11 23:59:32,346 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:32] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:32,351 - INFO: Scraping compliance for Klarna
+2025-08-11 23:59:34,353 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:34] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:34,359 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:34] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:34,361 - INFO: Scraping pricing for Klarna
+2025-08-11 23:59:36,365 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:36] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:36,370 - INFO: Scraping enterprise for Klarna
+2025-08-11 23:59:38,375 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:38] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:38,379 - INFO: Scraping partners for Klarna
+2025-08-11 23:59:40,381 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:40] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:40,385 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:40] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:40,387 - INFO: Scraping resources for Klarna
+2025-08-11 23:59:42,394 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:42] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:42,398 - INFO: Scraping marketing for PayPal
+2025-08-11 23:59:45,370 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:45] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:45,385 - INFO: Scraping api for PayPal
+2025-08-11 23:59:47,391 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:47] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:47,398 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:47] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:47,401 - INFO: Scraping compliance for PayPal
+2025-08-11 23:59:49,403 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:49] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:49,412 - INFO: Scraping security for PayPal
+2025-08-11 23:59:51,421 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:51] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:51,437 - INFO: Scraping pricing for PayPal
+2025-08-11 23:59:53,443 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:53] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:53,449 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:53] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:53,451 - INFO: Scraping enterprise for PayPal
+2025-08-11 23:59:55,456 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:55,462 - INFO: Scraping partners for PayPal
+2025-08-11 23:59:57,467 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:57,471 - INFO: Scraping developers for PayPal
+2025-08-11 23:59:59,477 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:59] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:59,489 - INFO: 127.0.0.1 - - [11/Aug/2025 23:59:59] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-11 23:59:59,495 - INFO: Scraping support for PayPal
+2025-08-12 00:00:01,504 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:01] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:01,531 - INFO: Scraping resources for PayPal
+2025-08-12 00:00:03,593 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:03] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:03,599 - INFO: Scraping marketing for Venmo
+2025-08-12 00:00:06,448 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:06] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:06,459 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:06] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:06,460 - INFO: Scraping docs for Venmo
+2025-08-12 00:00:09,718 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:09] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:09,725 - INFO: Scraping api for Venmo
+2025-08-12 00:00:11,731 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:11] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:11,737 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:11] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:11,741 - INFO: Scraping compliance for Venmo
+2025-08-12 00:00:13,745 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:13] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:13,753 - INFO: Scraping security for Venmo
+2025-08-12 00:00:15,755 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:15] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:15,764 - INFO: Scraping pricing for Venmo
+2025-08-12 00:00:17,770 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:17] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:17,774 - INFO: 127.0.0.1 - - [12/Aug/2025 00:00:17] "OPTIONS /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 00:00:17,777 - INFO: Scraping enterprise for Venmo

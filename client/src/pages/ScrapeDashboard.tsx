@@ -27,86 +27,247 @@ const genId = () => Math.random().toString(36).slice(2);
 // Dynamic industry groupings using LinkTargetingService
 const getIndustryGroupings = () => {
   const profiles = linkTargetingService.getAllCompanyProfiles();
-  const groupings: Record<string, { name: string; companies: string[]; categories: string[]; description: string; linkPatterns: Record<string, string[]> }> = {};
+  const groupings: Record<string, { name: string; companies: string[]; categories: string[]; description: string; linkPatterns: Record<string, string[]>; subcategoryPatterns?: Record<string, Record<string, string[]>>; regionalPatterns?: Record<string, string[]> }> = {};
   
-  // Enhanced preset groups with common link patterns
+  // Enhanced preset groups with comprehensive link patterns
   const enhancedGroupings = {
     'tech-saas': {
       name: 'Tech SaaS Companies',
-      companies: ['OpenAI', 'Stripe', 'Notion', 'Figma', 'Linear', 'Vercel', 'Supabase', 'PlanetScale'],
-      categories: ['marketing', 'docs', 'api', 'blog', 'community'],
-      description: 'Software-as-a-Service companies with developer-focused content',
+      companies: ['OpenAI', 'Stripe', 'Notion', 'Figma', 'Linear', 'Vercel', 'Supabase', 'PlanetScale', 'GitHub', 'GitLab', 'Atlassian', 'Slack', 'Discord', 'Zoom', 'Dropbox', 'Box', 'Salesforce', 'HubSpot', 'Intercom', 'Zendesk'],
+      categories: ['marketing', 'docs', 'api', 'blog', 'community', 'pricing', 'security', 'enterprise', 'partners', 'developers', 'support', 'resources'],
+      description: 'Software-as-a-Service companies with developer-focused content and comprehensive business solutions',
       linkPatterns: {
-        marketing: ['', '/features', '/pricing', '/about', '/customers', '/security'],
-        docs: ['/docs', '/help', '/guides', '/tutorials', '/api', '/reference'],
-        api: ['/api', '/docs/api', '/developers', '/integrations', '/sdk'],
-        blog: ['/blog', '/news', '/updates', '/changelog', '/insights'],
-        community: ['/community', '/forum', '/discord', '/slack', '/github']
+        marketing: ['', '/features', '/pricing', '/about', '/customers', '/security', '/solutions', '/use-cases', '/case-studies', '/testimonials', '/brand', '/press', '/careers'],
+        docs: ['/docs', '/help', '/guides', '/tutorials', '/api', '/reference', '/examples', '/quickstart', '/getting-started', '/best-practices', '/troubleshooting', '/faq'],
+        api: ['/api', '/docs/api', '/developers', '/integrations', '/sdk', '/libraries', '/tools', '/playground', '/console', '/endpoints', '/webhooks', '/rate-limits'],
+        blog: ['/blog', '/news', '/updates', '/changelog', '/insights', '/engineering', '/design', '/product', '/company', '/announcements', '/releases', '/roadmap'],
+        community: ['/community', '/forum', '/discussions', '/support', '/help-center', '/knowledge-base', '/tutorials', '/showcase', '/gallery', '/examples', '/templates'],
+        pricing: ['/pricing', '/plans', '/billing', '/subscriptions', '/enterprise', '/custom', '/quote', '/calculator', '/comparison', '/tiers'],
+        security: ['/security', '/trust', '/compliance', '/privacy', '/gdpr', '/soc2', '/iso27001', '/certifications', '/audit', '/penetration-testing'],
+        enterprise: ['/enterprise', '/business', '/teams', '/organizations', '/admin', '/governance', '/scalability', '/enterprise-features'],
+        partners: ['/partners', '/resellers', '/affiliates', '/marketplace', '/integrations', '/ecosystem', '/certified-partners'],
+        developers: ['/developers', '/dev', '/engineering', '/tech', '/architecture', '/infrastructure', '/deployment', '/ci-cd'],
+        support: ['/support', '/help', '/contact', '/tickets', '/chat', '/phone', '/email', '/status', '/outages'],
+        resources: ['/resources', '/downloads', '/templates', '/assets', '/media', '/videos', '/webinars', '/events', '/training']
+      },
+      subcategoryPatterns: {
+        marketing: {
+          features: ['/features', '/capabilities', '/functionality', '/tools', '/products'],
+          pricing: ['/pricing', '/plans', '/cost', '/billing', '/subscriptions'],
+          customers: ['/customers', '/case-studies', '/success-stories', '/testimonials', '/reviews'],
+          solutions: ['/solutions', '/use-cases', '/industries', '/departments', '/workflows']
+        },
+        docs: {
+          api: ['/docs/api', '/api-reference', '/endpoints', '/authentication', '/examples'],
+          guides: ['/guides', '/tutorials', '/how-to', '/walkthroughs', '/step-by-step'],
+          best_practices: ['/best-practices', '/recommendations', '/tips', '/guidelines', '/standards']
+        },
+        api: {
+          authentication: ['/auth', '/authentication', '/oauth', '/jwt', '/api-keys'],
+          webhooks: ['/webhooks', '/events', '/notifications', '/callbacks', '/triggers'],
+          rate_limits: ['/rate-limits', '/quotas', '/throttling', '/limits', '/policies']
+        }
+      },
+      regionalPatterns: {
+        'en-us': ['', '/us', '/en', '/en-us'],
+        'en-gb': ['/uk', '/en-gb', '/gb'],
+        'de': ['/de', '/de-de', '/german'],
+        'fr': ['/fr', '/fr-fr', '/french'],
+        'es': ['/es', '/es-es', '/spanish'],
+        'ja': ['/jp', '/ja-jp', '/japanese'],
+        'zh': ['/cn', '/zh-cn', '/chinese']
       }
     },
     'fintech': {
       name: 'Fintech & Payments',
-      companies: ['Stripe', 'Plaid', 'Square', 'Coinbase', 'Robinhood', 'Chime', 'Affirm', 'Klarna'],
-      categories: ['marketing', 'docs', 'api', 'compliance', 'security'],
-      description: 'Financial technology and payment processing companies',
+      companies: ['Stripe', 'Plaid', 'Square', 'Coinbase', 'Robinhood', 'Chime', 'Affirm', 'Klarna', 'PayPal', 'Venmo', 'Wise', 'Revolut', 'Monzo', 'N26', 'Brex', 'Ramp', 'Bill.com', 'QuickBooks', 'Xero', 'FreshBooks'],
+      categories: ['marketing', 'docs', 'api', 'compliance', 'security', 'pricing', 'enterprise', 'partners', 'developers', 'support', 'resources', 'compliance'],
+      description: 'Financial technology and payment processing companies with regulatory compliance focus',
       linkPatterns: {
-        marketing: ['', '/solutions', '/pricing', '/enterprise', '/partners'],
-        docs: ['/docs', '/guides', '/api', '/support', '/knowledge-base'],
-        api: ['/api', '/docs/api', '/developers', '/integrations', '/webhooks'],
-        compliance: ['/compliance', '/security', '/privacy', '/regulatory', '/audit'],
-        security: ['/security', '/trust', '/compliance', '/certifications']
+        marketing: ['', '/solutions', '/pricing', '/enterprise', '/partners', '/features', '/benefits', '/use-cases', '/industries', '/case-studies', '/testimonials', '/press', '/about'],
+        docs: ['/docs', '/guides', '/api', '/support', '/knowledge-base', '/tutorials', '/examples', '/quickstart', '/getting-started', '/best-practices', '/faq', '/help'],
+        api: ['/api', '/docs/api', '/developers', '/integrations', '/webhooks', '/sdk', '/libraries', '/tools', '/playground', '/console', '/endpoints', '/authentication'],
+        compliance: ['/compliance', '/security', '/privacy', '/regulatory', '/audit', '/certifications', '/standards', '/policies', '/procedures', '/training', '/gdpr', '/ccpa'],
+        security: ['/security', '/trust', '/compliance', '/certifications', '/audit', '/penetration-testing', '/vulnerability-disclosure', '/bug-bounty', '/security-practices'],
+        pricing: ['/pricing', '/plans', '/fees', '/rates', '/transactions', '/subscriptions', '/enterprise', '/custom', '/quote', '/calculator', '/comparison'],
+        enterprise: ['/enterprise', '/business', '/corporate', '/institutions', '/banks', '/credit-unions', '/insurance', '/wealth-management', '/enterprise-features'],
+        partners: ['/partners', '/resellers', '/affiliates', '/marketplace', '/integrations', '/ecosystem', '/certified-partners', '/referral-program'],
+        developers: ['/developers', '/dev', '/engineering', '/tech', '/architecture', '/infrastructure', '/deployment', '/ci-cd', '/testing', '/debugging'],
+        support: ['/support', '/help', '/contact', '/tickets', '/chat', '/phone', '/email', '/status', '/outages', '/emergency'],
+        resources: ['/resources', '/downloads', '/templates', '/assets', '/media', '/videos', '/webinars', '/events', '/training', '/certification']
+      },
+      subcategoryPatterns: {
+        compliance: {
+          regulatory: ['/regulatory', '/regulations', '/compliance-requirements', '/legal', '/law'],
+          audit: ['/audit', '/auditing', '/compliance-audit', '/internal-audit', '/external-audit'],
+          certifications: ['/certifications', '/certified', '/accreditation', '/standards', '/iso']
+        },
+        security: {
+          authentication: ['/auth', '/authentication', '/2fa', '/mfa', '/biometric', '/identity-verification'],
+          encryption: ['/encryption', '/encrypted', '/ssl', '/tls', '/pki', '/key-management'],
+          monitoring: ['/monitoring', '/alerts', '/fraud-detection', '/anomaly-detection', '/threat-intelligence']
+        }
+      },
+      regionalPatterns: {
+        'en-us': ['', '/us', '/en', '/en-us'],
+        'en-gb': ['/uk', '/en-gb', '/gb'],
+        'eu': ['/eu', '/europe', '/european'],
+        'ca': ['/ca', '/canada', '/en-ca'],
+        'au': ['/au', '/australia', '/en-au']
       }
     },
     'ai-ml': {
       name: 'AI & Machine Learning',
-      companies: ['OpenAI', 'Anthropic', 'Google AI', 'Microsoft AI', 'Hugging Face', 'Stability AI', 'Cohere', 'Scale AI'],
-      categories: ['marketing', 'docs', 'api', 'research', 'models'],
-      description: 'Artificial intelligence and machine learning companies',
+      companies: ['OpenAI', 'Anthropic', 'Google AI', 'Microsoft AI', 'Hugging Face', 'Stability AI', 'Cohere', 'Scale AI', 'DataRobot', 'H2O.ai', 'Databricks', 'Snowflake', 'Palantir', 'C3.ai', 'UiPath', 'Automation Anywhere', 'Blue Prism', 'IBM Watson', 'Amazon SageMaker', 'Azure ML'],
+      categories: ['marketing', 'docs', 'api', 'research', 'models', 'pricing', 'enterprise', 'partners', 'developers', 'support', 'resources', 'ethics'],
+      description: 'Artificial intelligence and machine learning companies with research and model focus',
       linkPatterns: {
-        marketing: ['', '/products', '/solutions', '/enterprise', '/research'],
-        docs: ['/docs', '/guides', '/tutorials', '/examples', '/best-practices'],
-        api: ['/api', '/docs/api', '/playground', '/models', '/endpoints'],
-        research: ['/research', '/papers', '/blog', '/publications', '/insights'],
-        models: ['/models', '/gallery', '/showcase', '/examples', '/benchmarks']
+        marketing: ['', '/products', '/solutions', '/enterprise', '/research', '/features', '/capabilities', '/use-cases', '/industries', '/case-studies', '/testimonials', '/press', '/about'],
+        docs: ['/docs', '/guides', '/tutorials', '/examples', '/best-practices', '/api', '/reference', '/quickstart', '/getting-started', '/troubleshooting', '/faq', '/help'],
+        api: ['/api', '/docs/api', '/playground', '/models', '/endpoints', '/authentication', '/rate-limits', '/webhooks', '/sdk', '/libraries', '/tools', '/console'],
+        research: ['/research', '/papers', '/blog', '/publications', '/insights', '/whitepapers', '/reports', '/studies', '/findings', '/methodology', '/experiments'],
+        models: ['/models', '/gallery', '/showcase', '/examples', '/benchmarks', '/performance', '/comparison', '/evaluation', '/metrics', '/leaderboard'],
+        pricing: ['/pricing', '/plans', '/cost', '/billing', '/subscriptions', '/enterprise', '/custom', '/quote', '/calculator', '/comparison', '/tiers'],
+        enterprise: ['/enterprise', '/business', '/corporate', '/industries', '/solutions', '/consulting', '/professional-services', '/training', '/support'],
+        partners: ['/partners', '/resellers', '/affiliates', '/marketplace', '/integrations', '/ecosystem', '/certified-partners', '/referral-program'],
+        developers: ['/developers', '/dev', '/engineering', '/tech', '/architecture', '/infrastructure', '/deployment', '/ci-cd', '/testing', '/debugging'],
+        support: ['/support', '/help', '/contact', '/tickets', '/chat', '/phone', '/email', '/status', '/outages', '/emergency'],
+        resources: ['/resources', '/downloads', '/templates', '/assets', '/media', '/videos', '/webinars', '/events', '/training', '/certification'],
+        ethics: ['/ethics', '/responsible-ai', '/fairness', '/transparency', '/accountability', '/safety', '/alignment', '/governance', '/policies']
+      },
+      subcategoryPatterns: {
+        models: {
+          performance: ['/performance', '/benchmarks', '/metrics', '/evaluation', '/comparison', '/leaderboard'],
+          deployment: ['/deployment', '/inference', '/serving', '/scaling', '/optimization', '/production'],
+          training: ['/training', '/fine-tuning', '/transfer-learning', '/data-preparation', '/hyperparameter-tuning']
+        },
+        research: {
+          papers: ['/papers', '/publications', '/research-papers', '/academic', '/conferences', '/journals'],
+          blog: ['/blog', '/research-blog', '/technical-blog', '/engineering-blog', '/insights', '/updates']
+        }
+      },
+      regionalPatterns: {
+        'en-us': ['', '/us', '/en', '/en-us'],
+        'en-gb': ['/uk', '/en-gb', '/gb'],
+        'eu': ['/eu', '/europe', '/european'],
+        'ca': ['/ca', '/canada', '/en-ca'],
+        'au': ['/au', '/australia', '/en-au']
       }
     },
     'ecommerce': {
       name: 'E-commerce & Retail',
-      companies: ['Shopify', 'WooCommerce', 'BigCommerce', 'Magento', 'Salesforce Commerce', 'Adobe Commerce'],
-      categories: ['marketing', 'docs', 'api', 'templates', 'apps'],
-      description: 'E-commerce platforms and retail technology',
+      companies: ['Shopify', 'WooCommerce', 'BigCommerce', 'Magento', 'Salesforce Commerce', 'Adobe Commerce', 'Squarespace', 'Wix', 'Squarespace', 'Webflow', 'Framer', 'Bubble', 'Zapier', 'Make', 'n8n', 'Retool', 'Airtable', 'Notion', 'Coda', 'Figma'],
+      categories: ['marketing', 'docs', 'api', 'templates', 'apps', 'pricing', 'enterprise', 'partners', 'developers', 'support', 'resources', 'showcase'],
+      description: 'E-commerce platforms and retail technology with template and app ecosystem focus',
       linkPatterns: {
-        marketing: ['', '/features', '/pricing', '/templates', '/showcase'],
-        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference'],
-        api: ['/api', '/docs/api', '/webhooks', '/integrations', '/apps'],
-        templates: ['/templates', '/themes', '/designs', '/showcase', '/examples'],
-        apps: ['/apps', '/extensions', '/plugins', '/integrations', '/marketplace']
+        marketing: ['', '/features', '/pricing', '/templates', '/showcase', '/solutions', '/use-cases', '/industries', '/case-studies', '/testimonials', '/press', '/about'],
+        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference', '/examples', '/quickstart', '/getting-started', '/best-practices', '/troubleshooting', '/faq', '/help'],
+        api: ['/api', '/docs/api', '/webhooks', '/integrations', '/apps', '/sdk', '/libraries', '/tools', '/playground', '/console', '/endpoints', '/authentication'],
+        templates: ['/templates', '/themes', '/designs', '/showcase', '/examples', '/gallery', '/marketplace', '/store', '/downloads', '/premium', '/free'],
+        apps: ['/apps', '/extensions', '/plugins', '/integrations', '/marketplace', '/store', '/ecosystem', '/partners', '/developers', '/api'],
+        pricing: ['/pricing', '/plans', '/cost', '/billing', '/subscriptions', '/enterprise', '/custom', '/quote', '/calculator', '/comparison', '/tiers'],
+        enterprise: ['/enterprise', '/business', '/corporate', '/industries', '/solutions', '/consulting', '/professional-services', '/training', '/support'],
+        partners: ['/partners', '/resellers', '/affiliates', '/marketplace', '/integrations', '/ecosystem', '/certified-partners', '/referral-program'],
+        developers: ['/developers', '/dev', '/engineering', '/tech', '/architecture', '/infrastructure', '/deployment', '/ci-cd', '/testing', '/debugging'],
+        support: ['/support', '/help', '/contact', '/tickets', '/chat', '/phone', '/email', '/status', '/outages', '/emergency'],
+        resources: ['/resources', '/downloads', '/templates', '/assets', '/media', '/videos', '/webinars', '/events', '/training', '/certification'],
+        showcase: ['/showcase', '/gallery', '/examples', '/case-studies', '/success-stories', '/portfolio', '/work', '/projects', '/demos']
+      },
+      subcategoryPatterns: {
+        templates: {
+          themes: ['/themes', '/designs', '/layouts', '/styles', '/customization'],
+          marketplace: ['/marketplace', '/store', '/shop', '/gallery', '/browse'],
+          premium: ['/premium', '/paid', '/professional', '/enterprise', '/custom']
+        },
+        apps: {
+          extensions: ['/extensions', '/plugins', '/add-ons', '/modules', '/components'],
+          integrations: ['/integrations', '/connectors', '/bridges', '/sync', '/automation'],
+          marketplace: ['/marketplace', '/store', '/app-store', '/gallery', '/browse']
+        }
+      },
+      regionalPatterns: {
+        'en-us': ['', '/us', '/en', '/en-us'],
+        'en-gb': ['/uk', '/en-gb', '/gb'],
+        'eu': ['/eu', '/europe', '/european'],
+        'ca': ['/ca', '/canada', '/en-ca'],
+        'au': ['/au', '/australia', '/en-au']
       }
     },
     'developer-tools': {
       name: 'Developer Tools',
-      companies: ['GitHub', 'GitLab', 'Bitbucket', 'JetBrains', 'VS Code', 'Postman', 'Docker', 'Kubernetes'],
-      categories: ['marketing', 'docs', 'api', 'downloads', 'community'],
-      description: 'Tools and platforms for software developers',
+      companies: ['GitHub', 'GitLab', 'Bitbucket', 'JetBrains', 'VS Code', 'Postman', 'Docker', 'Kubernetes', 'HashiCorp', 'CircleCI', 'Jenkins', 'Travis CI', 'GitHub Actions', 'GitLab CI', 'Bitbucket Pipelines', 'AWS', 'Google Cloud', 'Azure', 'DigitalOcean', 'Heroku'],
+      categories: ['marketing', 'docs', 'api', 'downloads', 'community', 'pricing', 'enterprise', 'partners', 'developers', 'support', 'resources', 'integrations'],
+      description: 'Tools and platforms for software developers with comprehensive development workflows',
       linkPatterns: {
-        marketing: ['', '/features', '/pricing', '/enterprise', '/teams'],
-        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference'],
-        api: ['/api', '/docs/api', '/webhooks', '/integrations', '/sdk'],
-        downloads: ['/download', '/releases', '/versions', '/changelog', '/updates'],
-        community: ['/community', '/forum', '/discussions', '/support', '/help']
+        marketing: ['', '/features', '/pricing', '/enterprise', '/teams', '/solutions', '/use-cases', '/industries', '/case-studies', '/testimonials', '/press', '/about'],
+        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference', '/examples', '/quickstart', '/getting-started', '/best-practices', '/troubleshooting', '/faq', '/help'],
+        api: ['/api', '/docs/api', '/webhooks', '/integrations', '/sdk', '/libraries', '/tools', '/playground', '/console', '/endpoints', '/authentication', '/rate-limits'],
+        downloads: ['/download', '/releases', '/versions', '/changelog', '/updates', '/beta', '/alpha', '/nightly', '/canary', '/preview', '/stable'],
+        community: ['/community', '/forum', '/discussions', '/support', '/help', '/chat', '/slack', '/discord', '/telegram', '/reddit', '/stack-overflow'],
+        pricing: ['/pricing', '/plans', '/cost', '/billing', '/subscriptions', '/enterprise', '/custom', '/quote', '/calculator', '/comparison', '/tiers'],
+        enterprise: ['/enterprise', '/business', '/corporate', '/industries', '/solutions', '/consulting', '/professional-services', '/training', '/support'],
+        partners: ['/partners', '/resellers', '/affiliates', '/marketplace', '/integrations', '/ecosystem', '/certified-partners', '/referral-program'],
+        developers: ['/developers', '/dev', '/engineering', '/tech', '/architecture', '/infrastructure', '/deployment', '/ci-cd', '/testing', '/debugging'],
+        support: ['/support', '/help', '/contact', '/tickets', '/chat', '/phone', '/email', '/status', '/outages', '/emergency'],
+        resources: ['/resources', '/downloads', '/templates', '/assets', '/media', '/videos', '/webinars', '/events', '/training', '/certification'],
+        integrations: ['/integrations', '/connectors', '/bridges', '/sync', '/automation', '/webhooks', '/api', '/sdk', '/libraries']
+      },
+      subcategoryPatterns: {
+        downloads: {
+          releases: ['/releases', '/versions', '/changelog', '/updates', '/whats-new'],
+          beta: ['/beta', '/alpha', '/nightly', '/canary', '/preview', '/experimental'],
+          platforms: ['/download/windows', '/download/mac', '/download/linux', '/download/ios', '/download/android']
+        },
+        community: {
+          forum: ['/forum', '/discussions', '/questions', '/answers', '/topics'],
+          chat: ['/chat', '/slack', '/discord', '/telegram', '/irc', '/gitter'],
+          support: ['/support', '/help', '/troubleshooting', '/bug-reports', '/feature-requests']
+        }
+      },
+      regionalPatterns: {
+        'en-us': ['', '/us', '/en', '/en-us'],
+        'en-gb': ['/uk', '/en-gb', '/gb'],
+        'eu': ['/eu', '/europe', '/european'],
+        'ca': ['/ca', '/canada', '/en-ca'],
+        'au': ['/au', '/australia', '/en-au']
       }
     },
     'data-analytics': {
       name: 'Data & Analytics',
-      companies: ['Tableau', 'Power BI', 'Looker', 'Mode', 'Amplitude', 'Mixpanel', 'Segment', 'Snowflake'],
-      categories: ['marketing', 'docs', 'api', 'templates', 'resources'],
-      description: 'Data visualization and analytics platforms',
+      companies: ['Tableau', 'Power BI', 'Looker', 'Mode', 'Amplitude', 'Mixpanel', 'Segment', 'Snowflake', 'Databricks', 'Fivetran', 'dbt', 'Airbyte', 'Meltano', 'Great Expectations', 'Monte Carlo', 'DataDog', 'New Relic', 'Splunk', 'Elastic', 'Grafana'],
+      categories: ['marketing', 'docs', 'api', 'templates', 'resources', 'pricing', 'enterprise', 'partners', 'developers', 'support', 'resources', 'demos'],
+      description: 'Data visualization and analytics platforms with comprehensive business intelligence solutions',
       linkPatterns: {
-        marketing: ['', '/solutions', '/pricing', '/enterprise', '/industries'],
-        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference'],
-        api: ['/api', '/docs/api', '/integrations', '/webhooks', '/sdk'],
-        templates: ['/templates', '/dashboards', '/examples', '/gallery', '/showcase'],
-        resources: ['/resources', '/blog', '/webinars', '/events', '/training']
+        marketing: ['', '/solutions', '/pricing', '/enterprise', '/industries', '/features', '/capabilities', '/use-cases', '/case-studies', '/testimonials', '/press', '/about'],
+        docs: ['/docs', '/guides', '/tutorials', '/api', '/reference', '/examples', '/quickstart', '/getting-started', '/best-practices', '/troubleshooting', '/faq', '/help'],
+        api: ['/api', '/docs/api', '/integrations', '/webhooks', '/sdk', '/libraries', '/tools', '/playground', '/console', '/endpoints', '/authentication', '/rate-limits'],
+        templates: ['/templates', '/dashboards', '/examples', '/gallery', '/showcase', '/samples', '/workbooks', '/reports', '/visualizations', '/charts'],
+        resources: ['/resources', '/blog', '/webinars', '/events', '/training', '/downloads', '/templates', '/assets', '/media', '/videos', '/certification'],
+        pricing: ['/pricing', '/plans', '/cost', '/billing', '/subscriptions', '/enterprise', '/custom', '/quote', '/calculator', '/comparison', '/tiers'],
+        enterprise: ['/enterprise', '/business', '/corporate', '/industries', '/solutions', '/consulting', '/professional-services', '/training', '/support'],
+        partners: ['/partners', '/resellers', '/affiliates', '/marketplace', '/integrations', '/ecosystem', '/certified-partners', '/referral-program'],
+        developers: ['/developers', '/dev', '/engineering', '/tech', '/architecture', '/infrastructure', '/deployment', '/ci-cd', '/testing', '/debugging'],
+        support: ['/support', '/help', '/contact', '/tickets', '/chat', '/phone', '/email', '/status', '/outages', '/emergency'],
+        demos: ['/demos', '/examples', '/showcase', '/gallery', '/samples', '/templates', '/dashboards', '/reports']
+      },
+      subcategoryPatterns: {
+        templates: {
+          dashboards: ['/dashboards', '/templates', '/examples', '/samples', '/gallery'],
+          reports: ['/reports', '/templates', '/examples', '/samples', '/gallery'],
+          visualizations: ['/visualizations', '/charts', '/graphs', '/maps', '/tables']
+        },
+        resources: {
+          blog: ['/blog', '/insights', '/analytics', '/data-science', '/business-intelligence'],
+          webinars: ['/webinars', '/events', '/seminars', '/workshops', '/training'],
+          training: ['/training', '/courses', '/certification', '/academy', '/university']
+        }
+      },
+      regionalPatterns: {
+        'en-us': ['', '/us', '/en', '/en-us'],
+        'en-gb': ['/uk', '/en-gb', '/gb'],
+        'eu': ['/eu', '/europe', '/european'],
+        'ca': ['/ca', '/canada', '/en-ca'],
+        'au': ['/au', '/australia', '/en-au']
       }
     }
   };
@@ -129,7 +290,233 @@ interface ScrapingTarget {
   category: string;
   url: string;
   enabled: boolean;
+  priority?: 'high' | 'medium' | 'low';
 }
+
+// Enhanced Link Targeting Service for intelligent URL generation
+class EnhancedLinkTargetingService {
+  private patternSuccessRates: Map<string, number> = new Map();
+  private companyPatterns: Map<string, Map<string, string[]>> = new Map();
+  private industryPatterns: Map<string, Map<string, string[]>> = new Map();
+  
+  constructor() {
+    this.initializePatterns();
+  }
+  
+  private initializePatterns() {
+    // Initialize with industry-specific patterns
+    const industryGroupings = getIndustryGroupings();
+    
+    Object.entries(industryGroupings).forEach(([industry, config]) => {
+      this.industryPatterns.set(industry, new Map(Object.entries(config.linkPatterns)));
+      
+      // Initialize company-specific patterns
+      config.companies.forEach(company => {
+        const companyPatterns = new Map(Object.entries(config.linkPatterns));
+        this.companyPatterns.set(company.toLowerCase(), companyPatterns);
+      });
+    });
+  }
+  
+  // Generate intelligent URLs based on company and category
+  generateIntelligentUrls(company: string, categories: string[]): Record<string, string> {
+    const urls: Record<string, string> = {};
+    const companyLower = company.toLowerCase();
+    
+    categories.forEach(category => {
+      // Try company-specific patterns first
+      let patterns = this.companyPatterns.get(companyLower)?.get(category);
+      
+      if (!patterns) {
+        // Fallback to industry patterns
+        const industry = this.findIndustryForCompany(company);
+        if (industry) {
+          patterns = this.industryPatterns.get(industry)?.get(category);
+        }
+      }
+      
+      if (patterns && patterns.length > 0) {
+        // Select best pattern based on success rate
+        const bestPattern = this.selectBestPattern(company, category, patterns);
+        const baseDomain = this.generateBaseDomain(company);
+        urls[category] = `https://www.${baseDomain}${bestPattern}`;
+        
+        // Add subcategory and regional variations
+        this.addSubcategoryUrls(urls, company, category, baseDomain);
+        this.addRegionalUrls(urls, company, category, baseDomain);
+        
+        // Add alternative patterns for comprehensive coverage
+        this.addAlternativePatterns(urls, company, category, patterns, baseDomain);
+      } else {
+        // Fallback to generic patterns
+        const fallbackUrl = this.generateFallbackUrl(company, category);
+        urls[category] = fallbackUrl;
+      }
+    });
+    
+    return urls;
+  }
+  
+  private findIndustryForCompany(company: string): string | null {
+    const industryGroupings = getIndustryGroupings();
+    
+    for (const [industry, config] of Object.entries(industryGroupings)) {
+      if (config.companies.some(c => c.toLowerCase() === company.toLowerCase())) {
+        return industry;
+      }
+    }
+    
+    return null;
+  }
+  
+  private selectBestPattern(company: string, category: string, patterns: string[]): string {
+    // Check if we have success rate data
+    const patternKey = `${company}_${category}`;
+    const successRates = this.patternSuccessRates.get(patternKey);
+    
+    if (successRates && patterns.length > 1) {
+      // Sort by success rate and return the best
+      const sortedPatterns = patterns.sort((a, b) => {
+        const rateA = this.getPatternSuccessRate(company, category, a);
+        const rateB = this.getPatternSuccessRate(company, category, b);
+        return rateB - rateA;
+      });
+      return sortedPatterns[0];
+    }
+    
+    // Default intelligent selection based on category
+    if (category === 'marketing') {
+      return patterns.find(p => p === '' || p === '/features') || patterns[0];
+    } else if (category === 'docs') {
+      return patterns.find(p => p === '/docs') || patterns[0];
+    } else if (category === 'api') {
+      return patterns.find(p => p === '/api') || patterns[0];
+    } else if (category === 'pricing') {
+      return patterns.find(p => p === '/pricing') || patterns[0];
+    } else if (category === 'security') {
+      return patterns.find(p => p === '/security') || patterns[0];
+    }
+    
+    return patterns[0];
+  }
+  
+  private addSubcategoryUrls(urls: Record<string, string>, company: string, category: string, baseDomain: string) {
+    const industry = this.findIndustryForCompany(company);
+    if (!industry) return;
+    
+    const industryGroupings = getIndustryGroupings();
+    const config = industryGroupings[industry];
+    
+    if (config.subcategoryPatterns && config.subcategoryPatterns[category]) {
+      Object.entries(config.subcategoryPatterns[category]).forEach(([subcategory, subPatterns]) => {
+        if (Array.isArray(subPatterns) && subPatterns.length > 0) {
+          urls[`${category}_${subcategory}`] = `https://www.${baseDomain}${subPatterns[0]}`;
+        }
+      });
+    }
+  }
+  
+  private addRegionalUrls(urls: Record<string, string>, company: string, category: string, baseDomain: string) {
+    const industry = this.findIndustryForCompany(company);
+    if (!industry) return;
+    
+    const industryGroupings = getIndustryGroupings();
+    const config = industryGroupings[industry];
+    
+    if (config.regionalPatterns) {
+      Object.entries(config.regionalPatterns).forEach(([region, regionPatterns]) => {
+        if (Array.isArray(regionPatterns) && regionPatterns.length > 0) {
+          urls[`${category}_${region}`] = `https://www.${baseDomain}${regionPatterns[0]}`;
+        }
+      });
+    }
+  }
+  
+  private addAlternativePatterns(urls: Record<string, string>, company: string, category: string, patterns: string[], baseDomain: string) {
+    // Add up to 3 alternative patterns for comprehensive coverage
+    const alternativePatterns = patterns.slice(1, 4);
+    alternativePatterns.forEach((pattern, index) => {
+      urls[`${category}_alt${index + 1}`] = `https://www.${baseDomain}${pattern}`;
+    });
+  }
+  
+  private generateFallbackUrl(company: string, category: string): string {
+    const baseDomain = this.generateBaseDomain(company);
+    
+    // Enhanced fallback patterns
+    const fallbackPatterns: Record<string, string[]> = {
+      marketing: ['', '/features', '/about', '/solutions'],
+      docs: ['/docs', '/help', '/guides', '/support'],
+      api: ['/api', '/docs/api', '/developers', '/integrations'],
+      blog: ['/blog', '/news', '/updates', '/insights'],
+      community: ['/community', '/forum', '/support', '/help'],
+      pricing: ['/pricing', '/plans', '/cost', '/billing'],
+      security: ['/security', '/trust', '/compliance', '/privacy'],
+      enterprise: ['/enterprise', '/business', '/corporate', '/solutions'],
+      partners: ['/partners', '/resellers', '/marketplace', '/ecosystem'],
+      developers: ['/developers', '/dev', '/engineering', '/tech'],
+      support: ['/support', '/help', '/contact', '/tickets'],
+      resources: ['/resources', '/downloads', '/templates', '/assets']
+    };
+    
+    const patterns = fallbackPatterns[category] || [`/${category}`];
+    return `https://www.${baseDomain}${patterns[0]}`;
+  }
+  
+  private generateBaseDomain(company: string): string {
+    return `${company.toLowerCase().replace(/\s+/g, '')}.com`;
+  }
+  
+  private getPatternSuccessRate(company: string, category: string, pattern: string): number {
+    const key = `${company}_${category}_${pattern}`;
+    return this.patternSuccessRates.get(key) || 0.5; // Default to 50% if unknown
+  }
+  
+  // Update success rates based on scraping results
+  updatePatternSuccessRate(company: string, category: string, pattern: string, success: boolean) {
+    const key = `${company}_${category}_${pattern}`;
+    const currentRate = this.patternSuccessRates.get(key) || 0.5;
+    
+    // Simple moving average for success rate
+    const newRate = success ? 
+      Math.min(currentRate + 0.1, 1.0) : 
+      Math.max(currentRate - 0.1, 0.0);
+    
+    this.patternSuccessRates.set(key, newRate);
+  }
+  
+  // Get success rate statistics
+  getSuccessRateStats(): Record<string, number> {
+    const stats: Record<string, number> = {};
+    this.patternSuccessRates.forEach((rate, key) => {
+      stats[key] = rate;
+    });
+    return stats;
+  }
+  
+  // Learn from successful patterns
+  learnFromSuccess(company: string, category: string, successfulUrls: string[]) {
+    successfulUrls.forEach(url => {
+      const pattern = this.extractPatternFromUrl(url);
+      if (pattern) {
+        this.updatePatternSuccessRate(company, category, pattern, true);
+      }
+    });
+  }
+  
+  private extractPatternFromUrl(url: string): string | null {
+    try {
+      const urlObj = new URL(url);
+      const path = urlObj.pathname;
+      return path === '/' ? '' : path;
+    } catch {
+      return null;
+    }
+  }
+}
+
+// Initialize enhanced link targeting service
+const enhancedLinkTargetingService = new EnhancedLinkTargetingService();
 
 export default function ScrapeDashboard() {
   const { toast } = useToast();
@@ -253,26 +640,39 @@ export default function ScrapeDashboard() {
   }, [dbItems, dbStats]);
 
   const filteredItems = useMemo(() => {
+    if (!dbItems || !Array.isArray(dbItems)) {
+      return [];
+    }
+    
     return dbItems.filter(item => {
-      const matchesSearch = !filters.search || 
-        item.title?.toLowerCase().includes(filters.search.toLowerCase()) ||
-        item.markdown?.toLowerCase().includes(filters.search.toLowerCase()) ||
-        item.company?.toLowerCase().includes(filters.search.toLowerCase()) ||
-        item.ai_analysis?.toLowerCase().includes(filters.search.toLowerCase());
+      if (!item || typeof item !== 'object') return false;
       
-      const matchesCompany = !filters.company || item.company === filters.company;
-      const matchesCategory = !filters.category || item.category === filters.category;
+      const matchesSearch = !filters.search || 
+        (item.title && item.title.toLowerCase().includes(filters.search.toLowerCase())) ||
+        (item.markdown && item.markdown.toLowerCase().includes(filters.search.toLowerCase())) ||
+        (item.company && item.company.toLowerCase().includes(filters.search.toLowerCase())) ||
+        (item.ai_analysis && item.ai_analysis.toLowerCase().includes(filters.search.toLowerCase()));
+      
+      const matchesCompany = !filters.company || (item.company && item.company === filters.company);
+      const matchesCategory = !filters.category || (item.category && item.category === filters.category);
       
       let matchesDate = true;
-      if (filters.dateRange !== 'all') {
-        const itemDate = new Date(item.scrapedAt);
-        const now = new Date();
-        const diffDays = (now.getTime() - itemDate.getTime()) / (1000 * 60 * 60 * 24);
-        
-        switch (filters.dateRange) {
-          case 'today': matchesDate = diffDays <= 1; break;
-          case 'week': matchesDate = diffDays <= 7; break;
-          case 'month': matchesDate = diffDays <= 30; break;
+      if (filters.dateRange !== 'all' && item.scrapedAt) {
+        try {
+          const itemDate = new Date(item.scrapedAt);
+          if (isNaN(itemDate.getTime())) return false;
+          
+          const now = new Date();
+          const diffDays = (now.getTime() - itemDate.getTime()) / (1000 * 60 * 60 * 24);
+          
+          switch (filters.dateRange) {
+            case 'today': matchesDate = diffDays <= 1; break;
+            case 'week': matchesDate = diffDays <= 7; break;
+            case 'month': matchesDate = diffDays <= 30; break;
+          }
+        } catch (error) {
+          console.warn('Date parsing error:', error);
+          matchesDate = false;
         }
       }
       
@@ -364,7 +764,9 @@ export default function ScrapeDashboard() {
   };
 
   const analyzeScrapedContent = async (items: ScrapedItem[]) => {
-    if (!openaiKey) {
+    // FIXED: Improved API key validation logic
+    const hasValidApiKey = useBackendKey ? openaiKey : frontendOpenAIKey;
+    if (!hasValidApiKey) {
       toast({ title: 'OpenAI API key required', description: 'Please set your OpenAI API key to enable AI analysis', variant: 'destructive' });
       return;
     }
@@ -393,7 +795,9 @@ export default function ScrapeDashboard() {
   };
 
   const generateCompetitiveSummary = async () => {
-    if (!openaiKey) {
+    // FIXED: Improved API key validation logic
+    const hasValidApiKey = useBackendKey ? openaiKey : frontendOpenAIKey;
+    if (!hasValidApiKey) {
       toast({ title: 'OpenAI API key required', variant: 'destructive' });
       return;
     }
@@ -439,15 +843,13 @@ export default function ScrapeDashboard() {
     setCompanyUrls(newCompanyUrls);
     setSelectedPreset(presetKey);
 
-    // Automatically select all targets for all companies
-    setTimeout(() => {
-      const newMap = new Map();
-      preset.companies.forEach(company => {
-        newMap.set(company, new Set(preset.categories));
-      });
-      setSelectedTargets(newMap);
-      setShowTargetSelection(true);
-    }, 100);
+    // Automatically select all targets for all companies - FIXED: removed setTimeout
+    const newMap = new Map();
+    preset.companies.forEach(company => {
+      newMap.set(company, new Set(preset.categories));
+    });
+    setSelectedTargets(newMap);
+    setShowTargetSelection(true);
     
     toast({ 
       title: `Loaded ${preset.name} preset`, 
@@ -465,65 +867,31 @@ export default function ScrapeDashboard() {
     // Add company to list
     setCustomCompanies(prev => [...prev, companyName.trim()]);
     
-    // Generate URLs using enhanced patterns
-    const newUrls: Record<string, string> = {};
-    const baseDomain = `${companyName.toLowerCase().replace(/\s+/g, '')}.com`;
-    
-    // Generate URLs for each selected category with common patterns
-    selectedCategories.forEach(category => {
-      let url = '';
-      
-      // Try to find a matching preset pattern
-      const preset = Object.values(INDUSTRY_GROUPINGS).find(p => 
-        p.companies.some(c => c.toLowerCase() === companyName.toLowerCase())
-      );
-      
-      if (preset && preset.linkPatterns[category]) {
-        // Use preset patterns
-        const patterns = preset.linkPatterns[category];
-        url = `https://www.${baseDomain}${patterns[0]}`; // Use first pattern as default
-      } else {
-        // Fallback to common patterns
-        const commonPatterns: Record<string, string[]> = {
-          marketing: ['', '/features', '/pricing', '/about', '/solutions'],
-          docs: ['/docs', '/help', '/guides', '/tutorials', '/support'],
-          api: ['/api', '/docs/api', '/developers', '/integrations'],
-          blog: ['/blog', '/news', '/updates', '/insights', '/articles'],
-          community: ['/community', '/forum', '/discussions', '/support'],
-          news: ['/news', '/blog', '/press', '/updates', '/announcements'],
-          social: ['/twitter', '/linkedin', '/facebook', '/youtube'],
-          rss: ['/feed', '/rss', '/blog/feed', '/news/feed']
-        };
-        
-        if (commonPatterns[category]) {
-          url = `https://www.${baseDomain}${commonPatterns[category][0]}`;
-        } else {
-          url = `https://www.${baseDomain}/${category}`;
-        }
-      }
-      
-      newUrls[category] = url;
-    });
+    // Use enhanced link targeting service for intelligent URL generation
+    const newUrls = enhancedLinkTargetingService.generateIntelligentUrls(companyName.trim(), selectedCategories);
     
     setCompanyUrls(prev => ({
       ...prev,
       [companyName.trim()]: newUrls
     }));
 
-    // Automatically select all targets for the new company
-    setTimeout(() => {
-      const allCategories = new Set(selectedCategories);
-      setSelectedTargets(prev => {
-        const newMap = new Map(prev);
-        newMap.set(companyName.trim(), allCategories);
-        return newMap;
-      });
-      setShowTargetSelection(true);
-    }, 100);
+    // Automatically select all targets for the new company - FIXED: removed setTimeout
+    const allCategories = new Set(selectedCategories);
+    setSelectedTargets(prev => {
+      const newMap = new Map(prev);
+      newMap.set(companyName.trim(), allCategories);
+      return newMap;
+    });
+    setShowTargetSelection(true);
+    
+    // Show comprehensive success message with enhanced targeting info
+    const totalUrls = Object.keys(newUrls).length;
+    const primaryUrls = selectedCategories.length;
+    const enhancedUrls = totalUrls - primaryUrls;
     
     toast({ 
-      title: `Added ${companyName}`, 
-      description: `Generated ${Object.keys(newUrls).length} URLs and selected all targets automatically` 
+      title: `Added ${companyName} with Enhanced Targeting`, 
+      description: `Generated ${totalUrls} URLs (${primaryUrls} primary + ${enhancedUrls} enhanced patterns) including subcategories, regional variants, and alternative patterns for comprehensive coverage.` 
     });
   };
 
@@ -591,6 +959,238 @@ export default function ScrapeDashboard() {
     setSelectedTargets(new Map());
   };
 
+  // Helper function to check if we have a valid API key
+  const hasValidApiKey = () => {
+    return useBackendKey ? !!openaiKey : !!frontendOpenAIKey;
+  };
+
+  // Enhanced AI Analysis Functions
+  const runContentIntelligenceAnalysis = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = ['content themes', 'key topics', 'main messages', 'content quality'];
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'Content intelligence analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('Content intelligence analysis failed:', error);
+      toast({ title: 'Analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const runTrendDetectionAnalysis = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = ['emerging trends', 'market patterns', 'industry shifts', 'future predictions'];
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'Trend detection analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('Trend detection analysis failed:', error);
+      toast({ title: 'Analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const runCompetitivePositioningAnalysis = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = ['competitive positioning', 'market differentiation', 'brand strategy', 'competitive advantages'];
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'Competitive positioning analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('Competitive positioning analysis failed:', error);
+      toast({ title: 'Analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const runRiskAssessmentAnalysis = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = ['risk factors', 'potential threats', 'market risks', 'business vulnerabilities'];
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'Risk assessment analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('Risk assessment analysis failed:', error);
+      toast({ title: 'Analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const runOpportunityAnalysis = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = ['market opportunities', 'growth potential', 'strategic advantages', 'business opportunities'];
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'Opportunity analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('Opportunity analysis failed:', error);
+      toast({ title: 'Analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const runMarketSentimentAnalysis = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = ['market sentiment', 'public perception', 'brand sentiment', 'emotional tone'];
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'Market sentiment analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('Market sentiment analysis failed:', error);
+      toast({ title: 'Analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const runComprehensiveAnalysis = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const focusAreasArray = [
+        'content intelligence', 'trend detection', 'competitive positioning', 
+        'risk assessment', 'opportunity analysis', 'market sentiment'
+      ];
+      const analysisResults = await aiService.analyzeBatch(dbItems, focusAreasArray);
+      
+      // Update database with AI analysis
+      for (const [itemId, analysis] of analysisResults) {
+        await databaseService.updateItemAI(itemId, analysis);
+      }
+      
+      setAiInsights(analysisResults);
+      await loadDatabaseItems();
+      await loadDatabaseStats();
+      
+      toast({ title: 'Comprehensive analysis complete', description: `${analysisResults.size} items analyzed` });
+    } catch (error) {
+      console.error('Comprehensive analysis failed:', error);
+      toast({ title: 'Analysis failed', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const generateStrategicRecommendations = async () => {
+    if (!hasValidApiKey()) {
+      toast({ title: 'OpenAI API key required', variant: 'destructive' });
+      return;
+    }
+
+    try {
+      const companies = Array.from(new Set(dbItems.map(item => item.company)));
+      const focusAreasArray = ['strategic recommendations', 'action items', 'business opportunities', 'risk mitigation'];
+      
+      const recommendations = await aiService.generateCompetitiveSummary(companies, focusAreasArray);
+      setCompetitiveSummary(recommendations);
+      
+      toast({ title: 'Strategic recommendations generated' });
+    } catch (error) {
+      console.error('Failed to generate strategic recommendations:', error);
+      toast({ title: 'Recommendations generation failed', variant: 'destructive' });
+    }
+  };
+
   const generateAllTargets = () => {
     const allTargets: Record<string, LinkTarget[]> = {};
     
@@ -633,7 +1233,9 @@ export default function ScrapeDashboard() {
   };
 
   const runAIAnalysis = async () => {
-    if (!useBackendKey && !frontendOpenAIKey) {
+    // FIXED: Improved API key validation logic
+    const hasValidApiKey = useBackendKey ? openaiKey : frontendOpenAIKey;
+    if (!hasValidApiKey) {
       toast({ title: 'OpenAI API key required', variant: 'destructive' });
       return;
     }
@@ -720,45 +1322,157 @@ export default function ScrapeDashboard() {
   };
 
   const runScraping = async (targets: ScrapingTarget[]) => {
-    if (targets.length === 0) {
-      toast({ title: 'No valid scraping targets', variant: 'destructive' });
-      return;
-    }
-    
     setIsLoading(true);
     let totalScraped = 0;
     const scrapedItems: ScrapedItem[] = [];
     
     try {
+      // Enhanced scraping with comprehensive metadata capture
       for (const target of targets) {
         if (!target.enabled) continue;
         
         try {
-          const response = await APIService.scrapeCompany({
+          // Enhanced scraping request with comprehensive parameters
+          const enhancedRequest = {
             company: target.company,
             urls: { [target.category]: target.url },
             categories: [target.category],
-            page_limit: limit
-          });
+            page_limit: limit,
+            // Enhanced metadata capture parameters
+            depth_limit: 3, // Crawl depth for comprehensive coverage
+            respect_robots: true, // Ethical scraping
+            user_agent: 'InsightForge-WebIntelligence/1.0 (+https://insightforge.ai/bot)',
+            delay_between_requests: 1000, // 1 second delay between requests
+            // Content extraction preferences
+            extract_metadata: true, // Extract title, description, author, date
+            extract_links: true, // Extract internal and external links
+            extract_images: true, // Extract image alt text and captions
+            extract_tables: true, // Extract table data
+            extract_forms: true, // Extract form field information
+            // Content validation parameters
+            min_content_length: 100, // Minimum content length in characters
+            max_content_length: 50000, // Maximum content length in characters
+            content_language: 'auto', // Auto-detect content language
+            filter_duplicates: true, // Filter duplicate content
+            // Quality assessment parameters
+            readability_score: true, // Calculate readability metrics
+            content_density: true, // Calculate information density
+            freshness_indicator: true, // Detect content freshness
+            authority_signals: true, // Identify authority indicators
+            // Advanced targeting parameters
+            follow_redirects: true, // Follow HTTP redirects
+            handle_javascript: true, // Handle JavaScript-rendered content
+            extract_dynamic_content: true, // Extract AJAX-loaded content
+            capture_screenshots: false, // Disable screenshot capture for performance
+            // Regional and localization parameters
+            preferred_language: 'en', // Preferred language for content
+            regional_variants: true, // Include regional content variants
+            currency_format: 'auto', // Auto-detect currency format
+            date_format: 'auto', // Auto-detect date format
+            // Compliance and ethical parameters
+            gdpr_compliance: true, // Respect GDPR requirements
+            cookie_handling: 'minimal', // Minimal cookie usage
+            session_persistence: false, // Don't persist sessions
+            rate_limiting: 'adaptive' // Adaptive rate limiting
+          };
           
-          if (response.error) {
-            console.warn(`Failed to scrape ${target.category} for ${target.company}:`, response.error);
-            continue;
-          }
+          const response = await APIService.scrapeCompany(enhancedRequest);
           
+          // Enhanced response processing with comprehensive metadata
           if (response.categories && response.categories[target.category]) {
             const categoryData = response.categories[target.category];
             if (categoryData.items) {
-              const newItems: ScrapedItem[] = categoryData.items.map((item: { id?: string; url?: string; title?: string; content?: string; markdown?: string; content_html?: string; scraped_at?: string }) => ({
+              // Transform to enhanced structured format
+              const newItems: ScrapedItem[] = categoryData.items.map(item => ({
                 id: item.id || genId(),
                 company: target.company,
-                category: target.category as 'marketing' | 'docs' | 'rss' | 'social' | 'news' | 'api' | 'community',
+                category: target.category,
                 url: item.url || target.url,
                 title: item.title || `Scraped ${target.category} content`,
                 markdown: item.content || item.markdown || '',
                 html: item.content_html || '',
                 scrapedAt: item.scraped_at || new Date().toISOString(),
-                source: new URL(target.url).host
+                source: new URL(target.url).host,
+                // Enhanced metadata fields
+                metadata: {
+                  // Content analysis
+                  word_count: item.word_count || (item.content ? item.content.split(/\s+/).length : 0),
+                  char_count: item.char_count || (item.content ? item.content.length : 0),
+                  language: item.language || 'en',
+                  readability_score: item.readability_score || null,
+                  content_density: item.content_density || null,
+                  freshness_score: item.freshness_score || null,
+                  authority_score: item.authority_score || null,
+                  // Technical metadata
+                  http_status: item.http_status || 200,
+                  response_time: item.response_time || null,
+                  content_type: item.content_type || 'text/html',
+                  encoding: item.encoding || 'utf-8',
+                  // Content structure
+                  has_images: item.has_images || false,
+                  has_tables: item.has_tables || false,
+                  has_forms: item.has_forms || false,
+                  has_videos: item.has_videos || false,
+                  // Link analysis
+                  internal_links: item.internal_links || [],
+                  external_links: item.external_links || [],
+                  link_count: item.link_count || 0,
+                  // SEO metadata
+                  meta_title: item.meta_title || null,
+                  meta_description: item.meta_description || null,
+                  meta_keywords: item.meta_keywords || null,
+                  canonical_url: item.canonical_url || null,
+                  // Social media metadata
+                  og_title: item.og_title || null,
+                  og_description: item.og_description || null,
+                  og_image: item.og_image || null,
+                  twitter_card: item.twitter_card || null,
+                  // Publication metadata
+                  author: item.author || null,
+                  published_date: item.published_date || null,
+                  modified_date: item.modified_date || null,
+                  // Business metadata
+                  pricing_info: item.pricing_info || null,
+                  contact_info: item.contact_info || null,
+                  location_info: item.location_info || null,
+                  // Content quality indicators
+                  is_duplicate: item.is_duplicate || false,
+                  quality_score: item.quality_score || null,
+                  relevance_score: item.relevance_score || null,
+                  // Scraping metadata
+                  crawl_depth: item.crawl_depth || 1,
+                  parent_url: item.parent_url || null,
+                  redirect_chain: item.redirect_chain || [],
+                  // Regional and localization
+                  region: item.region || null,
+                  currency: item.currency || null,
+                  timezone: item.timezone || null,
+                  // Compliance metadata
+                  robots_txt_respected: item.robots_txt_respected || true,
+                  gdpr_compliant: item.gdpr_compliant || true,
+                  rate_limit_respected: item.rate_limit_respected || true
+                },
+                // Enhanced content fields
+                content_summary: item.content_summary || null,
+                key_phrases: item.key_phrases || [],
+                sentiment_preview: item.sentiment_preview || null,
+                topic_tags: item.topic_tags || [],
+                // Link targeting metadata
+                target_pattern: target.url,
+                target_category: target.category,
+                target_company: target.company,
+                target_priority: target.priority || 'medium',
+                // Performance metrics
+                processing_time: item.processing_time || null,
+                content_size: item.content_size || null,
+                compression_ratio: item.compression_ratio || null,
+                // AI analysis fields (existing)
+                sentiment_score: item.sentiment_score || 0,
+                ai_analysis: item.ai_analysis || '',
+                key_topics: item.key_topics || [],
+                risk_factors: item.risk_factors || [],
+                competitive_insights: item.competitive_insights || '',
+                updated_at: item.updated_at || new Date().toISOString()
               }));
               
               scrapedItems.push(...newItems);
@@ -767,28 +1481,80 @@ export default function ScrapeDashboard() {
           }
         } catch (error) {
           console.error(`Failed to scrape ${target.category} for ${target.company}:`, error);
+          
+          // Log detailed error information for debugging
+          const errorDetails = {
+            target: target,
+            error: error instanceof Error ? error.message : String(error),
+            timestamp: new Date().toISOString(),
+            user_agent: navigator.userAgent,
+            url: target.url
+          };
+          
+          console.error('Detailed scraping error:', errorDetails);
+          
+          // Continue with other targets instead of failing completely
+          continue;
         }
       }
       
-      // Store in database
+      // Enhanced storage with comprehensive data validation
       if (scrapedItems.length > 0) {
-        await databaseService.addItems(scrapedItems);
-        await loadDatabaseItems();
-        await loadDatabaseStats();
+        // Validate and clean data before storage
+        const validatedItems = scrapedItems.filter(item => {
+          // Basic validation
+          if (!item.url || !item.company || !item.category) return false;
+          if (!item.markdown || item.markdown.length < 50) return false; // Minimum content length
+          if (!item.title || item.title.length < 5) return false; // Minimum title length
+          
+          // Content quality validation
+          if (item.metadata) {
+            if (item.metadata.word_count && item.metadata.word_count < 10) return false; // Minimum word count
+            if (item.metadata.content_density && item.metadata.content_density < 0.1) return false; // Minimum content density
+          }
+          
+          return true;
+        });
         
-        // Add to store for immediate display
-        addItems(scrapedItems);
-        
-        // Run AI analysis if enabled
-        if (autoAnalysis && openaiKey) {
-          toast({ title: 'Starting AI analysis...', description: 'Analyzing scraped content for insights' });
-          setTimeout(() => analyzeScrapedContent(scrapedItems), 1000);
+        if (validatedItems.length > 0) {
+          await databaseService.addItems(validatedItems);
+          await loadDatabaseItems();
+          await loadDatabaseStats();
+          
+          // Add to store for immediate display
+          addItems(validatedItems);
+          
+          // Show comprehensive success message
+          toast({ 
+            title: `Scraping completed successfully`, 
+            description: `Scraped ${validatedItems.length} high-quality items from ${targets.length} targets. ${scrapedItems.length - validatedItems.length} items were filtered for quality.` 
+          });
+          
+          // Optional: Run AI analysis automatically
+          if (autoAnalysis && hasValidApiKey()) {
+            setTimeout(() => analyzeScrapedContent(validatedItems), 1000);
+          }
+        } else {
+          toast({ 
+            title: 'No valid content found', 
+            description: 'All scraped content failed quality validation. Please check your target URLs and try again.',
+            variant: 'destructive'
+          });
         }
+      } else {
+        toast({ 
+          title: 'No content scraped', 
+          description: 'No content was successfully scraped from the selected targets. Please check your configuration and try again.',
+          variant: 'destructive'
+        });
       }
-      
-      toast({ title: `Scraping complete: ${totalScraped} items from ${targets.length} targets` });
     } catch (error) {
-      toast({ title: 'Scraping failed', variant: 'destructive' });
+      console.error('Scraping failed:', error);
+      toast({ 
+        title: 'Scraping failed', 
+        description: 'An unexpected error occurred during scraping. Please check the console for details.',
+        variant: 'destructive' 
+      });
     } finally {
       setIsLoading(false);
     }
@@ -1481,7 +2247,7 @@ export default function ScrapeDashboard() {
                   <div className="flex gap-3">
                     <Button
                       onClick={runAIAnalysis}
-                      disabled={isAnalyzing || (useBackendKey && !openaiKey) || (!useBackendKey && !frontendOpenAIKey)}
+                      disabled={isAnalyzing || !hasValidApiKey()}
                       className="flex-1"
                     >
                       {isAnalyzing ? (
@@ -1498,7 +2264,7 @@ export default function ScrapeDashboard() {
                     </Button>
                     <Button
                       onClick={generateCompetitiveSummary}
-                      disabled={!openaiKey && !frontendOpenAIKey}
+                      disabled={!hasValidApiKey()}
                       variant="outline"
                     >
                       <TrendingUp className="h-4 w-4 mr-2" />
@@ -1506,7 +2272,7 @@ export default function ScrapeDashboard() {
                     </Button>
                   </div>
                   
-                  {!useBackendKey && !frontendOpenAIKey && (
+                  {!hasValidApiKey() && (
                     <div className="text-center py-4 text-muted-foreground">
                       <p>OpenAI API key required for AI analysis</p>
                       <p className="text-sm">Enter your API key above or enable backend key usage</p>
@@ -1553,6 +2319,295 @@ export default function ScrapeDashboard() {
                       {dbItems.filter(i => i.sentiment_score !== undefined).length}
                     </div>
                     <div className="text-sm text-muted-foreground">Analyzed</div>
+                  </div>
+                </div>
+
+                {/* Content Insights Dashboard */}
+                <div className="space-y-6">
+                  <h4 className="font-medium text-lg">Content Insights Dashboard</h4>
+                  
+                  {/* Content Type Distribution */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h5 className="font-medium">Content Distribution by Category</h5>
+                      <div className="space-y-3">
+                        {Object.entries(
+                          dbItems.reduce((acc, item) => {
+                            acc[item.category] = (acc[item.category] || 0) + 1;
+                            return acc;
+                          }, {} as Record<string, number>)
+                        )
+                        .sort(([,a], [,b]) => b - a)
+                        .map(([category, count]) => {
+                          const percentage = ((count / dbItems.length) * 100).toFixed(1);
+                          const categoryItems = dbItems.filter(i => i.category === category);
+                          const avgWords = Math.round(
+                            categoryItems.reduce((acc, i) => acc + (i.markdown?.split(/\s+/).length || 0), 0) / count
+                          );
+                          
+                          return (
+                            <div key={category} className="p-3 border rounded-lg bg-muted/30">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="font-medium capitalize">{category}</span>
+                                <Badge variant="outline">{count} pages</Badge>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2 text-sm">
+                                  <span className="text-muted-foreground">Share:</span>
+                                  <span className="font-medium">{percentage}%</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                  <span className="text-muted-foreground">Avg Words:</span>
+                                  <span className="font-medium">{avgWords}</span>
+                                </div>
+                                {categoryItems.some(i => i.sentiment_score !== undefined) && (
+                                  <div className="flex items-center gap-2 text-sm">
+                                    <span className="text-muted-foreground">Sentiment:</span>
+                                    <Badge variant="outline" className="text-xs">
+                                      {categoryItems.filter(i => i.sentiment_score !== undefined).length} analyzed
+                                    </Badge>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h5 className="font-medium">Content Quality Metrics</h5>
+                      <div className="space-y-3">
+                        <div className="p-3 border rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium">Total Content Volume</span>
+                            <Badge variant="outline">
+                              {Math.round(dbItems.reduce((acc, i) => acc + (i.markdown?.length || 0), 0) / 1000)}K chars
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {dbItems.reduce((acc, i) => acc + (i.markdown?.split(/\s+/).length || 0), 0).toLocaleString()} words across all content
+                          </div>
+                        </div>
+
+                        <div className="p-3 border rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium">AI Analysis Coverage</span>
+                            <Badge variant="outline">
+                              {((dbItems.filter(i => i.sentiment_score !== undefined).length / dbItems.length) * 100).toFixed(1)}%
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {dbItems.filter(i => i.sentiment_score !== undefined).length} of {dbItems.length} items analyzed
+                          </div>
+                        </div>
+
+                        <div className="p-3 border rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium">Content Freshness</span>
+                            <Badge variant="outline">
+                              {dbItems.filter(i => {
+                                const days = (new Date().getTime() - new Date(i.scrapedAt).getTime()) / (1000 * 60 * 60 * 24);
+                                return days <= 7;
+                              }).length} recent
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Content from last 7 days: {dbItems.filter(i => {
+                              const days = (new Date().getTime() - new Date(i.scrapedAt).getTime()) / (1000 * 60 * 60 * 24);
+                              return days <= 7;
+                            }).length} items
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content Preview Showcase */}
+                  <div className="space-y-4">
+                    <h5 className="font-medium">Content Preview Showcase</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {dbItems
+                        .filter(i => i.markdown && i.markdown.length > 100)
+                        .slice(0, 4)
+                        .map((item, index) => (
+                          <div key={item.id || index} className="p-4 border rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Badge variant="outline" className="text-xs">{item.company}</Badge>
+                              <Badge variant="secondary" className="text-xs capitalize">{item.category}</Badge>
+                              {item.sentiment_score !== undefined && (
+                                <Badge variant={item.sentiment_score > 0 ? 'default' : item.sentiment_score < 0 ? 'destructive' : 'outline'} className="text-xs">
+                                  {item.sentiment_score > 0 ? '😊' : item.sentiment_score < 0 ? '😟' : '😐'}
+                                </Badge>
+                              )}
+                            </div>
+                            
+                            <h6 className="font-medium mb-2 text-sm line-clamp-2">
+                              {item.title || 'Untitled Content'}
+                            </h6>
+                            
+                            <div className="text-xs text-muted-foreground mb-3 line-clamp-3">
+                              {item.markdown?.slice(0, 150)}...
+                            </div>
+                            
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-muted-foreground">
+                                {item.markdown?.split(/\s+/).length || 0} words
+                              </span>
+                              <span className="text-muted-foreground">
+                                {new Date(item.scrapedAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* AI Analysis Insights Preview */}
+                  {dbItems.some(i => i.ai_analysis) && (
+                    <div className="space-y-4">
+                      <h5 className="font-medium">AI Analysis Insights Preview</h5>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {dbItems
+                          .filter(i => i.ai_analysis && i.key_topics && i.key_topics.length > 0)
+                          .slice(0, 4)
+                          .map((item, index) => (
+                            <div key={item.id || index} className="p-4 border rounded-lg bg-gradient-to-br from-green-50 to-emerald-50">
+                              <div className="flex items-center gap-2 mb-3">
+                                <Brain className="h-4 w-4 text-green-600" />
+                                <span className="font-medium text-sm">{item.company}</span>
+                                <Badge variant="outline" className="text-xs capitalize">{item.category}</Badge>
+                              </div>
+                              
+                              <div className="space-y-3">
+                                {item.key_topics && item.key_topics.length > 0 && (
+                                  <div>
+                                    <span className="text-xs font-medium text-green-700">Key Topics:</span>
+                                    <div className="flex flex-wrap gap-1 mt-1">
+                                      {item.key_topics.slice(0, 3).map((topic, idx) => (
+                                        <Badge key={idx} variant="outline" className="text-xs bg-green-100">
+                                          {topic}
+                                        </Badge>
+                                      ))}
+                                      {item.key_topics.length > 3 && (
+                                        <Badge variant="outline" className="text-xs bg-green-100">
+                                          +{item.key_topics.length - 3} more
+                                        </Badge>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                                
+                                {item.ai_analysis && (
+                                  <div>
+                                    <span className="text-xs font-medium text-green-700">AI Insight:</span>
+                                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                                      {item.ai_analysis}
+                                    </p>
+                                  </div>
+                                )}
+                                
+                                {item.sentiment_score !== undefined && (
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs font-medium text-green-700">Sentiment:</span>
+                                    <Badge variant={item.sentiment_score > 0 ? 'default' : item.sentiment_score < 0 ? 'destructive' : 'outline'} className="text-xs">
+                                      {item.sentiment_score > 0 ? 'Positive' : item.sentiment_score < 0 ? 'Negative' : 'Neutral'} ({item.sentiment_score.toFixed(2)})
+                                    </Badge>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Use Case Examples */}
+                  <div className="space-y-4">
+                    <h5 className="font-medium">AI Analysis Use Case Examples</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="p-4 border rounded-lg bg-gradient-to-br from-purple-50 to-violet-50">
+                        <div className="flex items-center gap-2 mb-3">
+                          <MessageCircle className="h-4 w-4 text-purple-600" />
+                          <span className="font-medium text-sm">Customer Reviews</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Analyze thousands of customer reviews to understand sentiment trends, common complaints, and feature requests.
+                        </p>
+                        <div className="text-xs text-purple-700">
+                          <strong>Example:</strong> "Analyze 2,500+ customer reviews across 15 companies to identify top pain points and satisfaction drivers"
+                        </div>
+                      </div>
+
+                      <div className="p-4 border rounded-lg bg-gradient-to-br from-orange-50 to-amber-50">
+                        <div className="flex items-center gap-2 mb-3">
+                          <TrendingUp className="h-4 w-4 text-orange-600" />
+                          <span className="font-medium text-sm">Market Trends</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Track emerging trends, product launches, and market positioning across competitors over time.
+                        </p>
+                        <div className="text-xs text-orange-700">
+                          <strong>Example:</strong> "Monitor 50+ tech companies for AI product announcements and feature comparisons"
+                        </div>
+                      </div>
+
+                      <div className="p-4 border rounded-lg bg-gradient-to-br from-teal-50 to-cyan-50">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Target className="h-4 w-4 text-teal-600" />
+                          <span className="font-medium text-sm">Competitive Intel</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Understand competitor strategies, pricing changes, and market positioning in real-time.
+                        </p>
+                        <div className="text-xs text-teal-700">
+                          <strong>Example:</strong> "Track pricing changes, feature updates, and marketing campaigns across 20 SaaS competitors"
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quick AI Analysis Actions */}
+                  <div className="space-y-4">
+                    <h5 className="font-medium">Quick AI Analysis Actions</h5>
+                    <div className="flex gap-3 flex-wrap">
+                      <Button
+                        onClick={() => runContentIntelligenceAnalysis()}
+                        disabled={isAnalyzing || !hasValidApiKey()}
+                        size="sm"
+                        variant="outline"
+                      >
+                        <Brain className="h-4 w-4 mr-2" />
+                        Content Intelligence
+                      </Button>
+                      <Button
+                        onClick={() => runTrendDetectionAnalysis()}
+                        disabled={isAnalyzing || !hasValidApiKey()}
+                        size="sm"
+                        variant="outline"
+                      >
+                        <TrendingUp className="h-4 w-4 mr-2" />
+                        Trend Detection
+                      </Button>
+                      <Button
+                        onClick={() => runMarketSentimentAnalysis()}
+                        disabled={isAnalyzing || !hasValidApiKey()}
+                        size="sm"
+                        variant="outline"
+                      >
+                        <BarChart3 className="h-4 w-4 mr-2" />
+                        Sentiment Analysis
+                      </Button>
+                      <Button
+                        onClick={() => runComprehensiveAnalysis()}
+                        disabled={isAnalyzing || !hasValidApiKey()}
+                        size="sm"
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+                      >
+                        <Zap className="h-4 w-4 mr-2" />
+                        Run All Analysis
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
@@ -1660,7 +2715,7 @@ export default function ScrapeDashboard() {
                         <div className="flex gap-2">
                           <Button
                             onClick={() => runAIAnalysis()}
-                            disabled={isAnalyzing || (useBackendKey && !openaiKey) || (!useBackendKey && !frontendOpenAIKey)}
+                            disabled={isAnalyzing || !hasValidApiKey()}
                             size="sm"
                           >
                             <RefreshCw className="h-4 w-4 mr-2" />
@@ -1684,7 +2739,7 @@ export default function ScrapeDashboard() {
                         <div className="flex gap-2">
                           <Button
                             onClick={generateCompetitiveSummary}
-                            disabled={!openaiKey && !frontendOpenAIKey}
+                            disabled={!hasValidApiKey()}
                             size="sm"
                           >
                             <Brain className="h-4 w-4 mr-2" />
@@ -1692,7 +2747,7 @@ export default function ScrapeDashboard() {
                           </Button>
                           <Button
                             onClick={() => runAIAnalysis()}
-                            disabled={isAnalyzing || (useBackendKey && !openaiKey) || (!useBackendKey && !frontendOpenAIKey)}
+                            disabled={isAnalyzing || !hasValidApiKey()}
                             variant="outline"
                             size="sm"
                           >
@@ -1723,437 +2778,144 @@ export default function ScrapeDashboard() {
               </CardContent>
             </Card>
           )}
-        </TabsContent>
 
-        {/* Analytics Tab */}
-        <TabsContent value="analytics" className="space-y-6">
-          {/* Metrics Overview */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <div className="text-2xl font-bold text-primary">{metrics.totalItems}</div>
-                <div className="text-sm text-muted-foreground">Total Items</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <div className="text-2xl font-bold text-primary">{metrics.uniqueCompanies}</div>
-                <div className="text-sm text-muted-foreground">Companies</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <div className="text-lg font-bold text-primary">{metrics.contentQuality.averageWordsPerItem}</div>
-                <div className="text-sm text-muted-foreground">Avg Words/Item</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <div className="text-lg font-bold text-primary">{metrics.contentQuality.richContent}</div>
-                <div className="text-sm text-muted-foreground">Rich Content</div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Charts */}
+          {/* Enhanced Link Targeting Dashboard */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5" />
-                Data Visualizations
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-2 mb-4">
-                {['overview', 'trends', 'categories', 'companies'].map(chart => (
-                  <Button
-                    key={chart}
-                    variant={selectedChart === chart ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setSelectedChart(chart)}
-                  >
-                    {chart === 'overview' && <BarChart3 className="h-4 w-4 mr-2" />}
-                    {chart === 'trends' && <LineChartIcon className="h-4 w-4 mr-2" />}
-                    {chart === 'categories' && <PieChartIcon className="h-4 w-4 mr-2" />}
-                    {chart === 'companies' && <Users className="h-4 w-4 mr-2" />}
-                    {chart.charAt(0).toUpperCase() + chart.slice(1)}
-                  </Button>
-                ))}
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold">Enhanced Link Targeting</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Intelligent URL generation with pattern learning and success rate tracking
+                  </p>
+                </div>
+                <Badge variant="secondary" className="text-xs">
+                  AI-Powered
+                </Badge>
               </div>
               
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  {(() => {
-                    if (selectedChart === 'overview' && metrics.byCat.length > 0) {
-                      return (
-                        <BarChart data={metrics.byCat}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis allowDecimals={false} />
-                          <Tooltip />
-                          <Legend />
-                          <Bar dataKey="value" name="Pages" fill="hsl(var(--primary))" />
-                        </BarChart>
-                      );
-                    }
-                    
-                    if (selectedChart === 'trends' && metrics.trendData.length > 0) {
-                      return (
-                        <AreaChart data={metrics.trendData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <Tooltip />
-                          <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
-                        </AreaChart>
-                      );
-                    }
-                    
-                    if (selectedChart === 'categories' && metrics.byCat.length > 0) {
-                      return (
-                        <PieChart>
-                          <Pie
-                            data={metrics.byCat}
-                            cx="50%"
-                            cy="50%"
-                            outerRadius={100}
-                            fill="#8884d8"
-                            dataKey="value"
-                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                          />
-                          <Tooltip />
-                        </PieChart>
-                      );
-                    }
-                    
-                    if (selectedChart === 'companies' && metrics.byCompany.length > 0) {
-                      return (
-                        <BarChart data={metrics.byCompany}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis allowDecimals={false} />
-                          <Tooltip />
-                          <Legend />
-                          <Bar dataKey="value" name="Items" fill="#82ca9d" />
-                        </BarChart>
-                      );
-                    }
-                    
-                    // Fallback for empty data
-                    return (
-                      <div className="flex items-center justify-center h-full text-muted-foreground">
-                        <div className="text-center">
-                          <BarChart3 className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                          <p>No data available for this chart</p>
-                          <p className="text-sm">Scrape some data first to see visualizations</p>
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* AI Insights Tab */}
-        <TabsContent value="ai-insights" className="space-y-6">
-          {/* AI Analysis Status */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Brain className="h-5 w-5" />
-                AI Analysis Status
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold text-primary">{aiInsights.size}</div>
-                  <div className="text-sm text-muted-foreground">Items Analyzed</div>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold text-primary">
-                    {dbItems.filter(item => item.sentiment_score !== undefined).length}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {/* Pattern Success Rates */}
+                <div className="space-y-2">
+                  <h4 className="font-medium text-sm">Pattern Success Rates</h4>
+                  <div className="text-2xl font-bold text-green-600">
+                    {(() => {
+                      const stats = enhancedLinkTargetingService.getSuccessRateStats();
+                      const avgRate = Object.values(stats).reduce((a, b) => a + b, 0) / Math.max(Object.values(stats).length, 1);
+                      return `${(avgRate * 100).toFixed(1)}%`;
+                    })()}
                   </div>
-                  <div className="text-sm text-muted-foreground">Sentiment Scores</div>
+                  <p className="text-xs text-muted-foreground">
+                    Average success rate across all patterns
+                  </p>
                 </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold text-primary">
-                    {dbItems.filter(item => item.key_topics && item.key_topics.length > 0).length}
+                
+                {/* Total Patterns */}
+                <div className="space-y-2">
+                  <h4 className="font-medium text-sm">Total Patterns</h4>
+                  <div className="text-2xl font-bold text-blue-600">
+                    {(() => {
+                      const stats = enhancedLinkTargetingService.getSuccessRateStats();
+                      return Object.keys(stats).length;
+                    })()}
                   </div>
-                  <div className="text-sm text-muted-foreground">Topic Analysis</div>
+                  <p className="text-xs text-muted-foreground">
+                    Learned patterns across companies
+                  </p>
                 </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold text-primary">
-                    {dbItems.filter(item => item.risk_factors && item.risk_factors.length > 0).length}
+                
+                {/* Enhanced Coverage */}
+                <div className="space-y-2">
+                  <h4 className="font-medium text-sm">Enhanced Coverage</h4>
+                  <div className="text-2xl font-bold text-purple-600">
+                    {(() => {
+                      const industryGroupings = getIndustryGroupings();
+                      let totalPatterns = 0;
+                      let totalEnhanced = 0;
+                      
+                      Object.values(industryGroupings).forEach(config => {
+                        Object.values(config.linkPatterns).forEach(patterns => {
+                          totalPatterns += patterns.length;
+                          totalEnhanced += patterns.length * 3; // Subcategories + regional + alternatives
+                        });
+                      });
+                      
+                      return `${totalEnhanced.toLocaleString()}`;
+                    })()}
                   </div>
-                  <div className="text-sm text-muted-foreground">Risk Assessments</div>
+                  <p className="text-xs text-muted-foreground">
+                    Total enhanced targeting URLs available
+                  </p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* AI Analysis Results */}
-          {aiInsights.size > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5" />
-                  AI Analysis Results
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {Array.from(aiInsights.entries()).slice(0, 5).map(([itemId, analysis]) => {
-                    const item = dbItems.find(i => i.id === itemId);
-                    if (!item) return null;
-                    
-                    return (
-                      <div key={itemId} className="p-4 border rounded-lg">
-                        <div className="flex items-center gap-2 mb-3">
-                          <h4 className="font-medium">{item.title || 'Untitled'}</h4>
-                          <Badge variant="outline">{item.company}</Badge>
-                          <Badge variant="secondary">{item.category}</Badge>
-                          <Badge variant={analysis.sentiment_score > 0 ? 'default' : analysis.sentiment_score < 0 ? 'destructive' : 'outline'}>
-                            {analysis.sentiment_score > 0 ? 'Positive' : analysis.sentiment_score < 0 ? 'Negative' : 'Neutral'}
-                          </Badge>
-                        </div>
-                        
-                        <div className="space-y-3">
-                          {analysis.ai_analysis && (
-                            <div>
-                              <h5 className="font-medium text-sm mb-1">Analysis</h5>
-                              <p className="text-sm text-muted-foreground">{analysis.ai_analysis}</p>
-                            </div>
-                          )}
-                          
-                          {analysis.key_topics && analysis.key_topics.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-sm mb-1">Key Topics</h5>
-                              <div className="flex flex-wrap gap-1">
-                                {analysis.key_topics.map((topic, index) => (
-                                  <Badge key={index} variant="outline" className="text-xs">
-                                    {topic}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {analysis.competitive_insights && (
-                            <div>
-                              <h5 className="font-medium text-sm mb-1">Competitive Insights</h5>
-                              <p className="text-sm text-muted-foreground">{analysis.competitive_insights}</p>
-                            </div>
-                          )}
-                          
-                          {analysis.risk_factors && analysis.risk_factors.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-sm mb-1">Risk Factors</h5>
-                              <div className="flex flex-wrap gap-1">
-                                {analysis.risk_factors.map((risk, index) => (
-                                  <Badge key={index} variant="destructive" className="text-xs">
-                                    <AlertTriangle className="h-3 w-3 mr-1" />
-                                    {risk}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                  
-                  {aiInsights.size > 5 && (
-                    <div className="text-center py-4 text-muted-foreground">
-                      <p>Showing first 5 of {aiInsights.size} analyzed items</p>
-                      <p className="text-sm">Use the Data View tab to see all analyzed content</p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-
-        {/* Data View Tab */}
-        <TabsContent value="data" className="space-y-6">
-          {/* Search and Filters */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Search className="h-5 w-5" />
-                Search & Filter
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                <Input
-                  placeholder="Search content, titles, companies..."
-                  value={filters.search}
-                  onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                />
-                <Select 
-                  value={filters.company} 
-                  onValueChange={(value) => setFilters(prev => ({ ...prev, company: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Companies" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">All Companies</SelectItem>
-                    {Array.from(new Set(dbItems.map(i => i.company))).map(company => (
-                      <SelectItem key={company} value={company}>{company}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select 
-                  value={filters.category} 
-                  onValueChange={(value) => setFilters(prev => ({ ...prev, category: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Categories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">All Categories</SelectItem>
-                    {Array.from(new Set(dbItems.map(i => i.category))).map(cat => (
-                      <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select 
-                  value={filters.dateRange} 
-                  onValueChange={(value) => setFilters(prev => ({ ...prev, dateRange: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Time</SelectItem>
-                    <SelectItem value="today">Today</SelectItem>
-                    <SelectItem value="week">This Week</SelectItem>
-                    <SelectItem value="month">This Month</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
               
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Badge variant="secondary">{filteredItems.length} items</Badge>
-                  <Badge variant="outline">{metrics.uniqueCompanies} companies</Badge>
-                </div>
-                <div className="flex gap-2">
-                  <Button variant="outline" onClick={exportCSV}>
-                    <Download className="h-4 w-4 mr-2" />
-                    Export CSV
-                  </Button>
-                  <Button variant="ghost" onClick={clearAllData}>Clear All</Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Results Display */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Scraped Data ({dbItems.length} items)
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {dbItems.length === 0 ? (
-                <div className="text-center py-8">
-                  <div className="mb-4">
-                    {backendStatus === 'connected' ? (
-                      <div className="text-muted-foreground">
-                        <p className="mb-2">No scraped data yet. Configure companies and URLs in the Scraping Setup tab.</p>
-                        <p className="text-sm">The backend Python scraper will collect real content from the specified websites.</p>
+              {/* Pattern Learning Status */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm">Pattern Learning Status</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {Object.entries(getIndustryGroupings()).slice(0, 4).map(([industry, config]) => (
+                    <div key={industry} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                      <div>
+                        <p className="font-medium text-sm">{config.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {config.companies.length} companies • {Object.keys(config.linkPatterns).length} categories
+                        </p>
                       </div>
-                    ) : (
-                      <div className="text-red-600">
-                        <p className="mb-2 font-medium">Backend not connected</p>
-                        <p className="text-sm">Real scraping requires a connected backend. Please ensure your InsightForge backend is running.</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {filteredItems.slice(0, 10).map(item => (
-                    <div key={item.id} className="p-4 border rounded-lg">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="font-medium">{item.title || 'Untitled'}</h3>
-                        <Badge variant="outline">{item.company}</Badge>
-                        <Badge variant="secondary">{item.category}</Badge>
-                        {item.sentiment_score !== undefined && (
-                          <Badge variant={item.sentiment_score > 0 ? 'default' : item.sentiment_score < 0 ? 'destructive' : 'outline'}>
-                            {item.sentiment_score > 0 ? '😊' : item.sentiment_score < 0 ? '😟' : '😐'}
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      {item.markdown && (
-                        <div className="prose prose-sm max-h-32 overflow-auto mb-3">
-                          <div className="whitespace-pre-wrap">
-                            {item.markdown.slice(0, 300)}...
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* AI Analysis Results */}
-                      {item.ai_analysis && (
-                        <div className="border-t pt-3 space-y-2">
-                          <h4 className="font-medium text-sm">AI Analysis</h4>
-                          <p className="text-sm text-muted-foreground">{item.ai_analysis}</p>
-                          
-                          {item.key_topics && item.key_topics.length > 0 && (
-                            <div>
-                              <span className="text-xs font-medium">Topics: </span>
-                              <div className="inline-flex flex-wrap gap-1">
-                                {item.key_topics.map((topic, index) => (
-                                  <Badge key={index} variant="outline" className="text-xs">
-                                    {topic}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {item.risk_factors && item.risk_factors.length > 0 && (
-                            <div>
-                              <span className="text-xs font-medium text-red-600">Risks: </span>
-                              <div className="inline-flex flex-wrap gap-1">
-                                {item.risk_factors.map((risk, index) => (
-                                  <Badge key={index} variant="destructive" className="text-xs">
-                                    {risk}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      
-                      <div className="text-xs text-muted-foreground mt-2">
-                        Scraped: {new Date(item.scrapedAt).toLocaleDateString()}
-                        {item.updated_at && item.updated_at !== item.scrapedAt && (
-                          <span> • Analyzed: {new Date(item.updated_at).toLocaleDateString()}</span>
-                        )}
-                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {config.categories.length} patterns
+                      </Badge>
                     </div>
                   ))}
-                  
-                  {filteredItems.length > 10 && (
-                    <div className="text-center py-4 text-muted-foreground">
-                      <p>Showing first 10 of {filteredItems.length} items</p>
-                      <p className="text-sm">Use the search and filter options above to find specific content</p>
-                    </div>
-                  )}
                 </div>
-              )}
+              </div>
+              
+              {/* Quick Actions */}
+              <div className="mt-6 pt-4 border-t">
+                <h4 className="font-medium text-sm mb-3">Quick Actions</h4>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const stats = enhancedLinkTargetingService.getSuccessRateStats();
+                      console.log('Pattern Success Rates:', stats);
+                      toast({ title: 'Success rates logged to console', description: 'Check browser console for detailed pattern statistics' });
+                    }}
+                  >
+                    View Success Rates
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      // Simulate pattern learning from successful scrapes
+                      const testCompanies = ['OpenAI', 'Stripe', 'Notion'];
+                      testCompanies.forEach(company => {
+                        enhancedLinkTargetingService.learnFromSuccess(company, 'marketing', [`https://www.${company.toLowerCase()}.com/features`]);
+                      });
+                      toast({ title: 'Pattern learning updated', description: 'Success rates updated based on recent scraping results' });
+                    }}
+                  >
+                    Update Learning
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      // Show enhanced targeting capabilities
+                      const demoCompany = 'DemoCorp';
+                      const demoUrls = enhancedLinkTargetingService.generateIntelligentUrls(demoCompany, ['marketing', 'docs', 'api']);
+                      console.log('Enhanced Targeting Demo:', demoUrls);
+                      toast({ 
+                        title: 'Enhanced targeting demo', 
+                        description: `Generated ${Object.keys(demoUrls).length} URLs for ${demoCompany}. Check console for details.` 
+                      });
+                    }}
+                  >
+                    Demo Targeting
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

@@ -4,13 +4,93 @@ import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 export interface ScrapedItem {
   id: string;
   company: string;
-  category: 'marketing' | 'docs' | 'rss' | 'social' | 'aggregate' | 'upload';
+  category: 'marketing' | 'docs' | 'rss' | 'social' | 'aggregate' | 'upload' | 'api' | 'blog' | 'community' | 'pricing' | 'security' | 'enterprise' | 'partners' | 'developers' | 'support' | 'resources' | 'templates' | 'apps' | 'downloads' | 'integrations' | 'compliance' | 'research' | 'models' | 'ethics' | 'demos' | 'news';
   url?: string;
   title?: string;
   markdown?: string;
   html?: string;
   scrapedAt: string;
   source?: string;
+  // Enhanced metadata fields
+  metadata?: {
+    // Content analysis
+    word_count?: number;
+    char_count?: number;
+    language?: string;
+    readability_score?: number | null;
+    content_density?: number | null;
+    freshness_score?: number | null;
+    authority_score?: number | null;
+    // Technical metadata
+    http_status?: number;
+    response_time?: number | null;
+    content_type?: string;
+    encoding?: string;
+    // Content structure
+    has_images?: boolean;
+    has_tables?: boolean;
+    has_forms?: boolean;
+    has_videos?: boolean;
+    // Link analysis
+    internal_links?: string[];
+    external_links?: string[];
+    link_count?: number;
+    // SEO metadata
+    meta_title?: string | null;
+    meta_description?: string | null;
+    meta_keywords?: string | null;
+    canonical_url?: string | null;
+    // Social media metadata
+    og_title?: string | null;
+    og_description?: string | null;
+    og_image?: string | null;
+    twitter_card?: string | null;
+    // Publication metadata
+    author?: string | null;
+    published_date?: string | null;
+    modified_date?: string | null;
+    // Business metadata
+    pricing_info?: string | null;
+    contact_info?: string | null;
+    location_info?: string | null;
+    // Content quality indicators
+    is_duplicate?: boolean;
+    quality_score?: number | null;
+    relevance_score?: number | null;
+    // Scraping metadata
+    crawl_depth?: number;
+    parent_url?: string | null;
+    redirect_chain?: string[];
+    // Regional and localization
+    region?: string | null;
+    currency?: string | null;
+    timezone?: string | null;
+    // Compliance metadata
+    robots_txt_respected?: boolean;
+    gdpr_compliant?: boolean;
+    rate_limit_respected?: boolean;
+  };
+  // Enhanced content fields
+  content_summary?: string | null;
+  key_phrases?: string[];
+  sentiment_preview?: string | null;
+  topic_tags?: string[];
+  // Link targeting metadata
+  target_pattern?: string;
+  target_category?: string;
+  target_company?: string;
+  target_priority?: 'high' | 'medium' | 'low';
+  // Performance metrics
+  processing_time?: number | null;
+  content_size?: number | null;
+  compression_ratio?: number | null;
+  // AI analysis fields
+  sentiment_score?: number;
+  ai_analysis?: string;
+  key_topics?: string[];
+  risk_factors?: string[];
+  competitive_insights?: string;
+  updated_at?: string;
 }
 
 interface ScrapeState {
