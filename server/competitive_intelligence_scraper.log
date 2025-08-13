@@ -2039,3 +2039,375 @@
 2025-08-12 20:24:26,097 - INFO:  * Restarting with stat
 2025-08-12 20:24:26,741 - WARNING:  * Debugger is active!
 2025-08-12 20:24:26,746 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:43:29,880 - INFO: Scraping rss for Snowflake
+2025-08-13 15:43:32,718 - INFO: 127.0.0.1 - - [13/Aug/2025 15:43:32] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:43:32,746 - INFO: Scraping rss for Snowflake
+2025-08-13 15:43:37,012 - INFO: 127.0.0.1 - - [13/Aug/2025 15:43:37] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:43:48,639 - INFO: 127.0.0.1 - - [13/Aug/2025 15:43:48] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:44:05,517 - INFO: 127.0.0.1 - - [13/Aug/2025 15:44:05] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:44:14,587 - INFO: Scraping rss for Databricks
+2025-08-13 15:44:16,874 - INFO: 127.0.0.1 - - [13/Aug/2025 15:44:16] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:44:16,933 - INFO: Scraping rss for Databricks
+2025-08-13 15:44:19,310 - INFO: 127.0.0.1 - - [13/Aug/2025 15:44:19] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:44:19,316 - INFO: Scraping rss for Databricks
+2025-08-13 15:44:21,636 - INFO: 127.0.0.1 - - [13/Aug/2025 15:44:21] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:44:39,497 - INFO: 127.0.0.1 - - [13/Aug/2025 15:44:39] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:44:49,189 - INFO: 127.0.0.1 - - [13/Aug/2025 15:44:49] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:44:56,592 - INFO: Scraping rss for Datadog
+2025-08-13 15:44:58,886 - INFO: 127.0.0.1 - - [13/Aug/2025 15:44:58] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:44:58,892 - INFO: Scraping rss for Datadog
+2025-08-13 15:45:01,499 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:01] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:45:01,511 - INFO: Scraping rss for Datadog
+2025-08-13 15:45:04,091 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:04] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:45:04,098 - INFO: Scraping rss for Datadog
+2025-08-13 15:45:06,853 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:06] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:45:06,859 - INFO: Scraping rss for Datadog
+2025-08-13 15:45:09,455 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:09] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:45:24,549 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:24] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:45:40,157 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:40] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:45:50,134 - INFO: Scraping rss for PowerBI
+2025-08-13 15:45:53,163 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:53] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:45:53,183 - INFO: Scraping rss for PowerBI
+2025-08-13 15:45:55,431 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:45:55,437 - INFO: Scraping rss for PowerBI
+2025-08-13 15:45:58,066 - INFO: 127.0.0.1 - - [13/Aug/2025 15:45:58] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 15:46:12,285 - INFO: 127.0.0.1 - - [13/Aug/2025 15:46:12] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:46:28,009 - INFO: 127.0.0.1 - - [13/Aug/2025 15:46:28] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:46:46,592 - INFO: 127.0.0.1 - - [13/Aug/2025 15:46:46] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:46:59,593 - INFO: 127.0.0.1 - - [13/Aug/2025 15:46:59] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 15:47:07,902 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:47:08,016 - INFO:  * Restarting with stat
+2025-08-13 15:47:09,091 - WARNING:  * Debugger is active!
+2025-08-13 15:47:09,101 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:49:28,484 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:49:28,551 - INFO:  * Restarting with stat
+2025-08-13 15:49:29,188 - WARNING:  * Debugger is active!
+2025-08-13 15:49:29,193 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:50:57,259 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:50:57,341 - INFO:  * Restarting with stat
+2025-08-13 15:50:58,010 - WARNING:  * Debugger is active!
+2025-08-13 15:50:58,017 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:51:04,087 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:51:04,178 - INFO:  * Restarting with stat
+2025-08-13 15:51:04,673 - WARNING:  * Debugger is active!
+2025-08-13 15:51:04,677 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:51:06,697 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:51:06,769 - INFO:  * Restarting with stat
+2025-08-13 15:51:07,260 - WARNING:  * Debugger is active!
+2025-08-13 15:51:07,265 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:51:11,308 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:51:11,390 - INFO:  * Restarting with stat
+2025-08-13 15:51:11,892 - WARNING:  * Debugger is active!
+2025-08-13 15:51:11,919 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:51:13,950 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:51:14,053 - INFO:  * Restarting with stat
+2025-08-13 15:51:14,544 - WARNING:  * Debugger is active!
+2025-08-13 15:51:14,548 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:51:41,833 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:51:41,902 - INFO:  * Restarting with stat
+2025-08-13 15:51:42,534 - WARNING:  * Debugger is active!
+2025-08-13 15:51:42,543 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:51:43,558 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:51:43,636 - INFO:  * Restarting with stat
+2025-08-13 15:51:44,141 - WARNING:  * Debugger is active!
+2025-08-13 15:51:44,146 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:51:50,209 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:51:50,295 - INFO:  * Restarting with stat
+2025-08-13 15:51:50,781 - WARNING:  * Debugger is active!
+2025-08-13 15:51:50,785 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:52:21,198 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:52:21,300 - INFO:  * Restarting with stat
+2025-08-13 15:52:21,925 - WARNING:  * Debugger is active!
+2025-08-13 15:52:21,929 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:52:23,955 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:52:24,034 - INFO:  * Restarting with stat
+2025-08-13 15:52:24,551 - WARNING:  * Debugger is active!
+2025-08-13 15:52:24,555 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:53:01,960 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:53:02,083 - INFO:  * Restarting with stat
+2025-08-13 15:53:02,722 - WARNING:  * Debugger is active!
+2025-08-13 15:53:02,730 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:53:03,752 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:53:03,843 - INFO:  * Restarting with stat
+2025-08-13 15:53:04,347 - WARNING:  * Debugger is active!
+2025-08-13 15:53:04,351 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:53:14,462 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:53:14,560 - INFO:  * Restarting with stat
+2025-08-13 15:53:15,185 - WARNING:  * Debugger is active!
+2025-08-13 15:53:15,189 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:53:19,244 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:53:19,334 - INFO:  * Restarting with stat
+2025-08-13 15:53:19,840 - WARNING:  * Debugger is active!
+2025-08-13 15:53:19,845 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:53:22,883 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:53:22,975 - INFO:  * Restarting with stat
+2025-08-13 15:53:23,494 - WARNING:  * Debugger is active!
+2025-08-13 15:53:23,500 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:53:37,640 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:53:37,826 - INFO:  * Restarting with stat
+2025-08-13 15:53:38,420 - WARNING:  * Debugger is active!
+2025-08-13 15:53:38,424 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:53:52,561 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:53:52,648 - INFO:  * Restarting with stat
+2025-08-13 15:53:53,213 - WARNING:  * Debugger is active!
+2025-08-13 15:53:53,217 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:54:34,792 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:54:34,924 - INFO:  * Restarting with stat
+2025-08-13 15:54:35,690 - WARNING:  * Debugger is active!
+2025-08-13 15:54:35,701 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:54:41,768 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:54:41,856 - INFO:  * Restarting with stat
+2025-08-13 15:54:42,542 - WARNING:  * Debugger is active!
+2025-08-13 15:54:42,553 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:54:46,587 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:54:46,666 - INFO:  * Restarting with stat
+2025-08-13 15:54:47,167 - WARNING:  * Debugger is active!
+2025-08-13 15:54:47,181 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:54:54,259 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:54:54,362 - INFO:  * Restarting with stat
+2025-08-13 15:54:54,939 - WARNING:  * Debugger is active!
+2025-08-13 15:54:54,951 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:55:13,151 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:55:13,261 - INFO:  * Restarting with stat
+2025-08-13 15:55:13,945 - WARNING:  * Debugger is active!
+2025-08-13 15:55:13,949 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:55:20,023 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:55:20,123 - INFO:  * Restarting with stat
+2025-08-13 15:55:20,775 - WARNING:  * Debugger is active!
+2025-08-13 15:55:20,779 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:55:30,996 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:55:31,098 - INFO:  * Restarting with stat
+2025-08-13 15:55:31,780 - WARNING:  * Debugger is active!
+2025-08-13 15:55:31,784 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:55:43,917 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:55:44,039 - INFO:  * Restarting with stat
+2025-08-13 15:55:44,748 - WARNING:  * Debugger is active!
+2025-08-13 15:55:44,753 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:55:50,814 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:55:50,904 - INFO:  * Restarting with stat
+2025-08-13 15:55:51,597 - WARNING:  * Debugger is active!
+2025-08-13 15:55:51,602 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:56:44,186 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:56:44,299 - INFO:  * Restarting with stat
+2025-08-13 15:56:45,017 - WARNING:  * Debugger is active!
+2025-08-13 15:56:45,024 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:56:55,120 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:56:55,197 - INFO:  * Restarting with stat
+2025-08-13 15:56:55,945 - WARNING:  * Debugger is active!
+2025-08-13 15:56:55,949 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:57:13,114 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:57:13,235 - INFO:  * Restarting with stat
+2025-08-13 15:57:14,028 - WARNING:  * Debugger is active!
+2025-08-13 15:57:14,033 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:57:17,073 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:57:17,160 - INFO:  * Restarting with stat
+2025-08-13 15:57:17,767 - WARNING:  * Debugger is active!
+2025-08-13 15:57:17,773 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:57:18,793 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:57:18,885 - INFO:  * Restarting with stat
+2025-08-13 15:57:19,385 - WARNING:  * Debugger is active!
+2025-08-13 15:57:19,390 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 15:58:18,127 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/unified_competitive_monitor.py', reloading
+2025-08-13 15:58:18,239 - INFO:  * Restarting with stat
+2025-08-13 15:58:18,913 - WARNING:  * Debugger is active!
+2025-08-13 15:58:18,918 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:07:26,881 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:07:26,982 - INFO:  * Restarting with stat
+2025-08-13 16:07:27,767 - WARNING:  * Debugger is active!
+2025-08-13 16:07:27,774 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:07:52,029 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:07:52,120 - INFO:  * Restarting with stat
+2025-08-13 16:07:52,841 - WARNING:  * Debugger is active!
+2025-08-13 16:07:52,846 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:08:03,945 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:08:04,034 - INFO:  * Restarting with stat
+2025-08-13 16:08:04,786 - WARNING:  * Debugger is active!
+2025-08-13 16:08:04,811 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:08:06,866 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:08:06,952 - INFO:  * Restarting with stat
+2025-08-13 16:08:07,484 - WARNING:  * Debugger is active!
+2025-08-13 16:08:07,491 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:08:08,505 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:08:08,576 - INFO:  * Restarting with stat
+2025-08-13 16:08:09,101 - WARNING:  * Debugger is active!
+2025-08-13 16:08:09,107 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:08:11,132 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:08:11,216 - INFO:  * Restarting with stat
+2025-08-13 16:08:11,779 - WARNING:  * Debugger is active!
+2025-08-13 16:08:11,783 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:08:23,803 - INFO: Scraping rss for Snowflake
+2025-08-13 16:08:26,313 - INFO: 127.0.0.1 - - [13/Aug/2025 16:08:26] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:08:26,329 - INFO: Scraping rss for Snowflake
+2025-08-13 16:08:26,954 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:08:27,032 - INFO:  * Restarting with stat
+2025-08-13 16:08:27,822 - WARNING:  * Debugger is active!
+2025-08-13 16:08:27,828 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:08:34,897 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:08:34,972 - INFO:  * Restarting with stat
+2025-08-13 16:08:35,791 - WARNING:  * Debugger is active!
+2025-08-13 16:08:35,800 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:08:57,999 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/targeted_bi_monitor.py', reloading
+2025-08-13 16:08:58,105 - INFO:  * Restarting with stat
+2025-08-13 16:08:58,808 - WARNING:  * Debugger is active!
+2025-08-13 16:08:58,815 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:06,905 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:06,999 - INFO:  * Restarting with stat
+2025-08-13 16:09:07,814 - WARNING:  * Debugger is active!
+2025-08-13 16:09:07,819 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:08,837 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:08,926 - INFO:  * Restarting with stat
+2025-08-13 16:09:09,425 - WARNING:  * Debugger is active!
+2025-08-13 16:09:09,429 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:12,474 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:12,607 - INFO:  * Restarting with stat
+2025-08-13 16:09:13,859 - WARNING:  * Debugger is active!
+2025-08-13 16:09:13,866 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:15,910 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:15,988 - INFO:  * Restarting with stat
+2025-08-13 16:09:16,574 - WARNING:  * Debugger is active!
+2025-08-13 16:09:16,581 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:18,613 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:18,697 - INFO:  * Restarting with stat
+2025-08-13 16:09:19,293 - WARNING:  * Debugger is active!
+2025-08-13 16:09:19,297 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:24,347 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:24,435 - INFO:  * Restarting with stat
+2025-08-13 16:09:24,977 - WARNING:  * Debugger is active!
+2025-08-13 16:09:24,982 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:40,133 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:40,241 - INFO:  * Restarting with stat
+2025-08-13 16:09:40,942 - WARNING:  * Debugger is active!
+2025-08-13 16:09:40,946 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:40,954 - INFO: Scraping rss for Snowflake
+2025-08-13 16:09:43,353 - INFO: 127.0.0.1 - - [13/Aug/2025 16:09:43] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:09:43,378 - INFO: Scraping rss for Snowflake
+2025-08-13 16:09:45,003 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:09:45,083 - INFO:  * Restarting with stat
+2025-08-13 16:09:45,642 - WARNING:  * Debugger is active!
+2025-08-13 16:09:45,648 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:09:58,590 - INFO: 127.0.0.1 - - [13/Aug/2025 16:09:58] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:10:04,818 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:10:04,895 - INFO:  * Restarting with stat
+2025-08-13 16:10:05,663 - WARNING:  * Debugger is active!
+2025-08-13 16:10:05,674 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:10:08,719 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:10:08,799 - INFO:  * Restarting with stat
+2025-08-13 16:10:09,342 - WARNING:  * Debugger is active!
+2025-08-13 16:10:09,351 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:10:10,369 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:10:10,450 - INFO:  * Restarting with stat
+2025-08-13 16:10:11,009 - WARNING:  * Debugger is active!
+2025-08-13 16:10:11,013 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:10:15,057 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:10:15,138 - INFO:  * Restarting with stat
+2025-08-13 16:10:15,646 - WARNING:  * Debugger is active!
+2025-08-13 16:10:15,651 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:10:27,728 - INFO: Scraping rss for Databricks
+2025-08-13 16:10:29,911 - INFO: 127.0.0.1 - - [13/Aug/2025 16:10:29] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:10:29,916 - INFO: Scraping rss for Databricks
+2025-08-13 16:10:32,289 - INFO: 127.0.0.1 - - [13/Aug/2025 16:10:32] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:10:32,296 - INFO: Scraping rss for Databricks
+2025-08-13 16:10:34,500 - INFO: 127.0.0.1 - - [13/Aug/2025 16:10:34] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:10:34,988 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:10:35,086 - INFO:  * Restarting with stat
+2025-08-13 16:10:36,010 - WARNING:  * Debugger is active!
+2025-08-13 16:10:36,028 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:10:40,064 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:10:40,159 - INFO:  * Restarting with stat
+2025-08-13 16:10:40,685 - WARNING:  * Debugger is active!
+2025-08-13 16:10:40,690 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:10:44,735 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:10:44,811 - INFO:  * Restarting with stat
+2025-08-13 16:10:45,352 - WARNING:  * Debugger is active!
+2025-08-13 16:10:45,359 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:10:53,775 - INFO: Scraping rss for PowerBI
+2025-08-13 16:10:55,999 - INFO: 127.0.0.1 - - [13/Aug/2025 16:10:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:10:56,005 - INFO: Scraping rss for PowerBI
+2025-08-13 16:10:58,127 - INFO: 127.0.0.1 - - [13/Aug/2025 16:10:58] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:10:58,131 - INFO: Scraping rss for PowerBI
+2025-08-13 16:11:00,434 - INFO: 127.0.0.1 - - [13/Aug/2025 16:11:00] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:11:00,442 - INFO: Scraping rss for PowerBI
+2025-08-13 16:11:02,721 - INFO: 127.0.0.1 - - [13/Aug/2025 16:11:02] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:11:02,728 - INFO: Scraping rss for PowerBI
+2025-08-13 16:11:05,198 - INFO: 127.0.0.1 - - [13/Aug/2025 16:11:05] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:11:17,131 - INFO: 127.0.0.1 - - [13/Aug/2025 16:11:17] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:11:59,830 - INFO: 127.0.0.1 - - [13/Aug/2025 16:11:59] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:12:19,177 - INFO: 127.0.0.1 - - [13/Aug/2025 16:12:19] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:12:34,415 - INFO: 127.0.0.1 - - [13/Aug/2025 16:12:34] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:13:13,435 - INFO: 127.0.0.1 - - [13/Aug/2025 16:13:13] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:13:50,093 - INFO: 127.0.0.1 - - [13/Aug/2025 16:13:50] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:14:25,869 - INFO: Scraping rss for Looker
+2025-08-13 16:14:28,478 - INFO: 127.0.0.1 - - [13/Aug/2025 16:14:28] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:14:28,545 - INFO: Scraping rss for Looker
+2025-08-13 16:14:33,045 - INFO: 127.0.0.1 - - [13/Aug/2025 16:14:33] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:14:44,999 - INFO: 127.0.0.1 - - [13/Aug/2025 16:14:44] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:14:52,400 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:14:52,560 - INFO:  * Restarting with stat
+2025-08-13 16:14:53,380 - WARNING:  * Debugger is active!
+2025-08-13 16:14:53,389 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:15:19,893 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:15:20,031 - INFO:  * Restarting with stat
+2025-08-13 16:15:21,025 - WARNING:  * Debugger is active!
+2025-08-13 16:15:21,039 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:15:33,121 - INFO: 127.0.0.1 - - [13/Aug/2025 16:15:33] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:15:44,350 - INFO: 127.0.0.1 - - [13/Aug/2025 16:15:44] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:15:57,379 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:15:57,471 - INFO:  * Restarting with stat
+2025-08-13 16:15:58,247 - WARNING:  * Debugger is active!
+2025-08-13 16:15:58,252 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:16:08,427 - INFO: 127.0.0.1 - - [13/Aug/2025 16:16:08] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:16:12,396 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:16:12,487 - INFO:  * Restarting with stat
+2025-08-13 16:16:13,235 - WARNING:  * Debugger is active!
+2025-08-13 16:16:13,242 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:16:37,473 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:16:37,582 - INFO:  * Restarting with stat
+2025-08-13 16:16:38,307 - WARNING:  * Debugger is active!
+2025-08-13 16:16:38,311 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:16:54,379 - INFO: 127.0.0.1 - - [13/Aug/2025 16:16:54] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:17:24,898 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:17:25,000 - INFO:  * Restarting with stat
+2025-08-13 16:17:26,133 - WARNING:  * Debugger is active!
+2025-08-13 16:17:26,144 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:18:03,799 - INFO: 127.0.0.1 - - [13/Aug/2025 16:18:03] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:19:13,783 - INFO: 127.0.0.1 - - [13/Aug/2025 16:19:13] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:19:27,503 - INFO: 127.0.0.1 - - [13/Aug/2025 16:19:27] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:20:01,879 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:20:01,980 - INFO:  * Restarting with stat
+2025-08-13 16:20:02,721 - WARNING:  * Debugger is active!
+2025-08-13 16:20:02,728 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:21:15,355 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/targeted_bi_monitor.py', reloading
+2025-08-13 16:21:15,436 - INFO:  * Restarting with stat
+2025-08-13 16:21:16,073 - WARNING:  * Debugger is active!
+2025-08-13 16:21:16,078 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:21:17,094 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:21:17,185 - INFO:  * Restarting with stat
+2025-08-13 16:21:17,707 - WARNING:  * Debugger is active!
+2025-08-13 16:21:17,714 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:21:27,807 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:21:27,893 - INFO:  * Restarting with stat
+2025-08-13 16:21:28,444 - WARNING:  * Debugger is active!
+2025-08-13 16:21:28,449 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:21:44,599 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:21:44,690 - INFO:  * Restarting with stat
+2025-08-13 16:21:45,238 - WARNING:  * Debugger is active!
+2025-08-13 16:21:45,244 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:21:46,260 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:21:46,334 - INFO:  * Restarting with stat
+2025-08-13 16:21:46,973 - WARNING:  * Debugger is active!
+2025-08-13 16:21:46,980 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:21:49,005 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:21:49,114 - INFO:  * Restarting with stat
+2025-08-13 16:21:49,689 - WARNING:  * Debugger is active!
+2025-08-13 16:21:49,698 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:21:52,264 - INFO: Scraping rss for Snowflake
+2025-08-13 16:21:54,773 - INFO: 127.0.0.1 - - [13/Aug/2025 16:21:54] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:21:54,804 - INFO: Scraping rss for Snowflake
+2025-08-13 16:21:57,875 - INFO: 127.0.0.1 - - [13/Aug/2025 16:21:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-13 16:22:10,682 - INFO: 127.0.0.1 - - [13/Aug/2025 16:22:10] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-13 16:22:24,131 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:22:24,221 - INFO:  * Restarting with stat
+2025-08-13 16:22:25,083 - WARNING:  * Debugger is active!
+2025-08-13 16:22:25,094 - INFO:  * Debugger PIN: 297-482-426
+2025-08-13 16:22:32,162 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
+2025-08-13 16:22:32,239 - INFO:  * Restarting with stat

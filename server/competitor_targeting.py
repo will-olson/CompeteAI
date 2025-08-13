@@ -1,0 +1,16 @@
+COMPETITORS = [
+    {"name": "Snowflake", "domain": "https://www.snowflake.com/", "docs": ["https://docs.snowflake.com/"]},
+    {"name": "Databricks", "domain": "https://www.databricks.com/", "docs": ["https://docs.databricks.com/"]},
+    {"name": "PowerBI", "domain": "https://powerbi.microsoft.com/", "docs": ["https://learn.microsoft.com/en-us/power-bi/"]},
+    {"name": "Tableau", "domain": "https://www.tableau.com/", "docs": ["https://help.tableau.com/"]},
+    {"name": "Omni", "domain": "https://www.omni.co/", "docs": ["https://docs.omni.co/docs", "https://docs.omni.co/"]},
+    {"name": "Looker", "domain": "https://cloud.google.com/looker", "docs": ["https://cloud.google.com/looker/docs/intro", "https://cloud.google.com/looker/docs"]},
+    {"name": "Oracle", "domain": "https://www.oracle.com/business-analytics/business-intelligence/technologies/bi-enterprise-edition.html", "docs": ["https://docs.oracle.com/middleware/bi12214/biee/index.html", "https://docs.oracle.com/"]},
+    {"name": "SAP BusinessObjects", "domain": "https://www.sap.com/products/data-cloud/bi-platform.html", "docs": ["https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE?version=4.2", "https://help.sap.com/"]},
+    {"name": "Qlik", "domain": "https://www.qlik.com/", "docs": ["https://help.qlik.com/"]},
+    {"name": "MicroStrategy", "domain": "https://www.microstrategy.com/", "docs": ["https://community.microstrategy.com/s/documentation?language=en_US", "https://www2.microstrategy.com/producthelp/"]},
+    {"name": "Hex", "domain": "https://hex.tech/", "docs": ["https://learn.hex.tech/docs", "https://docs.hex.tech/"]},
+    {"name": "Thoughtspot", "domain": "https://www.thoughtspot.com/", "docs": ["https://docs.thoughtspot.com/home"]},
+    {"name": "Domo", "domain": "https://www.domo.com/", "docs": ["https://domo-support.domo.com/s/knowledge-base?language=en_US", "https://developer.domo.com/"]},
+    {"name": "IBM Cognos", "domain": "https://www.ibm.com/products/cognos-analytics", "docs": ["https://www.ibm.com/docs/en/cognos-analytics"]},
+]
