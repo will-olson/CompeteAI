@@ -148,6 +148,88 @@ def scrape_company():
             'message': str(e)
         }), 500
 
+# 12-hour MVP enhancement: Enhanced technical scraping endpoint
+@app.route('/api/scrape/technical', methods=['POST'])
+def scrape_technical_content():
+    """Enhanced scraping with technical content focus"""
+    try:
+        data = request.json
+        required_fields = ['company', 'urls']
+        
+        for field in required_fields:
+            if field not in data:
+                return jsonify({
+                    'error': f'Missing required field: {field}'
+                }), 400
+        
+        # Use enhanced technical scraping
+        technical_results = scraper.enhanced_technical_scraping(
+            company=data['company'],
+            urls=data['urls']
+        )
+        
+        return jsonify({
+            'company': data['company'],
+            'technical_results': technical_results,
+            'scraped_at': datetime.now().isoformat(),
+            'total_categories': len(technical_results),
+            'successful_scrapes': len([r for r in technical_results.values() if 'error' not in r])
+        })
+    
+    except Exception as e:
+        logger.error(f"Error in technical scraping: {str(e)}")
+        return jsonify({
+            'error': 'Failed to perform technical scraping',
+            'message': str(e)
+        }), 500
+
+# 12-hour MVP enhancement: Technical content analysis endpoint
+@app.route('/api/ai/analyze-technical', methods=['POST'])
+def analyze_technical_content():
+    """AI analysis of technical content with industry expertise"""
+    try:
+        data = request.json
+        required_fields = ['content', 'company', 'category', 'contentType', 'industry']
+        
+        for field in required_fields:
+            if field not in data:
+                return jsonify({
+                    'error': f'Missing required field: {field}'
+                }), 400
+        
+        # Prepare analysis request
+        analysis_request = {
+            'content': data['content'],
+            'company': data['company'],
+            'category': data['category'],
+            'contentType': data['contentType'],
+            'industry': data['industry'],
+            'technicalDepth': data.get('technicalDepth', 'intermediate'),
+            'title': data.get('title', ''),
+            'focus_areas': data.get('focus_areas', [])
+        }
+        
+        # Perform technical analysis
+        analysis_result = ai_analyzer.analyze_technical_content(analysis_request)
+        
+        return jsonify({
+            'analysis': analysis_result,
+            'metadata': {
+                'company': data['company'],
+                'category': data['category'],
+                'contentType': data['contentType'],
+                'industry': data['industry'],
+                'analyzed_at': datetime.now().isoformat()
+            }
+        })
+    
+    except Exception as e:
+        logger.error(f"Error in technical content analysis: {str(e)}")
+        return jsonify({
+            'error': 'Failed to analyze technical content',
+            'message': str(e)
+        }), 500
+
 @app.route('/api/scrape/group', methods=['POST'])
 def scrape_group():
     """Scrape data for an entire competitor group"""
@@ -525,6 +607,115 @@ def get_analytics_summary():
         logger.error(f"Error generating analytics summary: {str(e)}")
         return jsonify({
             'error': 'Failed to generate analytics summary',
+            'message': str(e)
+        }), 500
+
+# 12-hour MVP enhancement: Technical content quality metrics endpoint
+@app.route('/api/analytics/technical-quality', methods=['POST'])
+def get_technical_quality_metrics():
+    """Get technical content quality metrics for scraped data"""
+    try:
+        data = request.json
+        scraped_data = data.get('data', {})
+        
+        if not scraped_data:
+            return jsonify({
+                'error': 'No data provided for analysis'
+            }), 400
+        
+        # Calculate technical quality metrics
+        quality_metrics = {
+            'overview': {
+                'total_items': 0,
+                'high_quality_items': 0,
+                'technical_relevance_score': 0.0,
+                'average_quality_score': 0.0
+            },
+            'by_category': {},
+            'by_company': {},
+            'technical_insights': []
+        }
+        
+        total_quality_score = 0
+        total_technical_relevance = 0
+        item_count = 0
+        
+        # Process company data
+        for company, company_data in scraped_data.get('companies', {}).items():
+            company_metrics = {
+                'total_items': 0,
+                'quality_score': 0.0,
+                'technical_relevance': 0.0
+            }
+            
+            # Process category data
+            for category, category_data in company_data.get('categories', {}).items():
+                if category not in quality_metrics['by_category']:
+                    quality_metrics['by_category'][category] = {
+                        'total_items': 0,
+                        'quality_score': 0.0,
+                        'technical_relevance': 0.0
+                    }
+                
+                # Process individual items
+                for item in category_data.get('items', []):
+                    item_count += 1
+                    company_metrics['total_items'] += 1
+                    quality_metrics['by_category'][category]['total_items'] += 1
+                    
+                    # Extract quality metrics
+                    quality_score = item.get('metadata', {}).get('quality_score', 0)
+                    technical_relevance = item.get('metadata', {}).get('technical_relevance', 0)
+                    
+                    if quality_score > 0:
+                        total_quality_score += quality_score
+                        company_metrics['quality_score'] += quality_score
+                        quality_metrics['by_category'][category]['quality_score'] += quality_score
+                        
+                        if quality_score >= 8.0:
+                            quality_metrics['overview']['high_quality_items'] += 1
+                    
+                    if technical_relevance > 0:
+                        total_technical_relevance += technical_relevance
+                        company_metrics['technical_relevance'] += technical_relevance
+                        quality_metrics['by_category'][category]['technical_relevance'] += technical_relevance
+                    
+                    # Add technical insights for high-quality items
+                    if quality_score >= 7.0 and technical_relevance >= 0.7:
+                        quality_metrics['technical_insights'].append({
+                            'company': company,
+                            'category': category,
+                            'title': item.get('title', 'N/A'),
+                            'quality_score': quality_score,
+                            'technical_relevance': technical_relevance,
+                            'key_features': item.get('metadata', {}).get('key_topics', [])
+                        })
+            
+            # Calculate company averages
+            if company_metrics['total_items'] > 0:
+                company_metrics['quality_score'] = round(company_metrics['quality_score'] / company_metrics['total_items'], 2)
+                company_metrics['technical_relevance'] = round(company_metrics['technical_relevance'] / company_metrics['total_items'], 2)
+            
+            quality_metrics['by_company'][company] = company_metrics
+        
+        # Calculate category averages
+        for category, metrics in quality_metrics['by_category'].items():
+            if metrics['total_items'] > 0:
+                metrics['quality_score'] = round(metrics['quality_score'] / metrics['total_items'], 2)
+                metrics['technical_relevance'] = round(metrics['technical_relevance'] / metrics['total_items'], 2)
+        
+        # Calculate overall metrics
+        if item_count > 0:
+            quality_metrics['overview']['total_items'] = item_count
+            quality_metrics['overview']['average_quality_score'] = round(total_quality_score / item_count, 2)
+            quality_metrics['overview']['technical_relevance_score'] = round(total_technical_relevance / item_count, 2)
+        
+        return jsonify(quality_metrics)
+    
+    except Exception as e:
+        logger.error(f"Error calculating technical quality metrics: {str(e)}")
+        return jsonify({
+            'error': 'Failed to calculate technical quality metrics',
             'message': str(e)
         }), 500
 

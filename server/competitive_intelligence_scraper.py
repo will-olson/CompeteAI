@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 import csv
 import markdown
 import docx
+from functools import wraps
 
 # Load environment variables
 load_dotenv()
@@ -31,9 +32,28 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+def rate_limited(max_per_second=2):
+    """Simple rate limiting decorator for respectful crawling"""
+    def decorator(func):
+        last_called = {}
+        
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            now = time.time()
+            if func.__name__ in last_called:
+                time_since_last = now - last_called[func.__name__]
+                if time_since_last < 1.0 / max_per_second:
+                    time.sleep(1.0 / max_per_second - time_since_last)
+            
+            last_called[func.__name__] = time.time()
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
 class CompetitiveIntelligenceScraper:
     """
     Comprehensive competitive intelligence scraper supporting multiple data sources
+    with enhanced technical content extraction
     """
     
     def __init__(self, firecrawl_api_key: Optional[str] = None):
@@ -45,6 +65,14 @@ class CompetitiveIntelligenceScraper:
         
         # Initialize preset competitor groups
         self.preset_groups = self._initialize_preset_groups()
+        
+        # Technical content keywords for relevance scoring
+        self.technical_keywords = {
+            'api_docs': ['api', 'endpoint', 'authentication', 'rate limit', 'response', 'request', 'headers', 'parameters'],
+            'pricing': ['price', 'plan', 'tier', 'billing', 'subscription', 'cost', 'pricing', 'enterprise'],
+            'features': ['feature', 'capability', 'functionality', 'integration', 'workflow', 'automation'],
+            'integrations': ['webhook', 'oauth', 'sdk', 'plugin', 'connector', 'api key', 'authentication']
+        }
         
     def _initialize_preset_groups(self) -> Dict[str, Dict[str, Any]]:
         """Initialize preset competitor groups for quick analysis"""
@@ -720,6 +748,273 @@ class CompetitiveIntelligenceScraper:
             return self._generate_mock_social_data(url, page_limit)
         else:
             return []
+
+    def enhanced_technical_scraping(self, company: str, urls: Dict[str, str]) -> Dict[str, Any]:
+        """Enhanced scraping with technical content focus - 12-hour MVP enhancement"""
+        results = {}
+        
+        for category, url in urls.items():
+            try:
+                logger.info(f"Enhanced technical scraping for {company} - {category}")
+                
+                # Use existing scraping logic
+                content = self._scrape_url(url)
+                
+                # Enhanced content extraction
+                structured_data = self._extract_technical_content(content)
+                
+                # Quality scoring
+                quality_score = self._calculate_content_quality(structured_data)
+                
+                # Technical relevance assessment
+                technical_relevance = self._assess_technical_relevance(category, content)
+                
+                results[category] = {
+                    'content': structured_data,
+                    'quality_score': quality_score,
+                    'technical_relevance': technical_relevance,
+                    'scraped_at': datetime.now().isoformat(),
+                    'url': url
+                }
+                
+            except Exception as e:
+                logger.error(f"Error in enhanced technical scraping for {category}: {str(e)}")
+                results[category] = {'error': str(e)}
+        
+        return results
+
+    def _extract_technical_content(self, html_content: str) -> Dict[str, Any]:
+        """Extract technical content using existing BeautifulSoup - 12-hour MVP enhancement"""
+        try:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            
+            # Extract tables (existing functionality)
+            tables = soup.find_all('table')
+            table_data = []
+            for table in tables:
+                table_data.append({
+                    'html': str(table),
+                    'text': table.get_text(strip=True),
+                    'rows': len(table.find_all('tr')),
+                    'columns': len(table.find_all('th')) or len(table.find_all('td', limit=1))
+                })
+            
+            # Extract code blocks
+            code_blocks = soup.find_all(['code', 'pre'])
+            code_data = []
+            for block in code_blocks:
+                code_data.append({
+                    'html': str(block),
+                    'text': block.get_text(strip=True),
+                    'language': self._detect_code_language(block),
+                    'length': len(block.get_text())
+                })
+            
+            # Extract links (existing functionality)
+            links = soup.find_all('a')
+            link_data = []
+            for link in links:
+                href = link.get('href')
+                if href:
+                    link_data.append({
+                        'url': href,
+                        'text': link.get_text(strip=True),
+                        'title': link.get('title', ''),
+                        'is_external': self._is_external_link(href)
+                    })
+            
+            # Extract technical metadata
+            technical_metadata = self._extract_technical_metadata(soup)
+            
+            return {
+                'tables': table_data,
+                'code_blocks': code_data,
+                'links': link_data,
+                'text_content': soup.get_text(strip=True),
+                'technical_metadata': technical_metadata,
+                'has_forms': len(soup.find_all('form')) > 0,
+                'has_images': len(soup.find_all('img')) > 0,
+                'has_videos': len(soup.find_all(['video', 'iframe'])) > 0
+            }
+            
+        except Exception as e:
+            logger.error(f"Error extracting technical content: {str(e)}")
+            return {
+                'error': str(e),
+                'text_content': html_content[:1000] if html_content else '',
+                'tables': [],
+                'code_blocks': [],
+                'links': []
+            }
+
+    def _detect_code_language(self, code_block) -> str:
+        """Detect programming language from code block"""
+        try:
+            # Check for language class
+            class_attr = code_block.get('class', [])
+            for cls in class_attr:
+                if cls.startswith('language-'):
+                    return cls.replace('language-', '')
+            
+            # Check for data attributes
+            data_lang = code_block.get('data-lang')
+            if data_lang:
+                return data_lang
+            
+            # Simple keyword-based detection
+            text = code_block.get_text().lower()
+            if any(keyword in text for keyword in ['function', 'var ', 'const ', 'let ']):
+                return 'javascript'
+            elif any(keyword in text for keyword in ['def ', 'import ', 'class ']):
+                return 'python'
+            elif any(keyword in text for keyword in ['public class', 'private ', 'public ']):
+                return 'java'
+            elif any(keyword in text for keyword in ['<?php', 'function ', '$']):
+                return 'php'
+            else:
+                return 'unknown'
+                
+        except Exception:
+            return 'unknown'
+
+    def _is_external_link(self, url: str) -> bool:
+        """Check if link is external"""
+        try:
+            parsed = urlparse(url)
+            return bool(parsed.netloc and parsed.netloc not in ['localhost', '127.0.0.1'])
+        except Exception:
+            return False
+
+    def _extract_technical_metadata(self, soup) -> Dict[str, Any]:
+        """Extract technical metadata from HTML"""
+        metadata = {}
+        
+        try:
+            # Meta tags
+            meta_tags = soup.find_all('meta')
+            for meta in meta_tags:
+                name_attr = meta.get('name', None)
+                prop_attr = meta.get('property', None)
+                key = name_attr or prop_attr
+                content = meta.get('content', '')
+                if key and content:
+                    metadata[key] = content
+            
+            # Schema.org structured data
+            schema_scripts = soup.find_all('script', type='application/ld+json')
+            for script in schema_scripts:
+                try:
+                    if script.string:
+                        schema_data = json.loads(script.string)
+                        if isinstance(schema_data, dict):
+                            metadata['schema'] = schema_data
+                except json.JSONDecodeError:
+                    continue
+            
+            # Open Graph tags
+            og_tags = soup.find_all('meta', attrs={'property': lambda x: x and x.startswith('og:')})
+            for tag in og_tags:
+                property_name = tag.get('property', '')
+                if property_name:
+                    metadata[property_name] = tag.get('content', '')
+            
+            # Twitter Card tags (use attrs to avoid name param conflict)
+            twitter_tags = soup.find_all('meta', attrs={'name': lambda x: x and x.startswith('twitter:')})
+            for tag in twitter_tags:
+                n = tag.get('name', '')
+                if n:
+                    metadata[n] = tag.get('content', '')
+                    
+        except Exception as e:
+            logger.error(f"Error extracting technical metadata: {str(e)}")
+        
+        return metadata
+
+    def _assess_technical_relevance(self, category: str, content: str) -> float:
+        """Quick technical relevance scoring - 12-hour MVP enhancement"""
+        try:
+            if category in self.technical_keywords:
+                keywords = self.technical_keywords[category]
+                content_lower = content.lower()
+                matches = sum(1 for keyword in keywords if keyword.lower() in content_lower)
+                relevance_score = min(1.0, matches / len(keywords))
+                
+                # Boost score for technical content types
+                if category in ['api_docs', 'integrations']:
+                    relevance_score = min(1.0, relevance_score * 1.2)
+                
+                return round(relevance_score, 2)
+            
+            return 0.5
+            
+        except Exception as e:
+            logger.error(f"Error assessing technical relevance: {str(e)}")
+            return 0.5
+
+    def _calculate_content_quality(self, structured_data: Dict[str, Any]) -> float:
+        """Calculate content quality score - 12-hour MVP enhancement"""
+        try:
+            score = 0.0
+            max_score = 10.0
+            
+            # Text content quality (40% of score)
+            text_content = structured_data.get('text_content', '')
+            if text_content:
+                word_count = len(text_content.split())
+                if word_count > 1000:
+                    score += 4.0
+                elif word_count > 500:
+                    score += 3.0
+                elif word_count > 100:
+                    score += 2.0
+                else:
+                    score += 1.0
+            
+            # Technical content richness (30% of score)
+            tables = structured_data.get('tables', [])
+            code_blocks = structured_data.get('code_blocks', [])
+            links = structured_data.get('links', [])
+            
+            if tables:
+                score += 1.5
+            if code_blocks:
+                score += 1.5
+            if len(links) > 10:
+                score += 1.0
+            elif len(links) > 5:
+                score += 0.5
+            
+            # Metadata completeness (20% of score)
+            technical_metadata = structured_data.get('technical_metadata', {})
+            if technical_metadata.get('schema'):
+                score += 1.0
+            if technical_metadata.get('og:title'):
+                score += 0.5
+            if technical_metadata.get('description'):
+                score += 0.5
+            
+            # Content structure (10% of score)
+            if structured_data.get('has_forms'):
+                score += 0.5
+            if structured_data.get('has_images'):
+                score += 0.5
+            
+            return min(max_score, round(score, 1))
+            
+        except Exception as e:
+            logger.error(f"Error calculating content quality: {str(e)}")
+            return 5.0
+
+    @rate_limited(max_per_second=1)
+    def _scrape_url(self, url: str) -> str:
+        """Scrape URL with rate limiting - 12-hour MVP enhancement"""
+        try:
+            response = self.session.get(url, timeout=30)
+            response.raise_for_status()
+            return response.text
+        except Exception as e:
+            logger.error(f"Error scraping URL {url}: {str(e)}")
+            raise e
 
 
 # Example usage and testing

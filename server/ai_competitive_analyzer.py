@@ -42,6 +42,77 @@ class AICompetitiveAnalyzer:
         # Initialize analysis templates
         self.analysis_templates = self._initialize_analysis_templates()
         
+    def analyze_technical_content(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Analyze technical content with industry and content-type context.
+        Expected request fields: content, company, category, contentType, industry, technicalDepth
+        """
+        try:
+            content = request.get('content', '')
+            company = request.get('company', 'Unknown')
+            category = request.get('category', 'unknown')
+            content_type = request.get('contentType', 'api_docs')
+            industry = request.get('industry', 'tech-saas')
+            technical_depth = request.get('technicalDepth', 'intermediate')
+            title = request.get('title', '')
+            focus_areas = request.get('focus_areas', [])
+
+            system_context = (
+                f"You are an expert technical competitive intelligence analyst specializing in {industry}. "
+                f"Provide {technical_depth} depth analysis for {content_type}."
+            )
+
+            user_prompt = (
+                f"Analyze this {content_type} content from {company} (industry: {industry}).\n\n"
+                f"Title: {title}\n"
+                f"Category: {category}\n"
+                f"Focus Areas: {', '.join(focus_areas) if focus_areas else 'api, features, pricing, integrations, security'}\n\n"
+                f"Content:\n{content[:4000]}{'...' if len(content) > 4000 else ''}\n\n"
+                "Return a strict JSON object with keys: ai_analysis, sentiment_score (-1..1), key_topics (array), "
+                "competitive_insights (string), risk_factors (array), technical_recommendations (string)."
+            )
+
+            if not self.preferred_provider:
+                # Mock structured response when no AI keys configured
+                return {
+                    'ai_analysis': f"Mock technical analysis for {company} ({content_type}).",
+                    'sentiment_score': 0.0,
+                    'key_topics': ['api', 'authentication', 'pricing'],
+                    'competitive_insights': 'Mock insights: clear documentation; standard auth; usage-based pricing.',
+                    'risk_factors': ['Mock risk: rate limits may impact throughput'],
+                    'technical_recommendations': 'Mock recommendation: provide SDK examples and error handling guides.'
+                }
+
+            # Call underlying provider
+            prompt = f"System: {system_context}\n\nUser: {user_prompt}"
+            ai_response_text = self._get_ai_analysis(prompt, 'technical_content')
+
+            # Try to parse JSON if the model returned JSON
+            try:
+                parsed = json.loads(ai_response_text)
+                return {
+                    'ai_analysis': parsed.get('ai_analysis', ''),
+                    'sentiment_score': parsed.get('sentiment_score', 0),
+                    'key_topics': parsed.get('key_topics', []),
+                    'competitive_insights': parsed.get('competitive_insights', ''),
+                    'risk_factors': parsed.get('risk_factors', []),
+                    'technical_recommendations': parsed.get('technical_recommendations', '')
+                }
+            except Exception:
+                # Fallback: build a minimal structured response from free-form text
+                return {
+                    'ai_analysis': ai_response_text,
+                    'sentiment_score': 0,
+                    'key_topics': [],
+                    'competitive_insights': ai_response_text[:500],
+                    'risk_factors': [],
+                    'technical_recommendations': 'Review full analysis text for detailed recommendations.'
+                }
+        except Exception as e:
+            logger.error(f"Error in analyze_technical_content: {str(e)}")
+            return {
+                'error': str(e)
+            }
+    
     def _initialize_analysis_templates(self) -> Dict[str, str]:
         """Initialize analysis prompt templates"""
         return {

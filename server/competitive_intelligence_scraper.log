@@ -1694,3 +1694,142 @@
 2025-08-12 16:07:35,781 - INFO: 127.0.0.1 - - [12/Aug/2025 16:07:35] "GET /api/health HTTP/1.1" 200 -
 2025-08-12 16:07:51,382 - INFO: 127.0.0.1 - - [12/Aug/2025 16:07:51] "[33mGET / HTTP/1.1[0m" 404 -
 2025-08-12 16:07:51,624 - INFO: 127.0.0.1 - - [12/Aug/2025 16:07:51] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-12 19:24:21,401 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:3001
+ * Running on http://192.168.4.134:3001
+2025-08-12 19:24:21,401 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-12 19:24:21,403 - INFO:  * Restarting with stat
+2025-08-12 19:24:21,929 - WARNING:  * Debugger is active!
+2025-08-12 19:24:21,935 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 19:39:03,563 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:3001
+ * Running on http://192.168.4.134:3001
+2025-08-12 19:39:03,564 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-12 19:39:03,565 - INFO:  * Restarting with stat
+2025-08-12 19:39:04,090 - WARNING:  * Debugger is active!
+2025-08-12 19:39:04,103 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 19:39:07,223 - INFO: 127.0.0.1 - - [12/Aug/2025 19:39:07] "GET /api/health HTTP/1.1" 200 -
+2025-08-12 19:39:07,227 - INFO: 127.0.0.1 - - [12/Aug/2025 19:39:07] "GET /api/preset-groups HTTP/1.1" 200 -
+2025-08-12 19:39:07,229 - INFO: Enhanced technical scraping for OpenAI - api_docs
+2025-08-12 19:39:07,415 - ERROR: Error scraping URL https://platform.openai.com/docs: 403 Client Error: Forbidden for url: https://platform.openai.com/docs
+2025-08-12 19:39:07,415 - ERROR: Error in enhanced technical scraping for api_docs: 403 Client Error: Forbidden for url: https://platform.openai.com/docs
+2025-08-12 19:39:07,415 - INFO: Enhanced technical scraping for OpenAI - pricing
+2025-08-12 19:39:08,389 - ERROR: Error scraping URL https://openai.com/pricing: 403 Client Error: Forbidden for url: https://openai.com/pricing
+2025-08-12 19:39:08,389 - ERROR: Error in enhanced technical scraping for pricing: 403 Client Error: Forbidden for url: https://openai.com/pricing
+2025-08-12 19:39:08,389 - INFO: Enhanced technical scraping for OpenAI - features
+2025-08-12 19:39:09,355 - ERROR: Error scraping URL https://openai.com/features: 403 Client Error: Forbidden for url: https://openai.com/features
+2025-08-12 19:39:09,355 - ERROR: Error in enhanced technical scraping for features: 403 Client Error: Forbidden for url: https://openai.com/features
+2025-08-12 19:39:09,355 - INFO: Enhanced technical scraping for OpenAI - integrations
+2025-08-12 19:39:10,361 - ERROR: Error scraping URL https://platform.openai.com/docs/integrations: 403 Client Error: Forbidden for url: https://platform.openai.com/docs/integrations
+2025-08-12 19:39:10,361 - ERROR: Error in enhanced technical scraping for integrations: 403 Client Error: Forbidden for url: https://platform.openai.com/docs/integrations
+2025-08-12 19:39:10,362 - INFO: 127.0.0.1 - - [12/Aug/2025 19:39:10] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:39:20,830 - INFO: 127.0.0.1 - - [12/Aug/2025 19:39:20] "POST /api/ai/analyze-technical HTTP/1.1" 200 -
+2025-08-12 19:39:20,836 - INFO: 127.0.0.1 - - [12/Aug/2025 19:39:20] "POST /api/analytics/technical-quality HTTP/1.1" 200 -
+2025-08-12 19:41:21,350 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/store_scrape_to_sqlite.py', reloading
+2025-08-12 19:41:21,475 - INFO:  * Restarting with stat
+2025-08-12 19:41:22,206 - WARNING:  * Debugger is active!
+2025-08-12 19:41:22,211 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 19:41:26,335 - INFO: Enhanced technical scraping for OpenAI - api_docs
+2025-08-12 19:41:26,791 - ERROR: Error scraping URL https://platform.openai.com/docs: 403 Client Error: Forbidden for url: https://platform.openai.com/docs
+2025-08-12 19:41:26,791 - ERROR: Error in enhanced technical scraping for api_docs: 403 Client Error: Forbidden for url: https://platform.openai.com/docs
+2025-08-12 19:41:26,791 - INFO: Enhanced technical scraping for OpenAI - pricing
+2025-08-12 19:41:27,481 - ERROR: Error scraping URL https://openai.com/pricing: 403 Client Error: Forbidden for url: https://openai.com/pricing
+2025-08-12 19:41:27,482 - ERROR: Error in enhanced technical scraping for pricing: 403 Client Error: Forbidden for url: https://openai.com/pricing
+2025-08-12 19:41:27,482 - INFO: Enhanced technical scraping for OpenAI - features
+2025-08-12 19:41:28,468 - ERROR: Error scraping URL https://openai.com/features: 403 Client Error: Forbidden for url: https://openai.com/features
+2025-08-12 19:41:28,468 - ERROR: Error in enhanced technical scraping for features: 403 Client Error: Forbidden for url: https://openai.com/features
+2025-08-12 19:41:28,468 - INFO: Enhanced technical scraping for OpenAI - integrations
+2025-08-12 19:41:29,459 - ERROR: Error scraping URL https://platform.openai.com/docs/integrations: 403 Client Error: Forbidden for url: https://platform.openai.com/docs/integrations
+2025-08-12 19:41:29,459 - ERROR: Error in enhanced technical scraping for integrations: 403 Client Error: Forbidden for url: https://platform.openai.com/docs/integrations
+2025-08-12 19:41:29,461 - INFO: 127.0.0.1 - - [12/Aug/2025 19:41:29] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:41:44,427 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/store_scrape_to_sqlite.py', reloading
+2025-08-12 19:41:44,494 - INFO:  * Restarting with stat
+2025-08-12 19:41:45,276 - WARNING:  * Debugger is active!
+2025-08-12 19:41:45,281 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 19:45:00,798 - INFO: Enhanced technical scraping for Requests - api_docs
+2025-08-12 19:45:00,986 - ERROR: Error extracting technical metadata: find_all() got multiple values for argument 'name'
+2025-08-12 19:45:00,988 - INFO: Enhanced technical scraping for Requests - pricing
+2025-08-12 19:45:02,738 - ERROR: Error extracting technical metadata: find_all() got multiple values for argument 'name'
+2025-08-12 19:45:02,742 - INFO: Enhanced technical scraping for Requests - features
+2025-08-12 19:45:02,933 - ERROR: Error extracting technical metadata: find_all() got multiple values for argument 'name'
+2025-08-12 19:45:02,937 - INFO: Enhanced technical scraping for Requests - integrations
+2025-08-12 19:45:03,978 - ERROR: Error extracting technical metadata: find_all() got multiple values for argument 'name'
+2025-08-12 19:45:03,990 - INFO: 127.0.0.1 - - [12/Aug/2025 19:45:03] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:48:15,380 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitive_intelligence_scraper.py', reloading
+2025-08-12 19:48:15,492 - INFO:  * Restarting with stat
+2025-08-12 19:48:17,271 - WARNING:  * Debugger is active!
+2025-08-12 19:48:17,278 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 19:49:13,865 - INFO: Enhanced technical scraping for Tableau - api_docs
+2025-08-12 19:49:14,080 - ERROR: Error scraping URL https://help.tableau.com/current/api/overview/en-us/: 404 Client Error: Not Found for url: https://help.tableau.com/current/api/overview/en-us/
+2025-08-12 19:49:14,080 - ERROR: Error in enhanced technical scraping for api_docs: 404 Client Error: Not Found for url: https://help.tableau.com/current/api/overview/en-us/
+2025-08-12 19:49:14,081 - INFO: Enhanced technical scraping for Tableau - features
+2025-08-12 19:49:15,118 - INFO: Enhanced technical scraping for Tableau - integrations
+2025-08-12 19:49:15,971 - ERROR: Error scraping URL https://help.tableau.com/current/online/en-us/to_integrations.htm: 404 Client Error: Not Found for url: https://help.tableau.com/current/online/en-us/to_integrations.htm
+2025-08-12 19:49:15,972 - ERROR: Error in enhanced technical scraping for integrations: 404 Client Error: Not Found for url: https://help.tableau.com/current/online/en-us/to_integrations.htm
+2025-08-12 19:49:15,972 - INFO: Enhanced technical scraping for Tableau - pricing
+2025-08-12 19:49:17,055 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:17] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:17,065 - INFO: Enhanced technical scraping for PowerBI - api_docs
+2025-08-12 19:49:18,143 - INFO: Enhanced technical scraping for PowerBI - features
+2025-08-12 19:49:19,764 - INFO: Enhanced technical scraping for PowerBI - integrations
+2025-08-12 19:49:20,010 - ERROR: Error scraping URL https://learn.microsoft.com/power-bi/connect-data/service-datasets-connect: 404 Client Error: Not Found for url: https://learn.microsoft.com/en-us/power-bi/connect-data/service-datasets-connect
+2025-08-12 19:49:20,010 - ERROR: Error in enhanced technical scraping for integrations: 404 Client Error: Not Found for url: https://learn.microsoft.com/en-us/power-bi/connect-data/service-datasets-connect
+2025-08-12 19:49:20,010 - INFO: Enhanced technical scraping for PowerBI - pricing
+2025-08-12 19:49:26,438 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:26] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:26,449 - INFO: Enhanced technical scraping for Looker - api_docs
+2025-08-12 19:49:26,853 - INFO: Enhanced technical scraping for Looker - features
+2025-08-12 19:49:27,894 - INFO: Enhanced technical scraping for Looker - integrations
+2025-08-12 19:49:28,913 - ERROR: Error scraping URL https://cloud.google.com/looker/docs/looker-integrations: 404 Client Error: Not Found for url: https://cloud.google.com/looker/docs/looker-integrations
+2025-08-12 19:49:28,913 - ERROR: Error in enhanced technical scraping for integrations: 404 Client Error: Not Found for url: https://cloud.google.com/looker/docs/looker-integrations
+2025-08-12 19:49:28,913 - INFO: Enhanced technical scraping for Looker - pricing
+2025-08-12 19:49:29,824 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:29] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:29,832 - INFO: Enhanced technical scraping for Snowflake - api_docs
+2025-08-12 19:49:31,091 - INFO: Enhanced technical scraping for Snowflake - features
+2025-08-12 19:49:32,032 - ERROR: Error scraping URL https://www.snowflake.com/en/platform/: 404 Client Error: Not Found for url: https://www.snowflake.com/en/platform/
+2025-08-12 19:49:32,033 - ERROR: Error in enhanced technical scraping for features: 404 Client Error: Not Found for url: https://www.snowflake.com/en/platform/
+2025-08-12 19:49:32,033 - INFO: Enhanced technical scraping for Snowflake - integrations
+2025-08-12 19:49:32,597 - ERROR: Error scraping URL https://docs.snowflake.com/en/user-guide/ecosystem-connector-overview: 404 Client Error: Not Found for url: https://docs.snowflake.com/en/user-guide/ecosystem-connector-overview
+2025-08-12 19:49:32,597 - ERROR: Error in enhanced technical scraping for integrations: 404 Client Error: Not Found for url: https://docs.snowflake.com/en/user-guide/ecosystem-connector-overview
+2025-08-12 19:49:32,598 - INFO: Enhanced technical scraping for Snowflake - pricing
+2025-08-12 19:49:33,934 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:33] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:33,943 - INFO: Enhanced technical scraping for Databricks - api_docs
+2025-08-12 19:49:34,662 - INFO: Enhanced technical scraping for Databricks - features
+2025-08-12 19:49:35,914 - INFO: Enhanced technical scraping for Databricks - integrations
+2025-08-12 19:49:36,653 - INFO: Enhanced technical scraping for Databricks - pricing
+2025-08-12 19:49:37,733 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:37] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:37,742 - INFO: Enhanced technical scraping for BigQuery - api_docs
+2025-08-12 19:49:39,421 - INFO: Enhanced technical scraping for BigQuery - features
+2025-08-12 19:49:39,989 - INFO: Enhanced technical scraping for BigQuery - integrations
+2025-08-12 19:49:41,068 - ERROR: Error scraping URL https://cloud.google.com/bigquery/docs/load-data-cloud-storage: 404 Client Error: Not Found for url: https://cloud.google.com/bigquery/docs/load-data-cloud-storage
+2025-08-12 19:49:41,068 - ERROR: Error in enhanced technical scraping for integrations: 404 Client Error: Not Found for url: https://cloud.google.com/bigquery/docs/load-data-cloud-storage
+2025-08-12 19:49:41,068 - INFO: Enhanced technical scraping for BigQuery - pricing
+2025-08-12 19:49:42,474 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:42] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:42,485 - INFO: Enhanced technical scraping for SageMaker - api_docs
+2025-08-12 19:49:42,755 - INFO: Enhanced technical scraping for SageMaker - features
+2025-08-12 19:49:43,880 - INFO: Enhanced technical scraping for SageMaker - integrations
+2025-08-12 19:49:44,664 - INFO: Enhanced technical scraping for SageMaker - pricing
+2025-08-12 19:49:45,773 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:45] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:45,813 - INFO: Enhanced technical scraping for AzureML - api_docs
+2025-08-12 19:49:46,781 - INFO: Enhanced technical scraping for AzureML - features
+2025-08-12 19:49:49,346 - INFO: Enhanced technical scraping for AzureML - integrations
+2025-08-12 19:49:49,503 - ERROR: Error scraping URL https://learn.microsoft.com/azure/machine-learning/component-and-data: 404 Client Error: Not Found for url: https://learn.microsoft.com/en-us/azure/machine-learning/component-and-data
+2025-08-12 19:49:49,503 - ERROR: Error in enhanced technical scraping for integrations: 404 Client Error: Not Found for url: https://learn.microsoft.com/en-us/azure/machine-learning/component-and-data
+2025-08-12 19:49:49,503 - INFO: Enhanced technical scraping for AzureML - pricing
+2025-08-12 19:49:51,197 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:51] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:51,210 - INFO: Enhanced technical scraping for VertexAI - api_docs
+2025-08-12 19:49:51,832 - INFO: Enhanced technical scraping for VertexAI - features
+2025-08-12 19:49:52,803 - INFO: Enhanced technical scraping for VertexAI - integrations
+2025-08-12 19:49:53,705 - ERROR: Error scraping URL https://cloud.google.com/vertex-ai/docs/integrations: 404 Client Error: Not Found for url: https://cloud.google.com/vertex-ai/docs/integrations
+2025-08-12 19:49:53,705 - ERROR: Error in enhanced technical scraping for integrations: 404 Client Error: Not Found for url: https://cloud.google.com/vertex-ai/docs/integrations
+2025-08-12 19:49:53,705 - INFO: Enhanced technical scraping for VertexAI - pricing
+2025-08-12 19:49:55,969 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:55] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:49:55,995 - INFO: Enhanced technical scraping for Datadog - api_docs
+2025-08-12 19:49:56,630 - INFO: Enhanced technical scraping for Datadog - features
+2025-08-12 19:49:57,393 - INFO: Enhanced technical scraping for Datadog - integrations
+2025-08-12 19:49:58,949 - INFO: Enhanced technical scraping for Datadog - pricing
+2025-08-12 19:49:59,585 - INFO: 127.0.0.1 - - [12/Aug/2025 19:49:59] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 19:50:11,100 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/batch_scrape_enterprise_group.py', reloading
+2025-08-12 19:50:11,203 - INFO:  * Restarting with stat
+2025-08-12 19:50:11,979 - WARNING:  * Debugger is active!
+2025-08-12 19:50:11,984 - INFO:  * Debugger PIN: 297-482-426

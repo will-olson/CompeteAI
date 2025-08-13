@@ -41,6 +41,14 @@ export function ConfigurationPanel({}: ConfigurationPanelProps) {
   const [useBackendKey, setUseBackendKey] = useState(true);
   const [frontendOpenAIKey, setFrontendOpenAIKey] = useState<string>('');
   
+  // 12-hour MVP enhancement: Technical content focus options
+  const [technicalFocus, setTechnicalFocus] = useState<string[]>([
+    'api_docs', 'pricing', 'features', 'integrations'
+  ]);
+  
+  // 12-hour MVP enhancement: Industry context selection
+  const [industryContext, setIndustryContext] = useState<string>('tech-saas');
+  
   // Advanced configuration
   const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -93,16 +101,91 @@ export function ConfigurationPanel({}: ConfigurationPanelProps) {
     toast({ title: 'OpenAI API key saved' });
   };
 
+  // 12-hour MVP enhancement: Enhanced preset loading with technical focus
   const handleLoadPresetGroup = (presetKey: string) => {
     const preset = presetGroups[presetKey];
     if (!preset) return;
     
-    loadPresetGroup(presetKey, preset);
+    // Auto-generate technical targets based on focus areas
+    const technicalTargets = generateTechnicalTargets(preset, technicalFocus);
+    
+    // Update configuration with technical focus
+    updateConfiguration({
+      ...configuration,
+      selectedPreset: presetKey,
+      targets: technicalTargets,
+      industryContext: industryContext,
+      technicalFocus: technicalFocus
+    });
     
     toast({ 
-      title: `Loaded ${preset.name} preset`, 
-      description: `Configured ${preset.companies.length} companies with ${preset.categories.length} categories.` 
+      title: 'Preset group loaded', 
+      description: `Loaded ${preset.name} with ${technicalTargets.length} technical targets`
     });
+  };
+
+  // 12-hour MVP enhancement: Generate technical targets from configuration
+  const generateTechnicalTargets = (preset: any, focus: string[]) => {
+    const targets: any[] = [];
+    
+    preset.companies.forEach((company: string) => {
+      focus.forEach(contentType => {
+        const baseUrl = `https://${company.toLowerCase().replace('_', '').replace(' ', '')}.com`;
+        
+        let url = baseUrl;
+        switch (contentType) {
+          case 'api_docs':
+            url = `${baseUrl}/docs/api`;
+            break;
+          case 'pricing':
+            url = `${baseUrl}/pricing`;
+            break;
+          case 'features':
+            url = `${baseUrl}/features`;
+            break;
+          case 'integrations':
+            url = `${baseUrl}/integrations`;
+            break;
+        }
+        
+        targets.push({
+          company,
+          category: contentType,
+          url,
+          priority: 'high',
+          description: `${contentType.replace('_', ' ')} for ${company}`
+        });
+      });
+    });
+    
+    return targets;
+  };
+
+  // 12-hour MVP enhancement: Handle technical focus changes
+  const handleTechnicalFocusChange = (focus: string, checked: boolean) => {
+    if (checked) {
+      setTechnicalFocus([...technicalFocus, focus]);
+    } else {
+      setTechnicalFocus(technicalFocus.filter(f => f !== focus));
+    }
+  };
+
+  // 12-hour MVP enhancement: Handle industry context change
+  const handleIndustryContextChange = (industry: string) => {
+    setIndustryContext(industry);
+    
+    // Update configuration if preset is already loaded
+    if (configuration.selectedPreset) {
+      const preset = presetGroups[configuration.selectedPreset];
+      if (preset) {
+        const technicalTargets = generateTechnicalTargets(preset, technicalFocus);
+        updateConfiguration({
+          ...configuration,
+          industryContext: industry,
+          targets: technicalTargets
+        });
+      }
+    }
   };
 
   const addCustomCompany = () => {
@@ -282,6 +365,110 @@ export function ConfigurationPanel({}: ConfigurationPanelProps) {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* 12-hour MVP enhancement: Technical Content Focus */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Zap className="h-5 w-5" />
+            <span>Technical Content Focus</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Technical Focus Options */}
+          <div className="space-y-4">
+            <Label className="text-base font-medium">Content Types to Target</Label>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { key: 'api_docs', label: 'API Documentation', description: 'Technical specs, endpoints, authentication' },
+                { key: 'pricing', label: 'Pricing Pages', description: 'Pricing models, plans, enterprise features' },
+                { key: 'features', label: 'Feature Documentation', description: 'Product capabilities, workflows, automation' },
+                { key: 'integrations', label: 'Integration Guides', description: 'SDKs, webhooks, plugins, connectors' }
+              ].map(({ key, label, description }) => (
+                <div key={key} className="space-y-2">
+                  <label className="flex items-start space-x-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={technicalFocus.includes(key)}
+                      onChange={(e) => handleTechnicalFocusChange(key, e.target.checked)}
+                      className="mt-1"
+                    />
+                    <div>
+                      <span className="font-medium">{label}</span>
+                      <p className="text-sm text-gray-600">{description}</p>
+                    </div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Industry Context */}
+          <div className="space-y-4">
+            <Label className="text-base font-medium">Industry Context</Label>
+            <Select value={industryContext} onValueChange={handleIndustryContextChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select industry context" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="tech-saas">
+                  <div>
+                    <div className="font-medium">Tech SaaS</div>
+                    <div className="text-sm text-gray-600">Software-as-a-Service companies</div>
+                  </div>
+                </SelectItem>
+                <SelectItem value="fintech">
+                  <div>
+                    <div className="font-medium">Fintech</div>
+                    <div className="text-sm text-gray-600">Financial technology and payments</div>
+                  </div>
+                </SelectItem>
+                <SelectItem value="ecommerce">
+                  <div>
+                    <div className="font-medium">E-commerce</div>
+                    <div className="text-sm text-gray-600">Online retail and marketplaces</div>
+                  </div>
+                </SelectItem>
+                <SelectItem value="ai-ml">
+                  <div>
+                    <div className="font-medium">AI/ML</div>
+                    <div className="text-sm text-gray-600">Artificial intelligence and machine learning</div>
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-sm text-gray-600">
+              Industry context helps AI analysis focus on relevant technical factors and competitive dynamics.
+            </p>
+          </div>
+
+          {/* Technical Target Summary */}
+          {configuration.targets && configuration.targets.length > 0 && (
+            <div className="space-y-3">
+              <Label className="text-base font-medium">Generated Technical Targets</Label>
+              <div className="bg-gray-50 rounded-lg p-4">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium">Total Targets:</span> {configuration.targets.length}
+                  </div>
+                  <div>
+                    <span className="font-medium">Companies:</span> {new Set(configuration.targets.map(t => t.company)).size}
+                  </div>
+                  <div>
+                    <span className="font-medium">Content Types:</span> {new Set(configuration.targets.map(t => t.category)).size}
+                  </div>
+                  <div>
+                    <span className="font-medium">Industry:</span> {configuration.industryContext}
+                  </div>
+                </div>
+                <div className="mt-3 text-xs text-gray-600">
+                  Targets will be automatically generated when you load a preset group or add custom companies.
+                </div>
+              </div>
             </div>
           )}
         </CardContent>
