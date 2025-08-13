@@ -1833,3 +1833,209 @@
 2025-08-12 19:50:11,203 - INFO:  * Restarting with stat
 2025-08-12 19:50:11,979 - WARNING:  * Debugger is active!
 2025-08-12 19:50:11,984 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 20:00:55,152 - INFO: Enhanced technical scraping for Datadog - rss
+2025-08-12 20:00:55,588 - ERROR: Error scraping URL https://www.datadoghq.com/blog/feed/: 404 Client Error: Not Found for url: https://www.datadoghq.com/blog/feed/
+2025-08-12 20:00:55,588 - ERROR: Error in enhanced technical scraping for rss: 404 Client Error: Not Found for url: https://www.datadoghq.com/blog/feed/
+2025-08-12 20:00:55,589 - INFO: 127.0.0.1 - - [12/Aug/2025 20:00:55] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:00:55,596 - INFO: Enhanced technical scraping for Snowflake - rss
+2025-08-12 20:00:56,542 - INFO: 127.0.0.1 - - [12/Aug/2025 20:00:56] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:00:56,547 - INFO: Enhanced technical scraping for Databricks - rss
+2025-08-12 20:00:57,627 - ERROR: Error scraping URL https://www.databricks.com/blog/rss.xml: 404 Client Error: Not Found for url: https://www.databricks.com/blog/rss.xml
+2025-08-12 20:00:57,627 - ERROR: Error in enhanced technical scraping for rss: 404 Client Error: Not Found for url: https://www.databricks.com/blog/rss.xml
+2025-08-12 20:00:57,628 - INFO: 127.0.0.1 - - [12/Aug/2025 20:00:57] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:00:57,634 - INFO: Enhanced technical scraping for BigQuery - rss
+2025-08-12 20:00:59,170 - INFO: 127.0.0.1 - - [12/Aug/2025 20:00:59] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:00:59,174 - INFO: Enhanced technical scraping for Tableau - rss
+2025-08-12 20:00:59,575 - INFO: 127.0.0.1 - - [12/Aug/2025 20:00:59] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:00:59,580 - INFO: Enhanced technical scraping for PowerBI - rss
+2025-08-12 20:01:00,362 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:00] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:01:00,366 - INFO: Enhanced technical scraping for Asana - rss
+2025-08-12 20:01:01,801 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:01] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:01:01,804 - INFO: Enhanced technical scraping for Trello - rss
+2025-08-12 20:01:02,885 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:02] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:01:02,888 - INFO: Enhanced technical scraping for Jira - rss
+2025-08-12 20:01:03,751 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:03] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:01:03,756 - INFO: Enhanced technical scraping for Monday - rss
+2025-08-12 20:01:05,400 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:05] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:01:05,404 - INFO: Enhanced technical scraping for Zapier - rss
+2025-08-12 20:01:06,052 - ERROR: Error scraping URL https://zapier.com/blog/atom.xml: 404 Client Error: Not Found for url: https://zapier.com/blog/atom.xml
+2025-08-12 20:01:06,053 - ERROR: Error in enhanced technical scraping for rss: 404 Client Error: Not Found for url: https://zapier.com/blog/atom.xml
+2025-08-12 20:01:06,053 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:06] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:01:06,057 - INFO: Enhanced technical scraping for Airtable - rss
+2025-08-12 20:01:06,867 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:06] "POST /api/scrape/technical HTTP/1.1" 200 -
+2025-08-12 20:01:26,005 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/rss_batch_scrape_and_insights.py', reloading
+2025-08-12 20:01:26,170 - INFO:  * Restarting with stat
+2025-08-12 20:01:26,898 - WARNING:  * Debugger is active!
+2025-08-12 20:01:26,910 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 20:01:31,201 - INFO: Scraping rss for Datadog
+2025-08-12 20:01:33,721 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:33] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:33,728 - INFO: Scraping rss for Snowflake
+2025-08-12 20:01:36,162 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:36] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:36,168 - INFO: Scraping rss for Databricks
+2025-08-12 20:01:38,556 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:38] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:38,564 - INFO: Scraping rss for BigQuery
+2025-08-12 20:01:42,718 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:42] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:42,724 - INFO: Scraping rss for Tableau
+2025-08-12 20:01:45,123 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:45] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:45,129 - INFO: Scraping rss for PowerBI
+2025-08-12 20:01:47,269 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:47] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:47,272 - INFO: Scraping rss for Asana
+2025-08-12 20:01:49,932 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:49] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:49,937 - INFO: Scraping rss for Trello
+2025-08-12 20:01:52,622 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:52] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:52,625 - INFO: Scraping rss for Jira
+2025-08-12 20:01:55,012 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:55,017 - INFO: Scraping rss for Monday
+2025-08-12 20:01:57,965 - INFO: 127.0.0.1 - - [12/Aug/2025 20:01:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:01:57,971 - INFO: Scraping rss for Zapier
+2025-08-12 20:02:00,614 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:00] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:00,621 - INFO: Scraping rss for Airtable
+2025-08-12 20:02:02,994 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:02] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:25,518 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/rss_batch_scrape_and_insights.py', reloading
+2025-08-12 20:02:25,606 - INFO:  * Restarting with stat
+2025-08-12 20:02:26,272 - WARNING:  * Debugger is active!
+2025-08-12 20:02:26,277 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 20:02:28,637 - INFO: Scraping rss for Datadog
+2025-08-12 20:02:31,155 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:31] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:31,163 - INFO: Scraping rss for Snowflake
+2025-08-12 20:02:33,585 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:33] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:33,605 - INFO: Scraping rss for Databricks
+2025-08-12 20:02:36,261 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:36] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:36,265 - INFO: Scraping rss for BigQuery
+2025-08-12 20:02:39,620 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:39] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:39,624 - INFO: Scraping rss for Tableau
+2025-08-12 20:02:41,962 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:41] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:41,979 - INFO: Scraping rss for PowerBI
+2025-08-12 20:02:44,115 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:44] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:44,126 - INFO: Scraping rss for Asana
+2025-08-12 20:02:46,893 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:46] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:46,898 - INFO: Scraping rss for Trello
+2025-08-12 20:02:49,564 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:49] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:49,571 - INFO: Scraping rss for Jira
+2025-08-12 20:02:52,009 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:52] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:52,020 - INFO: Scraping rss for Monday
+2025-08-12 20:02:54,404 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:54] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:54,411 - INFO: Scraping rss for Zapier
+2025-08-12 20:02:57,036 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:02:57,041 - INFO: Scraping rss for Airtable
+2025-08-12 20:02:59,659 - INFO: 127.0.0.1 - - [12/Aug/2025 20:02:59] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:03:10,694 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/rss_batch_scrape_and_insights.py', reloading
+2025-08-12 20:03:10,751 - INFO:  * Restarting with stat
+2025-08-12 20:03:11,484 - WARNING:  * Debugger is active!
+2025-08-12 20:03:11,489 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 20:09:44,236 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/rss_batch_scrape_and_insights.py', reloading
+2025-08-12 20:09:44,309 - INFO:  * Restarting with stat
+2025-08-12 20:09:44,988 - WARNING:  * Debugger is active!
+2025-08-12 20:09:44,992 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 20:09:59,148 - INFO: Scraping rss for Datadog
+2025-08-12 20:10:01,377 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:01] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:01,392 - INFO: Scraping rss for Datadog
+2025-08-12 20:10:04,379 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:04] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:04,399 - INFO: Scraping rss for Datadog
+2025-08-12 20:10:07,262 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:07] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:07,268 - INFO: Scraping rss for Datadog
+2025-08-12 20:10:10,052 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:10] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:10,058 - INFO: Scraping rss for Datadog
+2025-08-12 20:10:12,785 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:12] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:31,779 - INFO: Scraping rss for Snowflake
+2025-08-12 20:10:34,361 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:34] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:34,374 - INFO: Scraping rss for Snowflake
+2025-08-12 20:10:37,157 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:37] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:43,819 - INFO: Scraping rss for Databricks
+2025-08-12 20:10:45,974 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:45] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:45,984 - INFO: Scraping rss for Databricks
+2025-08-12 20:10:48,311 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:48] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:10:48,340 - INFO: Scraping rss for Databricks
+2025-08-12 20:10:50,500 - INFO: 127.0.0.1 - - [12/Aug/2025 20:10:50] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:11:19,154 - INFO: Scraping rss for PowerBI
+2025-08-12 20:11:21,498 - INFO: 127.0.0.1 - - [12/Aug/2025 20:11:21] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:11:21,508 - INFO: Scraping rss for PowerBI
+2025-08-12 20:11:23,629 - INFO: 127.0.0.1 - - [12/Aug/2025 20:11:23] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:11:23,636 - INFO: Scraping rss for PowerBI
+2025-08-12 20:11:25,977 - INFO: 127.0.0.1 - - [12/Aug/2025 20:11:25] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:11:46,659 - INFO: Scraping rss for Trello
+2025-08-12 20:11:49,003 - INFO: 127.0.0.1 - - [12/Aug/2025 20:11:49] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:11:49,013 - INFO: Scraping rss for Trello
+2025-08-12 20:11:51,233 - INFO: 127.0.0.1 - - [12/Aug/2025 20:11:51] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:11:51,243 - INFO: Scraping rss for Trello
+2025-08-12 20:11:53,647 - INFO: 127.0.0.1 - - [12/Aug/2025 20:11:53] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:12:10,495 - INFO: Scraping rss for Jira
+2025-08-12 20:12:12,919 - INFO: 127.0.0.1 - - [12/Aug/2025 20:12:12] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:12:12,939 - INFO: Scraping rss for Jira
+2025-08-12 20:12:15,783 - INFO: 127.0.0.1 - - [12/Aug/2025 20:12:15] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:13:01,829 - INFO: Scraping rss for Zapier
+2025-08-12 20:13:05,138 - INFO: 127.0.0.1 - - [12/Aug/2025 20:13:05] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:13:17,633 - INFO: Scraping rss for Airtable
+2025-08-12 20:13:19,921 - INFO: 127.0.0.1 - - [12/Aug/2025 20:13:19] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:13:19,935 - INFO: Scraping rss for Airtable
+2025-08-12 20:13:22,344 - INFO: 127.0.0.1 - - [12/Aug/2025 20:13:22] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:13:22,349 - INFO: Scraping rss for Airtable
+2025-08-12 20:13:24,627 - INFO: 127.0.0.1 - - [12/Aug/2025 20:13:24] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:13:36,742 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/rss_batch_scrape_and_insights.py', reloading
+2025-08-12 20:13:36,807 - INFO:  * Restarting with stat
+2025-08-12 20:13:37,490 - WARNING:  * Debugger is active!
+2025-08-12 20:13:37,495 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 20:18:35,998 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/rss_batch_scrape_and_insights.py', reloading
+2025-08-12 20:18:36,083 - INFO:  * Restarting with stat
+2025-08-12 20:18:36,790 - WARNING:  * Debugger is active!
+2025-08-12 20:18:36,795 - INFO:  * Debugger PIN: 297-482-426
+2025-08-12 20:18:49,665 - INFO: Scraping rss for Datadog
+2025-08-12 20:18:51,861 - INFO: 127.0.0.1 - - [12/Aug/2025 20:18:51] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:18:51,869 - INFO: Scraping rss for Datadog
+2025-08-12 20:18:54,470 - INFO: 127.0.0.1 - - [12/Aug/2025 20:18:54] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:18:54,478 - INFO: Scraping rss for Datadog
+2025-08-12 20:18:57,310 - INFO: 127.0.0.1 - - [12/Aug/2025 20:18:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:18:57,316 - INFO: Scraping rss for Datadog
+2025-08-12 20:18:59,903 - INFO: 127.0.0.1 - - [12/Aug/2025 20:18:59] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:18:59,909 - INFO: Scraping rss for Datadog
+2025-08-12 20:19:02,647 - INFO: 127.0.0.1 - - [12/Aug/2025 20:19:02] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:19:16,817 - INFO: 127.0.0.1 - - [12/Aug/2025 20:19:16] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:19:32,019 - INFO: Scraping rss for Snowflake
+2025-08-12 20:19:34,656 - INFO: 127.0.0.1 - - [12/Aug/2025 20:19:34] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:19:34,663 - INFO: Scraping rss for Snowflake
+2025-08-12 20:19:37,553 - INFO: 127.0.0.1 - - [12/Aug/2025 20:19:37] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:19:49,440 - INFO: 127.0.0.1 - - [12/Aug/2025 20:19:49] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:19:55,949 - INFO: Scraping rss for Databricks
+2025-08-12 20:19:58,174 - INFO: 127.0.0.1 - - [12/Aug/2025 20:19:58] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:19:58,180 - INFO: Scraping rss for Databricks
+2025-08-12 20:20:00,722 - INFO: 127.0.0.1 - - [12/Aug/2025 20:20:00] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:20:00,727 - INFO: Scraping rss for Databricks
+2025-08-12 20:20:03,003 - INFO: 127.0.0.1 - - [12/Aug/2025 20:20:03] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:20:14,528 - INFO: 127.0.0.1 - - [12/Aug/2025 20:20:14] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:20:39,733 - INFO: 127.0.0.1 - - [12/Aug/2025 20:20:39] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:20:52,489 - INFO: 127.0.0.1 - - [12/Aug/2025 20:20:52] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:20:58,262 - INFO: Scraping rss for PowerBI
+2025-08-12 20:21:00,609 - INFO: 127.0.0.1 - - [12/Aug/2025 20:21:00] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:21:00,616 - INFO: Scraping rss for PowerBI
+2025-08-12 20:21:02,742 - INFO: 127.0.0.1 - - [12/Aug/2025 20:21:02] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:21:02,748 - INFO: Scraping rss for PowerBI
+2025-08-12 20:21:05,128 - INFO: 127.0.0.1 - - [12/Aug/2025 20:21:05] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:21:19,188 - INFO: 127.0.0.1 - - [12/Aug/2025 20:21:19] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:21:44,055 - INFO: 127.0.0.1 - - [12/Aug/2025 20:21:44] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:21:53,135 - INFO: Scraping rss for Trello
+2025-08-12 20:21:55,547 - INFO: 127.0.0.1 - - [12/Aug/2025 20:21:55] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:21:55,556 - INFO: Scraping rss for Trello
+2025-08-12 20:21:57,807 - INFO: 127.0.0.1 - - [12/Aug/2025 20:21:57] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:21:57,814 - INFO: Scraping rss for Trello
+2025-08-12 20:22:00,227 - INFO: 127.0.0.1 - - [12/Aug/2025 20:22:00] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:22:11,214 - INFO: 127.0.0.1 - - [12/Aug/2025 20:22:11] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:22:22,803 - INFO: Scraping rss for Jira
+2025-08-12 20:22:25,288 - INFO: 127.0.0.1 - - [12/Aug/2025 20:22:25] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:22:25,293 - INFO: Scraping rss for Jira
+2025-08-12 20:22:27,911 - INFO: 127.0.0.1 - - [12/Aug/2025 20:22:27] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:22:42,341 - INFO: 127.0.0.1 - - [12/Aug/2025 20:22:42] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:23:20,012 - INFO: 127.0.0.1 - - [12/Aug/2025 20:23:20] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:23:33,138 - INFO: Scraping rss for Zapier
+2025-08-12 20:23:36,550 - INFO: 127.0.0.1 - - [12/Aug/2025 20:23:36] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:23:49,969 - INFO: 127.0.0.1 - - [12/Aug/2025 20:23:49] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:23:58,470 - INFO: Scraping rss for Airtable
+2025-08-12 20:24:00,655 - INFO: 127.0.0.1 - - [12/Aug/2025 20:24:00] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:24:00,663 - INFO: Scraping rss for Airtable
+2025-08-12 20:24:03,010 - INFO: 127.0.0.1 - - [12/Aug/2025 20:24:03] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:24:03,018 - INFO: Scraping rss for Airtable
+2025-08-12 20:24:05,307 - INFO: 127.0.0.1 - - [12/Aug/2025 20:24:05] "POST /api/scrape/company HTTP/1.1" 200 -
+2025-08-12 20:24:13,890 - INFO: 127.0.0.1 - - [12/Aug/2025 20:24:13] "POST /api/ai/analyze HTTP/1.1" 200 -
+2025-08-12 20:24:26,025 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/rss_batch_scrape_and_insights.py', reloading
+2025-08-12 20:24:26,097 - INFO:  * Restarting with stat
+2025-08-12 20:24:26,741 - WARNING:  * Debugger is active!
+2025-08-12 20:24:26,746 - INFO:  * Debugger PIN: 297-482-426
