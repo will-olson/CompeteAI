@@ -26,7 +26,14 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle,
-  XCircle
+  XCircle,
+  ExternalLink,
+  Copy,
+  BookOpen,
+  Tag,
+  Clock,
+  User,
+  MapPin
 } from 'lucide-react';
 import { ScrapedItem } from '@/state/ScrapeStore';
 import ReactMarkdown from 'react-markdown';
@@ -45,6 +52,7 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [dateRange, setDateRange] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'cards' | 'analytics'>('table');
+  const [selectedItem, setSelectedItem] = useState<ScrapedItem | null>(null);
   
   // Safe data processing with error handling
   const processedItems = useMemo(() => {
@@ -55,7 +63,7 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
         if (!item || typeof item !== 'object') return false;
         
         // Basic validation
-        if (!item.url || !item.company || !item.category) return false;
+        if (!item.company || !item.category) return false;
         
         // Search filter
         if (searchTerm) {
@@ -76,22 +84,16 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
         if (selectedCategory && item.category !== selectedCategory) return false;
         
         // Date filter
-        if (dateRange !== 'all' && item.scrapedAt) {
-          try {
-            const itemDate = new Date(item.scrapedAt);
-            if (isNaN(itemDate.getTime())) return false;
-            
-            const now = new Date();
-            const diffDays = (now.getTime() - itemDate.getTime()) / (1000 * 60 * 60 * 24);
-            
-            switch (dateRange) {
-              case 'today': if (diffDays > 1) return false; break;
-              case 'week': if (diffDays > 7) return false; break;
-              case 'month': if (diffDays > 30) return false; break;
-            }
-          } catch (error) {
-            console.warn('Date parsing error:', error);
-            return false;
+        if (dateRange !== 'all') {
+          const itemDate = new Date(item.scrapedAt);
+          const now = new Date();
+          const diffDays = Math.floor((now.getTime() - itemDate.getTime()) / (1000 * 60 * 60 * 24));
+          
+          switch (dateRange) {
+            case '1d': if (diffDays > 1) return false; break;
+            case '7d': if (diffDays > 7) return false; break;
+            case '30d': if (diffDays > 30) return false; break;
+            case '90d': if (diffDays > 90) return false; break;
           }
         }
         
@@ -103,156 +105,61 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
     }
   }, [items, searchTerm, selectedCompany, selectedCategory, dateRange]);
 
-  // Safe analytics calculation
-  const analytics = useMemo(() => {
-    try {
-      if (!processedItems || processedItems.length === 0) {
-        return {
-          totalItems: 0,
-          companies: [],
-          categories: [],
-          dateDistribution: [],
-          contentQuality: {
-            averageWords: 0,
-            averageChars: 0,
-            hasImages: 0,
-            hasLinks: 0,
-            hasTables: 0
-          }
-        };
-      }
-
-      // Company distribution
-      const companyCounts: Record<string, number> = {};
-      const categoryCounts: Record<string, number> = {};
-      const dateCounts: Record<string, number> = {};
-      
-      let totalWords = 0;
-      let totalChars = 0;
-      let itemsWithImages = 0;
-      let itemsWithLinks = 0;
-      let itemsWithTables = 0;
-
-      processedItems.forEach(item => {
-        // Company counts
-        companyCounts[item.company] = (companyCounts[item.company] || 0) + 1;
-        
-        // Category counts
-        categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
-        
-        // Date distribution
-        if (item.scrapedAt) {
-          try {
-            const date = new Date(item.scrapedAt).toLocaleDateString();
-            dateCounts[date] = (dateCounts[date] || 0) + 1;
-          } catch (error) {
-            console.warn('Date parsing error in analytics:', error);
-          }
-        }
-        
-        // Content quality metrics
-        if (item.markdown) {
-          const words = item.markdown.split(/\s+/).length;
-          totalWords += words;
-          totalChars += item.markdown.length;
-        }
-        
-        // Metadata analysis
-        if (item.metadata) {
-          if (item.metadata.has_images) itemsWithImages++;
-          if (item.metadata.has_links) itemsWithLinks++;
-          if (item.metadata.has_tables) itemsWithTables++;
-        }
-      });
-
-      return {
-        totalItems: processedItems.length,
-        companies: Object.entries(companyCounts).map(([name, count]) => ({ name, count })),
-        categories: Object.entries(categoryCounts).map(([name, count]) => ({ name, count })),
-        dateDistribution: Object.entries(dateCounts)
-          .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
-          .map(([date, count]) => ({ date, count })),
-        contentQuality: {
-          averageWords: Math.round(totalWords / processedItems.length),
-          averageChars: Math.round(totalChars / processedItems.length),
-          hasImages: itemsWithImages,
-          hasLinks: itemsWithLinks,
-          hasTables: itemsWithTables
-        }
-      };
-    } catch (error) {
-      console.error('Error calculating analytics:', error);
-      return {
-        totalItems: 0,
-        companies: [],
-        categories: [],
-        dateDistribution: [],
-        contentQuality: {
-          averageWords: 0,
-          averageChars: 0,
-          hasImages: 0,
-          hasLinks: 0,
-          hasTables: 0
-        }
-      };
-    }
-  }, [processedItems]);
-
   // Get unique companies and categories for filters
-  const uniqueCompanies = useMemo(() => {
+  const companies = useMemo(() => {
     try {
-      if (!Array.isArray(items)) return [];
-      return Array.from(new Set(items.map(item => item.company).filter(Boolean)));
+      return Array.from(new Set(items.map(item => item.company).filter(Boolean))).sort();
     } catch (error) {
-      console.error('Error getting unique companies:', error);
       return [];
     }
   }, [items]);
 
-  const uniqueCategories = useMemo(() => {
+  const categories = useMemo(() => {
     try {
-      if (!Array.isArray(items)) return [];
-      return Array.from(new Set(items.map(item => item.category).filter(Boolean)));
+      return Array.from(new Set(items.map(item => item.category).filter(Boolean))).sort();
     } catch (error) {
-      console.error('Error getting unique categories:', error);
       return [];
     }
   }, [items]);
 
-  const clearFilters = () => {
-    setSearchTerm('');
-    setSelectedCompany('');
-    setSelectedCategory('');
-    setDateRange('all');
+  // Export functionality
+  const exportToCSV = () => {
+    try {
+      const headers = ['Company', 'Category', 'Title', 'URL', 'Scraped At', 'Word Count', 'AI Analysis'];
+      const csvContent = [
+        headers.join(','),
+        ...processedItems.map(item => [
+          `"${item.company}"`,
+          `"${item.category}"`,
+          `"${item.title || ''}"`,
+          `"${item.url}"`,
+          `"${item.scrapedAt}"`,
+          item.metadata?.word_count || 0,
+          `"${item.ai_analysis || ''}"`
+        ].join(','))
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `scraped_data_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      
+      toast({ title: 'Data exported successfully', description: `Exported ${processedItems.length} items to CSV` });
+    } catch (error) {
+      toast({ title: 'Export failed', description: 'Error exporting data to CSV', variant: 'destructive' });
+    }
   };
 
-  const exportFilteredData = () => {
-    try {
-      const csvContent = [
-        ['Company', 'Category', 'Title', 'URL', 'Scraped At', 'Word Count', 'AI Analysis'],
-        ...processedItems.map(item => [
-          item.company || '',
-          item.category || '',
-          item.title || '',
-          item.url || '',
-          item.scrapedAt || '',
-          item.markdown ? item.markdown.split(/\s+/).length : 0,
-          item.ai_analysis || ''
-        ])
-      ].map(row => row.map(field => `"${field}"`).join(',')).join('\n');
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({ title: 'Copied to clipboard' });
+  };
 
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'filtered_scraped_data.csv';
-      link.click();
-      URL.revokeObjectURL(link.href);
-      
-      toast({ title: 'Data exported successfully' });
-    } catch (error) {
-      console.error('Export error:', error);
-      toast({ title: 'Export failed', variant: 'destructive' });
-    }
+  const openInNewTab = (url: string) => {
+    window.open(url, '_blank');
   };
 
   if (!Array.isArray(items)) {
@@ -261,7 +168,7 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
         <AlertTriangle className="h-4 w-4" />
         <AlertTitle>Data Error</AlertTitle>
         <AlertDescription>
-          Invalid data format. Please check your data source.
+          Unable to load scraped data. Please check the data source and try again.
         </AlertDescription>
       </Alert>
     );
@@ -269,63 +176,36 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
 
   return (
     <div className="space-y-6">
-      {/* Header with stats */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span>Data Overview</span>
-            <div className="flex items-center space-x-4">
-              <Badge variant="outline">
-                {processedItems.length} of {items.length} items
-              </Badge>
-              <Button onClick={exportFilteredData} size="sm" variant="outline">
-                <Download className="h-4 w-4 mr-2" />
-                Export
-              </Button>
-            </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{analytics.totalItems}</div>
-              <div className="text-sm text-gray-600">Total Items</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{analytics.companies.length}</div>
-              <div className="text-sm text-gray-600">Companies</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{analytics.categories.length}</div>
-              <div className="text-sm text-gray-600">Categories</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600">{analytics.contentQuality.averageWords}</div>
-              <div className="text-sm text-gray-600">Avg Words</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-red-600">{analytics.contentQuality.hasImages}</div>
-              <div className="text-sm text-gray-600">With Images</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Header with Controls */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+        <div>
+          <h2 className="text-2xl font-bold">Data View</h2>
+          <p className="text-gray-600">
+            {processedItems.length} of {items.length} items
+            {searchTerm && ` matching "${searchTerm}"`}
+          </p>
+        </div>
+        
+        <div className="flex gap-2">
+          <Button onClick={exportToCSV} variant="outline">
+            <Download className="h-4 w-4 mr-2" />
+            Export CSV
+          </Button>
+        </div>
+      </div>
 
       {/* Filters */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Filter className="h-5 w-5" />
-            <span>Filters & Search</span>
-          </CardTitle>
+          <CardTitle className="text-lg">Filters & Search</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <Label htmlFor="search">Search</Label>
+              <Label htmlFor="search">Search Content</Label>
               <Input
                 id="search"
-                placeholder="Search content..."
+                placeholder="Search titles, content, companies..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -338,11 +218,9 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
                   <SelectValue placeholder="All companies" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All companies</SelectItem>
-                  {uniqueCompanies.map(company => (
-                    <SelectItem key={company} value={company}>
-                      {company}
-                    </SelectItem>
+                  <SelectItem value="">All companies</SelectItem>
+                  {companies.map(company => (
+                    <SelectItem key={company} value={company}>{company}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -355,48 +233,39 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
                   <SelectValue placeholder="All categories" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All categories</SelectItem>
-                  {uniqueCategories.map(category => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
+                  <SelectItem value="">All categories</SelectItem>
+                  {categories.map(category => (
+                    <SelectItem key={category} value={category}>{category}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             
             <div>
-              <Label htmlFor="date-range">Date Range</Label>
+              <Label htmlFor="dateRange">Date Range</Label>
               <Select value={dateRange} onValueChange={setDateRange}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All time</SelectItem>
-                  <SelectItem value="today">Today</SelectItem>
-                  <SelectItem value="week">This week</SelectItem>
-                  <SelectItem value="month">This month</SelectItem>
+                  <SelectItem value="1d">Last 24 hours</SelectItem>
+                  <SelectItem value="7d">Last 7 days</SelectItem>
+                  <SelectItem value="30d">Last 30 days</SelectItem>
+                  <SelectItem value="90d">Last 90 days</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-          </div>
-          
-          <div className="flex justify-between items-center mt-4">
-            <Button onClick={clearFilters} variant="outline" size="sm">
-              Clear Filters
-            </Button>
-            <div className="text-sm text-gray-600">
-              Showing {processedItems.length} of {items.length} items
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* View Mode Tabs */}
-      <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as any)}>
-        <TabsList className="grid w-full grid-cols-3">
+      <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as any)} className="space-y-4">
+        <TabsList>
           <TabsTrigger value="table">Table View</TabsTrigger>
           <TabsTrigger value="cards">Card View</TabsTrigger>
+          <TabsTrigger value="content">Content Analysis</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
         </TabsList>
 
@@ -408,45 +277,70 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
                 <table className="w-full">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Company
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Category
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Title
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Date
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Actions
-                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Company</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Category</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Title</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">URL</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Scraped</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Content</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200">
                     {processedItems.map((item, index) => (
                       <tr key={item.id || index} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 py-3">
                           <Badge variant="outline">{item.company}</Badge>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 py-3">
                           <Badge variant="secondary">{item.category}</Badge>
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="max-w-xs truncate" title={item.title}>
+                        <td className="px-4 py-3 max-w-xs">
+                          <div className="truncate" title={item.title}>
                             {item.title || 'No title'}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {item.scrapedAt ? new Date(item.scrapedAt).toLocaleDateString() : 'Unknown'}
+                        <td className="px-4 py-3 max-w-xs">
+                          <div className="truncate text-blue-600" title={item.url}>
+                            {item.url}
+                          </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <Button size="sm" variant="outline">
-                            <Eye className="h-4 w-4 mr-2" />
-                            View
-                          </Button>
+                        <td className="px-4 py-3 text-sm text-gray-500">
+                          {new Date(item.scrapedAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2 text-sm">
+                            {item.metadata?.word_count && (
+                              <span className="flex items-center gap-1">
+                                <FileText className="h-3 w-3" />
+                                {item.metadata.word_count}
+                              </span>
+                            )}
+                            {item.metadata?.has_images && (
+                              <span className="flex items-center gap-1 text-blue-600">
+                                <BarChart3 className="h-3 w-3" />
+                                Images
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setSelectedItem(item)}
+                            >
+                              <Eye className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => window.open(item.url, '_blank')}
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -461,32 +355,60 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
         <TabsContent value="cards" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {processedItems.map((item, index) => (
-              <Card key={item.id || index} className="hover:shadow-md transition-shadow">
+              <Card key={item.id || index} className="hover:shadow-lg transition-shadow">
                 <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-1">
-                      <CardTitle className="text-base line-clamp-2">{item.title || 'No title'}</CardTitle>
-                      <div className="flex items-center space-x-2">
-                        <Badge variant="outline" className="text-xs">{item.company}</Badge>
-                        <Badge variant="secondary" className="text-xs">{item.category}</Badge>
-                      </div>
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-2">
+                      <Badge variant="outline">{item.company}</Badge>
+                      <Badge variant="secondary">{item.category}</Badge>
                     </div>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setSelectedItem(item)}
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
                   </div>
+                  <CardTitle className="text-lg line-clamp-2">
+                    {item.title || 'No title'}
+                  </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="space-y-3">
-                    <div className="text-sm text-gray-600 line-clamp-3">
-                      {item.markdown ? item.markdown.substring(0, 150) + '...' : 'No content available'}
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>{item.scrapedAt ? new Date(item.scrapedAt).toLocaleDateString() : 'Unknown date'}</span>
-                      <span>{item.markdown ? item.markdown.split(/\s+/).length : 0} words</span>
-                    </div>
-                    
-                    <Button size="sm" className="w-full">
-                      <Eye className="h-4 w-4 mr-2" />
-                      View Details
+                <CardContent className="space-y-3">
+                  <div className="text-sm text-gray-600 line-clamp-3">
+                    {item.markdown ? 
+                      item.markdown.substring(0, 150) + (item.markdown.length > 150 ? '...' : '') :
+                      'No content available'
+                    }
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-sm text-gray-500">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {new Date(item.scrapedAt).toLocaleDateString()}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <FileText className="h-3 w-3" />
+                      {item.metadata?.word_count || 0} words
+                    </span>
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => openInNewTab(item.url)}
+                    >
+                      <ExternalLink className="h-3 w-3 mr-1" />
+                      View
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => copyToClipboard(item.url)}
+                    >
+                      <Copy className="h-3 w-3" />
                     </Button>
                   </div>
                 </CardContent>
@@ -495,119 +417,150 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
           </div>
         </TabsContent>
 
+        {/* Content Analysis View */}
+        <TabsContent value="content" className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {processedItems.map((item, index) => (
+              <Card key={item.id || index} className="h-full">
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-2">
+                      <div className="flex gap-2">
+                        <Badge variant="outline">{item.company}</Badge>
+                        <Badge variant="secondary">{item.category}</Badge>
+                      </div>
+                      <CardTitle className="text-lg">{item.title || 'No title'}</CardTitle>
+                      <p className="text-sm text-gray-600">{item.url}</p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => openInNewTab(item.url)}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Content Preview */}
+                  <div>
+                    <h4 className="font-medium mb-2">Content Preview</h4>
+                    <div className="bg-gray-50 p-3 rounded text-sm max-h-32 overflow-y-auto">
+                      {item.markdown ? 
+                        item.markdown.substring(0, 300) + (item.markdown.length > 300 ? '...' : '') :
+                        'No content available'
+                      }
+                    </div>
+                  </div>
+                  
+                  {/* Metadata */}
+                  <div>
+                    <h4 className="font-medium mb-2">Content Analysis</h4>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-blue-500" />
+                        <span>{item.metadata?.word_count || 0} words</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Hash className="h-4 w-4 text-green-500" />
+                        <span>{item.metadata?.char_count || 0} characters</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <BarChart3 className="h-4 w-4 text-purple-500" />
+                        <span>{item.metadata?.has_images ? 'Has images' : 'No images'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Globe className="h-4 w-4 text-orange-500" />
+                        <span>{item.metadata?.link_count || 0} links</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* AI Analysis */}
+                  {item.ai_analysis && (
+                    <div>
+                      <h4 className="font-medium mb-2">AI Insights</h4>
+                      <div className="bg-blue-50 p-3 rounded text-sm">
+                        {item.ai_analysis}
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
         {/* Analytics View */}
         <TabsContent value="analytics" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Company Distribution */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <BarChart3 className="h-5 w-5" />
-                  <span>Company Distribution</span>
-                </CardTitle>
+                <CardTitle className="text-lg">Content Distribution</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2">
-                  {analytics.companies.slice(0, 10).map((company, index) => (
-                    <div key={company.name} className="flex items-center justify-between">
-                      <span className="text-sm truncate">{company.name}</span>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-24 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-blue-600 h-2 rounded-full" 
-                            style={{ width: `${(company.count / analytics.totalItems) * 100}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-600 w-8 text-right">{company.count}</span>
-                      </div>
+                <div className="space-y-3">
+                  {Object.entries(
+                    processedItems.reduce((acc, item) => {
+                      acc[item.category] = (acc[item.category] || 0) + 1;
+                      return acc;
+                    }, {} as Record<string, number>)
+                  ).map(([category, count]) => (
+                    <div key={category} className="flex justify-between items-center">
+                      <span className="text-sm font-medium">{category}</span>
+                      <Badge variant="outline">{count}</Badge>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-
-            {/* Category Distribution */}
+            
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <PieChart className="h-5 w-5" />
-                  <span>Category Distribution</span>
-                </CardTitle>
+                <CardTitle className="text-lg">Company Activity</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2">
-                  {analytics.categories.map((category, index) => (
-                    <div key={category.name} className="flex items-center justify-between">
-                      <span className="text-sm capitalize">{category.name}</span>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-24 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-green-600 h-2 rounded-full" 
-                            style={{ width: `${(category.count / analytics.totalItems) * 100}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-600 w-8 text-right">{category.count}</span>
-                      </div>
+                <div className="space-y-3">
+                  {Object.entries(
+                    processedItems.reduce((acc, item) => {
+                      acc[item.company] = (acc[item.company] || 0) + 1;
+                      return acc;
+                    }, {} as Record<string, number>)
+                  ).map(([company, count]) => (
+                    <div key={company} className="flex justify-between items-center">
+                      <span className="text-sm font-medium">{company}</span>
+                      <Badge variant="outline">{count}</Badge>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-
-            {/* Content Quality Metrics */}
+            
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <TrendingUp className="h-5 w-5" />
-                  <span>Content Quality</span>
-                </CardTitle>
+                <CardTitle className="text-lg">Content Quality</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 bg-blue-50 rounded-lg">
-                    <div className="text-lg font-semibold text-blue-600">{analytics.contentQuality.averageWords}</div>
-                    <div className="text-xs text-blue-600">Avg Words</div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium">Total Items</span>
+                    <Badge variant="outline">{processedItems.length}</Badge>
                   </div>
-                  <div className="text-center p-3 bg-green-50 rounded-lg">
-                    <div className="text-lg font-semibold text-green-600">{analytics.contentQuality.averageChars}</div>
-                    <div className="text-xs text-green-600">Avg Chars</div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium">With AI Analysis</span>
+                    <Badge variant="outline">
+                      {processedItems.filter(item => item.ai_analysis).length}
+                    </Badge>
                   </div>
-                  <div className="text-center p-3 bg-purple-50 rounded-lg">
-                    <div className="text-lg font-semibold text-purple-600">{analytics.contentQuality.hasImages}</div>
-                    <div className="text-xs text-purple-600">With Images</div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium">Average Words</span>
+                    <Badge variant="outline">
+                      {Math.round(
+                        processedItems.reduce((sum, item) => sum + (item.metadata?.word_count || 0), 0) / 
+                        Math.max(processedItems.length, 1)
+                      )}
+                    </Badge>
                   </div>
-                  <div className="text-center p-3 bg-orange-50 rounded-lg">
-                    <div className="text-lg font-semibold text-orange-600">{analytics.contentQuality.hasLinks}</div>
-                    <div className="text-xs text-orange-600">With Links</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Date Distribution */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Calendar className="h-5 w-5" />
-                  <span>Scraping Timeline</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {analytics.dateDistribution.slice(-7).map((date, index) => (
-                    <div key={date.date} className="flex items-center justify-between">
-                      <span className="text-sm">{date.date}</span>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-20 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-red-600 h-2 rounded-full" 
-                            style={{ width: `${(date.count / Math.max(...analytics.dateDistribution.map(d => d.count))) * 100}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-600 w-8 text-right">{date.count}</span>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -615,15 +568,91 @@ export function DataViewPanel({ items }: DataViewPanelProps) {
         </TabsContent>
       </Tabs>
 
-      {/* No Results */}
-      {processedItems.length === 0 && (
-        <Alert>
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>No Results</AlertTitle>
-          <AlertDescription>
-            No items match your current filters. Try adjusting your search criteria or clearing filters.
-          </AlertDescription>
-        </Alert>
+      {/* Item Detail Modal */}
+      {selectedItem && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <CardHeader>
+              <div className="flex justify-between items-start">
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Badge variant="outline">{selectedItem.company}</Badge>
+                    <Badge variant="secondary">{selectedItem.category}</Badge>
+                  </div>
+                  <CardTitle className="text-xl">{selectedItem.title || 'No title'}</CardTitle>
+                  <p className="text-sm text-gray-600">{selectedItem.url}</p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelectedItem(null)}
+                >
+                  ✕
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Full Content */}
+              <div>
+                <h4 className="font-medium mb-3">Full Content</h4>
+                <div className="bg-gray-50 p-4 rounded max-h-96 overflow-y-auto">
+                  {selectedItem.markdown ? (
+                    <div className="prose prose-sm max-w-none">
+                      {selectedItem.markdown}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No content available</p>
+                  )}
+                </div>
+              </div>
+              
+              {/* AI Analysis */}
+              {selectedItem.ai_analysis && (
+                <div>
+                  <h4 className="font-medium mb-3">AI Analysis</h4>
+                  <div className="bg-blue-50 p-4 rounded">
+                    <p className="text-sm">{selectedItem.ai_analysis}</p>
+                  </div>
+                </div>
+              )}
+              
+              {/* Metadata */}
+              <div>
+                <h4 className="font-medium mb-3">Content Metadata</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium">Scraped:</span>
+                    <p className="text-gray-600">{new Date(selectedItem.scrapedAt).toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Words:</span>
+                    <p className="text-gray-600">{selectedItem.metadata?.word_count || 0}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Characters:</span>
+                    <p className="text-gray-600">{selectedItem.metadata?.char_count || 0}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Links:</span>
+                    <p className="text-gray-600">{selectedItem.metadata?.link_count || 0}</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Actions */}
+              <div className="flex gap-2">
+                <Button onClick={() => window.open(selectedItem.url, '_blank')}>
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  View Original
+                </Button>
+                <Button variant="outline" onClick={() => navigator.clipboard.writeText(selectedItem.url)}>
+                  <Copy className="h-4 w-4 mr-2" />
+                  Copy URL
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );

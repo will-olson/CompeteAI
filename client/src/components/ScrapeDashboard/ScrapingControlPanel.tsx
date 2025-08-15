@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { APIService } from '@/utils/APIService';
+import APIService from '@/utils/APIService';
 import { useScrapeStore, useScrapeConfiguration } from '@/state/ScrapeStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

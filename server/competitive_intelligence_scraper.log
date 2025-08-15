@@ -2411,3 +2411,36 @@
 2025-08-13 16:22:25,094 - INFO:  * Debugger PIN: 297-482-426
 2025-08-13 16:22:32,162 - INFO:  * Detected change in '/Users/willolson/Development/StockMarketAI/server/competitor_targeting.py', reloading
 2025-08-13 16:22:32,239 - INFO:  * Restarting with stat
+2025-08-15 12:58:49,522 - INFO: Investigating coverage gaps for TestCompany
+2025-08-15 13:58:55,435 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.114:5001
+2025-08-15 13:58:55,436 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-15 13:58:55,437 - INFO:  * Restarting with stat
+2025-08-15 13:58:55,959 - WARNING:  * Debugger is active!
+2025-08-15 13:58:55,967 - INFO:  * Debugger PIN: 121-403-977
+2025-08-15 14:03:03,755 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.114:5001
+2025-08-15 14:03:03,755 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-15 14:03:03,756 - INFO:  * Restarting with stat
+2025-08-15 14:03:04,270 - WARNING:  * Debugger is active!
+2025-08-15 14:03:04,276 - INFO:  * Debugger PIN: 121-403-977
+2025-08-15 14:43:30,774 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.114:5001
+2025-08-15 14:43:30,774 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-15 14:43:30,775 - INFO:  * Restarting with stat
+2025-08-15 14:43:31,265 - WARNING:  * Debugger is active!
+2025-08-15 14:43:31,271 - INFO:  * Debugger PIN: 121-403-977
+2025-08-15 15:48:04,843 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.114:5001
+2025-08-15 15:48:04,844 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-15 15:48:04,845 - INFO:  * Restarting with stat
+2025-08-15 15:48:05,363 - WARNING:  * Debugger is active!
+2025-08-15 15:48:05,369 - INFO:  * Debugger PIN: 121-403-977

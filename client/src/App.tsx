@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ScrapeDashboard from "./pages/ScrapeDashboard";
+import TechnicalIntelligenceDashboard from "./pages/TechnicalIntelligenceDashboard";
 import AIAnalysis from "./pages/AIAnalysis";
 import Battlecard from "./pages/Battlecard";
 import { NavBar } from "./components/NavBar";
@@ -25,6 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/scrape" element={<ScrapeDashboard />} />
+            <Route path="/technical-intelligence" element={<TechnicalIntelligenceDashboard />} />
             <Route path="/analysis" element={<AIAnalysis />} />
             <Route path="/battlecards" element={<Battlecard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

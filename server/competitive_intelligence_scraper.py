@@ -66,12 +66,54 @@ class CompetitiveIntelligenceScraper:
         # Initialize preset competitor groups
         self.preset_groups = self._initialize_preset_groups()
         
-        # Technical content keywords for relevance scoring
+        # Enhanced technical content keywords for relevance scoring
         self.technical_keywords = {
-            'api_docs': ['api', 'endpoint', 'authentication', 'rate limit', 'response', 'request', 'headers', 'parameters'],
-            'pricing': ['price', 'plan', 'tier', 'billing', 'subscription', 'cost', 'pricing', 'enterprise'],
-            'features': ['feature', 'capability', 'functionality', 'integration', 'workflow', 'automation'],
-            'integrations': ['webhook', 'oauth', 'sdk', 'plugin', 'connector', 'api key', 'authentication']
+            'api_docs': ['api', 'endpoint', 'authentication', 'rate limit', 'response', 'request', 'headers', 'parameters', 'swagger', 'openapi', 'rest', 'graphql', 'webhook'],
+            'pricing': ['price', 'plan', 'tier', 'billing', 'subscription', 'cost', 'pricing', 'enterprise', 'quote', 'contact sales', 'pricing calculator'],
+            'features': ['feature', 'capability', 'functionality', 'integration', 'workflow', 'automation', 'connector', 'plugin', 'add-on'],
+            'integrations': ['webhook', 'oauth', 'sdk', 'plugin', 'connector', 'api key', 'authentication', 'zapier', 'ifttt', 'webhook', 'callback'],
+            'sdk_docs': ['sdk', 'client library', 'download', 'install', 'npm', 'pip', 'maven', 'gradle', 'nuget', 'composer', 'github', 'repository'],
+            'deployment': ['deploy', 'installation', 'setup', 'configuration', 'environment', 'docker', 'kubernetes', 'aws', 'azure', 'gcp', 'on-premise']
+        }
+        
+        # Content type detection patterns
+        self.content_patterns = {
+            'api_docs': [
+                r'\b(api|endpoint|rest|graphql|swagger|openapi)\b',
+                r'https?://[^\s]+\.json',
+                r'https?://[^\s]+\.yaml',
+                r'https?://[^\s]+\.yml',
+                r'POST|GET|PUT|DELETE|PATCH',
+                r'status code|response code|error code'
+            ],
+            'sdk_docs': [
+                r'\b(sdk|client library|download|install|npm|pip|maven|gradle)\b',
+                r'github\.com|gitlab\.com|bitbucket\.org',
+                r'package\.json|requirements\.txt|pom\.xml|build\.gradle',
+                r'installation guide|getting started|quick start'
+            ],
+            'pricing': [
+                r'\b(price|plan|tier|billing|subscription|cost|pricing|enterprise)\b',
+                r'\$\d+|\d+\s*(per month|per year|monthly|yearly)',
+                r'contact sales|request quote|pricing calculator',
+                r'free|starter|professional|enterprise|custom'
+            ],
+            'deployment': [
+                r'\b(deploy|installation|setup|configuration|environment)\b',
+                r'docker|kubernetes|aws|azure|gcp|on-premise',
+                r'installation guide|deployment guide|setup instructions',
+                r'requirements|prerequisites|system requirements'
+            ]
+        }
+        
+        # Company-specific technical keywords
+        self.company_technical_keywords = {
+            'snowflake': ['snowpark', 'cortex', 'warehouse', 'data cloud', 'sql', 'python', 'java', 'spark'],
+            'databricks': ['notebook', 'workspace', 'unity catalog', 'delta lake', 'mlflow', 'spark', 'python', 'scala'],
+            'powerbi': ['power query', 'dax', 'm language', 'gateway', 'workspace', 'report server', 'power platform'],
+            'tableau': ['tableau prep', 'tableau server', 'tableau online', 'tableau public', 'vizql', 'hyper'],
+            'looker': ['lookml', 'explore', 'dashboard', 'block', 'looker studio', 'bigquery', 'data warehouse'],
+            'qlik': ['qlikview', 'qliksense', 'script', 'load script', 'qlik engine', 'associative engine']
         }
         
     def _initialize_preset_groups(self) -> Dict[str, Dict[str, Any]]:
@@ -761,7 +803,7 @@ class CompetitiveIntelligenceScraper:
                 content = self._scrape_url(url)
                 
                 # Enhanced content extraction
-                structured_data = self._extract_technical_content(content)
+                structured_data = self._extract_technical_content(content, company)
                 
                 # Quality scoring
                 quality_score = self._calculate_content_quality(structured_data)
@@ -783,8 +825,8 @@ class CompetitiveIntelligenceScraper:
         
         return results
 
-    def _extract_technical_content(self, html_content: str) -> Dict[str, Any]:
-        """Extract technical content using existing BeautifulSoup - 12-hour MVP enhancement"""
+    def _extract_technical_content(self, html_content: str, company: str = "") -> Dict[str, Any]:
+        """Extract technical content using enhanced BeautifulSoup - Phase 1 implementation"""
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             
@@ -799,42 +841,56 @@ class CompetitiveIntelligenceScraper:
                     'columns': len(table.find_all('th')) or len(table.find_all('td', limit=1))
                 })
             
-            # Extract code blocks
+            # Extract code blocks with enhanced analysis
             code_blocks = soup.find_all(['code', 'pre'])
             code_data = []
             for block in code_blocks:
-                code_data.append({
-                    'html': str(block),
-                    'text': block.get_text(strip=True),
-                    'language': self._detect_code_language(block),
-                    'length': len(block.get_text())
-                })
+                code_info = self._analyze_code_block(block)
+                code_data.append(code_info)
             
-            # Extract links (existing functionality)
+            # Extract links with technical relevance scoring
             links = soup.find_all('a')
             link_data = []
             for link in links:
                 href = link.get('href')
                 if href:
-                    link_data.append({
-                        'url': href,
-                        'text': link.get_text(strip=True),
-                        'title': link.get('title', ''),
-                        'is_external': self._is_external_link(href)
-                    })
+                    link_info = self._analyze_link_technical_relevance(link, company)
+                    link_data.append(link_info)
             
             # Extract technical metadata
             technical_metadata = self._extract_technical_metadata(soup)
+            
+            # Detect OpenAPI specifications
+            openapi_specs = self.detect_openapi_specs(html_content)
+            
+            # Classify overall content
+            text_content = soup.get_text(strip=True)
+            content_classification = self.classify_technical_content(text_content, company)
+            
+            # Extract API endpoints from text content
+            api_endpoints = self._extract_api_endpoints_from_text(text_content)
+            
+            # Extract authentication patterns
+            auth_patterns = self._extract_authentication_patterns(text_content)
+            
+            # Extract rate limiting information
+            rate_limit_info = self._extract_rate_limit_info(text_content)
             
             return {
                 'tables': table_data,
                 'code_blocks': code_data,
                 'links': link_data,
-                'text_content': soup.get_text(strip=True),
+                'text_content': text_content,
                 'technical_metadata': technical_metadata,
+                'openapi_specs': openapi_specs,
+                'content_classification': content_classification,
+                'api_endpoints': api_endpoints,
+                'authentication_patterns': auth_patterns,
+                'rate_limit_info': rate_limit_info,
                 'has_forms': len(soup.find_all('form')) > 0,
                 'has_images': len(soup.find_all('img')) > 0,
-                'has_videos': len(soup.find_all(['video', 'iframe'])) > 0
+                'has_videos': len(soup.find_all(['video', 'iframe'])) > 0,
+                'extraction_timestamp': datetime.now().isoformat()
             }
             
         except Exception as e:
@@ -844,8 +900,290 @@ class CompetitiveIntelligenceScraper:
                 'text_content': html_content[:1000] if html_content else '',
                 'tables': [],
                 'code_blocks': [],
-                'links': []
+                'links': [],
+                'extraction_timestamp': datetime.now().isoformat()
             }
+
+    def _analyze_code_block(self, code_block) -> Dict[str, Any]:
+        """Enhanced code block analysis with technical indicators"""
+        try:
+            code_text = code_block.get_text(strip=True)
+            language = self._detect_code_language(code_block)
+            
+            # Extract technical indicators
+            technical_indicators = []
+            if 'api' in code_text.lower() or 'endpoint' in code_text.lower():
+                technical_indicators.append('api_related')
+            if 'auth' in code_text.lower() or 'token' in code_text.lower():
+                technical_indicators.append('authentication')
+            if 'sdk' in code_text.lower() or 'client' in code_text.lower():
+                technical_indicators.append('sdk_related')
+            if 'config' in code_text.lower() or 'setup' in code_text.lower():
+                technical_indicators.append('configuration')
+            
+            # Calculate complexity score
+            complexity_score = self._calculate_code_complexity(code_text)
+            
+            return {
+                'html': str(code_block),
+                'text': code_text,
+                'language': language,
+                'length': len(code_text),
+                'technical_indicators': technical_indicators,
+                'complexity_score': complexity_score,
+                'has_api_patterns': any(indicator in technical_indicators for indicator in ['api_related', 'authentication'])
+            }
+            
+        except Exception as e:
+            logger.error(f"Error analyzing code block: {str(e)}")
+            return {
+                'html': str(code_block),
+                'text': code_block.get_text(strip=True),
+                'language': 'unknown',
+                'length': 0,
+                'technical_indicators': [],
+                'complexity_score': 0.0,
+                'has_api_patterns': False
+            }
+
+    def _analyze_link_technical_relevance(self, link, company: str = "") -> Dict[str, Any]:
+        """Analyze link for technical relevance"""
+        try:
+            href = link.get('href')
+            link_text = link.get_text(strip=True)
+            
+            # Score technical relevance
+            technical_score = 0.0
+            technical_indicators = []
+            
+            # Check link text for technical keywords
+            for category, keywords in self.technical_keywords.items():
+                for keyword in keywords:
+                    if keyword.lower() in link_text.lower():
+                        technical_score += 0.1
+                        technical_indicators.append(f"{category}:{keyword}")
+            
+            # Check URL for technical patterns
+            if href:
+                if any(pattern in href.lower() for pattern in ['/api/', '/docs/', '/developers/', '/reference/']):
+                    technical_score += 0.3
+                    technical_indicators.append('technical_url_pattern')
+                if any(ext in href.lower() for ext in ['.json', '.yaml', '.yml', '.md']):
+                    technical_score += 0.2
+                    technical_indicators.append('technical_file_extension')
+            
+            # Company-specific relevance
+            if company:
+                company_lower = company.lower()
+                for comp, keywords in self.company_technical_keywords.items():
+                    if comp in company_lower:
+                        for keyword in keywords:
+                            if keyword.lower() in link_text.lower():
+                                technical_score += 0.2
+                                technical_indicators.append(f"company_specific:{keyword}")
+            
+            return {
+                'url': href,
+                'text': link_text,
+                'title': link.get('title', ''),
+                'is_external': self._is_external_link(href) if href else False,
+                'technical_score': min(1.0, technical_score),
+                'technical_indicators': technical_indicators,
+                'relevance_category': self._categorize_link_relevance(technical_score)
+            }
+            
+        except Exception as e:
+            logger.error(f"Error analyzing link technical relevance: {str(e)}")
+            return {
+                'url': link.get('href', ''),
+                'text': link.get_text(strip=True),
+                'technical_score': 0.0,
+                'technical_indicators': [],
+                'relevance_category': 'unknown'
+            }
+
+    def _categorize_link_relevance(self, technical_score: float) -> str:
+        """Categorize link by technical relevance"""
+        if technical_score >= 0.7:
+            return 'high_technical'
+        elif technical_score >= 0.4:
+            return 'medium_technical'
+        elif technical_score >= 0.1:
+            return 'low_technical'
+        else:
+            return 'non_technical'
+
+    def _calculate_code_complexity(self, code_text: str) -> float:
+        """Calculate code complexity score"""
+        try:
+            complexity_score = 0.0
+            
+            # Basic complexity indicators
+            if len(code_text) > 1000:
+                complexity_score += 0.3
+            elif len(code_text) > 500:
+                complexity_score += 0.2
+            elif len(code_text) > 100:
+                complexity_score += 0.1
+            
+            # Function/class complexity
+            function_count = len(re.findall(r'\b(def|function|class)\b', code_text, re.IGNORECASE))
+            complexity_score += min(0.3, function_count * 0.05)
+            
+            # Import/dependency complexity
+            import_count = len(re.findall(r'\b(import|from|require|include)\b', code_text, re.IGNORECASE))
+            complexity_score += min(0.2, import_count * 0.03)
+            
+            # Error handling complexity
+            error_patterns = ['try:', 'catch', 'except', 'finally', 'error', 'exception']
+            error_count = sum(1 for pattern in error_patterns if pattern in code_text.lower())
+            complexity_score += min(0.2, error_count * 0.05)
+            
+            return min(1.0, complexity_score)
+            
+        except Exception:
+            return 0.0
+
+    def _extract_api_endpoints_from_text(self, text: str) -> List[Dict[str, Any]]:
+        """Extract API endpoint patterns from text content"""
+        try:
+            endpoints = []
+            
+            # Look for URL patterns that might be API endpoints
+            url_pattern = r'https?://[^\s]+(/api/[^\s]+|/v\d+/[^\s]+|/[a-z]+/[a-z0-9_-]+)'
+            url_matches = re.findall(url_pattern, text, re.IGNORECASE)
+            
+            for match in url_matches:
+                if any(keyword in match.lower() for keyword in ['api', 'v1', 'v2', 'v3', 'rest', 'graphql']):
+                    endpoints.append({
+                        'url': match,
+                        'type': 'url_pattern',
+                        'confidence': 'medium'
+                    })
+            
+            # Look for HTTP method + path patterns
+            http_pattern = r'\b(GET|POST|PUT|DELETE|PATCH)\s+([/\w-]+)'
+            http_matches = re.findall(http_pattern, text, re.IGNORECASE)
+            
+            for method, path in http_matches:
+                if any(keyword in path.lower() for keyword in ['api', 'endpoint', 'v1', 'v2', 'v3']):
+                    endpoints.append({
+                        'method': method.upper(),
+                        'path': path,
+                        'type': 'http_pattern',
+                        'confidence': 'high'
+                    })
+            
+            return endpoints
+            
+        except Exception as e:
+            logger.error(f"Error extracting API endpoints: {str(e)}")
+            return []
+
+    def _extract_authentication_patterns(self, text: str) -> List[Dict[str, Any]]:
+        """Extract authentication patterns from text content"""
+        try:
+            auth_patterns = []
+            
+            # OAuth patterns
+            oauth_patterns = [
+                r'oauth\s*2\.0',
+                r'client_id\s*[:=]\s*[\w-]+',
+                r'client_secret\s*[:=]\s*[\w-]+',
+                r'authorization_code',
+                r'access_token',
+                r'refresh_token'
+            ]
+            
+            for pattern in oauth_patterns:
+                matches = re.findall(pattern, text, re.IGNORECASE)
+                if matches:
+                    auth_patterns.append({
+                        'type': 'oauth2',
+                        'pattern': pattern,
+                        'matches': matches,
+                        'confidence': 'high'
+                    })
+            
+            # API key patterns
+            api_key_patterns = [
+                r'api_key\s*[:=]\s*[\w-]+',
+                r'x-api-key',
+                r'authorization\s*:\s*bearer',
+                r'x-auth-token'
+            ]
+            
+            for pattern in api_key_patterns:
+                matches = re.findall(pattern, text, re.IGNORECASE)
+                if matches:
+                    auth_patterns.append({
+                        'type': 'api_key',
+                        'pattern': pattern,
+                        'matches': matches,
+                        'confidence': 'medium'
+                    })
+            
+            # Basic auth patterns
+            basic_auth_patterns = [
+                r'basic\s+authentication',
+                r'username\s*[:=]\s*[\w-]+',
+                r'password\s*[:=]\s*[\w-]+'
+            ]
+            
+            for pattern in basic_auth_patterns:
+                matches = re.findall(pattern, text, re.IGNORECASE)
+                if matches:
+                    auth_patterns.append({
+                        'type': 'basic_auth',
+                        'pattern': pattern,
+                        'matches': matches,
+                        'confidence': 'medium'
+                    })
+            
+            return auth_patterns
+            
+        except Exception as e:
+            logger.error(f"Error extracting authentication patterns: {str(e)}")
+            return []
+
+    def _extract_rate_limit_info(self, text: str) -> List[Dict[str, Any]]:
+        """Extract rate limiting information from text content"""
+        try:
+            rate_limit_info = []
+            
+            # Rate limit patterns
+            rate_patterns = [
+                r'rate\s+limit[:\s]+(\d+)\s+(requests?|calls?)\s+per\s+(second|minute|hour|day)',
+                r'(\d+)\s+(requests?|calls?)\s+per\s+(second|minute|hour|day)',
+                r'throttling[:\s]+(\d+)\s+(requests?|calls?)',
+                r'quota[:\s]+(\d+)\s+(requests?|calls?)',
+                r'maximum\s+(\d+)\s+(requests?|calls?)'
+            ]
+            
+            for pattern in rate_patterns:
+                matches = re.findall(pattern, text, re.IGNORECASE)
+                if matches:
+                    for match in matches:
+                        if isinstance(match, tuple):
+                            limit, unit, time_period = match
+                        else:
+                            limit = match
+                            unit = 'requests'
+                            time_period = 'minute'
+                        
+                        rate_limit_info.append({
+                            'limit': int(limit),
+                            'unit': unit,
+                            'time_period': time_period,
+                            'pattern': pattern,
+                            'confidence': 'medium'
+                        })
+            
+            return rate_limit_info
+            
+        except Exception as e:
+            logger.error(f"Error extracting rate limit info: {str(e)}")
+            return []
 
     def _detect_code_language(self, code_block) -> str:
         """Detect programming language from code block"""
@@ -950,6 +1288,267 @@ class CompetitiveIntelligenceScraper:
         except Exception as e:
             logger.error(f"Error assessing technical relevance: {str(e)}")
             return 0.5
+
+    def classify_technical_content(self, content: str, company: str = "") -> Dict[str, Any]:
+        """Classify content by technical type and relevance - Phase 1.3 implementation"""
+        try:
+            content_lower = content.lower()
+            classification = {
+                'content_type': 'unknown',
+                'technical_depth': 0.0,
+                'api_relevance': 0.0,
+                'sdk_relevance': 0.0,
+                'pricing_relevance': 0.0,
+                'deployment_relevance': 0.0,
+                'integrations_relevance': 0.0,
+                'overall_technical_score': 0.0,
+                'detected_patterns': [],
+                'company_specific_matches': []
+            }
+            
+            # Determine content type based on pattern matching
+            content_type_scores = {}
+            for content_type, patterns in self.content_patterns.items():
+                score = 0.0
+                matched_patterns = []
+                for pattern in patterns:
+                    matches = re.findall(pattern, content_lower, re.IGNORECASE)
+                    if matches:
+                        score += len(matches) * 0.1
+                        matched_patterns.extend(matches)
+                
+                if score > 0:
+                    content_type_scores[content_type] = score
+                    classification['detected_patterns'].extend(matched_patterns)
+            
+            # Set primary content type
+            if content_type_scores:
+                classification['content_type'] = max(content_type_scores, key=content_type_scores.get)
+            
+            # Calculate relevance scores for each category
+            for category, keywords in self.technical_keywords.items():
+                if category == 'api_docs':
+                    classification['api_relevance'] = self._calculate_keyword_relevance(content_lower, keywords)
+                elif category == 'sdk_docs':
+                    classification['sdk_relevance'] = self._calculate_keyword_relevance(content_lower, keywords)
+                elif category == 'pricing':
+                    classification['pricing_relevance'] = self._calculate_keyword_relevance(content_lower, keywords)
+                elif category == 'deployment':
+                    classification['deployment_relevance'] = self._calculate_keyword_relevance(content_lower, keywords)
+                elif category == 'integrations':
+                    classification['integrations_relevance'] = self._calculate_keyword_relevance(content_lower, keywords)
+            
+            # Calculate technical depth based on content characteristics
+            classification['technical_depth'] = self._calculate_technical_depth(content)
+            
+            # Add company-specific technical keyword matching
+            if company:
+                company_lower = company.lower()
+                for comp, keywords in self.company_technical_keywords.items():
+                    if comp in company_lower:
+                        company_matches = []
+                        for keyword in keywords:
+                            if keyword.lower() in content_lower:
+                                company_matches.append(keyword)
+                        if company_matches:
+                            classification['company_specific_matches'] = company_matches
+                            # Boost overall score for company-specific content
+                            classification['overall_technical_score'] += 0.2
+            
+            # Calculate overall technical score
+            relevance_scores = [
+                classification['api_relevance'],
+                classification['sdk_relevance'],
+                classification['pricing_relevance'],
+                classification['deployment_relevance'],
+                classification['integrations_relevance']
+            ]
+            
+            classification['overall_technical_score'] = min(1.0, 
+                classification['overall_technical_score'] + 
+                (sum(relevance_scores) / len(relevance_scores)) * 0.6 +
+                classification['technical_depth'] * 0.4
+            )
+            
+            # Round all scores
+            for key, value in classification.items():
+                if isinstance(value, float):
+                    classification[key] = round(value, 3)
+            
+            return classification
+            
+        except Exception as e:
+            logger.error(f"Error in technical content classification: {str(e)}")
+            return {
+                'content_type': 'error',
+                'technical_depth': 0.0,
+                'overall_technical_score': 0.0,
+                'error': str(e)
+            }
+    
+    def _calculate_keyword_relevance(self, content: str, keywords: List[str]) -> float:
+        """Calculate relevance score based on keyword matches"""
+        try:
+            matches = sum(1 for keyword in keywords if keyword.lower() in content)
+            return min(1.0, matches / len(keywords)) if keywords else 0.0
+        except Exception:
+            return 0.0
+    
+    def _calculate_technical_depth(self, content: str) -> float:
+        """Calculate technical depth based on content characteristics"""
+        try:
+            depth_score = 0.0
+            
+            # Code blocks and technical elements
+            if '```' in content or '<code>' in content:
+                depth_score += 0.3
+            
+            # Technical terminology density
+            technical_terms = ['api', 'endpoint', 'authentication', 'sdk', 'deployment', 'configuration']
+            term_count = sum(1 for term in technical_terms if term in content.lower())
+            depth_score += min(0.3, term_count * 0.05)
+            
+            # URL patterns (API endpoints, documentation links)
+            url_patterns = [r'https?://[^\s]+\.json', r'https?://[^\s]+\.yaml', r'https?://[^\s]+\.yml']
+            for pattern in url_patterns:
+                if re.search(pattern, content):
+                    depth_score += 0.2
+            
+            # HTTP methods
+            http_methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
+            method_count = sum(1 for method in http_methods if method in content)
+            depth_score += min(0.2, method_count * 0.05)
+            
+            return min(1.0, depth_score)
+            
+        except Exception:
+            return 0.0
+
+    def detect_openapi_specs(self, html_content: str) -> List[Dict]:
+        """Detect OpenAPI specifications in HTML content - Phase 1.1 implementation"""
+        try:
+            openapi_specs = []
+            
+            # Look for direct OpenAPI file references
+            openapi_patterns = [
+                r'https?://[^\s"\']+\.json',
+                r'https?://[^\s"\']+\.yaml',
+                r'https?://[^\s"\']+\.yml'
+            ]
+            
+            for pattern in openapi_patterns:
+                matches = re.findall(pattern, html_content)
+                for match in matches:
+                    if any(keyword in match.lower() for keyword in ['openapi', 'swagger', 'api']):
+                        openapi_specs.append({
+                            'url': match,
+                            'type': 'direct_reference',
+                            'detected_at': datetime.now().isoformat()
+                        })
+            
+            # Look for OpenAPI links in HTML
+            soup = BeautifulSoup(html_content, 'html.parser')
+            for link in soup.find_all('a', href=True):
+                href = link.get('href')
+                if href and any(keyword in href.lower() for keyword in ['openapi', 'swagger', 'api.json', 'api.yaml']):
+                    openapi_specs.append({
+                        'url': href,
+                        'type': 'html_link',
+                        'link_text': link.get_text(strip=True),
+                        'detected_at': datetime.now().isoformat()
+                    })
+            
+            # Look for OpenAPI content in script tags
+            for script in soup.find_all('script'):
+                if script.string:
+                    script_content = script.string
+                    # Look for OpenAPI spec content embedded in scripts
+                    if 'openapi' in script_content.lower() or 'swagger' in script_content.lower():
+                        openapi_specs.append({
+                            'type': 'embedded_script',
+                            'content_preview': script_content[:200],
+                            'detected_at': datetime.now().isoformat()
+                        })
+            
+            return openapi_specs
+            
+        except Exception as e:
+            logger.error(f"Error detecting OpenAPI specs: {str(e)}")
+            return []
+
+    def parse_openapi_spec(self, spec_url: str) -> Dict[str, Any]:
+        """Parse OpenAPI specification and extract technical information"""
+        try:
+            response = self.session.get(spec_url, timeout=15)
+            response.raise_for_status()
+            
+            spec_content = response.text
+            spec_data = {}
+            
+            # Try to parse as JSON first
+            try:
+                spec_data = json.loads(spec_content)
+            except json.JSONDecodeError:
+                # Try YAML parsing if JSON fails
+                try:
+                    import yaml
+                    spec_data = yaml.safe_load(spec_content)
+                except ImportError:
+                    logger.warning("PyYAML not available for YAML parsing")
+                    return {'error': 'YAML parsing not available'}
+            
+            # Extract key technical information
+            extracted_info = {
+                'openapi_version': spec_data.get('openapi', 'unknown'),
+                'title': spec_data.get('info', {}).get('title', ''),
+                'version': spec_data.get('info', {}).get('version', ''),
+                'description': spec_data.get('info', {}).get('description', ''),
+                'endpoints': [],
+                'authentication_methods': [],
+                'rate_limits': [],
+                'parsed_at': datetime.now().isoformat()
+            }
+            
+            # Extract endpoints
+            paths = spec_data.get('paths', {})
+            for path, methods in paths.items():
+                for method, details in methods.items():
+                    if method.upper() in ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']:
+                        endpoint_info = {
+                            'path': path,
+                            'method': method.upper(),
+                            'summary': details.get('summary', ''),
+                            'description': details.get('description', ''),
+                            'parameters': details.get('parameters', []),
+                            'responses': list(details.get('responses', {}).keys())
+                        }
+                        extracted_info['endpoints'].append(endpoint_info)
+            
+            # Extract authentication methods
+            security_schemes = spec_data.get('components', {}).get('securitySchemes', {})
+            for scheme_name, scheme_details in security_schemes.items():
+                auth_info = {
+                    'name': scheme_name,
+                    'type': scheme_details.get('type', ''),
+                    'description': scheme_details.get('description', '')
+                }
+                extracted_info['authentication_methods'].append(auth_info)
+            
+            # Look for rate limiting information in descriptions
+            for endpoint in extracted_info['endpoints']:
+                description = endpoint.get('description', '').lower()
+                if any(term in description for term in ['rate limit', 'throttling', 'quota', 'requests per']):
+                    extracted_info['rate_limits'].append({
+                        'endpoint': endpoint['path'],
+                        'method': endpoint['method'],
+                        'description': endpoint['description']
+                    })
+            
+            return extracted_info
+            
+        except Exception as e:
+            logger.error(f"Error parsing OpenAPI spec {spec_url}: {str(e)}")
+            return {'error': str(e)}
 
     def _calculate_content_quality(self, structured_data: Dict[str, Any]) -> float:
         """Calculate content quality score - 12-hour MVP enhancement"""

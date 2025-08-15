@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { useScrapeStore, useScrapeConfiguration } from '@/state/ScrapeStore';
+import { useScrapeActions, useScrapeConfiguration } from '@/state/ScrapeStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,7 +21,7 @@ import {
   Eye,
   Edit3,
   AlertTriangle,
-  Switch
+  ToggleLeft
 } from 'lucide-react';
 
 interface ScrapingTarget {
@@ -34,7 +34,7 @@ interface ScrapingTarget {
 
 export function TargetSelectionPanel() {
   const { toast } = useToast();
-  const { updateTargets, addTarget, removeTarget, updateTarget } = useScrapeStore();
+  const { updateTargets, addTarget, removeTarget, updateTarget } = useScrapeActions();
   const configuration = useScrapeConfiguration();
   
   // Target state
@@ -55,7 +55,7 @@ export function TargetSelectionPanel() {
 
   // Generate targets from configuration
   const generatedTargets = useMemo(() => {
-    if (!configuration.customCompanies.length || !configuration.selectedCategories.length) {
+    if (!configuration?.customCompanies?.length || !configuration?.selectedCategories?.length) {
       return [];
     }
 
@@ -70,10 +70,10 @@ export function TargetSelectionPanel() {
           priority: 'medium' as const
         }))
       );
-  }, [configuration.customCompanies, configuration.selectedCategories]);
+  }, [configuration?.customCompanies, configuration?.selectedCategories]);
 
   // Update targets when configuration changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (generatedTargets.length > 0) {
       updateTargets(generatedTargets);
     }
@@ -90,7 +90,7 @@ export function TargetSelectionPanel() {
   };
 
   const toggleTargetEnabled = (targetId: string) => {
-    const target = configuration.targets.find(t => `${t.company}-${t.category}` === targetId);
+    const target = configuration?.targets?.find(t => `${t.company}-${t.category}` === targetId);
     if (target) {
       updateTarget(targetId, { enabled: !target.enabled });
     }
@@ -152,12 +152,12 @@ export function TargetSelectionPanel() {
     toast({ title: 'URL variation added' });
   };
 
-  const getTargetCount = () => configuration.targets.length;
-  const getEnabledTargetCount = () => configuration.targets.filter(t => t.enabled).length;
+  const getTargetCount = () => configuration?.targets?.length || 0;
+  const getEnabledTargetCount = () => configuration?.targets?.filter(t => t.enabled).length || 0;
   const getSelectedTargetCount = () => selectedTargets.size;
 
   // Show warning if no configuration is set
-  if (!configuration.customCompanies.length || !configuration.selectedCategories.length) {
+  if (!configuration?.customCompanies?.length || !configuration?.selectedCategories?.length) {
     return (
       <div className="space-y-6">
         <Alert>
@@ -191,14 +191,14 @@ export function TargetSelectionPanel() {
         
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600">{configuration.customCompanies.filter(c => c.trim()).length}</div>
+            <div className="text-2xl font-bold text-purple-600">{configuration?.customCompanies?.filter(c => c.trim()).length}</div>
             <div className="text-sm text-gray-600">Companies</div>
           </CardContent>
         </Card>
         
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-orange-600">{configuration.selectedCategories.length}</div>
+            <div className="text-2xl font-bold text-orange-600">{configuration?.selectedCategories?.length}</div>
             <div className="text-sm text-gray-600">Categories</div>
           </CardContent>
         </Card>
@@ -214,15 +214,15 @@ export function TargetSelectionPanel() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {configuration.targets.length === 0 ? (
+          {configuration?.targets?.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <Target className="h-12 w-12 mx-auto mb-4 text-gray-300" />
               <p>No targets configured yet.</p>
-              <p className="text-sm">Configure companies and categories in the Configuration tab.</p>
+              <p className="text-sm">Configure companies and categories in the Configuration tab first.</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {configuration.targets.map((target) => {
+              {configuration?.targets?.map((target) => {
                 const targetId = `${target.company}-${target.category}`;
                 const isEditing = editingTarget === targetId;
                 const isSelected = selectedTargets.has(targetId);
@@ -350,9 +350,9 @@ export function TargetSelectionPanel() {
                           <Button
                             onClick={() => {
                               // Add URL variations for all configured companies
-                              configuration.customCompanies
-                                .filter(company => company.trim())
-                                .forEach(company => {
+                              configuration?.customCompanies
+                                ?.filter(company => company.trim())
+                                ?.forEach(company => {
                                   const url = `https://${company.toLowerCase().replace(/\s+/g, '')}.com${pattern}`;
                                   addUrlVariation(company.trim(), category, url);
                                 });
@@ -387,14 +387,12 @@ export function TargetSelectionPanel() {
             <div className="flex space-x-2">
               <Button
                 onClick={() => {
-                  configuration.targets.forEach(target => {
+                  // Enable all targets
+                  configuration?.targets?.forEach(target => {
                     const targetId = `${target.company}-${target.category}`;
-                    if (selectedTargets.has(targetId)) {
-                      updateTarget(targetId, { enabled: true });
-                    }
+                    updateTarget(targetId, { enabled: true });
                   });
-                  setSelectedTargets(new Set());
-                  toast({ title: 'All selected targets enabled' });
+                  toast({ title: 'All targets enabled' });
                 }}
                 variant="outline"
               >
@@ -403,14 +401,12 @@ export function TargetSelectionPanel() {
               
               <Button
                 onClick={() => {
-                  configuration.targets.forEach(target => {
+                  // Disable all targets
+                  configuration?.targets?.forEach(target => {
                     const targetId = `${target.company}-${target.category}`;
-                    if (selectedTargets.has(targetId)) {
-                      updateTarget(targetId, { enabled: false });
-                    }
+                    updateTarget(targetId, { enabled: false });
                   });
-                  setSelectedTargets(new Set());
-                  toast({ title: 'All selected targets disabled' });
+                  toast({ title: 'All targets disabled' });
                 }}
                 variant="outline"
               >

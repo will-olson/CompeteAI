@@ -153,12 +153,70 @@ type ScrapeAction =
   | { type: 'UPDATE_TARGET'; payload: { id: string; updates: Partial<ScrapingTarget> } };
 
 const initialState: ScrapeState = {
-  items: [],
+  items: [
+    {
+      id: 'sample-1',
+      company: 'OpenAI',
+      category: 'marketing',
+      url: 'https://openai.com',
+      title: 'OpenAI Product Launch',
+      markdown: 'We are excited to announce the launch of our new product...',
+      scrapedAt: new Date().toISOString(),
+      source: 'marketing',
+      metadata: {
+        word_count: 150,
+        char_count: 750,
+        has_images: true,
+        link_count: 5
+      },
+      ai_analysis: 'Positive sentiment about product launch. Key topics: AI, innovation, product development.',
+      sentiment_score: 0.8,
+      key_topics: ['AI', 'innovation', 'product launch'],
+      risk_factors: [],
+      competitive_insights: 'Leading AI company launching new product'
+    },
+    {
+      id: 'sample-2',
+      company: 'Stripe',
+      category: 'docs',
+      url: 'https://stripe.com/docs',
+      title: 'Stripe API Documentation',
+      markdown: 'Complete API reference for Stripe payment processing...',
+      scrapedAt: new Date().toISOString(),
+      source: 'docs',
+      metadata: {
+        word_count: 300,
+        char_count: 1500,
+        has_images: false,
+        link_count: 12
+      },
+      ai_analysis: 'Technical documentation with comprehensive API coverage. Key topics: payments, API, integration.',
+      sentiment_score: 0.0,
+      key_topics: ['payments', 'API', 'integration'],
+      risk_factors: [],
+      competitive_insights: 'Comprehensive payment processing documentation'
+    }
+  ],
   configuration: {
     selectedPreset: '',
-    customCompanies: [''],
+    customCompanies: ['OpenAI', 'Stripe'],
     selectedCategories: ['marketing', 'docs'],
-    targets: [],
+    targets: [
+      {
+        company: 'OpenAI',
+        category: 'marketing',
+        url: 'https://openai.com',
+        enabled: true,
+        priority: 'high'
+      },
+      {
+        company: 'Stripe',
+        category: 'docs',
+        url: 'https://stripe.com/docs',
+        enabled: true,
+        priority: 'medium'
+      }
+    ],
     advancedConfig: {
       pageLimit: 25,
       depthLimit: 3,

@@ -1,114 +1,102 @@
 import { useState, useEffect } from 'react';
-import { APIService } from '@/utils/APIService';
+import APIService from '@/utils/APIService';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wifi, WifiOff, RefreshCw, Server } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Server, Wifi, WifiOff, RefreshCw } from 'lucide-react';
 
 export function BackendStatus() {
   const [status, setStatus] = useState<'connected' | 'disconnected' | 'checking'>('checking');
-  const [presetGroups, setPresetGroups] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [lastCheck, setLastCheck] = useState<Date | null>(null);
+
+  const checkConnection = async () => {
+    setStatus('checking');
+    try {
+      const response = await APIService.checkHealth();
+      if (response.status === 'healthy') {
+        setStatus('connected');
+      } else {
+        setStatus('disconnected');
+      }
+      setLastCheck(new Date());
+    } catch (error) {
+      console.error('Backend connection check failed:', error);
+      setStatus('disconnected');
+      setLastCheck(new Date());
+    }
+  };
 
   useEffect(() => {
     checkConnection();
   }, []);
 
-  const checkConnection = async () => {
-    try {
-      setStatus('checking');
-      setError(null);
-      
-      // Test health endpoint
-      const health = await APIService.healthCheck();
-      console.log('Health check result:', health);
-      
-      if (health.status === 'healthy') {
-        setStatus('connected');
-        
-        // Test preset groups endpoint
-        try {
-          const groups = await APIService.getPresetGroups();
-          console.log('Preset groups result:', groups);
-          setPresetGroups(groups);
-        } catch (groupError) {
-          console.warn('Failed to get preset groups:', groupError);
-          setError('Health check passed but preset groups failed');
-        }
-      } else {
-        setStatus('disconnected');
-        setError('Backend reported unhealthy status');
-      }
-    } catch (err: any) {
-      console.error('Backend connection failed:', err);
-      setStatus('disconnected');
-      setError(err.message || 'Connection failed');
+  const getStatusIcon = () => {
+    switch (status) {
+      case 'connected':
+        return <Wifi className="h-5 w-5 text-green-600" />;
+      case 'disconnected':
+        return <WifiOff className="h-5 w-5 text-red-600" />;
+      case 'checking':
+        return <RefreshCw className="h-5 w-5 text-yellow-600 animate-spin" />;
+    }
+  };
+
+  const getStatusText = () => {
+    switch (status) {
+      case 'connected':
+        return 'Connected';
+      case 'disconnected':
+        return 'Disconnected';
+      case 'checking':
+        return 'Checking...';
+    }
+  };
+
+  const getStatusColor = () => {
+    switch (status) {
+      case 'connected':
+        return 'bg-green-100 text-green-800';
+      case 'disconnected':
+        return 'bg-red-100 text-red-800';
+      case 'checking':
+        return 'bg-yellow-100 text-yellow-800';
     }
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <Card className="w-80">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-lg">
           <Server className="h-5 w-5" />
-          Backend Connection Test
+          Backend Connection
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Status Display */}
-        <div className="flex items-center gap-2 p-3 border rounded-lg">
-          {status === 'connected' && (
-            <>
-              <Wifi className="h-5 w-5 text-green-500" />
-              <span className="text-sm font-medium text-green-600">Connected</span>
-            </>
-          )}
-          {status === 'disconnected' && (
-            <>
-              <WifiOff className="h-5 w-5 text-red-500" />
-              <span className="text-sm font-medium text-red-600">Disconnected</span>
-            </>
-          )}
-          {status === 'checking' && (
-            <>
-              <Wifi className="h-5 w-5 text-yellow-500 animate-spin" />
-              <span className="text-sm font-medium text-yellow-600">Checking...</span>
-            </>
-          )}
+      <CardContent className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium">Status:</span>
+          <Badge className={getStatusColor()}>
+            {getStatusIcon()}
+            <span className="ml-2">{getStatusText()}</span>
+          </Badge>
         </div>
-
-        {/* Error Display */}
-        {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-600">{error}</p>
+        
+        {lastCheck && (
+          <div className="text-xs text-gray-500">
+            Last checked: {lastCheck.toLocaleTimeString()}
           </div>
         )}
-
-        {/* Preset Groups Display */}
-        {presetGroups && (
-          <div className="space-y-2">
-            <h4 className="text-sm font-medium">Available Preset Groups:</h4>
-            <div className="space-y-1">
-              {Object.entries(presetGroups).map(([key, group]: [string, any]) => (
-                <div key={key} className="text-sm p-2 bg-gray-50 rounded">
-                  <strong>{group.name}</strong> ({group.company_count} companies)
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Test Button */}
+        
         <Button 
           onClick={checkConnection} 
           disabled={status === 'checking'}
           className="w-full"
         >
           <RefreshCw className="h-4 w-4 mr-2" />
-          Test Connection
+          Refresh Status
         </Button>
-
+        
         <p className="text-xs text-muted-foreground text-center">
-          Testing connection to InsightForge API on localhost:3001
+          Connected to InsightForge API on localhost:5001
         </p>
       </CardContent>
     </Card>

@@ -31,18 +31,234 @@ scraper = CompetitiveIntelligenceScraper()
 ai_analyzer = AICompetitiveAnalyzer()
 enterprise_analyzer = EnterpriseSoftwareAnalyzer()
 
-@app.route('/api/health', methods=['GET'])
-def health_check():
-    """Health check endpoint"""
+@app.route('/health', methods=['GET'])
+def health_check_simple():
+    """Simple health check endpoint"""
     return jsonify({
         'status': 'healthy',
-        'timestamp': datetime.now().isoformat(),
-        'services': {
-            'scraper': 'available',
-            'ai_analyzer': 'available' if ai_analyzer.preferred_provider else 'limited',
-            'enterprise_analyzer': 'available'
-        }
+        'timestamp': datetime.now().isoformat()
     })
+
+@app.route('/api/scraped-items', methods=['GET'])
+def get_scraped_items():
+    """Get all scraped items from the database"""
+    try:
+        import sqlite3
+        
+        conn = sqlite3.connect('scraped_data.db')
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            SELECT id, company, category, url, text_content, quality_score, 
+                   technical_relevance, scraped_at
+            FROM scraped_items
+            ORDER BY scraped_at DESC
+        """)
+        
+        rows = cursor.fetchall()
+        items = []
+        
+        for row in rows:
+            items.append({
+                'id': row[0],
+                'company': row[1],
+                'category': row[2],
+                'url': row[3],
+                'text_content': row[4],
+                'quality_score': row[5],
+                'technical_relevance': row[6],
+                'scraped_at': row[7]
+            })
+        
+        conn.close()
+        return jsonify(items)
+        
+    except Exception as e:
+        logger.error(f"Error getting scraped items: {str(e)}")
+        return jsonify({
+            'error': 'Failed to retrieve scraped items',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/company-data', methods=['GET'])
+def get_company_data():
+    """Get company summary data with aggregated statistics"""
+    try:
+        import sqlite3
+        
+        conn = sqlite3.connect('scraped_data.db')
+        cursor = conn.cursor()
+        
+        # Get company statistics
+        cursor.execute("""
+            SELECT 
+                company,
+                COUNT(*) as total_items,
+                COUNT(DISTINCT category) as category_count,
+                AVG(quality_score) as avg_quality,
+                AVG(technical_relevance) as avg_technical,
+                MAX(scraped_at) as last_scraped
+            FROM scraped_items
+            GROUP BY company
+            ORDER BY total_items DESC
+        """)
+        
+        rows = cursor.fetchall()
+        companies = []
+        
+        for row in rows:
+            company = row[0]
+            
+            # Get category breakdown for this company
+            cursor.execute("""
+                SELECT category, COUNT(*) as count
+                FROM scraped_items
+                WHERE company = ?
+                GROUP BY category
+            """, (company,))
+            
+            category_data = {}
+            for cat_row in cursor.fetchall():
+                category_data[cat_row[0]] = cat_row[1]
+            
+            # Get recent items
+            cursor.execute("""
+                SELECT id, company, category, url, text_content, quality_score, 
+                       technical_relevance, scraped_at
+                FROM scraped_items
+                WHERE company = ?
+                ORDER BY scraped_at DESC
+                LIMIT 5
+            """, (company,))
+            
+            recent_items = []
+            for item_row in cursor.fetchall():
+                recent_items.append({
+                    'id': item_row[0],
+                    'company': item_row[1],
+                    'category': item_row[2],
+                    'url': item_row[3],
+                    'text_content': item_row[4],
+                    'quality_score': item_row[5],
+                    'technical_relevance': item_row[6],
+                    'scraped_at': item_row[7]
+                })
+            
+            companies.append({
+                'company': company,
+                'total_items': row[1],
+                'categories': category_data,
+                'recent_items': recent_items,
+                'technical_score': row[4] or 0.0,
+                'last_scraped': row[5]
+            })
+        
+        conn.close()
+        return jsonify(companies)
+        
+    except Exception as e:
+        logger.error(f"Error getting company data: {str(e)}")
+        return jsonify({
+            'error': 'Failed to retrieve company data',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/competitive-intelligence', methods=['GET'])
+def get_competitive_intelligence():
+    """Get competitive intelligence data from markdown files and database"""
+    try:
+        import os
+        import sqlite3
+        
+        # Get data from database
+        conn = sqlite3.connect('scraped_data.db')
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            SELECT company, category, url, text_content, scraped_at
+            FROM scraped_items
+            ORDER BY scraped_at DESC
+            LIMIT 100
+        """)
+        
+        db_items = cursor.fetchall()
+        conn.close()
+        
+        # Get data from markdown files
+        markdown_dir = 'competitive_intelligence_output/scraped_markdown'
+        markdown_items = []
+        
+        if os.path.exists(markdown_dir):
+            for filename in os.listdir(markdown_dir):
+                if filename.endswith('.md'):
+                    # Parse filename to extract company and category
+                    parts = filename.replace('.md', '').split('_')
+                    if len(parts) >= 3:
+                        company = parts[0]
+                        category = parts[1]
+                        
+                        # Read file content
+                        filepath = os.path.join(markdown_dir, filename)
+                        try:
+                            with open(filepath, 'r', encoding='utf-8') as f:
+                                content = f.read()
+                                
+                            # Extract title and preview
+                            lines = content.split('\n')
+                            title = lines[0].replace('#', '').strip() if lines else 'No title'
+                            preview = lines[2][:200] + '...' if len(lines) > 2 else content[:200] + '...'
+                            
+                            markdown_items.append({
+                                'company': company,
+                                'category': category,
+                                'content_type': category,
+                                'title': title,
+                                'url': f'file://{filepath}',
+                                'content_preview': preview,
+                                'scraped_at': datetime.now().isoformat(),
+                                'metadata': {
+                                    'word_count': len(content.split()),
+                                    'link_count': content.count('http'),
+                                    'has_images': '![image]' in content,
+                                    'technical_keywords': ['AI', 'API', 'data', 'cloud']  # Placeholder
+                                }
+                            })
+                        except Exception as e:
+                            logger.warning(f"Error reading markdown file {filename}: {e}")
+                            continue
+        
+        # Combine and return data
+        all_items = []
+        
+        # Add database items
+        for item in db_items:
+            all_items.append({
+                'company': item[0],
+                'category': item[1],
+                'content_type': item[1],
+                'title': f"{item[0]} - {item[1]}",
+                'url': item[2],
+                'content_preview': (item[3] or '')[:200] + '...' if item[3] else 'No content',
+                'scraped_at': item[4],
+                'metadata': {
+                    'word_count': len((item[3] or '').split()),
+                    'link_count': (item[3] or '').count('http'),
+                    'has_images': False,
+                    'technical_keywords': []
+                }
+            })
+        
+        # Add markdown items
+        all_items.extend(markdown_items)
+        
+        return jsonify(all_items)
+        
+    except Exception as e:
+        logger.error(f"Error getting competitive intelligence data: {str(e)}")
+        return jsonify({
+            'error': 'Failed to retrieve competitive intelligence data',
+            'message': str(e)
+        }), 500
 
 # Preset Group Management
 @app.route('/api/preset-groups', methods=['GET'])
@@ -843,4 +1059,4 @@ if __name__ == '__main__':
     os.makedirs('enterprise_software_output', exist_ok=True)
     
     # Run the Flask app
-    app.run(debug=True, host='0.0.0.0', port=3001) 
+    app.run(debug=True, host='0.0.0.0', port=5001) 

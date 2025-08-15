@@ -15,6 +15,7 @@ export const NavBar = () => {
         <Link to="/" className="font-semibold">InsightForge</Link>
         <div className="flex items-center gap-1">
           {link('/scrape', 'Scrape')}
+          {link('/technical-intelligence', 'Tech Intelligence')}
           {link('/analysis', 'AI Analysis')}
           {link('/battlecards', 'Battlecards')}
         </div>

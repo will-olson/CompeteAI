@@ -1,12 +1,46 @@
 // APIService.ts - Service for communicating with the InsightForge backend
 // Provides fallback functionality for frontend testing when backend is unavailable
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001';
 
-export interface HealthResponse {
-  status: 'healthy' | 'unhealthy';
-  timestamp: string;
-  services: Record<string, string>;
+export interface ScrapedItem {
+  id: number;
+  company: string;
+  category: string;
+  url: string;
+  text_content?: string;
+  quality_score?: number;
+  technical_relevance?: number;
+  scraped_at: string;
+}
+
+export interface CompanyData {
+  company: string;
+  total_items: number;
+  categories: {
+    [category: string]: number;
+  };
+  recent_items: ScrapedItem[];
+  technical_score: number;
+  last_scraped: string;
+}
+
+export interface CompetitiveIntelligenceData {
+  company: string;
+  category: string;
+  content_type: 'docs' | 'rss' | 'api_docs' | 'features' | 'pricing' | 'integrations';
+  title?: string;
+  url: string;
+  content_preview: string;
+  ai_summary?: string;
+  insights?: string;
+  scraped_at: string;
+  metadata: {
+    word_count?: number;
+    link_count?: number;
+    has_images?: boolean;
+    technical_keywords?: string[];
+  };
 }
 
 export interface PresetGroup {
@@ -45,162 +79,78 @@ export interface ScrapeGroupResponse {
   data?: any;
 }
 
-export class APIService {
-  private static async makeRequest<T>(endpoint: string, options?: RequestInit): Promise<T> {
+class APIService {
+  private async makeRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
-    
-    try {
-      const response = await fetch(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          ...options?.headers,
-        },
-        ...options,
-      });
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.warn(`API request failed for ${endpoint}:`, error);
-      throw error;
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
     }
+
+    return response.json();
   }
 
-  static async healthCheck(): Promise<HealthResponse> {
-    try {
-      return await this.makeRequest<HealthResponse>('/api/health');
-    } catch (error) {
-      // Return mock health response for frontend testing
-      return {
-        status: 'unhealthy',
-        timestamp: new Date().toISOString(),
-        services: {
-          scraper: 'unavailable',
-          ai_analyzer: 'unavailable',
-          enterprise_analyzer: 'unavailable'
-        }
-      };
-    }
+  // Health check
+  async checkHealth(): Promise<{ status: string; timestamp: string }> {
+    return this.makeRequest('/health');
   }
 
-  static async getPresetGroups(): Promise<Record<string, PresetGroup>> {
-    try {
-      return await this.makeRequest<Record<string, PresetGroup>>('/api/preset-groups');
-    } catch (error) {
-      // Return mock preset groups for frontend testing
-      return {
-        'tech-saas': {
-          name: 'Tech SaaS',
-          companies: ['Salesforce', 'HubSpot', 'Slack', 'Notion', 'Figma', 'Airtable'],
-          categories: ['marketing', 'docs', 'rss', 'social'],
-          company_count: 6
-        },
-        'fintech': {
-          name: 'Fintech',
-          companies: ['Stripe', 'Plaid', 'Coinbase', 'Robinhood', 'Chime', 'Affirm'],
-          categories: ['marketing', 'docs', 'rss', 'social'],
-          company_count: 6
-        },
-        'ecommerce': {
-          name: 'E-commerce',
-          companies: ['Shopify', 'Amazon', 'Etsy', 'WooCommerce', 'BigCommerce', 'Magento'],
-          categories: ['marketing', 'docs', 'rss', 'social'],
-          company_count: 6
-        },
-        'ai-ml': {
-          name: 'AI/ML',
-          companies: ['OpenAI', 'Anthropic', 'Google AI', 'Microsoft AI', 'Meta AI', 'NVIDIA'],
-          categories: ['marketing', 'docs', 'rss', 'social'],
-          company_count: 6
-        }
-      };
-    }
+  // Get all scraped items from database
+  async getScrapedItems(): Promise<ScrapedItem[]> {
+    return this.makeRequest('/api/scraped-items');
   }
 
-  static async loadPresetGroup(groupKey: string): Promise<PresetGroup> {
-    try {
-      return await this.makeRequest<PresetGroup>(`/api/preset-groups/${groupKey}`);
-    } catch (error) {
-      // Return mock preset group for frontend testing
-      const mockGroups = await this.getPresetGroups();
-      const mockGroup = mockGroups[groupKey];
-      
-      if (!mockGroup) {
-        throw new Error(`Preset group '${groupKey}' not found`);
-      }
-      
-      return mockGroup;
-    }
+  // Get company summary data
+  async getCompanyData(): Promise<CompanyData[]> {
+    return this.makeRequest('/api/company-data');
   }
 
-  static async scrapeCompany(request: ScrapeCompanyRequest): Promise<ScrapeCompanyResponse> {
-    try {
-      return await this.makeRequest<ScrapeCompanyResponse>('/api/scrape/company', {
-        method: 'POST',
-        body: JSON.stringify(request),
-      });
-    } catch (error) {
-      // Return mock response for frontend testing
-      console.warn('Backend scraping failed, returning mock data:', error);
-      return {
-        company: request.company,
-        categories: {
-          [request.categories[0]]: {
-            items: [
-              {
-                id: `mock_${Date.now()}`,
-                title: `Mock ${request.categories[0]} content for ${request.company}`,
-                content: `This is mock content for ${request.company} in the ${request.categories[0]} category. This demonstrates the scraping functionality when the backend is not available.`,
-                url: Object.values(request.urls)[0] || 'https://example.com',
-                scraped_at: new Date().toISOString()
-              }
-            ]
-          }
-        }
-      };
-    }
+  // Get competitive intelligence data
+  async getCompetitiveIntelligenceData(): Promise<CompetitiveIntelligenceData[]> {
+    return this.makeRequest('/api/competitive-intelligence');
   }
 
-  static async createCustomGroup(groupData: {
-    name: string;
-    companies: string[];
-    categories: string[];
-  }): Promise<{ success: boolean; group_id: string }> {
-    try {
-      return await this.makeRequest<{ success: boolean; group_id: string }>('/api/custom-groups', {
-        method: 'POST',
-        body: JSON.stringify(groupData),
-      });
-    } catch (error) {
-      // Return mock response for frontend testing
-      return {
-        success: true,
-        group_id: `mock_${Date.now()}`
-      };
-    }
+  // Get preset groups
+  async getPresetGroups(): Promise<Record<string, any>> {
+    return this.makeRequest('/api/preset-groups');
   }
 
-  static async scrapeGroup(request: ScrapeGroupRequest): Promise<ScrapeGroupResponse> {
-    try {
-      return await this.makeRequest<ScrapeGroupResponse>('/api/scrape/group', {
-        method: 'POST',
-        body: JSON.stringify(request),
-      });
-    } catch (error) {
-      // Return mock response for frontend testing
-      return {
-        success: true,
-        message: `Mock scraping completed for ${request.companies.length} companies`,
-        data: {
-          total_pages: request.companies.length * 5,
-          companies_processed: request.companies.length,
-          categories_processed: request.categories.length
-        }
-      };
-    }
+  // Start scraping
+  async startScraping(config: any): Promise<{ job_id: string; status: string }> {
+    return this.makeRequest('/api/scrape/company', {
+      method: 'POST',
+      body: JSON.stringify(config),
+    });
+  }
+
+  // Get scraping status
+  async getScrapingStatus(jobId: string): Promise<{ status: string; progress: number; results: any[] }> {
+    // Since the server doesn't have a status endpoint, return mock data
+    return {
+      status: 'completed',
+      progress: 100,
+      results: []
+    };
+  }
+}
+
+export default new APIService();
+
+// Legacy static methods for backward compatibility
+export class APIServiceStatic {
+  static async healthCheck(): Promise<{ status: string; timestamp: string }> {
+    return new APIService().checkHealth();
+  }
+
+  static async getPresetGroups(): Promise<Record<string, any>> {
+    return new APIService().getPresetGroups();
   }
 
   static async getScrapingStatus(): Promise<{
@@ -209,63 +159,56 @@ export class APIService {
     current_company: string;
     total_companies: number;
   }> {
-    try {
-      return await this.makeRequest<{
-        is_running: boolean;
-        progress: number;
-        current_company: string;
-        total_companies: number;
-      }>('/api/scraping-status');
-    } catch (error) {
-      // Return mock status for frontend testing
-      return {
-        is_running: false,
-        progress: 0,
-        current_company: '',
-        total_companies: 0
-      };
-    }
+    // Mock status for backward compatibility
+    return {
+      is_running: false,
+      progress: 0,
+      current_company: '',
+      total_companies: 0
+    };
   }
 
   static async getScrapingHistory(): Promise<Array<{
     id: string;
-    timestamp: string;
-    companies: string[];
-    categories: string[];
-    total_pages: number;
-    status: 'completed' | 'failed' | 'running';
+    company: string;
+    category: string;
+    url: string;
+    scraped_at: string;
+    status: string;
+    items_found: number;
   }>> {
-    try {
-      return await this.makeRequest<Array<{
-        id: string;
-        timestamp: string;
-        companies: string[];
-        categories: string[];
-        total_pages: number;
-        status: 'completed' | 'failed' | 'running';
-      }>>('/api/scraping-history');
-    } catch (error) {
-      // Return mock history for frontend testing
-      return [
-        {
-          id: 'mock_1',
-          timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-          companies: ['Salesforce', 'HubSpot'],
-          categories: ['marketing', 'docs'],
-          total_pages: 15,
-          status: 'completed'
-        },
-        {
-          id: 'mock_2',
-          timestamp: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-          companies: ['Stripe', 'Plaid'],
-          categories: ['marketing', 'rss'],
-          total_pages: 12,
-          status: 'completed'
-        }
-      ];
-    }
+    return [];
   }
-}
 
-export default APIService; 
+  static async getCompanyInsights(company: string): Promise<{
+    company: string;
+    total_items: number;
+    categories: Record<string, number>;
+    recent_activity: string[];
+    technical_score: number;
+  }> {
+    return {
+      company,
+      total_items: 0,
+      categories: {},
+      recent_activity: [],
+      technical_score: 0
+    };
+  }
+
+  static async getCompetitiveAnalysis(): Promise<{
+    total_companies: number;
+    total_items: number;
+    top_categories: string[];
+    recent_activity: string[];
+    technical_trends: string[];
+  }> {
+    return {
+      total_companies: 0,
+      total_items: 0,
+      top_categories: [],
+      recent_activity: [],
+      technical_trends: []
+    };
+  }
+} 
