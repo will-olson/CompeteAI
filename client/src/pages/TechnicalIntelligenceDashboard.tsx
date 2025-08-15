@@ -146,6 +146,7 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const [showAddCompany, setShowAddCompany] = useState(false);
   const [newCompany, setNewCompany] = useState({ name: '', url: '', docs: '' });
+  const [isLoading, setIsLoading] = useState(false);
   
   // System status state
   const [systemStatus, setSystemStatus] = useState<SystemStatus>({
@@ -155,6 +156,14 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
     active_scrapes: 0,
     last_backup: '2025-08-15 12:50'
   });
+
+  const refreshData = () => {
+    setIsLoading(true);
+    // Simulate data refresh
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  };
 
   const runScrape = async (companyName: string) => {
     if (isRunning) return;
@@ -612,10 +621,229 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
         <TabsContent value="data" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Data Visualization</CardTitle>
+              <div className="flex justify-between items-center">
+                <div>
+                  <CardTitle>Data Visualization & Content Analysis</CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Real-time view of scraped content with technical analysis and insights
+                  </p>
+                </div>
+                <Button onClick={refreshData} disabled={isLoading}>
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  {isLoading ? 'Loading...' : 'Refresh Data'}
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
-              <p>Basic data visualization will be added here once the core functionality is confirmed working.</p>
+              <div className="space-y-6">
+                {/* Content Overview Dashboard */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="text-center p-4 bg-blue-50 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {companies.reduce((sum, c) => sum + (c.results?.docs_count || 0), 0)}
+                    </div>
+                    <div className="text-sm text-blue-600">Total Documents</div>
+                  </div>
+                  <div className="text-center p-4 bg-green-50 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">
+                      {companies.reduce((sum, c) => sum + (c.results?.rss_count || 0), 0)}
+                    </div>
+                    <div className="text-sm text-green-600">Total RSS Items</div>
+                  </div>
+                  <div className="text-center p-4 bg-purple-50 rounded-lg">
+                    <div className="text-2xl font-bold text-purple-600">
+                      {companies.filter(c => c.results?.fallback_discovery_used).length}
+                    </div>
+                    <div className="text-sm text-purple-600">Fallback Used</div>
+                  </div>
+                  <div className="text-center p-4 bg-orange-50 rounded-lg">
+                    <div className="text-2xl font-bold text-orange-600">
+                      {Math.round(companies.reduce((sum, c) => sum + (c.technicalScore || 0), 0) / companies.length)}
+                    </div>
+                    <div className="text-sm text-orange-600">Avg Tech Score</div>
+                  </div>
+                </div>
+
+                {/* Company Performance Matrix */}
+                <div className="border rounded-lg p-4 bg-gray-50">
+                  <h3 className="font-semibold mb-3">Company Performance Matrix</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-2">Company</th>
+                          <th className="text-center p-2">Tech Score</th>
+                          <th className="text-center p-2">Documents</th>
+                          <th className="text-center p-2">RSS Items</th>
+                          <th className="text-center p-2">High Tech</th>
+                          <th className="text-center p-2">Medium Tech</th>
+                          <th className="text-center p-2">Low Tech</th>
+                          <th className="text-center p-2">Status</th>
+                          <th className="text-center p-2">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {companies.map((company) => (
+                          <tr key={company.name} className="border-b hover:bg-white">
+                            <td className="p-2 font-medium">{company.name}</td>
+                            <td className="p-2 text-center">
+                              <span className={`px-2 py-1 rounded text-xs ${
+                                company.technicalScore >= 80 ? 'bg-green-100 text-green-800' :
+                                company.technicalScore >= 60 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
+                              }`}>
+                                {company.technicalScore}/100
+                              </span>
+                            </td>
+                            <td className="p-2 text-center">{company.results?.docs_count || 0}</td>
+                            <td className="p-2 text-center">{company.results?.rss_count || 0}</td>
+                            <td className="p-2 text-center">
+                              <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs">
+                                {company.results?.technical_relevance_stats?.high_tech || 0}
+                              </span>
+                            </td>
+                            <td className="p-2 text-center">
+                              <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs">
+                                {company.results?.technical_relevance_stats?.medium_tech || 0}
+                              </span>
+                            </td>
+                            <td className="p-2 text-center">
+                              <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs">
+                                {company.results?.technical_relevance_stats?.low_tech || 0}
+                              </span>
+                            </td>
+                            <td className="p-2 text-center">
+                              <Badge className={
+                                company.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                company.status === 'running' ? 'bg-blue-100 text-blue-800' :
+                                company.status === 'failed' ? 'bg-red-100 text-red-800' :
+                                'bg-gray-100 text-gray-800'
+                              }>
+                                {company.status}
+                              </Badge>
+                            </td>
+                            <td className="p-2 text-center">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setSelectedCompany(company.name)}
+                              >
+                                <Eye className="h-3 w-3 mr-1" />
+                                View
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Technical Content Distribution */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Technical Content Distribution</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {companies.filter(c => c.results?.technical_relevance_stats).map((company) => (
+                          <div key={company.name} className="border rounded p-3">
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="font-medium">{company.name}</span>
+                              <span className="text-sm text-gray-600">
+                                {company.results?.docs_count || 0} total items
+                              </span>
+                            </div>
+                            <div className="flex space-x-2">
+                              <div className="flex-1 bg-purple-100 rounded p-2 text-center">
+                                <div className="text-sm font-bold text-purple-800">
+                                  {company.results?.technical_relevance_stats?.high_tech || 0}
+                                </div>
+                                <div className="text-xs text-purple-600">High Tech</div>
+                              </div>
+                              <div className="flex-1 bg-orange-100 rounded p-2 text-center">
+                                <div className="text-sm font-bold text-orange-800">
+                                  {company.results?.technical_relevance_stats?.medium_tech || 0}
+                                </div>
+                                <div className="text-xs text-orange-600">Medium Tech</div>
+                              </div>
+                              <div className="flex-1 bg-gray-100 rounded p-2 text-center">
+                                <div className="text-sm font-bold text-gray-800">
+                                  {company.results?.technical_relevance_stats?.low_tech || 0}
+                                </div>
+                                <div className="text-xs text-gray-600">Low Tech</div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Coverage Quality Analysis</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {companies.map((company) => {
+                          const docsCount = company.results?.docs_count || 0;
+                          const rssCount = company.results?.rss_count || 0;
+                          const totalItems = docsCount + rssCount;
+                          const coverageQuality = totalItems > 50 ? 'Excellent' : totalItems > 20 ? 'Good' : totalItems > 5 ? 'Fair' : 'Poor';
+                          
+                          return (
+                            <div key={company.name} className="flex items-center justify-between p-2 border rounded">
+                              <div>
+                                <span className="font-medium">{company.name}</span>
+                                <div className="text-sm text-gray-600">
+                                  {docsCount} docs + {rssCount} RSS = {totalItems} items
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <Badge className={
+                                  coverageQuality === 'Excellent' ? 'bg-green-100 text-green-800' :
+                                  coverageQuality === 'Good' ? 'bg-blue-100 text-blue-800' :
+                                  coverageQuality === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
+                                  'bg-red-100 text-red-800'
+                                }>
+                                  {coverageQuality}
+                                </Badge>
+                                {company.results?.fallback_discovery_used && (
+                                  <div className="text-xs text-gray-500 mt-1">Fallback Used</div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Data Export Options */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Data Export & Analysis</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+                        <Download className="h-6 w-6 mb-2" />
+                        <span>Export CSV</span>
+                      </Button>
+                      <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+                        <BarChart3 className="h-6 w-6 mb-2" />
+                        <span>Generate Report</span>
+                      </Button>
+                      <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+                        <TrendingUp className="h-6 w-6 mb-2" />
+                        <span>Trend Analysis</span>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -657,6 +885,193 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
                   Cancel
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Results Modal */}
+      {selectedCompany && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Technical Intelligence Results for {selectedCompany}</CardTitle>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setSelectedCompany(null)}
+                >
+                  ✕
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {(() => {
+                const company = companies.find(c => c.name === selectedCompany);
+                if (!company?.results) return <p>No results available</p>;
+                
+                return (
+                  <div className="space-y-6">
+                    {/* Company Overview */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="text-center p-4 bg-blue-50 rounded">
+                        <div className="text-2xl font-bold text-blue-600">
+                          {company.results.docs_count}
+                        </div>
+                        <div className="text-sm text-blue-600">Documents</div>
+                      </div>
+                      <div className="text-center p-4 bg-green-50 rounded">
+                        <div className="text-2xl font-bold text-green-600">
+                          {company.results.rss_count}
+                        </div>
+                        <div className="text-sm text-green-600">RSS Items</div>
+                      </div>
+                      <div className="text-center p-4 bg-purple-50 rounded">
+                        <div className="text-2xl font-bold text-purple-600">
+                          {company.technicalScore}
+                        </div>
+                        <div className="text-sm text-purple-600">Tech Score</div>
+                      </div>
+                      <div className="text-center p-4 bg-orange-50 rounded">
+                        <div className="text-2xl font-bold text-orange-600">
+                          {company.results.docs_count + company.results.rss_count}
+                        </div>
+                        <div className="text-sm text-orange-600">Total Items</div>
+                      </div>
+                    </div>
+                    
+                    {/* Technical Content Distribution */}
+                    {company.results.technical_relevance_stats && (
+                      <div className="space-y-4">
+                        <h4 className="font-semibold text-lg">Technical Content Distribution</h4>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div className="text-center p-4 bg-purple-100 rounded-lg">
+                            <div className="text-3xl font-bold text-purple-800">
+                              {company.results.technical_relevance_stats.high_tech}
+                            </div>
+                            <div className="text-sm text-purple-700 font-medium">High Technical</div>
+                            <div className="text-xs text-purple-600 mt-1">
+                              {Math.round((company.results.technical_relevance_stats.high_tech / (company.results.docs_count + company.results.rss_count)) * 100)}% of total
+                            </div>
+                          </div>
+                          <div className="text-center p-4 bg-orange-100 rounded-lg">
+                            <div className="text-3xl font-bold text-orange-800">
+                              {company.results.technical_relevance_stats.medium_tech}
+                            </div>
+                            <div className="text-sm text-orange-700 font-medium">Medium Technical</div>
+                            <div className="text-xs text-orange-600 mt-1">
+                              {Math.round((company.results.technical_relevance_stats.medium_tech / (company.results.docs_count + company.results.rss_count)) * 100)}% of total
+                            </div>
+                          </div>
+                          <div className="text-center p-4 bg-gray-100 rounded-lg">
+                            <div className="text-3xl font-bold text-gray-800">
+                              {company.results.technical_relevance_stats.low_tech}
+                            </div>
+                            <div className="text-sm text-gray-700 font-medium">Low Technical</div>
+                            <div className="text-xs text-gray-600 mt-1">
+                              {Math.round((company.results.technical_relevance_stats.low_tech / (company.results.docs_count + company.results.rss_count)) * 100)}% of total
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Content Quality Metrics */}
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg">Content Quality Metrics</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="border rounded-lg p-4">
+                          <h5 className="font-medium mb-3">Document Analysis</h5>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span>Total Documents:</span>
+                              <span className="font-medium">{company.results.docs_count}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Technical Documents:</span>
+                              <span className="font-medium">
+                                {(company.results.technical_relevance_stats?.high_tech || 0) + (company.results.technical_relevance_stats?.medium_tech || 0)}
+                              </span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Technical Ratio:</span>
+                              <span className="font-medium">
+                                {company.results.docs_count > 0 ? 
+                                  Math.round(((company.results.technical_relevance_stats?.high_tech || 0) + (company.results.technical_relevance_stats?.medium_tech || 0)) / company.results.docs_count * 100) : 0
+                                }%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="border rounded-lg p-4">
+                          <h5 className="font-medium mb-3">RSS Feed Analysis</h5>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span>Total RSS Items:</span>
+                              <span className="font-medium">{company.results.rss_count}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Content Freshness:</span>
+                              <span className="font-medium">
+                                {company.results.rss_count > 0 ? 'Active' : 'Inactive'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Update Frequency:</span>
+                              <span className="font-medium">
+                                {company.results.rss_count > 20 ? 'High' : company.results.rss_count > 5 ? 'Medium' : 'Low'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* System Features Used */}
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg">System Features Used</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <span>Enhanced Technical Content Extraction</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <span>Intelligent Link Discovery</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <span>Technical Relevance Classification</span>
+                        </div>
+                        {company.results.fallback_discovery_used && (
+                          <div className="flex items-center space-x-2">
+                            <CheckCircle className="h-5 w-5 text-green-500" />
+                            <span>Fallback Discovery System</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="flex space-x-3 pt-4 border-t">
+                      <Button variant="outline" onClick={() => window.open(company.url, '_blank')}>
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Visit Website
+                      </Button>
+                      <Button variant="outline">
+                        <Download className="h-4 w-4 mr-2" />
+                        Export Results
+                      </Button>
+                      <Button variant="outline">
+                        <BarChart3 className="h-4 w-4 mr-2" />
+                        Detailed Analysis
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
         </div>
