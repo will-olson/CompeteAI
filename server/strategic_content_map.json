@@ -1,0 +1,571 @@
+{
+  "metadata": {
+    "description": "Strategic Content Map for Competitive Intelligence Scraping",
+    "version": "1.0",
+    "created": "2025-08-15",
+    "total_companies": 15,
+    "dimensions": [
+      "api_first_architecture",
+      "cloud_native_features", 
+      "data_integration",
+      "developer_experience",
+      "modern_analytics"
+    ],
+    "notes": "PLACEHOLDER URLs - Requires manual research and verification for each competitor"
+  },
+  "companies": {
+    "Snowflake": {
+      "api_first_architecture": [
+        "https://docs.snowflake.com/en/developer-guide/sql-api/index.html",
+        "https://docs.snowflake.com/en/developer-guide/connectors-drivers.html",
+        "https://docs.snowflake.com/en/developer-guide/snowpark/index.html",
+        "https://docs.snowflake.com/en/developer-guide/python-connector.html",
+        "https://docs.snowflake.com/en/developer-guide/nodejs-connector.html"
+      ],
+      "cloud_native_features": [
+        "https://docs.snowflake.com/en/user-guide/admin-account-identifier.html",
+        "https://docs.snowflake.com/en/user-guide/warehouses-overview.html",
+        "https://docs.snowflake.com/en/user-guide/scaling-warehouses.html",
+        "https://docs.snowflake.com/en/user-guide/multi-cluster-warehouses.html",
+        "https://docs.snowflake.com/en/user-guide/security-overview.html"
+      ],
+      "data_integration": [
+        "https://docs.snowflake.com/en/user-guide/data-load-overview.html",
+        "https://docs.snowflake.com/en/user-guide/data-pipelines-overview.html",
+        "https://docs.snowflake.com/en/user-guide/data-sharing-overview.html",
+        "https://docs.snowflake.com/en/user-guide/data-exchange.html",
+        "https://docs.snowflake.com/en/user-guide/streams.html"
+      ],
+      "developer_experience": [
+        "https://docs.snowflake.com/en/developer-guide/getting-started.html",
+        "https://docs.snowflake.com/en/developer-guide/samples.html",
+        "https://docs.snowflake.com/en/developer-guide/connectors-drivers.html",
+        "https://docs.snowflake.com/en/developer-guide/sql-api.html",
+        "https://docs.snowflake.com/en/developer-guide/snowpark.html"
+      ],
+      "modern_analytics": [
+        "https://docs.snowflake.com/en/user-guide/ui-snowsight-overview.html",
+        "https://docs.snowflake.com/en/user-guide/ui-snowsight-ai-ml.html",
+        "https://docs.snowflake.com/en/user-guide/ui-snowsight-collaboration.html",
+        "https://docs.snowflake.com/en/user-guide/ui-snowsight-dashboards.html",
+        "https://docs.snowflake.com/en/user-guide/ui-snowsight-charts.html"
+      ]
+    },
+    "Databricks": {
+      "api_first_architecture": [
+        "https://docs.databricks.com/dev-tools/api/latest/index.html",
+        "https://docs.databricks.com/dev-tools/api/latest/authentication.html",
+        "https://docs.databricks.com/dev-tools/sdk.html",
+        "https://docs.databricks.com/dev-tools/api/latest/workspace.html",
+        "https://docs.databricks.com/dev-tools/api/latest/jobs.html"
+      ],
+      "cloud_native_features": [
+        "https://docs.databricks.com/clusters/index.html",
+        "https://docs.databricks.com/clusters/autoscale.html",
+        "https://docs.databricks.com/clusters/serverless.html",
+        "https://docs.databricks.com/clusters/configure.html",
+        "https://docs.databricks.com/clusters/policies.html"
+      ],
+      "data_integration": [
+        "https://docs.databricks.com/data/data-sources/index.html",
+        "https://docs.databricks.com/data/data-sources/streaming.html",
+        "https://docs.databricks.com/data/data-sources/unity-catalog.html",
+        "https://docs.databricks.com/data/data-sources/delta-lake.html",
+        "https://docs.databricks.com/data/data-sources/autoloader.html"
+      ],
+      "developer_experience": [
+        "https://docs.databricks.com/dev-tools/index.html",
+        "https://docs.databricks.com/dev-tools/ide.html",
+        "https://docs.databricks.com/dev-tools/notebooks.html",
+        "https://docs.databricks.com/dev-tools/repos.html",
+        "https://docs.databricks.com/dev-tools/ci-cd.html"
+      ],
+      "modern_analytics": [
+        "https://docs.databricks.com/machine-learning/index.html",
+        "https://docs.databricks.com/sql/index.html",
+        "https://docs.databricks.com/notebooks/notebooks-code.html",
+        "https://docs.databricks.com/machine-learning/mlflow/index.html",
+        "https://docs.databricks.com/machine-learning/feature-store/index.html"
+      ]
+    },
+    "PowerBI": {
+      "api_first_architecture": [
+        "https://learn.microsoft.com/en-us/power-bi/developer/automation/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/embedded/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/rest-api/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/visuals/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/embedded/embedding-content.md"
+      ],
+      "cloud_native_features": [
+        "https://learn.microsoft.com/en-us/power-bi/admin/service-admin/",
+        "https://learn.microsoft.com/en-us/power-bi/admin/service-premium-what-is/",
+        "https://learn.microsoft.com/en-us/power-bi/admin/service-premium-capacity-manage/",
+        "https://learn.microsoft.com/en-us/power-bi/admin/service-admin-portal/",
+        "https://learn.microsoft.com/en-us/power-bi/admin/service-admin-role/"
+      ],
+      "data_integration": [
+        "https://learn.microsoft.com/en-us/power-bi/connect-data/",
+        "https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-data-sources/",
+        "https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-connectors/",
+        "https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-incremental-refresh-overview/",
+        "https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-directquery-about/"
+      ],
+      "developer_experience": [
+        "https://learn.microsoft.com/en-us/power-bi/developer/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/visuals/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/embedded/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/automation/",
+        "https://learn.microsoft.com/en-us/power-bi/developer/visuals/developing-a-custom-visual/"
+      ],
+      "modern_analytics": [
+        "https://learn.microsoft.com/en-us/power-bi/consumer/end-user-q-and-a/",
+        "https://learn.microsoft.com/en-us/power-bi/consumer/end-user-insights/",
+        "https://learn.microsoft.com/en-us/power-bi/consumer/end-user-ai-features/",
+        "https://learn.microsoft.com/en-us/power-bi/consumer/end-user-cortana/",
+        "https://learn.microsoft.com/en-us/power-bi/consumer/end-user-mobile/"
+      ]
+    },
+    "Tableau": {
+      "api_first_architecture": [
+        "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm",
+        "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm",
+        "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts.htm",
+        "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_workflow.htm",
+        "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_examples.htm"
+      ],
+      "cloud_native_features": [
+        "https://help.tableau.com/current/online/en-us/deploy.htm",
+        "https://help.tableau.com/current/online/en-us/admin.htm",
+        "https://help.tableau.com/current/online/en-us/security.htm",
+        "https://help.tableau.com/current/online/en-us/performance.htm",
+        "https://help.tableau.com/current/online/en-us/scaling.htm"
+      ],
+      "data_integration": [
+        "https://help.tableau.com/current/pro/desktop/en-us/connect.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/connectors.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/data_sources.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/data_analysis.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/data_management.htm"
+      ],
+      "developer_experience": [
+        "https://help.tableau.com/current/api/en-us/",
+        "https://help.tableau.com/current/api/en-us/rest_api.htm",
+        "https://help.tableau.com/current/api/en-us/rest_api_ref.htm",
+        "https://help.tableau.com/current/api/en-us/rest_api_examples.htm",
+        "https://help.tableau.com/current/api/en-us/rest_api_workflow.htm"
+      ],
+      "modern_analytics": [
+        "https://help.tableau.com/current/pro/desktop/en-us/analysis.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/analysis_calculations.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/analysis_tables.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/analysis_charts.htm",
+        "https://help.tableau.com/current/pro/desktop/en-us/analysis_maps.htm"
+      ]
+    },
+    "Omni": {
+      "api_first_architecture": [
+        "https://docs.omni.co/docs/api/",
+        "https://docs.omni.co/docs/api/authentication/",
+        "https://docs.omni.co/docs/api/endpoints/",
+        "https://docs.omni.co/docs/api/rate-limits/",
+        "https://docs.omni.co/docs/api/errors/"
+      ],
+      "cloud_native_features": [
+        "https://docs.omni.co/docs/deployment/",
+        "https://docs.omni.co/docs/scaling/",
+        "https://docs.omni.co/docs/security/",
+        "https://docs.omni.co/docs/monitoring/",
+        "https://docs.omni.co/docs/backup/"
+      ],
+      "data_integration": [
+        "https://docs.omni.co/docs/integrations/",
+        "https://docs.omni.co/docs/connectors/",
+        "https://docs.omni.co/docs/data-sources/",
+        "https://docs.omni.co/docs/etl/",
+        "https://docs.omni.co/docs/pipelines/"
+      ],
+      "developer_experience": [
+        "https://docs.omni.co/docs/getting-started/",
+        "https://docs.omni.co/docs/tutorials/",
+        "https://docs.omni.co/docs/examples/",
+        "https://docs.omni.co/docs/samples/",
+        "https://docs.omni.co/docs/playground/"
+      ],
+      "modern_analytics": [
+        "https://docs.omni.co/docs/analytics/",
+        "https://docs.omni.co/docs/ai-ml/",
+        "https://docs.omni.co/docs/collaboration/",
+        "https://docs.omni.co/docs/insights/",
+        "https://docs.omni.co/docs/reporting/"
+      ]
+    },
+    "Looker": {
+      "api_first_architecture": [
+        "https://cloud.google.com/looker/docs/admin/api/getting-started",
+        "https://cloud.google.com/looker/docs/admin/api/oauth2",
+        "https://cloud.google.com/looker/docs/admin/api/versions",
+        "https://cloud.google.com/looker/docs/admin/api/rate-limits",
+        "https://cloud.google.com/looker/docs/admin/api/errors"
+      ],
+      "cloud_native_features": [
+        "https://cloud.google.com/looker/docs/admin/deployment",
+        "https://cloud.google.com/looker/docs/admin/scaling",
+        "https://cloud.google.com/looker/docs/admin/security",
+        "https://cloud.google.com/looker/docs/admin/monitoring",
+        "https://cloud.google.com/looker/docs/admin/backup"
+      ],
+      "data_integration": [
+        "https://cloud.google.com/looker/docs/data-modeling/connections",
+        "https://cloud.google.com/looker/docs/data-modeling/etl",
+        "https://cloud.google.com/looker/docs/data-modeling/pipelines",
+        "https://cloud.google.com/looker/docs/data-modeling/streaming",
+        "https://cloud.google.com/looker/docs/data-modeling/warehouses"
+      ],
+      "developer_experience": [
+        "https://cloud.google.com/looker/docs/develop",
+        "https://cloud.google.com/looker/docs/develop/lookml",
+        "https://cloud.google.com/looker/docs/develop/plugins",
+        "https://cloud.google.com/looker/docs/develop/api",
+        "https://cloud.google.com/looker/docs/develop/sdk"
+      ],
+      "modern_analytics": [
+        "https://cloud.google.com/looker/docs/analyzing",
+        "https://cloud.google.com/looker/docs/analyzing/ai-ml",
+        "https://cloud.google.com/looker/docs/analyzing/collaboration",
+        "https://cloud.google.com/looker/docs/analyzing/insights",
+        "https://cloud.google.com/looker/docs/analyzing/reporting"
+      ]
+    },
+    "Oracle": {
+      "api_first_architecture": [
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/toc.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/admin/BISYS/toc.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-API-REFERENCE.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-SDK-REFERENCE.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-WEB-SERVICES.htm"
+      ],
+      "cloud_native_features": [
+        "https://docs.oracle.com/middleware/bi12214/biee/admin/BISYS/GUID-DEPLOYMENT.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/admin/BISYS/GUID-SCALING.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/admin/BISYS/GUID-SECURITY.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/admin/BISYS/GUID-MONITORING.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/admin/BISYS/GUID-BACKUP.htm"
+      ],
+      "data_integration": [
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-CONNECTORS.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-ETL.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-PIPELINES.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-STREAMING.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-WAREHOUSES.htm"
+      ],
+      "developer_experience": [
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-GETTING-STARTED.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-TUTORIALS.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-EXAMPLES.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-SAMPLES.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/develop/BIDEV/GUID-PLAYGROUND.htm"
+      ],
+      "modern_analytics": [
+        "https://docs.oracle.com/middleware/bi12214/biee/analyze/GUID-ANALYTICS.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/analyze/GUID-AI-ML.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/analyze/GUID-COLLABORATION.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/analyze/GUID-INSIGHTS.htm",
+        "https://docs.oracle.com/middleware/bi12214/biee/analyze/GUID-REPORTING.htm"
+      ]
+    },
+    "SAP BusinessObjects": {
+      "api_first_architecture": [
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYSIS?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_DESIGN_STUDIO?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_CRYSTAL_REPORTS?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_EXPLORER?version=4.2"
+      ],
+      "cloud_native_features": [
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_CLOUD?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_DEPLOYMENT?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_SCALING?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_SECURITY?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_MONITORING?version=4.2"
+      ],
+      "data_integration": [
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_DATA_INTEGRATION?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_CONNECTORS?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ETL?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_PIPELINES?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WAREHOUSES?version=4.2"
+      ],
+      "developer_experience": [
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_DEVELOPMENT?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_SDK?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_API?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_EXAMPLES?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_SAMPLES?version=4.2"
+      ],
+      "modern_analytics": [
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_ANALYTICS?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_AI_ML?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_COLLABORATION?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_INSIGHTS?version=4.2",
+        "https://help.sap.com/docs/SAP_BUSINESSOBJECTS_REPORTING?version=4.2"
+      ]
+    },
+    "Qlik": {
+      "api_first_architecture": [
+        "https://help.qlik.com/en/developer/",
+        "https://help.qlik.com/en/developer/apis/",
+        "https://help.qlik.com/en/developer/sdk/",
+        "https://help.qlik.com/en/developer/rest-api/",
+        "https://help.qlik.com/en/developer/websocket-api/"
+      ],
+      "cloud_native_features": [
+        "https://help.qlik.com/en/cloud/",
+        "https://help.qlik.com/en/cloud/deployment/",
+        "https://help.qlik.com/en/cloud/scaling/",
+        "https://help.qlik.com/en/cloud/security/",
+        "https://help.qlik.com/en/cloud/monitoring/"
+      ],
+      "data_integration": [
+        "https://help.qlik.com/en/connectors/",
+        "https://help.qlik.com/en/connectors/overview/",
+        "https://help.qlik.com/en/connectors/etl/",
+        "https://help.qlik.com/en/connectors/pipelines/",
+        "https://help.qlik.com/en/connectors/warehouses/"
+      ],
+      "developer_experience": [
+        "https://help.qlik.com/en/developer/getting-started/",
+        "https://help.qlik.com/en/developer/tutorials/",
+        "https://help.qlik.com/en/developer/examples/",
+        "https://help.qlik.com/en/developer/samples/",
+        "https://help.qlik.com/en/developer/playground/"
+      ],
+      "modern_analytics": [
+        "https://help.qlik.com/en/analytics/",
+        "https://help.qlik.com/en/analytics/ai-ml/",
+        "https://help.qlik.com/en/analytics/collaboration/",
+        "https://help.qlik.com/en/analytics/insights/",
+        "https://help.qlik.com/en/analytics/reporting/"
+      ]
+    },
+    "MicroStrategy": {
+      "api_first_architecture": [
+        "https://www2.microstrategy.com/producthelp/current/",
+        "https://www2.microstrategy.com/producthelp/current/API/",
+        "https://www2.microstrategy.com/producthelp/current/SDK/",
+        "https://www2.microstrategy.com/producthelp/current/REST-API/",
+        "https://www2.microstrategy.com/producthelp/current/Web-Services/"
+      ],
+      "cloud_native_features": [
+        "https://www2.microstrategy.com/producthelp/current/Cloud/",
+        "https://www2.microstrategy.com/producthelp/current/Deployment/",
+        "https://www2.microstrategy.com/producthelp/current/Scaling/",
+        "https://www2.microstrategy.com/producthelp/current/Security/",
+        "https://www2.microstrategy.com/producthelp/current/Monitoring/"
+      ],
+      "data_integration": [
+        "https://www2.microstrategy.com/producthelp/current/Connectors/",
+        "https://www2.microstrategy.com/producthelp/current/ETL/",
+        "https://www2.microstrategy.com/producthelp/current/Pipelines/",
+        "https://www2.microstrategy.com/producthelp/current/Streaming/",
+        "https://www2.microstrategy.com/producthelp/current/Warehouses/"
+      ],
+      "developer_experience": [
+        "https://www2.microstrategy.com/producthelp/current/Development/",
+        "https://www2.microstrategy.com/producthelp/current/Tutorials/",
+        "https://www2.microstrategy.com/producthelp/current/Examples/",
+        "https://www2.microstrategy.com/producthelp/current/Samples/",
+        "https://www2.microstrategy.com/producthelp/current/Playground/"
+      ],
+      "modern_analytics": [
+        "https://www2.microstrategy.com/producthelp/current/Analytics/",
+        "https://www2.microstrategy.com/producthelp/current/AI-ML/",
+        "https://www2.microstrategy.com/producthelp/current/Collaboration/",
+        "https://www2.microstrategy.com/producthelp/current/Insights/",
+        "https://www2.microstrategy.com/producthelp/current/Reporting/"
+      ]
+    },
+    "Hex": {
+      "api_first_architecture": [
+        "https://learn.hex.tech/docs/developers",
+        "https://learn.hex.tech/docs/developers/api",
+        "https://learn.hex.tech/docs/developers/sdk",
+        "https://learn.hex.tech/docs/developers/rest-api",
+        "https://learn.hex.tech/docs/developers/webhooks"
+      ],
+      "cloud_native_features": [
+        "https://learn.hex.tech/docs/deployment",
+        "https://learn.hex.tech/docs/scaling",
+        "https://learn.hex.tech/docs/security",
+        "https://learn.hex.tech/docs/monitoring",
+        "https://learn.hex.tech/docs/backup"
+      ],
+      "data_integration": [
+        "https://learn.hex.tech/docs/integrations",
+        "https://learn.hex.tech/docs/connectors",
+        "https://learn.hex.tech/docs/data-sources",
+        "https://learn.hex.tech/docs/etl",
+        "https://learn.hex.tech/docs/pipelines"
+      ],
+      "developer_experience": [
+        "https://learn.hex.tech/docs/getting-started",
+        "https://learn.hex.tech/docs/tutorials",
+        "https://learn.hex.tech/docs/examples",
+        "https://learn.hex.tech/docs/samples",
+        "https://learn.hex.tech/docs/playground"
+      ],
+      "modern_analytics": [
+        "https://learn.hex.tech/docs/analytics",
+        "https://learn.hex.tech/docs/ai-ml",
+        "https://learn.hex.tech/docs/collaboration",
+        "https://learn.hex.tech/docs/insights",
+        "https://learn.hex.tech/docs/reporting"
+      ]
+    },
+    "Thoughtspot": {
+      "api_first_architecture": [
+        "https://docs.thoughtspot.com/home/api",
+        "https://docs.thoughtspot.com/home/api/rest-api",
+        "https://docs.thoughtspot.com/home/api/sdk",
+        "https://docs.thoughtspot.com/home/api/authentication",
+        "https://docs.thoughtspot.com/home/api/rate-limits"
+      ],
+      "cloud_native_features": [
+        "https://docs.thoughtspot.com/home/cloud",
+        "https://docs.thoughtspot.com/home/deployment",
+        "https://docs.thoughtspot.com/home/scaling",
+        "https://docs.thoughtspot.com/home/security",
+        "https://docs.thoughtspot.com/home/monitoring"
+      ],
+      "data_integration": [
+        "https://docs.thoughtspot.com/home/integrations",
+        "https://docs.thoughtspot.com/home/connectors",
+        "https://docs.thoughtspot.com/home/data-sources",
+        "https://docs.thoughtspot.com/home/etl",
+        "https://docs.thoughtspot.com/home/pipelines"
+      ],
+      "developer_experience": [
+        "https://docs.thoughtspot.com/home/developers",
+        "https://docs.thoughtspot.com/home/tutorials",
+        "https://docs.thoughtspot.com/home/examples",
+        "https://docs.thoughtspot.com/home/samples",
+        "https://docs.thoughtspot.com/home/playground"
+      ],
+      "modern_analytics": [
+        "https://docs.thoughtspot.com/home/analytics",
+        "https://docs.thoughtspot.com/home/ai-ml",
+        "https://docs.thoughtspot.com/home/collaboration",
+        "https://docs.thoughtspot.com/home/insights",
+        "https://docs.thoughtspot.com/home/reporting"
+      ]
+    },
+    "Domo": {
+      "api_first_architecture": [
+        "https://developer.domo.com/",
+        "https://developer.domo.com/api",
+        "https://developer.domo.com/sdk",
+        "https://developer.domo.com/rest-api",
+        "https://developer.domo.com/webhooks"
+      ],
+      "cloud_native_features": [
+        "https://domo-support.domo.com/s/knowledge-base?language=en_US",
+        "https://domo-support.domo.com/s/deployment",
+        "https://domo-support.domo.com/s/scaling",
+        "https://domo-support.domo.com/s/security",
+        "https://domo-support.domo.com/s/monitoring"
+      ],
+      "data_integration": [
+        "https://domo-support.domo.com/s/integrations",
+        "https://domo-support.domo.com/s/connectors",
+        "https://domo-support.domo.com/s/data-sources",
+        "https://domo-support.domo.com/s/etl",
+        "https://domo-support.domo.com/s/pipelines"
+      ],
+      "developer_experience": [
+        "https://developer.domo.com/getting-started",
+        "https://developer.domo.com/tutorials",
+        "https://developer.domo.com/examples",
+        "https://developer.domo.com/samples",
+        "https://developer.domo.com/playground"
+      ],
+      "modern_analytics": [
+        "https://domo-support.domo.com/s/analytics",
+        "https://domo-support.domo.com/s/ai-ml",
+        "https://domo-support.domo.com/s/collaboration",
+        "https://domo-support.domo.com/s/insights",
+        "https://domo-support.domo.com/s/reporting"
+      ]
+    },
+    "IBM Cognos": {
+      "api_first_architecture": [
+        "https://www.ibm.com/docs/en/cognos-analytics",
+        "https://www.ibm.com/docs/en/cognos-analytics/api",
+        "https://www.ibm.com/docs/en/cognos-analytics/sdk",
+        "https://www.ibm.com/docs/en/cognos-analytics/rest-api",
+        "https://www.ibm.com/docs/en/cognos-analytics/web-services"
+      ],
+      "cloud_native_features": [
+        "https://www.ibm.com/docs/en/cognos-analytics/cloud",
+        "https://www.ibm.com/docs/en/cognos-analytics/deployment",
+        "https://www.ibm.com/docs/en/cognos-analytics/scaling",
+        "https://www.ibm.com/docs/en/cognos-analytics/security",
+        "https://www.ibm.com/docs/en/cognos-analytics/monitoring"
+      ],
+      "data_integration": [
+        "https://www.ibm.com/docs/en/cognos-analytics/integrations",
+        "https://www.ibm.com/docs/en/cognos-analytics/connectors",
+        "https://www.ibm.com/docs/en/cognos-analytics/data-sources",
+        "https://www.ibm.com/docs/en/cognos-analytics/etl",
+        "https://www.ibm.com/docs/en/cognos-analytics/pipelines"
+      ],
+      "developer_experience": [
+        "https://www.ibm.com/docs/en/cognos-analytics/developers",
+        "https://www.ibm.com/docs/en/cognos-analytics/tutorials",
+        "https://www.ibm.com/docs/en/cognos-analytics/examples",
+        "https://www.ibm.com/docs/en/cognos-analytics/samples",
+        "https://www.ibm.com/docs/en/cognos-analytics/playground"
+      ],
+      "modern_analytics": [
+        "https://www.ibm.com/docs/en/cognos-analytics/analytics",
+        "https://www.ibm.com/docs/en/cognos-analytics/ai-ml",
+        "https://www.ibm.com/docs/en/cognos-analytics/collaboration",
+        "https://www.ibm.com/docs/en/cognos-analytics/insights",
+        "https://www.ibm.com/docs/en/cognos-analytics/reporting"
+      ]
+    }
+  },
+  "scraping_priorities": {
+    "high_priority": [
+      "api_first_architecture",
+      "cloud_native_features"
+    ],
+    "medium_priority": [
+      "data_integration",
+      "developer_experience"
+    ],
+    "low_priority": [
+      "modern_analytics"
+    ]
+  },
+  "content_validation_rules": {
+    "api_first_architecture": {
+      "required_keywords": ["api", "endpoint", "sdk", "authentication"],
+      "excluded_keywords": ["pricing", "contact sales", "get started"]
+    },
+    "cloud_native_features": {
+      "required_keywords": ["cloud", "scaling", "container", "serverless"],
+      "excluded_keywords": ["on-premise", "legacy", "traditional"]
+    },
+    "data_integration": {
+      "required_keywords": ["connector", "pipeline", "streaming", "etl"],
+      "excluded_keywords": ["manual", "import", "export"]
+    },
+    "developer_experience": {
+      "required_keywords": ["tutorial", "example", "getting started", "sample"],
+      "excluded_keywords": ["enterprise", "contact us", "demo request"]
+    },
+    "modern_analytics": {
+      "required_keywords": ["ai", "ml", "machine learning", "analytics"],
+      "excluded_keywords": ["basic", "simple", "traditional"]
+    }
+  }
+}
