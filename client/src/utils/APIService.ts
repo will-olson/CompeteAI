@@ -117,6 +117,15 @@ class APIService {
     return this.makeRequest('/api/competitive-intelligence');
   }
 
+  async getStrategicComparisonData(): Promise<any> {
+    try {
+      return await this.makeRequest('/api/strategic-comparison');
+    } catch (error) {
+      console.error('Error fetching strategic comparison data:', error);
+      throw error;
+    }
+  }
+
   // Get preset groups
   async getPresetGroups(): Promise<Record<string, any>> {
     return this.makeRequest('/api/preset-groups');

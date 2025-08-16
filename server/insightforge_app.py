@@ -1037,6 +1037,75 @@ def download_file(filename: str):
             'message': str(e)
         }), 500
 
+@app.route('/api/strategic-comparison', methods=['GET'])
+def get_strategic_comparison():
+    """Get strategic comparison data across competitive dimensions"""
+    try:
+        # Get all scraped items
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            SELECT company, category, url, text_content, quality_score, technical_relevance, scraped_at
+            FROM scraped_items 
+            ORDER BY company, scraped_at DESC
+        """)
+        
+        items = cursor.fetchall()
+        conn.close()
+        
+        # Group items by company
+        company_data = {}
+        for item in items:
+            company = item[0]
+            if company not in company_data:
+                company_data[company] = []
+            
+            company_data[company].append({
+                'company': item[0],
+                'category': item[1],
+                'url': item[2],
+                'text_content': item[3],
+                'quality_score': item[4],
+                'technical_relevance': item[5],
+                'scraped_at': item[6]
+            })
+        
+        # Analyze each company using the enhanced scraper
+        from competitive_intelligence_scraper import CompetitiveIntelligenceScraper
+        scraper = CompetitiveIntelligenceScraper()
+        
+        comparison_results = {}
+        for company, content in company_data.items():
+            try:
+                # Extract strategic comparison data
+                comparison_data = scraper.extract_strategic_comparison_data(content)
+                comparison_results[company] = comparison_data
+            except Exception as e:
+                print(f"Error analyzing {company}: {e}")
+                comparison_results[company] = {
+                    'api_first_architecture': 0,
+                    'cloud_native_features': 0,
+                    'data_integration': 0,
+                    'developer_experience': 0,
+                    'modern_analytics': 0,
+                    'overall_score': 0,
+                    'positioning': 'Unknown'
+                }
+        
+        return jsonify({
+            'success': True,
+            'data': comparison_results,
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
 # Error handlers
 @app.errorhandler(404)
 def not_found(error):

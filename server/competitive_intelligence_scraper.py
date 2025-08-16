@@ -66,15 +66,38 @@ class CompetitiveIntelligenceScraper:
         # Initialize preset competitor groups
         self.preset_groups = self._initialize_preset_groups()
         
-        # Enhanced technical content keywords for relevance scoring
-        self.technical_keywords = {
-            'api_docs': ['api', 'endpoint', 'authentication', 'rate limit', 'response', 'request', 'headers', 'parameters', 'swagger', 'openapi', 'rest', 'graphql', 'webhook'],
-            'pricing': ['price', 'plan', 'tier', 'billing', 'subscription', 'cost', 'pricing', 'enterprise', 'quote', 'contact sales', 'pricing calculator'],
-            'features': ['feature', 'capability', 'functionality', 'integration', 'workflow', 'automation', 'connector', 'plugin', 'add-on'],
-            'integrations': ['webhook', 'oauth', 'sdk', 'plugin', 'connector', 'api key', 'authentication', 'zapier', 'ifttt', 'webhook', 'callback'],
-            'sdk_docs': ['sdk', 'client library', 'download', 'install', 'npm', 'pip', 'maven', 'gradle', 'nuget', 'composer', 'github', 'repository'],
-            'deployment': ['deploy', 'installation', 'setup', 'configuration', 'environment', 'docker', 'kubernetes', 'aws', 'azure', 'gcp', 'on-premise']
-        }
+        # Enhanced technical content extraction
+        self.technical_keywords = [
+            # API-First Architecture
+            'api', 'endpoint', 'rest', 'graphql', 'swagger', 'openapi', 'sdk', 'client library',
+            'webhook', 'callback', 'authentication', 'oauth', 'rate limit', 'throttling',
+            'versioning', 'v1', 'v2', 'v3', 'api version', 'api documentation',
+            
+            # Cloud-Native Features
+            'multi-cloud', 'hybrid cloud', 'auto-scaling', 'elastic', 'serverless', 'lambda',
+            'container', 'kubernetes', 'docker', 'microservices', 'distributed',
+            'cloud-native', 'cloud-first', 'infrastructure as code', 'terraform', 'cloudformation',
+            'managed service', 'paas', 'saas', 'iaas', 'elastic compute', 'auto-scaling',
+            
+            # Data Integration & Connectors
+            'real-time', 'streaming', 'etl', 'elt', 'data pipeline', 'connector', 'integration',
+            'data warehouse', 'snowflake', 'bigquery', 'redshift', 'api-based', 'webhook',
+            'data mesh', 'data fabric', 'open format', 'parquet', 'avro', 'json', 'csv',
+            'data catalog', 'metadata', 'data lineage', 'data governance',
+            
+            # Developer Experience
+            'self-service', 'provisioning', 'ci/cd', 'pipeline', 'deployment', 'infrastructure as code',
+            'terraform', 'cloudformation', 'developer documentation', 'getting started',
+            'sample code', 'example', 'tutorial', 'playground', 'sandbox', 'demo',
+            'community', 'forum', 'support', 'api explorer', 'interactive', 'developer portal',
+            
+            # Modern Analytics Stack
+            'ai', 'machine learning', 'ml', 'artificial intelligence', 'real-time analytics',
+            'streaming analytics', 'data mesh', 'data fabric', 'open data', 'data sharing',
+            'natural language', 'nlp', 'conversational', 'automated insights', 'auto-discovery',
+            'collaborative', 'team analytics', 'governance', 'compliance', 'security',
+            'data democratization', 'self-service analytics', 'embedded analytics'
+        ]
         
         # Content type detection patterns
         self.content_patterns = {
@@ -1614,6 +1637,226 @@ class CompetitiveIntelligenceScraper:
         except Exception as e:
             logger.error(f"Error scraping URL {url}: {str(e)}")
             raise e
+
+    def extract_strategic_comparison_data(self, scraped_content):
+        """Extract strategic comparison data across cloud-native favorable dimensions"""
+        comparison_data = {
+            'api_first_architecture': self._analyze_api_first_architecture(scraped_content),
+            'cloud_native_features': self._analyze_cloud_native_features(scraped_content),
+            'data_integration': self._analyze_data_integration(scraped_content),
+            'developer_experience': self._analyze_developer_experience(scraped_content),
+            'modern_analytics': self._analyze_modern_analytics(scraped_content)
+        }
+        
+        overall_score = sum(comparison_data.values()) / len(comparison_data)
+        comparison_data['overall_score'] = overall_score
+        comparison_data['positioning'] = self._determine_positioning(overall_score)
+        
+        return comparison_data
+    
+    def _analyze_api_first_architecture(self, content):
+        """Analyze API-first architecture capabilities"""
+        score = 0
+        indicators = {
+            'api_documentation': 0,
+            'rest_graphql': 0,
+            'sdk_libraries': 0,
+            'webhooks': 0,
+            'authentication': 0,
+            'versioning': 0
+        }
+        
+        for item in content:
+            text = item.get('text_content', '').lower()
+            
+            if any(term in text for term in ['api', 'endpoint', 'api documentation']):
+                indicators['api_documentation'] += 1
+            if any(term in text for term in ['rest', 'graphql', 'swagger', 'openapi']):
+                indicators['rest_graphql'] += 1
+            if any(term in text for term in ['sdk', 'client library', 'npm', 'pip', 'maven']):
+                indicators['sdk_libraries'] += 1
+            if any(term in text for term in ['webhook', 'callback', 'event-driven']):
+                indicators['webhooks'] += 1
+            if any(term in text for term in ['authentication', 'oauth', 'api key', 'jwt']):
+                indicators['authentication'] += 1
+            if any(term in text for term in ['versioning', 'v1', 'v2', 'v3', 'api version']):
+                indicators['versioning'] += 1
+        
+        score = (
+            indicators['api_documentation'] * 20 +
+            indicators['rest_graphql'] * 20 +
+            indicators['sdk_libraries'] * 15 +
+            indicators['webhooks'] * 15 +
+            indicators['authentication'] * 15 +
+            indicators['versioning'] * 15
+        ) / max(len(content), 1)
+        
+        return min(100, score)
+    
+    def _analyze_cloud_native_features(self, content):
+        """Analyze cloud-native platform capabilities"""
+        score = 0
+        indicators = {
+            'multi_cloud': 0,
+            'auto_scaling': 0,
+            'serverless': 0,
+            'containers': 0,
+            'microservices': 0,
+            'infrastructure_as_code': 0
+        }
+        
+        for item in content:
+            text = item.get('text_content', '').lower()
+            
+            if any(term in text for term in ['multi-cloud', 'hybrid cloud', 'cross-cloud']):
+                indicators['multi_cloud'] += 1
+            if any(term in text for term in ['auto-scaling', 'elastic', 'auto-scale', 'dynamic scaling']):
+                indicators['auto_scaling'] += 1
+            if any(term in text for term in ['serverless', 'lambda', 'function as a service', 'faas']):
+                indicators['serverless'] += 1
+            if any(term in text for term in ['container', 'kubernetes', 'docker', 'orchestration']):
+                indicators['containers'] += 1
+            if any(term in text for term in ['microservices', 'distributed', 'service mesh']):
+                indicators['microservices'] += 1
+            if any(term in text for term in ['infrastructure as code', 'terraform', 'cloudformation', 'iac']):
+                indicators['infrastructure_as_code'] += 1
+        
+        score = (
+            indicators['multi_cloud'] * 20 +
+            indicators['auto_scaling'] * 20 +
+            indicators['serverless'] * 20 +
+            indicators['containers'] * 15 +
+            indicators['microservices'] * 15 +
+            indicators['infrastructure_as_code'] * 10
+        ) / max(len(content), 1)
+        
+        return min(100, score)
+    
+    def _analyze_data_integration(self, content):
+        """Analyze data integration and connector capabilities"""
+        score = 0
+        indicators = {
+            'real_time': 0,
+            'etl_pipelines': 0,
+            'connectors': 0,
+            'data_warehouses': 0,
+            'data_mesh': 0,
+            'open_formats': 0
+        }
+        
+        for item in content:
+            text = item.get('text_content', '').lower()
+            
+            if any(term in text for term in ['real-time', 'streaming', 'live data', 'instant']):
+                indicators['real_time'] += 1
+            if any(term in text for term in ['etl', 'elt', 'data pipeline', 'data transformation']):
+                indicators['etl_pipelines'] += 1
+            if any(term in text for term in ['connector', 'integration', 'plugin', 'add-on']):
+                indicators['connectors'] += 1
+            if any(term in text for term in ['data warehouse', 'snowflake', 'bigquery', 'redshift']):
+                indicators['data_warehouses'] += 1
+            if any(term in text for term in ['data mesh', 'data fabric', 'distributed data']):
+                indicators['data_mesh'] += 1
+            if any(term in text for term in ['open format', 'parquet', 'avro', 'json', 'csv']):
+                indicators['open_formats'] += 1
+        
+        score = (
+            indicators['real_time'] * 20 +
+            indicators['etl_pipelines'] * 20 +
+            indicators['connectors'] * 20 +
+            indicators['data_warehouses'] * 15 +
+            indicators['data_mesh'] * 15 +
+            indicators['open_formats'] * 10
+        ) / max(len(content), 1)
+        
+        return min(100, score)
+    
+    def _analyze_developer_experience(self, content):
+        """Analyze developer experience and self-service capabilities"""
+        score = 0
+        indicators = {
+            'self_service': 0,
+            'ci_cd': 0,
+            'documentation': 0,
+            'examples': 0,
+            'community': 0,
+            'playground': 0
+        }
+        
+        for item in content:
+            text = item.get('text_content', '').lower()
+            
+            if any(term in text for term in ['self-service', 'provisioning', 'self-provision']):
+                indicators['self_service'] += 1
+            if any(term in text for term in ['ci/cd', 'pipeline', 'deployment', 'continuous']):
+                indicators['ci_cd'] += 1
+            if any(term in text for term in ['developer documentation', 'getting started', 'tutorial']):
+                indicators['documentation'] += 1
+            if any(term in text for term in ['sample code', 'example', 'code sample', 'demo']):
+                indicators['examples'] += 1
+            if any(term in text for term in ['community', 'forum', 'support', 'developer portal']):
+                indicators['community'] += 1
+            if any(term in text for term in ['playground', 'sandbox', 'api explorer', 'interactive']):
+                indicators['playground'] += 1
+        
+        score = (
+            indicators['self_service'] * 25 +
+            indicators['ci_cd'] * 20 +
+            indicators['documentation'] * 20 +
+            indicators['examples'] * 15 +
+            indicators['community'] * 10 +
+            indicators['playground'] * 10
+        ) / max(len(content), 1)
+        
+        return min(100, score)
+    
+    def _analyze_modern_analytics(self, content):
+        """Analyze modern analytics and AI capabilities"""
+        score = 0
+        indicators = {
+            'ai_ml': 0,
+            'real_time_analytics': 0,
+            'collaboration': 0,
+            'natural_language': 0,
+            'automation': 0,
+            'governance': 0
+        }
+        
+        for item in content:
+            text = item.get('text_content', '').lower()
+            
+            if any(term in text for term in ['ai', 'machine learning', 'ml', 'artificial intelligence']):
+                indicators['ai_ml'] += 1
+            if any(term in text for term in ['real-time analytics', 'streaming analytics', 'live insights']):
+                indicators['real_time_analytics'] += 1
+            if any(term in text for term in ['collaborative', 'team analytics', 'shared workspace']):
+                indicators['collaboration'] += 1
+            if any(term in text for term in ['natural language', 'nlp', 'conversational', 'chat']):
+                indicators['natural_language'] += 1
+            if any(term in text for term in ['automated insights', 'auto-discovery', 'smart suggestions']):
+                indicators['automation'] += 1
+            if any(term in text for term in ['governance', 'compliance', 'security', 'data lineage']):
+                indicators['governance'] += 1
+        
+        score = (
+            indicators['ai_ml'] * 20 +
+            indicators['real_time_analytics'] * 20 +
+            indicators['collaboration'] * 20 +
+            indicators['natural_language'] * 15 +
+            indicators['automation'] * 15 +
+            indicators['governance'] * 10
+        ) / max(len(content), 1)
+        
+        return min(100, score)
+    
+    def _determine_positioning(self, overall_score):
+        """Determine competitive positioning based on overall score"""
+        if overall_score >= 80:
+            return 'Leader'
+        elif overall_score >= 60:
+            return 'Transitioning'
+        else:
+            return 'Legacy'
 
 
 # Example usage and testing

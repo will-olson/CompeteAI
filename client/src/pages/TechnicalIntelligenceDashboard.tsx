@@ -276,50 +276,373 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
     last_backup: '2025-08-15 12:50'
   });
 
+  // Comparison matrix state
+  const [comparisonFocus, setComparisonFocus] = useState<string>('all');
+  const [comparisonSort, setComparisonSort] = useState<string>('score');
+  const [comparisonViewMode, setComparisonViewMode] = useState<'matrix' | 'radar' | 'detailed'>('matrix');
+  const [comparisonData, setComparisonData] = useState<any[]>([]);
+
   // Fetch real data from backend
   const fetchRealData = async () => {
-    setIsLoading(true);
     try {
+      const apiService = new APIService();
+      
       // Fetch scraped items
-      const scrapedResponse = await fetch('http://localhost:5001/api/scraped-items');
-      const scrapedData = await scrapedResponse.json();
+      const scrapedItems = await apiService.getScrapedItems();
+      setRealScrapedData(scrapedItems || []);
       
       // Fetch company data
-      const companyResponse = await fetch('http://localhost:5001/api/company-data');
-      const companyData = await companyResponse.json();
-      
-      // Fetch competitive intelligence data
-      const competitiveResponse = await fetch('http://localhost:5001/api/competitive-intelligence');
-      const competitiveData = await competitiveResponse.json();
-      
-      setRealScrapedData(scrapedData || []);
+      const companyData = await apiService.getCompanyData();
       setRealCompanyStats(companyData || []);
-      setContentAnalysis(competitiveData || {
-        code_blocks: 0,
-        tables: 0,
-        links: 0
-      });
       
-      // Update system status with real data
-      setSystemStatus(prev => ({
-        ...prev,
-        total_companies: (companyData || []).length,
-        database_size: `${((scrapedData || []).length * 0.01).toFixed(1)}MB` // Rough estimate
-      }));
+      // Fetch competitive intelligence
+      const competitiveData = await apiService.getCompetitiveIntelligenceData();
+      setContentAnalysis(competitiveData || {});
+      
+      // Fetch strategic comparison data
+      const comparisonData = await apiService.getStrategicComparisonData();
+      if (comparisonData?.success && comparisonData?.data) {
+        setComparisonData(Object.entries(comparisonData.data).map(([company, data]: [string, any]) => ({
+          name: company,
+          url: realCompanyStats.find(c => c.name === company)?.url || '',
+          apiScore: Math.round(data.api_first_architecture || 0),
+          apiDetails: getScoreDetails(data.api_first_architecture || 0, 'API'),
+          cloudScore: Math.round(data.cloud_native_features || 0),
+          cloudDetails: getScoreDetails(data.cloud_native_features || 0, 'Cloud'),
+          integrationScore: Math.round(data.data_integration || 0),
+          integrationDetails: getScoreDetails(data.data_integration || 0, 'Integration'),
+          developerScore: Math.round(data.developer_experience || 0),
+          developerDetails: getScoreDetails(data.developer_experience || 0, 'Developer'),
+          analyticsScore: Math.round(data.modern_analytics || 0),
+          analyticsDetails: getScoreDetails(data.modern_analytics || 0, 'Analytics'),
+          overallScore: Math.round(data.overall_score || 0),
+          positioning: data.positioning || 'Unknown',
+          insights: generateInsightsFromData(data)
+        })));
+      } else {
+        // Generate comparison data from scraped content
+        generateComparisonData();
+      }
       
     } catch (error) {
-      console.error('Failed to fetch real data:', error);
-      // Fall back to simulated data if backend is unavailable
-      setRealScrapedData([]);
-      setRealCompanyStats([]);
-      setContentAnalysis({
-        code_blocks: 0,
-        tables: 0,
-        links: 0
-      });
-    } finally {
-      setIsLoading(false);
+      console.error('Error fetching real data:', error);
+      // Use fallback data
+      generateComparisonData();
     }
+  };
+
+  // Generate strategic comparison data
+  const generateComparisonData = () => {
+    const comparison = realCompanyStats.map((company: any) => {
+      // Analyze scraped content for this company
+      const companyContent = realScrapedData.filter((item: any) => 
+        item.company === company.name
+      );
+      
+      // Calculate scores based on content analysis
+      const apiScore = calculateAPIScore(companyContent);
+      const cloudScore = calculateCloudScore(companyContent);
+      const integrationScore = calculateIntegrationScore(companyContent);
+      const developerScore = calculateDeveloperScore(companyContent);
+      const analyticsScore = calculateAnalyticsScore(companyContent);
+      
+      const overallScore = Math.round(
+        (apiScore + cloudScore + integrationScore + developerScore + analyticsScore) / 5
+      );
+      
+      // Determine positioning
+      const positioning = getPositioning(overallScore);
+      
+      // Generate insights
+      const insights = generateInsights(companyContent, {
+        apiScore,
+        cloudScore,
+        integrationScore,
+        developerScore,
+        analyticsScore
+      });
+      
+      return {
+        name: company.name,
+        url: company.url,
+        apiScore,
+        apiDetails: getScoreDetails(apiScore, 'API'),
+        cloudScore,
+        cloudDetails: getScoreDetails(cloudScore, 'Cloud'),
+        integrationScore,
+        integrationDetails: getScoreDetails(integrationScore, 'Integration'),
+        developerScore,
+        developerDetails: getScoreDetails(developerScore, 'Developer'),
+        analyticsScore,
+        analyticsDetails: getScoreDetails(analyticsScore, 'Analytics'),
+        overallScore,
+        positioning,
+        insights
+      };
+    });
+    
+    setComparisonData(comparison);
+  };
+
+  // Calculate API-First Architecture Score
+  const calculateAPIScore = (content: any[]): number => {
+    if (!content.length) return 0;
+    
+    let score = 0;
+    let totalContent = 0;
+    
+    content.forEach((item: any) => {
+      const text = item.text_content?.toLowerCase() || '';
+      totalContent += text.length;
+      
+      // API documentation indicators
+      if (text.includes('api') || text.includes('endpoint')) score += 20;
+      if (text.includes('rest') || text.includes('graphql')) score += 15;
+      if (text.includes('swagger') || text.includes('openapi')) score += 15;
+      if (text.includes('sdk') || text.includes('client library')) score += 10;
+      if (text.includes('webhook') || text.includes('callback')) score += 10;
+      if (text.includes('authentication') || text.includes('oauth')) score += 10;
+      if (text.includes('rate limit') || text.includes('throttling')) score += 10;
+      if (text.includes('versioning') || text.includes('v1') || text.includes('v2')) score += 10;
+    });
+    
+    return Math.min(100, Math.round((score / Math.max(totalContent / 1000, 1)) * 10));
+  };
+
+  // Calculate Cloud-Native Features Score
+  const calculateCloudScore = (content: any[]): number => {
+    if (!content.length) return 0;
+    
+    let score = 0;
+    let totalContent = 0;
+    
+    content.forEach((item: any) => {
+      const text = item.text_content?.toLowerCase() || '';
+      totalContent += text.length;
+      
+      // Cloud-native indicators
+      if (text.includes('multi-cloud') || text.includes('hybrid cloud')) score += 20;
+      if (text.includes('auto-scaling') || text.includes('elastic')) score += 15;
+      if (text.includes('serverless') || text.includes('lambda')) score += 15;
+      if (text.includes('container') || text.includes('kubernetes') || text.includes('docker')) score += 15;
+      if (text.includes('microservices') || text.includes('distributed')) score += 10;
+      if (text.includes('cloud-native') || text.includes('cloud-first')) score += 10;
+      if (text.includes('infrastructure as code') || text.includes('terraform')) score += 10;
+      if (text.includes('managed service') || text.includes('paas')) score += 5;
+    });
+    
+    return Math.min(100, Math.round((score / Math.max(totalContent / 1000, 1)) * 10));
+  };
+
+  // Calculate Data Integration Score
+  const calculateIntegrationScore = (content: any[]): number => {
+    if (!content.length) return 0;
+    
+    let score = 0;
+    let totalContent = 0;
+    
+    content.forEach((item: any) => {
+      const text = item.text_content?.toLowerCase() || '';
+      totalContent += text.length;
+      
+      // Integration indicators
+      if (text.includes('real-time') || text.includes('streaming')) score += 20;
+      if (text.includes('etl') || text.includes('elt') || text.includes('data pipeline')) score += 15;
+      if (text.includes('connector') || text.includes('integration')) score += 15;
+      if (text.includes('data warehouse') || text.includes('snowflake') || text.includes('bigquery')) score += 15;
+      if (text.includes('api-based') || text.includes('webhook')) score += 10;
+      if (text.includes('data mesh') || text.includes('data fabric')) score += 10;
+      if (text.includes('open format') || text.includes('parquet') || text.includes('avro')) score += 10;
+      if (text.includes('data catalog') || text.includes('metadata')) score += 5;
+    });
+    
+    return Math.min(100, Math.round((score / Math.max(totalContent / 1000, 1)) * 10));
+  };
+
+  // Calculate Developer Experience Score
+  const calculateDeveloperScore = (content: any[]): number => {
+    if (!content.length) return 0;
+    
+    let score = 0;
+    let totalContent = 0;
+    
+    content.forEach((item: any) => {
+      const text = item.text_content?.toLowerCase() || '';
+      totalContent += text.length;
+      
+      // Developer experience indicators
+      if (text.includes('self-service') || text.includes('provisioning')) score += 20;
+      if (text.includes('ci/cd') || text.includes('pipeline') || text.includes('deployment')) score += 15;
+      if (text.includes('infrastructure as code') || text.includes('terraform') || text.includes('cloudformation')) score += 15;
+      if (text.includes('developer documentation') || text.includes('getting started')) score += 15;
+      if (text.includes('sample code') || text.includes('example') || text.includes('tutorial')) score += 10;
+      if (text.includes('playground') || text.includes('sandbox') || text.includes('demo')) score += 10;
+      if (text.includes('community') || text.includes('forum') || text.includes('support')) score += 10;
+      if (text.includes('api explorer') || text.includes('interactive')) score += 5;
+    });
+    
+    return Math.min(100, Math.round((score / Math.max(totalContent / 1000, 1)) * 10));
+  };
+
+  // Calculate Modern Analytics Score
+  const calculateAnalyticsScore = (content: any[]): number => {
+    if (!content.length) return 0;
+    
+    let score = 0;
+    let totalContent = 0;
+    
+    content.forEach((item: any) => {
+      const text = item.text_content?.toLowerCase() || '';
+      totalContent += text.length;
+      
+      // Modern analytics indicators
+      if (text.includes('ai') || text.includes('machine learning') || text.includes('ml')) score += 20;
+      if (text.includes('real-time') || text.includes('streaming analytics')) score += 15;
+      if (text.includes('data mesh') || text.includes('data fabric')) score += 15;
+      if (text.includes('open data') || text.includes('data sharing')) score += 15;
+      if (text.includes('natural language') || text.includes('nlp') || text.includes('conversational')) score += 10;
+      if (text.includes('automated insights') || text.includes('auto-discovery')) score += 10;
+      if (text.includes('collaborative') || text.includes('team analytics')) score += 10;
+      if (text.includes('governance') || text.includes('compliance') || text.includes('security')) score += 5;
+    });
+    
+    return Math.min(100, Math.round((score / Math.max(totalContent / 1000, 1)) * 10));
+  };
+
+  // Get positioning based on overall score
+  const getPositioning = (score: number): string => {
+    if (score >= 80) return 'Leader';
+    if (score >= 60) return 'Transitioning';
+    return 'Legacy';
+  };
+
+  // Generate strategic insights
+  const generateInsights = (content: any[], scores: any): string[] => {
+    const insights: string[] = [];
+    
+    if (scores.apiScore >= 70) {
+      insights.push('Strong API-first architecture with comprehensive developer tools');
+    } else if (scores.apiScore <= 30) {
+      insights.push('Limited API capabilities, primarily traditional integration methods');
+    }
+    
+    if (scores.cloudScore >= 70) {
+      insights.push('Cloud-native platform with modern infrastructure capabilities');
+    } else if (scores.cloudScore <= 30) {
+      insights.push('Traditional on-premise focus, limited cloud-native features');
+    }
+    
+    if (scores.integrationScore >= 70) {
+      insights.push('Advanced data integration with real-time streaming capabilities');
+    } else if (scores.integrationScore <= 30) {
+      insights.push('Basic data integration, limited real-time capabilities');
+    }
+    
+    if (scores.developerScore >= 70) {
+      insights.push('Excellent developer experience with self-service capabilities');
+    } else if (scores.developerScore <= 30) {
+      insights.push('Complex provisioning process, limited developer self-service');
+    }
+    
+    if (scores.analyticsScore >= 70) {
+      insights.push('Modern AI-powered analytics with collaborative features');
+    } else if (scores.analyticsScore <= 30) {
+      insights.push('Traditional BI focus, limited AI and collaboration features');
+    }
+    
+    return insights;
+  };
+
+  // Get score details for display
+  const getScoreDetails = (score: number, category: string): string => {
+    if (score >= 80) return 'Excellent';
+    if (score >= 60) return 'Good';
+    if (score >= 40) return 'Fair';
+    if (score >= 20) return 'Limited';
+    return 'Minimal';
+  };
+
+  // Get sorted comparison data
+  const getSortedComparisonData = () => {
+    if (!comparisonData.length) return [];
+    
+    return [...comparisonData].sort((a: any, b: any) => {
+      switch (comparisonSort) {
+        case 'api':
+          return b.apiScore - a.apiScore;
+        case 'cloud':
+          return b.cloudScore - a.cloudScore;
+        case 'integration':
+          return b.integrationScore - a.integrationScore;
+        case 'developer':
+          return b.developerScore - a.developerScore;
+        default:
+          return b.overallScore - a.overallScore;
+      }
+    });
+  };
+
+  // Get company color based on score
+  const getCompanyColor = (score: number): string => {
+    if (score >= 80) return 'bg-green-500';
+    if (score >= 60) return 'bg-yellow-500';
+    return 'bg-red-500';
+  };
+
+  // Get positioning badge variant
+  const getPositioningVariant = (positioning: string): 'default' | 'secondary' | 'destructive' | 'outline' => {
+    switch (positioning) {
+      case 'Leader':
+        return 'default';
+      case 'Transitioning':
+        return 'secondary';
+      case 'Legacy':
+        return 'destructive';
+      default:
+        return 'outline';
+    }
+  };
+
+  // Refresh comparison data
+  const refreshComparisonData = () => {
+    generateComparisonData();
+  };
+
+  // Generate insights from API data
+  const generateInsightsFromData = (data: any): string[] => {
+    const insights: string[] = [];
+    
+    if (data.api_first_architecture >= 70) {
+      insights.push('Strong API-first architecture with comprehensive developer tools');
+    } else if (data.api_first_architecture <= 30) {
+      insights.push('Limited API capabilities, primarily traditional integration methods');
+    }
+    
+    if (data.cloud_native_features >= 70) {
+      insights.push('Cloud-native platform with modern infrastructure capabilities');
+    } else if (data.cloud_native_features <= 30) {
+      insights.push('Traditional on-premise focus, limited cloud-native features');
+    }
+    
+    if (data.data_integration >= 70) {
+      insights.push('Advanced data integration with real-time streaming capabilities');
+    } else if (data.data_integration <= 30) {
+      insights.push('Basic data integration, limited real-time capabilities');
+    }
+    
+    if (data.developer_experience >= 70) {
+      insights.push('Excellent developer experience with self-service capabilities');
+    } else if (data.developer_experience <= 30) {
+      insights.push('Complex provisioning process, limited developer self-service');
+    }
+    
+    if (data.modern_analytics >= 70) {
+      insights.push('Modern AI-powered analytics with collaborative features');
+    } else if (data.modern_analytics <= 30) {
+      insights.push('Traditional BI focus, limited AI and collaboration features');
+    }
+    
+    return insights;
   };
 
   // Load real data on component mount
@@ -557,6 +880,7 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
           <TabsTrigger value="coverage">Coverage Analysis</TabsTrigger>
           <TabsTrigger value="data">Data Visualization</TabsTrigger>
           <TabsTrigger value="content">Content Explorer</TabsTrigger>
+          <TabsTrigger value="comparison">Strategic Comparison</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
@@ -1543,6 +1867,353 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
                     );
                   })()}
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="comparison" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <div>
+                  <CardTitle>Strategic Feature Comparison Matrix</CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Cloud-native competitive positioning across key technical dimensions
+                  </p>
+                </div>
+                <Button onClick={refreshComparisonData} disabled={isLoading}>
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  {isLoading ? 'Updating...' : 'Update Matrix'}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {/* Matrix Controls */}
+                <div className="flex flex-wrap gap-4 items-center">
+                  <div>
+                    <Label className="text-sm font-medium">Focus Area</Label>
+                    <select 
+                      className="p-2 border rounded-md text-sm"
+                      value={comparisonFocus}
+                      onChange={(e) => setComparisonFocus(e.target.value)}
+                    >
+                      <option value="all">All Dimensions</option>
+                      <option value="api">API-First Architecture</option>
+                      <option value="cloud">Cloud-Native Features</option>
+                      <option value="integration">Data Integration</option>
+                      <option value="developer">Developer Experience</option>
+                      <option value="analytics">Modern Analytics</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium">Sort By</Label>
+                    <select 
+                      className="p-2 border rounded-md text-sm"
+                      value={comparisonSort}
+                      onChange={(e) => setComparisonSort(e.target.value)}
+                    >
+                      <option value="score">Overall Score</option>
+                      <option value="api">API Maturity</option>
+                      <option value="cloud">Cloud Native</option>
+                      <option value="integration">Integration</option>
+                      <option value="developer">Developer Experience</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium">View Mode</Label>
+                    <div className="flex space-x-2">
+                      <Button
+                        size="sm"
+                        variant={comparisonViewMode === 'matrix' ? 'default' : 'outline'}
+                        onClick={() => setComparisonViewMode('matrix')}
+                      >
+                        Matrix
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant={comparisonViewMode === 'radar' ? 'default' : 'outline'}
+                        onClick={() => setComparisonViewMode('radar')}
+                      >
+                        Radar
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant={comparisonViewMode === 'detailed' ? 'default' : 'outline'}
+                        onClick={() => setComparisonViewMode('detailed')}
+                      >
+                        Detailed
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Strategic Comparison Matrix */}
+                {comparisonViewMode === 'matrix' && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-50">
+                          <th className="border border-gray-300 p-3 text-left font-medium text-sm">Company</th>
+                          <th className="border border-gray-300 p-3 text-center font-medium text-sm">API-First</th>
+                          <th className="border border-gray-300 p-3 text-center font-medium text-sm">Cloud-Native</th>
+                          <th className="border border-gray-300 p-3 text-center font-medium text-sm">Data Integration</th>
+                          <th className="border border-gray-300 p-3 text-center font-medium text-sm">Developer Exp</th>
+                          <th className="border border-gray-300 p-3 text-center font-medium text-sm">Modern Analytics</th>
+                          <th className="border border-gray-300 p-3 text-center font-medium text-sm">Overall Score</th>
+                          <th className="border border-gray-300 p-3 text-center font-medium text-sm">Positioning</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {getSortedComparisonData().map((company: any) => (
+                          <tr key={company.name} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-3 font-medium">
+                              <div className="flex items-center space-x-2">
+                                <div className={`w-3 h-3 rounded-full ${getCompanyColor(company.overallScore)}`}></div>
+                                <span>{company.name}</span>
+                              </div>
+                            </td>
+                            <td className="border border-gray-300 p-3 text-center">
+                              <div className="flex flex-col items-center">
+                                <div className="text-lg font-bold text-blue-600">{company.apiScore}</div>
+                                <div className="text-xs text-gray-600">{company.apiDetails}</div>
+                              </div>
+                            </td>
+                            <td className="border border-gray-300 p-3 text-center">
+                              <div className="flex flex-col items-center">
+                                <div className="text-lg font-bold text-green-600">{company.cloudScore}</div>
+                                <div className="text-xs text-gray-600">{company.cloudDetails}</div>
+                              </div>
+                            </td>
+                            <td className="border border-gray-300 p-3 text-center">
+                              <div className="flex flex-col items-center">
+                                <div className="text-lg font-bold text-purple-600">{company.integrationScore}</div>
+                                <div className="text-xs text-gray-600">{company.integrationDetails}</div>
+                              </div>
+                            </td>
+                            <td className="border border-gray-300 p-3 text-center">
+                              <div className="flex flex-col items-center">
+                                <div className="text-lg font-bold text-orange-600">{company.developerScore}</div>
+                                <div className="text-xs text-gray-600">{company.developerDetails}</div>
+                              </div>
+                            </td>
+                            <td className="border border-gray-300 p-3 text-center">
+                              <div className="flex flex-col items-center">
+                                <div className="text-lg font-bold text-indigo-600">{company.analyticsScore}</div>
+                                <div className="text-xs text-gray-600">{company.analyticsDetails}</div>
+                              </div>
+                            </td>
+                            <td className="border border-gray-300 p-3 text-center">
+                              <div className="text-xl font-bold text-gray-800">{company.overallScore}</div>
+                            </td>
+                            <td className="border border-gray-300 p-3 text-center">
+                              <Badge variant={getPositioningVariant(company.positioning)}>
+                                {company.positioning}
+                              </Badge>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* Radar Chart View */}
+                {comparisonViewMode === 'radar' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {getSortedComparisonData().slice(0, 6).map((company: any) => (
+                      <Card key={company.name} className="p-4">
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">{company.name}</CardTitle>
+                          <p className="text-sm text-gray-600">Overall: {company.overallScore}/100</p>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-3">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">API-First</span>
+                              <div className="flex items-center space-x-2">
+                                <div className="w-16 bg-gray-200 rounded-full h-2">
+                                  <div 
+                                    className="bg-blue-600 h-2 rounded-full" 
+                                    style={{width: `${company.apiScore}%`}}
+                                  ></div>
+                                </div>
+                                <span className="text-sm font-medium w-8">{company.apiScore}</span>
+                              </div>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">Cloud-Native</span>
+                              <div className="flex items-center space-x-2">
+                                <div className="w-16 bg-gray-200 rounded-full h-2">
+                                  <div 
+                                    className="bg-green-600 h-2 rounded-full" 
+                                    style={{width: `${company.cloudScore}%`}}
+                                  ></div>
+                                </div>
+                                <span className="text-sm font-medium w-8">{company.cloudScore}</span>
+                              </div>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">Integration</span>
+                              <div className="flex items-center space-x-2">
+                                <div className="w-16 bg-gray-200 rounded-full h-2">
+                                  <div 
+                                    className="bg-purple-600 h-2 rounded-full" 
+                                    style={{width: `${company.integrationScore}%`}}
+                                  ></div>
+                                </div>
+                                <span className="text-sm font-medium w-8">{company.integrationScore}</span>
+                              </div>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">Developer</span>
+                              <div className="flex items-center space-x-2">
+                                <div className="w-16 bg-gray-200 rounded-full h-2">
+                                  <div className="w-16 bg-gray-200 rounded-full h-2">
+                                    <div 
+                                      className="bg-orange-600 h-2 rounded-full" 
+                                      style={{width: `${company.developerScore}%`}}
+                                    ></div>
+                                  </div>
+                                </div>
+                                <span className="text-sm font-medium w-8">{company.developerScore}</span>
+                              </div>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">Analytics</span>
+                              <div className="flex items-center space-x-2">
+                                <div className="w-16 bg-gray-200 rounded-full h-2">
+                                  <div 
+                                    className="bg-indigo-600 h-2 rounded-full" 
+                                    style={{width: `${company.analyticsScore}%`}}
+                                  ></div>
+                                </div>
+                                <span className="text-sm font-medium w-8">{company.analyticsScore}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+
+                {/* Detailed Analysis View */}
+                {comparisonViewMode === 'detailed' && (
+                  <div className="space-y-6">
+                    {getSortedComparisonData().map((company: any) => (
+                      <Card key={company.name} className="p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <h3 className="text-xl font-semibold">{company.name}</h3>
+                            <p className="text-sm text-gray-600">Overall Score: {company.overallScore}/100</p>
+                            <Badge variant={getPositioningVariant(company.positioning)} className="mt-2">
+                              {company.positioning}
+                            </Badge>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-gray-800">{company.overallScore}</div>
+                            <div className="text-sm text-gray-600">Cloud-Native Index</div>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                          <div className="text-center p-3 bg-blue-50 rounded">
+                            <div className="text-lg font-bold text-blue-600">{company.apiScore}</div>
+                            <div className="text-sm text-blue-600">API-First</div>
+                            <div className="text-xs text-blue-500 mt-1">{company.apiDetails}</div>
+                          </div>
+                          <div className="text-center p-3 bg-green-50 rounded">
+                            <div className="text-lg font-bold text-green-600">{company.cloudScore}</div>
+                            <div className="text-sm text-green-600">Cloud-Native</div>
+                            <div className="text-xs text-green-500 mt-1">{company.cloudDetails}</div>
+                          </div>
+                          <div className="text-center p-3 bg-purple-50 rounded">
+                            <div className="text-lg font-bold text-purple-600">{company.integrationScore}</div>
+                            <div className="text-sm text-purple-600">Integration</div>
+                            <div className="text-xs text-purple-500 mt-1">{company.integrationDetails}</div>
+                          </div>
+                          <div className="text-center p-3 bg-orange-50 rounded">
+                            <div className="text-lg font-bold text-orange-600">{company.developerScore}</div>
+                            <div className="text-sm text-orange-600">Developer</div>
+                            <div className="text-xs text-orange-500 mt-1">{company.developerDetails}</div>
+                          </div>
+                          <div className="text-center p-3 bg-indigo-50 rounded">
+                            <div className="text-lg font-bold text-indigo-600">{company.analyticsScore}</div>
+                            <div className="text-sm text-indigo-600">Analytics</div>
+                            <div className="text-xs text-indigo-500 mt-1">{company.analyticsDetails}</div>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 p-4 bg-gray-50 rounded">
+                          <h4 className="font-medium mb-2">Strategic Insights</h4>
+                          <div className="text-sm text-gray-700 space-y-1">
+                            {company.insights.map((insight: string, index: number) => (
+                              <div key={index} className="flex items-start space-x-2">
+                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                                <span>{insight}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+
+                {/* Competitive Positioning Summary */}
+                <Card className="p-6 bg-gradient-to-r from-blue-50 to-purple-50">
+                  <CardHeader>
+                    <CardTitle>Competitive Positioning Analysis</CardTitle>
+                    <p className="text-sm text-gray-600">
+                      How your competitive set positions against cloud-native advantages
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div>
+                        <h4 className="font-medium text-blue-800 mb-3">Cloud-Native Leaders</h4>
+                        <div className="space-y-2">
+                          {getSortedComparisonData()
+                            .filter((c: any) => c.positioning === 'Leader')
+                            .map((company: any) => (
+                              <div key={company.name} className="flex justify-between items-center text-sm">
+                                <span>{company.name}</span>
+                                <span className="font-medium">{company.overallScore}</span>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-orange-800 mb-3">Transitioning Platforms</h4>
+                        <div className="space-y-2">
+                          {getSortedComparisonData()
+                            .filter((c: any) => c.positioning === 'Transitioning')
+                            .map((company: any) => (
+                              <div key={company.name} className="flex justify-between items-center text-sm">
+                                <span>{company.name}</span>
+                                <span className="font-medium">{company.overallScore}</span>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-800 mb-3">Legacy Platforms</h4>
+                        <div className="space-y-2">
+                          {getSortedComparisonData()
+                            .filter((c: any) => c.positioning === 'Legacy')
+                            .map((company: any) => (
+                              <div key={company.name} className="flex justify-between items-center text-sm">
+                                <span>{company.name}</span>
+                                <span className="font-medium">{company.overallScore}</span>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </CardContent>
           </Card>
