@@ -10,19 +10,26 @@ import { AnalyticsPanel } from '@/components/ScrapeDashboard/AnalyticsPanel';
 import { AIAnalysisPanel } from '@/components/ScrapeDashboard/AIAnalysisPanel';
 import { ExportPanel } from '@/components/ScrapeDashboard/ExportPanel';
 import { BackendStatus } from '@/components/BackendStatus';
-import { useScrapeItems, useScrapeConfiguration, usePresetGroups } from '@/state/ScrapeStore';
+import APIService from '@/utils/APIService';
 import { useToast } from '@/hooks/use-toast';
 
 const ScrapeDashboard: React.FC = () => {
   const { toast } = useToast();
   
-  // Get data from ScrapeStore
-  const scrapedItems = useScrapeItems();
-  const configuration = useScrapeConfiguration();
-  const presetGroups = usePresetGroups();
-
-  // Local state for dashboard
+  // Real data state management - replacing ScrapeStore
+  const [realScrapedItems, setRealScrapedItems] = useState<any[]>([]);
+  const [realCompanyData, setRealCompanyData] = useState<any[]>([]);
+  const [realCompetitiveIntelligence, setRealCompetitiveIntelligence] = useState<any[]>([]);
+  const [realPresetGroups, setRealPresetGroups] = useState<any[]>([]);
+  const [realScrapingStatus, setRealScrapingStatus] = useState<any>(null);
+  const [realScrapingProgress, setRealScrapingProgress] = useState<any>({});
+  
+  // UI state
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataStatus, setDataStatus] = useState<'loading' | 'success' | 'error' | 'no_data'>('loading');
   const [activeTab, setActiveTab] = useState('configuration');
+  
+  // Dashboard stats based on real data
   const [dashboardStats, setDashboardStats] = useState({
     totalItems: 0,
     totalCompanies: 0,
@@ -31,24 +38,88 @@ const ScrapeDashboard: React.FC = () => {
     systemHealth: 'healthy' as 'healthy' | 'degraded' | 'down'
   });
 
-  // Update dashboard stats when data changes
-  useEffect(() => {
-    if (scrapedItems) {
-      const companies = new Set(scrapedItems.map(item => item.company));
-      const categories = new Set(scrapedItems.map(item => item.category));
+  // Real data fetching function
+  const fetchRealData = async () => {
+    try {
+      setIsLoading(true);
+      setDataStatus('loading');
+      
+      const apiService = new APIService();
+      
+      // Fetch all real data in parallel
+      const [
+        scrapedItems,
+        companyData,
+        competitiveIntelligence,
+        presetGroups,
+        scrapingStatus,
+        scrapingProgress
+      ] = await Promise.all([
+        apiService.getScrapedItems().catch(() => []),
+        apiService.getCompanyData().catch(() => []),
+        apiService.getCompetitiveIntelligence().catch(() => []),
+        apiService.getPresetGroups().catch(() => []),
+        apiService.getScrapingStatus().catch(() => null),
+        apiService.getScrapingProgress().catch(() => ({}))
+      ]);
+      
+      // Update state with real data
+      setRealScrapedItems(scrapedItems || []);
+      setRealCompanyData(companyData || []);
+      setRealCompetitiveIntelligence(competitiveIntelligence || []);
+      setRealPresetGroups(presetGroups || []);
+      setRealScrapingStatus(scrapingStatus);
+      setRealScrapingProgress(scrapingProgress);
+      
+      // Update dashboard stats
+      const companies = new Set(scrapedItems?.map((item: any) => item.company) || []);
+      const categories = new Set(scrapedItems?.map((item: any) => item.category) || []);
       
       setDashboardStats(prev => ({
         ...prev,
-        totalItems: scrapedItems.length,
+        totalItems: scrapedItems?.length || 0,
         totalCompanies: companies.size,
-        totalCategories: categories.size
+        totalCategories: categories.size,
+        lastScrapeTime: scrapingStatus?.last_scrape || null,
+        systemHealth: scrapingStatus?.status === 'active' ? 'healthy' : 'degraded'
       }));
+      
+      setDataStatus('success');
+      
+      // Show success toast
+      toast({
+        title: "Real data loaded",
+        description: `Successfully loaded ${scrapedItems?.length || 0} scraped items`,
+      });
+      
+    } catch (error) {
+      console.error('Error fetching real data:', error);
+      setDataStatus('error');
+      
+      // Show error toast
+      toast({
+        title: "Data loading failed",
+        description: "Failed to load real data from backend",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-  }, [scrapedItems]);
+  };
+
+  // Load real data on component mount
+  useEffect(() => {
+    fetchRealData();
+  }, []);
 
   // Handle tab changes
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+  };
+
+  // Refresh data function
+  const handleRefreshData = () => {
+    fetchRealData();
   };
 
   return (
@@ -58,11 +129,52 @@ const ScrapeDashboard: React.FC = () => {
         <div>
           <h1 className="text-3xl font-bold">ScrapeDashboard</h1>
           <p className="text-gray-600 mt-2">
-            Advanced competitive intelligence platform with AI-powered analysis
+            Advanced competitive intelligence platform with real-time data
           </p>
         </div>
-        <BackendStatus />
+        <div className="flex items-center space-x-4">
+          <BackendStatus />
+          <button
+            onClick={handleRefreshData}
+            disabled={isLoading}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+          >
+            {isLoading ? 'Loading...' : 'Refresh Data'}
+          </button>
+        </div>
       </div>
+
+      {/* Data Status Indicator */}
+      {dataStatus === 'loading' && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+              <p className="text-blue-800">Loading real data from backend...</p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {dataStatus === 'error' && (
+        <Card className="border-red-200 bg-red-50">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-red-100 rounded">
+                <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-medium text-red-800">Data Loading Error</p>
+                <p className="text-sm text-red-600">
+                  Failed to load real data. Check backend connection and try refreshing.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Dashboard Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -136,8 +248,8 @@ const ScrapeDashboard: React.FC = () => {
         </Card>
       </div>
 
-      {/* Configuration Status */}
-      {configuration && (
+      {/* Real Data Status */}
+      {dataStatus === 'success' && realScrapedItems.length > 0 && (
         <Card className="border-green-200 bg-green-50">
           <CardContent className="p-4">
             <div className="flex items-center space-x-3">
@@ -147,11 +259,10 @@ const ScrapeDashboard: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-green-800">Configuration Active</p>
+                <p className="font-medium text-green-800">Real Data Loaded</p>
                 <p className="text-sm text-green-600">
-                  Preset: {configuration.selectedPreset || 'Custom'} | 
-                  Categories: {configuration.selectedCategories.join(', ')} | 
-                  Targets: {configuration.targets?.length || 0}
+                  {realScrapedItems.length} scraped items from {dashboardStats.totalCompanies} companies | 
+                  Last updated: {dashboardStats.lastScrapeTime ? new Date(dashboardStats.lastScrapeTime).toLocaleString() : 'Unknown'}
                 </p>
               </div>
             </div>
@@ -189,19 +300,19 @@ const ScrapeDashboard: React.FC = () => {
         </TabsContent>
 
         <TabsContent value="data" className="space-y-4">
-          <DataViewPanel items={scrapedItems || []} />
+          <DataViewPanel items={realScrapedItems} />
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-4">
-          <AnalyticsPanel items={scrapedItems || []} />
+          <AnalyticsPanel items={realScrapedItems} />
         </TabsContent>
 
         <TabsContent value="ai" className="space-y-4">
-          <AIAnalysisPanel items={scrapedItems || []} />
+          <AIAnalysisPanel items={realScrapedItems} />
         </TabsContent>
 
         <TabsContent value="export" className="space-y-4">
-          <ExportPanel items={scrapedItems || []} />
+          <ExportPanel items={realScrapedItems} />
         </TabsContent>
       </Tabs>
     </div>

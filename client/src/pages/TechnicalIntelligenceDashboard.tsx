@@ -287,94 +287,154 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
     try {
       const apiService = new APIService();
       
-      // Fetch scraped items
-      const scrapedItems = await apiService.getScrapedItems();
-      console.log('Scraped items from API:', scrapedItems);
-      setRealScrapedData(scrapedItems || []);
+      // PRIORITY: Fetch real competitor data from new endpoints
+      console.log("Fetching real competitor data...");
+      const realCompetitorData = await apiService.getRealCompetitorData();
       
-      // Fetch company data
-      const companyData = await apiService.getCompanyData();
-      console.log('Company data from API:', companyData);
-      const finalCompanyData = companyData || realCompanyStats;
-      setRealCompanyStats(finalCompanyData);
-      
-      // Update system status with company count
-      setSystemStatus(prev => ({ ...prev, total_companies: finalCompanyData.length }));
-      
-      // Fetch competitive intelligence
-      const competitiveData = await apiService.getCompetitiveIntelligenceData();
-      console.log('Competitive intelligence from API:', competitiveData);
-      setContentAnalysis(competitiveData || contentAnalysis);
-      
-      // Fetch strategic comparison data
-      const comparisonData = await apiService.getStrategicComparisonData();
-      console.log('Strategic comparison from API:', comparisonData);
-      if (comparisonData?.success && comparisonData?.data) {
-        setComparisonData(Object.entries(comparisonData.data).map(([company, data]: [string, any]) => ({
-          name: company,
-          url: realCompanyStats.find(c => c.name === company)?.url || '',
-          apiScore: Math.round(data.api_first_architecture || 0),
-          apiDetails: getScoreDetails(data.api_first_architecture || 0, 'API'),
-          cloudScore: Math.round(data.cloud_native_features || 0),
-          cloudDetails: getScoreDetails(data.cloud_native_features || 0, 'Cloud'),
-          integrationScore: Math.round(data.data_integration || 0),
-          integrationDetails: getScoreDetails(data.data_integration || 0, 'Integration'),
-          developerScore: Math.round(data.developer_experience || 0),
-          developerDetails: getScoreDetails(data.developer_experience || 0, 'Developer'),
-          analyticsScore: Math.round(data.modern_analytics || 0),
-          analyticsDetails: getScoreDetails(data.modern_analytics || 0, 'Analytics'),
-          overallScore: Math.round(data.overall_score || 0),
-          positioning: data.positioning || 'Unknown',
-          insights: generateInsightsFromData(data)
-        })));
+      if (realCompetitorData?.success && realCompetitorData?.data) {
+        console.log("Real competitor data received:", realCompetitorData.data);
+        
+        // Transform real data for the UI
+        const transformedData = transformRealDataForUI(realCompetitorData.data);
+        
+        // Update states with real data
+        setRealScrapedData(transformedData.scrapedData);
+        setRealCompanyStats(transformedData.companyStats);
+        setComparisonData(transformedData.comparisonData);
+        
+        // Update system status
+        setSystemStatus(prev => ({ 
+          ...prev, 
+          total_companies: Object.keys(realCompetitorData.data).length,
+          database_size: `${(transformedData.scrapedData.length * 0.5).toFixed(1)}MB`
+        }));
+        
+        console.log("Real data successfully integrated into UI");
       } else {
-        // Generate comparison data from scraped content
-        generateComparisonData();
+        console.log("Real competitor data not available, falling back to existing APIs");
+        
+        // Fallback to existing API endpoints
+        const scrapedItems = await apiService.getScrapedItems();
+        const companyData = await apiService.getCompanyData();
+        const competitiveData = await apiService.getCompetitiveIntelligenceData();
+        const comparisonData = await apiService.getStrategicComparisonData();
+        
+        setRealScrapedData(scrapedItems || []);
+        setRealCompanyStats(companyData || realCompanyStats);
+        setComparisonData(comparisonData || []);
       }
       
     } catch (error) {
-      console.error('Error fetching real data:', error);
-      // Use fallback data and generate mock scraped data for testing
-      generateMockScrapedData();
-      generateComparisonData();
+      console.error("Error fetching real data:", error);
+      console.log("Falling back to existing data or showing empty state");
+      
+      // Handle error gracefully - show empty state instead of mock data
+      setRealScrapedData([]);
+      setRealCompanyStats([]);
+      setComparisonData([]);
+      setSystemStatus(prev => ({ ...prev, total_companies: 0, database_size: "0MB" }));
     }
   };
 
-  // Generate mock scraped data for testing when backend is not available
-  const generateMockScrapedData = () => {
-    const mockData = [];
-    const companies = ['Snowflake', 'Databricks', 'PowerBI', 'Tableau', 'Omni', 'Looker'];
-    const categories = ['API Documentation', 'Product Features', 'Pricing', 'Integrations', 'Tutorials'];
-    
-    companies.forEach(company => {
-      // Generate 5-15 mock documents per company
-      const docCount = Math.floor(Math.random() * 10) + 5;
-      
-      for (let i = 0; i < docCount; i++) {
-        const category = categories[Math.floor(Math.random() * categories.length)];
-        const mockContent = generateMockContent(category, company);
-        
-        mockData.push({
-          company: company,
-          category: category,
-          url: `https://docs.${company.toLowerCase()}.com/doc-${i + 1}`,
-          text_content: mockContent,
-          technical_relevance: Math.random() * 0.8 + 0.2, // 0.2 to 1.0
-          quality_score: Math.random() * 0.8 + 0.2,
-          scraped_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString() // Random date within last week
+  // Transform real data from backend to frontend format
+  const transformRealDataForUI = (realData: any) => {
+    const scrapedData: any[] = [];
+    const companyStats: any[] = [];
+    const comparisonData: any[] = [];
+
+    Object.entries(realData).forEach(([companyName, companyData]: [string, any]) => {
+      if (companyData.status === 'success') {
+        // Transform scraped documents
+        companyData.scraped_docs?.forEach((doc: any) => {
+          scrapedData.push({
+            company: companyName,
+            category: 'Technical Documentation',
+            url: doc.url,
+            text_content: doc.content,
+            technical_relevance: doc.content.length > 1000 ? 0.8 : 0.5,
+            quality_score: 0.7,
+            scraped_at: doc.scraped_at
+          });
+        });
+
+        // Transform company stats
+        const strategicAnalysis = companyData.strategic_analysis || {};
+        companyStats.push({
+          name: companyName,
+          url: companyData.domain || '',
+          technicalScore: Math.round(
+            (strategicAnalysis.api_first_architecture?.score || 0 +
+             strategicAnalysis.cloud_native_features?.score || 0 +
+             strategicAnalysis.data_integration?.score || 0 +
+             strategicAnalysis.developer_experience?.score || 0 +
+             strategicAnalysis.modern_analytics?.score || 0) / 5
+          ),
+          status: 'completed',
+          progress: 100,
+          results: {
+            docs_count: companyData.total_docs || 0,
+            rss_count: 0,
+            technical_relevance_stats: {
+              high_tech: Math.round((strategicAnalysis.api_first_architecture?.score || 0) / 20),
+              medium_tech: Math.round((strategicAnalysis.cloud_native_features?.score || 0) / 20),
+              low_tech: Math.round((strategicAnalysis.modern_analytics?.score || 0) / 20)
+            },
+            fallback_discovery_used: false
+          }
+        });
+
+        // Transform comparison data
+        comparisonData.push({
+          name: companyName,
+          url: companyData.domain || '',
+          apiScore: Math.round(strategicAnalysis.api_first_architecture?.score || 0),
+          cloudScore: Math.round(strategicAnalysis.cloud_native_features?.score || 0),
+          integrationScore: Math.round(strategicAnalysis.data_integration?.score || 0),
+          developerScore: Math.round(strategicAnalysis.developer_experience?.score || 0),
+          analyticsScore: Math.round(strategicAnalysis.modern_analytics?.score || 0),
+          overallScore: Math.round(
+            (strategicAnalysis.api_first_architecture?.score || 0 +
+             strategicAnalysis.cloud_native_features?.score || 0 +
+             strategicAnalysis.data_integration?.score || 0 +
+             strategicAnalysis.developer_experience?.score || 0 +
+             strategicAnalysis.modern_analytics?.score || 0) / 5
+          ),
+          positioning: getPositioning(Math.round(
+            (strategicAnalysis.api_first_architecture?.score || 0 +
+             strategicAnalysis.cloud_native_features?.score || 0 +
+             strategicAnalysis.data_integration?.score || 0 +
+             strategicAnalysis.developer_experience?.score || 0 +
+             strategicAnalysis.modern_analytics?.score || 0) / 5
+          )),
+          insights: generateInsightsFromRealData(strategicAnalysis)
         });
       }
     });
+
+    return { scrapedData, companyStats, comparisonData };
+  };
+
+  // Generate insights from real data
+  const generateInsightsFromRealData = (strategicAnalysis: any) => {
+    const insights = [];
     
-    console.log('Generated mock scraped data:', mockData);
-    setRealScrapedData(mockData);
+    if (strategicAnalysis.api_first_architecture?.score > 50) {
+      insights.push('Strong API-first architecture with comprehensive developer tools');
+    }
+    if (strategicAnalysis.cloud_native_features?.score > 50) {
+      insights.push('Cloud-native platform with modern scalability features');
+    }
+    if (strategicAnalysis.data_integration?.score > 50) {
+      insights.push('Excellent data integration capabilities and connector ecosystem');
+    }
+    if (strategicAnalysis.developer_experience?.score > 50) {
+      insights.push('Developer-friendly platform with extensive documentation');
+    }
+    if (strategicAnalysis.modern_analytics?.score > 50) {
+      insights.push('Advanced analytics with AI/ML integration');
+    }
     
-    // Update system status to reflect mock data
-    setSystemStatus(prev => ({ 
-      ...prev, 
-      total_companies: realCompanyStats.length,
-      database_size: `${(mockData.length * 0.5).toFixed(1)}MB` // Estimate based on mock data
-    }));
+    return insights.length > 0 ? insights : ['Comprehensive business intelligence platform'];
   };
 
   // Generate realistic mock content based on category and company

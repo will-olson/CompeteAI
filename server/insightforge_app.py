@@ -14,6 +14,8 @@ from typing import Dict, List, Optional, Any
 # Import our custom modules
 from competitive_intelligence_scraper import CompetitiveIntelligenceScraper
 from ai_competitive_analyzer import AICompetitiveAnalyzer
+from real_data_scraper import RealDataCompetitiveScraper
+from competitor_targeting import COMPETITORS
 from enterprise_software_analyzer import EnterpriseSoftwareAnalyzer
 
 # Load environment variables
@@ -1129,3 +1131,103 @@ if __name__ == '__main__':
     
     # Run the Flask app
     app.run(debug=True, host='0.0.0.0', port=5001) 
+# Real Data Integration Endpoints
+@app.route('/api/real-competitor-data', methods=['GET'])
+def get_real_competitor_data():
+    """Get real scraped data from all competitors in competitor_targeting.py"""
+    try:
+        scraper = RealDataCompetitiveScraper()
+        real_data = scraper.scrape_all_competitors()
+        
+        return jsonify({
+            'success': True,
+            'data': real_data,
+            'timestamp': datetime.now().isoformat(),
+            'data_source': 'competitor_targeting.py',
+            'total_competitors': len(real_data)
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
+@app.route('/api/real-competitor/<company_name>', methods=['GET'])
+def get_real_competitor(company_name):
+    """Get real scraped data for a specific competitor"""
+    try:
+        scraper = RealDataCompetitiveScraper()
+        competitor_data = scraper.scrape_competitor(company_name)
+        
+        return jsonify({
+            'success': True,
+            'company': company_name,
+            'data': competitor_data,
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
+@app.route('/api/scraping-status', methods=['GET'])
+def get_scraping_status():
+    """Get real-time scraping status and progress"""
+    try:
+        return jsonify({
+            'success': True,
+            'status': 'active',
+            'last_scrape': datetime.now().isoformat(),
+            'total_competitors': len(COMPETITORS),
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
+@app.route('/api/scraping-progress', methods=['GET'])
+def get_scraping_progress():
+    """Get real-time scraping progress for all competitors"""
+    try:
+        scraper = RealDataCompetitiveScraper()
+        progress_data = {}
+        
+        for competitor in COMPETITORS:
+            company_name = competitor['name']
+            try:
+                # Check if we have recent data for this competitor
+                progress_data[company_name] = {
+                    'status': 'completed',
+                    'last_scrape': datetime.now().isoformat(),
+                    'docs_count': len(competitor.get('docs', [])),
+                    'progress': 100
+                }
+            except Exception as e:
+                progress_data[company_name] = {
+                    'status': 'error',
+                    'error': str(e),
+                    'progress': 0
+                }
+        
+        return jsonify({
+            'success': True,
+            'progress': progress_data,
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+

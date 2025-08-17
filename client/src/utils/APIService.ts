@@ -131,6 +131,43 @@ class APIService {
     return this.makeRequest('/api/preset-groups');
   }
 
+  // Real Data Integration Methods
+  async getRealCompetitorData(): Promise<any> {
+    try {
+      return await this.makeRequest("/api/real-competitor-data");
+    } catch (error) {
+      console.error("Error fetching real competitor data:", error);
+      throw error;
+    }
+  }
+
+  async getRealCompetitor(companyName: string): Promise<any> {
+    try {
+      return await this.makeRequest(`/api/real-competitor/${companyName}`);
+    } catch (error) {
+      console.error(`Error fetching real data for ${companyName}:`, error);
+      throw error;
+    }
+  }
+
+  async getScrapingStatus(): Promise<any> {
+    try {
+      return await this.makeRequest("/api/scraping-status");
+    } catch (error) {
+      console.error("Error fetching scraping status:", error);
+      throw error;
+    }
+  }
+
+  async getScrapingProgress(): Promise<any> {
+    try {
+      return await this.makeRequest("/api/scraping-progress");
+    } catch (error) {
+      console.error("Error fetching scraping progress:", error);
+      throw error;
+    }
+  }
+
   // Start scraping
   async startScraping(config: any): Promise<{ job_id: string; status: string }> {
     return this.makeRequest('/api/scrape/company', {
@@ -139,15 +176,7 @@ class APIService {
     });
   }
 
-  // Get scraping status
-  async getScrapingStatus(jobId: string): Promise<{ status: string; progress: number; results: any[] }> {
-    // Since the server doesn't have a status endpoint, return mock data
-    return {
-      status: 'completed',
-      progress: 100,
-      results: []
-    };
-  }
+
 }
 
 export default new APIService();

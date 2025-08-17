@@ -2444,3 +2444,67 @@
 2025-08-15 15:48:04,845 - INFO:  * Restarting with stat
 2025-08-15 15:48:05,363 - WARNING:  * Debugger is active!
 2025-08-15 15:48:05,369 - INFO:  * Debugger PIN: 121-403-977
+2025-08-16 20:16:37,854 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-16 20:16:37,855 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-16 20:16:37,856 - INFO:  * Restarting with stat
+2025-08-16 20:16:38,374 - WARNING:  * Debugger is active!
+2025-08-16 20:16:38,381 - INFO:  * Debugger PIN: 121-403-977
+2025-08-17 11:26:54,453 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-17 11:26:54,454 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-17 11:26:54,455 - INFO:  * Restarting with stat
+2025-08-17 11:26:54,929 - WARNING:  * Debugger is active!
+2025-08-17 11:26:54,936 - INFO:  * Debugger PIN: 121-403-977
+2025-08-17 12:20:10,540 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-17 12:20:10,540 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-17 12:20:10,541 - INFO:  * Restarting with stat
+2025-08-17 12:20:11,024 - WARNING:  * Debugger is active!
+2025-08-17 12:20:11,035 - INFO:  * Debugger PIN: 121-403-977
+2025-08-17 14:10:16,849 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-17 14:10:16,850 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-17 14:10:16,851 - INFO:  * Restarting with stat
+2025-08-17 14:10:17,404 - WARNING:  * Debugger is active!
+2025-08-17 14:10:17,416 - INFO:  * Debugger PIN: 121-403-977
+2025-08-17 14:34:52,931 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-17 14:34:52,931 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-17 14:34:52,932 - INFO:  * Restarting with stat
+2025-08-17 14:34:53,421 - WARNING:  * Debugger is active!
+2025-08-17 14:34:53,430 - INFO:  * Debugger PIN: 121-403-977
+2025-08-17 15:28:46,935 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-17 15:28:46,935 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-17 15:28:46,946 - INFO:  * Restarting with stat
+2025-08-17 15:28:47,448 - WARNING:  * Debugger is active!
+2025-08-17 15:28:47,458 - INFO:  * Debugger PIN: 121-403-977
+2025-08-17 16:03:26,387 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-17 16:03:26,387 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-17 16:03:26,388 - INFO:  * Restarting with stat
+2025-08-17 16:03:26,859 - WARNING:  * Debugger is active!
+2025-08-17 16:03:26,865 - INFO:  * Debugger PIN: 121-403-977
+2025-08-17 16:34:54,354 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.86.50:5001
+2025-08-17 16:34:54,354 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-17 16:34:54,356 - INFO:  * Restarting with stat
+2025-08-17 16:34:54,853 - WARNING:  * Debugger is active!
+2025-08-17 16:34:54,859 - INFO:  * Debugger PIN: 121-403-977
