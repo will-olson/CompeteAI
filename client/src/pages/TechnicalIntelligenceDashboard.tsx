@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import APIService from '@/utils/APIService';
 import { 
   Play, 
   Square, 
@@ -285,7 +286,7 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
   // Fetch real data from backend
   const fetchRealData = async () => {
     try {
-      const apiService = new APIService();
+      const apiService = APIService;
       
       // PRIORITY: Fetch real competitor data from new endpoints
       console.log("Fetching real competitor data...");
@@ -920,6 +921,14 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
         
         <div className="flex space-x-2">
           <Button 
+            onClick={refreshData} 
+            disabled={isLoading}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            {isLoading ? 'Loading...' : 'Refresh Data'}
+          </Button>
+          <Button 
             onClick={runAllScrapes} 
             disabled={isRunning}
             className="bg-green-600 hover:bg-green-700"
@@ -934,14 +943,6 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Company
-          </Button>
-          
-          <Button 
-            onClick={() => window.location.reload()}
-            variant="outline"
-          >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
           </Button>
         </div>
       </div>
@@ -1029,7 +1030,30 @@ const TechnicalIntelligenceDashboard: React.FC = () => {
               <CardTitle>Technical Intelligence Overview</CardTitle>
             </CardHeader>
             <CardContent>
-              <p>Welcome to the Technical Intelligence Dashboard. This system provides advanced competitive intelligence through technical content extraction.</p>
+              {isLoading ? (
+                <div className="flex items-center space-x-3">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                  <p>Loading real data from backend...</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <p>Welcome to the Technical Intelligence Dashboard. This system provides advanced competitive intelligence through technical content extraction.</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center p-4 bg-blue-50 rounded">
+                      <div className="text-2xl font-bold text-blue-600">{realCompanyStats.length}</div>
+                      <div className="text-sm text-blue-600">Companies Loaded</div>
+                    </div>
+                    <div className="text-center p-4 bg-green-50 rounded">
+                      <div className="text-2xl font-bold text-green-600">{realScrapedData.length}</div>
+                      <div className="text-sm text-green-600">Documents Scraped</div>
+                    </div>
+                    <div className="text-center p-4 bg-purple-50 rounded">
+                      <div className="text-2xl font-bold text-purple-600">{systemStatus.database_size}</div>
+                      <div className="text-sm text-purple-600">Database Size</div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

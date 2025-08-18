@@ -1,0 +1,321 @@
+{
+  "validation_summary": {
+    "total_companies": 14,
+    "successful_scrapes": 14,
+    "success_rate": 100.0,
+    "total_content": 8905432,
+    "company_results": {
+      "Snowflake": {
+        "name": "Snowflake",
+        "domain": "https://www.snowflake.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 168335,
+        "docs_status": "partial_success",
+        "docs_content_length": 133246,
+        "total_content_length": 301581,
+        "scraping_success": true,
+        "error": null
+      },
+      "Databricks": {
+        "name": "Databricks",
+        "domain": "https://www.databricks.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 775722,
+        "docs_status": "partial_success",
+        "docs_content_length": 22484,
+        "total_content_length": 798206,
+        "scraping_success": true,
+        "error": null
+      },
+      "PowerBI": {
+        "name": "PowerBI",
+        "domain": "https://powerbi.microsoft.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 420691,
+        "docs_status": "partial_success",
+        "docs_content_length": 83304,
+        "total_content_length": 503995,
+        "scraping_success": true,
+        "error": null
+      },
+      "Tableau": {
+        "name": "Tableau",
+        "domain": "https://www.tableau.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 167527,
+        "docs_status": "partial_success",
+        "docs_content_length": 2846,
+        "total_content_length": 170373,
+        "scraping_success": true,
+        "error": null
+      },
+      "Omni": {
+        "name": "Omni",
+        "domain": "https://www.omni.co/",
+        "main_page_status": "success",
+        "main_page_content_length": 181842,
+        "docs_status": "partial_success",
+        "docs_content_length": 15730,
+        "total_content_length": 197572,
+        "scraping_success": true,
+        "error": null
+      },
+      "Looker": {
+        "name": "Looker",
+        "domain": "https://cloud.google.com/looker",
+        "main_page_status": "success",
+        "main_page_content_length": 2053039,
+        "docs_status": "partial_success",
+        "docs_content_length": 497972,
+        "total_content_length": 2551011,
+        "scraping_success": true,
+        "error": null
+      },
+      "Oracle": {
+        "name": "Oracle",
+        "domain": "https://www.oracle.com/business-analytics/business-intelligence/technologies/bi-enterprise-edition.html",
+        "main_page_status": "success",
+        "main_page_content_length": 55484,
+        "docs_status": "partial_success",
+        "docs_content_length": 11648,
+        "total_content_length": 67132,
+        "scraping_success": true,
+        "error": null
+      },
+      "SAP BusinessObjects": {
+        "name": "SAP BusinessObjects",
+        "domain": "https://www.sap.com/products/data-cloud/bi-platform.html",
+        "main_page_status": "failed_403",
+        "main_page_content_length": 0,
+        "docs_status": "partial_success",
+        "docs_content_length": 2064,
+        "total_content_length": 2064,
+        "scraping_success": true,
+        "error": null
+      },
+      "Qlik": {
+        "name": "Qlik",
+        "domain": "https://www.qlik.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 695889,
+        "docs_status": "partial_success",
+        "docs_content_length": 53604,
+        "total_content_length": 749493,
+        "scraping_success": true,
+        "error": null
+      },
+      "MicroStrategy": {
+        "name": "MicroStrategy",
+        "domain": "https://www.microstrategy.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 634166,
+        "docs_status": "partial_success",
+        "docs_content_length": 552956,
+        "total_content_length": 1187122,
+        "scraping_success": true,
+        "error": null
+      },
+      "Hex": {
+        "name": "Hex",
+        "domain": "https://hex.tech/",
+        "main_page_status": "success",
+        "main_page_content_length": 818208,
+        "docs_status": "partial_success",
+        "docs_content_length": 77763,
+        "total_content_length": 895971,
+        "scraping_success": true,
+        "error": null
+      },
+      "Thoughtspot": {
+        "name": "Thoughtspot",
+        "domain": "https://www.thoughtspot.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 142489,
+        "docs_status": "partial_success",
+        "docs_content_length": 43737,
+        "total_content_length": 186226,
+        "scraping_success": true,
+        "error": null
+      },
+      "Domo": {
+        "name": "Domo",
+        "domain": "https://www.domo.com/",
+        "main_page_status": "success",
+        "main_page_content_length": 541971,
+        "docs_status": "partial_success",
+        "docs_content_length": 487415,
+        "total_content_length": 1029386,
+        "scraping_success": true,
+        "error": null
+      },
+      "IBM Cognos": {
+        "name": "IBM Cognos",
+        "domain": "https://www.ibm.com/products/cognos-analytics",
+        "main_page_status": "success",
+        "main_page_content_length": 188111,
+        "docs_status": "partial_success",
+        "docs_content_length": 77189,
+        "total_content_length": 265300,
+        "scraping_success": true,
+        "error": null
+      }
+    }
+  },
+  "detailed_results": {
+    "Snowflake": {
+      "name": "Snowflake",
+      "domain": "https://www.snowflake.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 168335,
+      "docs_status": "partial_success",
+      "docs_content_length": 133246,
+      "total_content_length": 301581,
+      "scraping_success": true,
+      "error": null
+    },
+    "Databricks": {
+      "name": "Databricks",
+      "domain": "https://www.databricks.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 775722,
+      "docs_status": "partial_success",
+      "docs_content_length": 22484,
+      "total_content_length": 798206,
+      "scraping_success": true,
+      "error": null
+    },
+    "PowerBI": {
+      "name": "PowerBI",
+      "domain": "https://powerbi.microsoft.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 420691,
+      "docs_status": "partial_success",
+      "docs_content_length": 83304,
+      "total_content_length": 503995,
+      "scraping_success": true,
+      "error": null
+    },
+    "Tableau": {
+      "name": "Tableau",
+      "domain": "https://www.tableau.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 167527,
+      "docs_status": "partial_success",
+      "docs_content_length": 2846,
+      "total_content_length": 170373,
+      "scraping_success": true,
+      "error": null
+    },
+    "Omni": {
+      "name": "Omni",
+      "domain": "https://www.omni.co/",
+      "main_page_status": "success",
+      "main_page_content_length": 181842,
+      "docs_status": "partial_success",
+      "docs_content_length": 15730,
+      "total_content_length": 197572,
+      "scraping_success": true,
+      "error": null
+    },
+    "Looker": {
+      "name": "Looker",
+      "domain": "https://cloud.google.com/looker",
+      "main_page_status": "success",
+      "main_page_content_length": 2053039,
+      "docs_status": "partial_success",
+      "docs_content_length": 497972,
+      "total_content_length": 2551011,
+      "scraping_success": true,
+      "error": null
+    },
+    "Oracle": {
+      "name": "Oracle",
+      "domain": "https://www.oracle.com/business-analytics/business-intelligence/technologies/bi-enterprise-edition.html",
+      "main_page_status": "success",
+      "main_page_content_length": 55484,
+      "docs_status": "partial_success",
+      "docs_content_length": 11648,
+      "total_content_length": 67132,
+      "scraping_success": true,
+      "error": null
+    },
+    "SAP BusinessObjects": {
+      "name": "SAP BusinessObjects",
+      "domain": "https://www.sap.com/products/data-cloud/bi-platform.html",
+      "main_page_status": "failed_403",
+      "main_page_content_length": 0,
+      "docs_status": "partial_success",
+      "docs_content_length": 2064,
+      "total_content_length": 2064,
+      "scraping_success": true,
+      "error": null
+    },
+    "Qlik": {
+      "name": "Qlik",
+      "domain": "https://www.qlik.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 695889,
+      "docs_status": "partial_success",
+      "docs_content_length": 53604,
+      "total_content_length": 749493,
+      "scraping_success": true,
+      "error": null
+    },
+    "MicroStrategy": {
+      "name": "MicroStrategy",
+      "domain": "https://www.microstrategy.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 634166,
+      "docs_status": "partial_success",
+      "docs_content_length": 552956,
+      "total_content_length": 1187122,
+      "scraping_success": true,
+      "error": null
+    },
+    "Hex": {
+      "name": "Hex",
+      "domain": "https://hex.tech/",
+      "main_page_status": "success",
+      "main_page_content_length": 818208,
+      "docs_status": "partial_success",
+      "docs_content_length": 77763,
+      "total_content_length": 895971,
+      "scraping_success": true,
+      "error": null
+    },
+    "Thoughtspot": {
+      "name": "Thoughtspot",
+      "domain": "https://www.thoughtspot.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 142489,
+      "docs_status": "partial_success",
+      "docs_content_length": 43737,
+      "total_content_length": 186226,
+      "scraping_success": true,
+      "error": null
+    },
+    "Domo": {
+      "name": "Domo",
+      "domain": "https://www.domo.com/",
+      "main_page_status": "success",
+      "main_page_content_length": 541971,
+      "docs_status": "partial_success",
+      "docs_content_length": 487415,
+      "total_content_length": 1029386,
+      "scraping_success": true,
+      "error": null
+    },
+    "IBM Cognos": {
+      "name": "IBM Cognos",
+      "domain": "https://www.ibm.com/products/cognos-analytics",
+      "main_page_status": "success",
+      "main_page_content_length": 188111,
+      "docs_status": "partial_success",
+      "docs_content_length": 77189,
+      "total_content_length": 265300,
+      "scraping_success": true,
+      "error": null
+    }
+  },
+  "timestamp": "2025-08-17T17:37:11.430981"
+}
