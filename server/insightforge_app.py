@@ -18,6 +18,16 @@ from real_data_scraper import RealDataCompetitiveScraper
 from competitor_targeting import COMPETITORS
 from enterprise_software_analyzer import EnterpriseSoftwareAnalyzer
 
+# Import new competitive intelligence system
+try:
+    from competitive_intelligence_api import init_competitive_intelligence_api
+    from hybrid_competitive_scraper import HybridCompetitiveScraper
+    from competitive_intelligence_db import CompetitiveIntelligenceDB
+    COMPETITIVE_INTELLIGENCE_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"Competitive intelligence modules not available: {e}")
+    COMPETITIVE_INTELLIGENCE_AVAILABLE = False
+
 # Load environment variables
 load_dotenv()
 
@@ -33,12 +43,49 @@ scraper = CompetitiveIntelligenceScraper()
 ai_analyzer = AICompetitiveAnalyzer()
 enterprise_analyzer = EnterpriseSoftwareAnalyzer()
 
+# Initialize new competitive intelligence system if available
+if COMPETITIVE_INTELLIGENCE_AVAILABLE:
+    try:
+        # Initialize the competitive intelligence API
+        init_competitive_intelligence_api(app, "competitive_intelligence.db")
+        logger.info("New competitive intelligence system integrated successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize competitive intelligence system: {e}")
+        COMPETITIVE_INTELLIGENCE_AVAILABLE = False
+
 @app.route('/health', methods=['GET'])
 def health_check_simple():
     """Simple health check endpoint"""
     return jsonify({
         'status': 'healthy',
-        'timestamp': datetime.now().isoformat()
+        'timestamp': datetime.now().isoformat(),
+        'competitive_intelligence_available': COMPETITIVE_INTELLIGENCE_AVAILABLE
+    })
+
+@app.route('/api/status', methods=['GET'])
+def get_system_status():
+    """Get comprehensive system status including competitive intelligence"""
+    return jsonify({
+        'status': 'healthy',
+        'timestamp': datetime.now().isoformat(),
+        'systems': {
+            'core_scraper': True,
+            'ai_analyzer': True,
+            'enterprise_analyzer': True,
+            'competitive_intelligence': COMPETITIVE_INTELLIGENCE_AVAILABLE
+        },
+        'endpoints': {
+            'health': '/health',
+            'status': '/api/status',
+            'scraped_items': '/api/scraped-items',
+            'company_data': '/api/company-data',
+            'competitive_intelligence': '/api/competitive-intelligence',
+            'preset_groups': '/api/preset-groups',
+            'scrape_company': '/api/scrape/company',
+            'scrape_group': '/api/scrape/group',
+            'ai_analyze': '/api/ai/analyze',
+            'ai_battlecard': '/api/ai/battlecard'
+        }
     })
 
 @app.route('/api/scraped-items', methods=['GET'])

@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ScrapeDashboard from "./pages/ScrapeDashboard";
 import TechnicalIntelligenceDashboard from "./pages/TechnicalIntelligenceDashboard";
+import CompetitiveIntelligenceDashboard from "./pages/CompetitiveIntelligenceDashboard";
 import AIAnalysis from "./pages/AIAnalysis";
 import Battlecard from "./pages/Battlecard";
 import { NavBar } from "./components/NavBar";
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/scrape" element={<ScrapeDashboard />} />
             <Route path="/technical-intelligence" element={<TechnicalIntelligenceDashboard />} />
+            <Route path="/competitive-intelligence" element={<CompetitiveIntelligenceDashboard />} />
             <Route path="/analysis" element={<AIAnalysis />} />
             <Route path="/battlecards" element={<Battlecard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

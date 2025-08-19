@@ -1,0 +1,347 @@
+{
+  "metadata": {
+    "company": "Sigma",
+    "version": "1.0",
+    "last_updated": "2025-08-17",
+    "description": "Sigma's competitive positioning across 10 strategic dimensions for competitive intelligence analysis",
+    "data_source": "preset_company_data",
+    "confidence_score": 1.0
+  },
+  "company_info": {
+    "name": "Sigma",
+    "domain": "https://www.sigmacomputing.com/",
+    "description": "Sigma is a cloud-native analytics and business intelligence platform that combines the familiarity of spreadsheets with the power and scale of cloud data warehouses.",
+    "founded": 2014,
+    "headquarters": "San Francisco, CA",
+    "key_products": [
+      "Sigma Analytics Platform",
+      "Sigma Workbooks",
+      "Sigma Data Apps"
+    ]
+  },
+  "competitive_positioning": {
+    "spreadsheet_interface": {
+      "score": 9.5,
+      "strengths": [
+        "Excel-like interface familiar to business users",
+        "Real-time collaboration with Google Sheets-like experience",
+        "Advanced spreadsheet formulas and functions",
+        "Visual data exploration with drag-and-drop interface",
+        "Familiar pivot table functionality"
+      ],
+      "capabilities": [
+        "Spreadsheet-style data manipulation",
+        "Real-time collaborative editing",
+        "Advanced formula engine",
+        "Visual data exploration tools",
+        "Pivot table and charting capabilities"
+      ],
+      "differentiators": [
+        "Cloud-native spreadsheet interface",
+        "Direct connection to cloud data warehouses",
+        "Real-time collaboration at scale",
+        "Advanced analytics within familiar interface"
+      ],
+      "evidence_sources": [
+        "https://www.sigmacomputing.com/product/",
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "semantic_layer_integration": {
+      "score": 8.8,
+      "strengths": [
+        "Built-in semantic layer for data modeling",
+        "Business-friendly data definitions",
+        "Centralized data governance",
+        "Reusable data models and calculations",
+        "SQL abstraction for business users"
+      ],
+      "capabilities": [
+        "Semantic data modeling",
+        "Business logic definition",
+        "Centralized data definitions",
+        "Reusable calculations and metrics",
+        "Data lineage and impact analysis"
+      ],
+      "differentiators": [
+        "Integrated semantic layer",
+        "Business-user friendly modeling",
+        "Centralized governance and definitions",
+        "SQL abstraction layer"
+      ],
+      "evidence_sources": [
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/product/semantic-layer/",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "data_app_development": {
+      "score": 8.2,
+      "strengths": [
+        "Custom data application building",
+        "Embedded analytics capabilities",
+        "White-label solutions",
+        "API integration for custom apps",
+        "Responsive design for mobile and desktop"
+      ],
+      "capabilities": [
+        "Custom dashboard creation",
+        "Embedded analytics",
+        "White-label solutions",
+        "API integration",
+        "Responsive design"
+      ],
+      "differentiators": [
+        "Built-in app development platform",
+        "Embedded analytics capabilities",
+        "White-label and customization options",
+        "API-first architecture"
+      ],
+      "evidence_sources": [
+        "https://www.sigmacomputing.com/product/data-apps/",
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "multi_modal_development": {
+      "score": 7.8,
+      "strengths": [
+        "Multiple development approaches supported",
+        "Visual development tools",
+        "Code-based customization",
+        "Template-based development",
+        "Hybrid development workflows"
+      ],
+      "capabilities": [
+        "Visual development interface",
+        "Code-based customization",
+        "Template libraries",
+        "Hybrid development workflows",
+        "Multiple development paradigms"
+      ],
+      "differentiators": [
+        "Flexible development approaches",
+        "Visual and code-based options",
+        "Template-driven development",
+        "Hybrid workflow support"
+      ],
+      "evidence_sources": [
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/product/",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "writeback": {
+      "score": 7.5,
+      "strengths": [
+        "Data modification capabilities",
+        "Writeback to data sources",
+        "Collaborative data editing",
+        "Audit trail for changes",
+        "Governance controls for modifications"
+      ],
+      "capabilities": [
+        "Data modification and editing",
+        "Writeback to data sources",
+        "Collaborative editing",
+        "Change audit trails",
+        "Governance controls"
+      ],
+      "differentiators": [
+        "Collaborative data editing",
+        "Writeback capabilities",
+        "Audit trail for changes",
+        "Governance controls"
+      ],
+      "evidence_sources": [
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/product/",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "ai_model_flexibility": {
+      "score": 7.2,
+      "strengths": [
+        "AI-powered insights and recommendations",
+        "Natural language query capabilities",
+        "Predictive analytics features",
+        "Machine learning integration",
+        "AI-assisted data exploration"
+      ],
+      "capabilities": [
+        "AI-powered insights",
+        "Natural language queries",
+        "Predictive analytics",
+        "ML model integration",
+        "AI-assisted exploration"
+      ],
+      "differentiators": [
+        "AI-powered insights",
+        "Natural language interface",
+        "Predictive analytics",
+        "ML integration capabilities"
+      ],
+      "evidence_sources": [
+        "https://www.sigmacomputing.com/product/ai-features/",
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "unstructured_data_querying": {
+      "score": 6.8,
+      "strengths": [
+        "Text data analysis capabilities",
+        "Document processing features",
+        "Multi-format data support",
+        "Content analysis tools",
+        "Text mining capabilities"
+      ],
+      "capabilities": [
+        "Text data analysis",
+        "Document processing",
+        "Multi-format support",
+        "Content analysis",
+        "Text mining"
+      ],
+      "differentiators": [
+        "Text analysis capabilities",
+        "Document processing",
+        "Multi-format data support",
+        "Content analysis tools"
+      ],
+      "evidence_sources": [
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/product/",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "governed_collaboration": {
+      "score": 8.5,
+      "strengths": [
+        "Role-based access controls",
+        "Data governance policies",
+        "Collaborative workflows with governance",
+        "Audit trails for all activities",
+        "Compliance and security features"
+      ],
+      "capabilities": [
+        "Role-based access control",
+        "Data governance policies",
+        "Collaborative workflows",
+        "Comprehensive audit trails",
+        "Compliance features"
+      ],
+      "differentiators": [
+        "Integrated governance",
+        "Collaborative workflows",
+        "Comprehensive audit trails",
+        "Compliance and security"
+      ],
+      "evidence_sources": [
+        "https://www.sigmacomputing.com/product/security/",
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "materialization_controls": {
+      "score": 7.8,
+      "strengths": [
+        "Data pipeline management",
+        "Caching and optimization controls",
+        "Materialized view management",
+        "Performance optimization tools",
+        "Data refresh controls"
+      ],
+      "capabilities": [
+        "Data pipeline management",
+        "Caching controls",
+        "Materialized views",
+        "Performance optimization",
+        "Data refresh management"
+      ],
+      "differentiators": [
+        "Integrated pipeline management",
+        "Caching and optimization",
+        "Materialized view controls",
+        "Performance management tools"
+      ],
+      "evidence_sources": [
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/product/",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    },
+    "lineage": {
+      "score": 8.2,
+      "strengths": [
+        "Data provenance tracking",
+        "Impact analysis capabilities",
+        "Lineage visualization tools",
+        "Change tracking and monitoring",
+        "Data dependency mapping"
+      ],
+      "capabilities": [
+        "Data provenance tracking",
+        "Impact analysis",
+        "Lineage visualization",
+        "Change tracking",
+        "Dependency mapping"
+      ],
+      "differentiators": [
+        "Comprehensive lineage tracking",
+        "Impact analysis tools",
+        "Visual lineage representation",
+        "Change monitoring"
+      ],
+      "evidence_sources": [
+        "https://help.sigmacomputing.com/hc/en-us/articles/...",
+        "https://www.sigmacomputing.com/product/",
+        "https://www.sigmacomputing.com/blog/..."
+      ]
+    }
+  },
+  "overall_competitive_score": 8.0,
+  "competitive_advantages": [
+    "Superior spreadsheet interface for business users",
+    "Integrated semantic layer for data modeling",
+    "Strong governance and collaboration features",
+    "Cloud-native architecture with real-time capabilities"
+  ],
+  "competitive_challenges": [
+    "Limited unstructured data processing capabilities",
+    "AI/ML features still developing",
+    "Writeback capabilities could be enhanced",
+    "Multi-modal development options could expand"
+  ],
+  "market_positioning": {
+    "primary_target": "Business users who need Excel-like interface with cloud data warehouse power",
+    "key_differentiator": "Familiar spreadsheet interface combined with enterprise data warehouse capabilities",
+    "competitive_moat": "User experience and interface design that bridges business and technical users",
+    "growth_areas": [
+      "AI/ML capabilities expansion",
+      "Unstructured data processing",
+      "Advanced writeback features",
+      "Multi-modal development tools"
+    ]
+  },
+  "data_sources": {
+    "official_documentation": [
+      "https://www.sigmacomputing.com/product/",
+      "https://help.sigmacomputing.com/",
+      "https://www.sigmacomputing.com/blog/"
+    ],
+    "third_party_reviews": [
+      "https://www.g2.com/products/sigma-computing",
+      "https://www.capterra.com/p/sigma-computing/",
+      "https://www.trustradius.com/products/sigma-computing"
+    ],
+    "community_sources": [
+      "https://reddit.com/r/BusinessIntelligence/search/?q=sigma",
+      "https://reddit.com/r/dataengineering/search/?q=sigma"
+    ]
+  },
+  "update_frequency": "monthly",
+  "last_validation": "2025-08-17",
+  "validation_method": "manual_review_and_verification"
+}

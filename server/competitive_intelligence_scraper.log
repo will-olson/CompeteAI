@@ -2556,3 +2556,355 @@
 2025-08-17 17:29:16,911 - INFO:  * Restarting with stat
 2025-08-17 17:29:17,451 - WARNING:  * Debugger is active!
 2025-08-17 17:29:17,460 - INFO:  * Debugger PIN: 121-403-977
+2025-08-18 15:59:59,839 - INFO: Database initialized successfully
+2025-08-18 15:59:59,842 - INFO: Default dimensions inserted
+2025-08-18 15:59:59,843 - INFO: Company Sigma inserted/updated with ID 1
+2025-08-18 15:59:59,843 - INFO: Company Sigma inserted/updated with ID 2
+2025-08-18 15:59:59,844 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 15:59:59,848 - INFO: Company Sigma inserted/updated with ID 3
+2025-08-18 15:59:59,854 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 15:59:59,855 - INFO: Company Sigma inserted/updated with ID 4
+2025-08-18 15:59:59,856 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 15:59:59,857 - INFO: Company Sigma inserted/updated with ID 5
+2025-08-18 15:59:59,857 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 15:59:59,858 - INFO: Company Sigma inserted/updated with ID 6
+2025-08-18 15:59:59,859 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 15:59:59,860 - INFO: Company Sigma inserted/updated with ID 7
+2025-08-18 15:59:59,861 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 15:59:59,867 - INFO: Company Sigma inserted/updated with ID 8
+2025-08-18 15:59:59,868 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 15:59:59,868 - INFO: Company Sigma inserted/updated with ID 9
+2025-08-18 15:59:59,872 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 15:59:59,874 - INFO: Company Sigma inserted/updated with ID 10
+2025-08-18 15:59:59,876 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 15:59:59,877 - INFO: Company Sigma inserted/updated with ID 11
+2025-08-18 15:59:59,878 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 15:59:59,879 - INFO: Sigma data initialized in database
+2025-08-18 15:59:59,879 - INFO: Database initialized successfully
+2025-08-18 15:59:59,879 - INFO: Default dimensions inserted
+2025-08-18 15:59:59,882 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 15:59:59,882 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 16:52:12,984 - INFO: Database initialized successfully
+2025-08-18 16:52:12,985 - INFO: Default dimensions inserted
+2025-08-18 16:52:12,985 - INFO: Company Sigma inserted/updated with ID 12
+2025-08-18 16:52:12,986 - INFO: Company Sigma inserted/updated with ID 13
+2025-08-18 16:52:12,987 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 16:52:12,988 - INFO: Company Sigma inserted/updated with ID 14
+2025-08-18 16:52:12,988 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 16:52:12,989 - INFO: Company Sigma inserted/updated with ID 15
+2025-08-18 16:52:12,990 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 16:52:12,991 - INFO: Company Sigma inserted/updated with ID 16
+2025-08-18 16:52:12,991 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 16:52:12,992 - INFO: Company Sigma inserted/updated with ID 17
+2025-08-18 16:52:12,992 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 16:52:12,993 - INFO: Company Sigma inserted/updated with ID 18
+2025-08-18 16:52:12,994 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 16:52:12,995 - INFO: Company Sigma inserted/updated with ID 19
+2025-08-18 16:52:12,995 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 16:52:12,996 - INFO: Company Sigma inserted/updated with ID 20
+2025-08-18 16:52:12,997 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 16:52:12,998 - INFO: Company Sigma inserted/updated with ID 21
+2025-08-18 16:52:12,998 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 16:52:12,999 - INFO: Company Sigma inserted/updated with ID 22
+2025-08-18 16:52:13,000 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 16:52:13,001 - INFO: Sigma data initialized in database
+2025-08-18 16:52:13,001 - INFO: Database initialized successfully
+2025-08-18 16:52:13,001 - INFO: Default dimensions inserted
+2025-08-18 16:52:13,004 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 16:52:13,004 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 16:52:13,080 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.117:5001
+2025-08-18 16:52:13,080 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-18 16:52:13,081 - INFO:  * Restarting with stat
+2025-08-18 16:52:13,538 - INFO: Database initialized successfully
+2025-08-18 16:52:13,539 - INFO: Default dimensions inserted
+2025-08-18 16:52:13,540 - INFO: Company Sigma inserted/updated with ID 23
+2025-08-18 16:52:13,540 - INFO: Company Sigma inserted/updated with ID 24
+2025-08-18 16:52:13,541 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 16:52:13,542 - INFO: Company Sigma inserted/updated with ID 25
+2025-08-18 16:52:13,542 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 16:52:13,543 - INFO: Company Sigma inserted/updated with ID 26
+2025-08-18 16:52:13,544 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 16:52:13,544 - INFO: Company Sigma inserted/updated with ID 27
+2025-08-18 16:52:13,545 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 16:52:13,546 - INFO: Company Sigma inserted/updated with ID 28
+2025-08-18 16:52:13,546 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 16:52:13,547 - INFO: Company Sigma inserted/updated with ID 29
+2025-08-18 16:52:13,548 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 16:52:13,549 - INFO: Company Sigma inserted/updated with ID 30
+2025-08-18 16:52:13,550 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 16:52:13,550 - INFO: Company Sigma inserted/updated with ID 31
+2025-08-18 16:52:13,551 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 16:52:13,552 - INFO: Company Sigma inserted/updated with ID 32
+2025-08-18 16:52:13,552 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 16:52:13,553 - INFO: Company Sigma inserted/updated with ID 33
+2025-08-18 16:52:13,554 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 16:52:13,554 - INFO: Sigma data initialized in database
+2025-08-18 16:52:13,555 - INFO: Database initialized successfully
+2025-08-18 16:52:13,555 - INFO: Default dimensions inserted
+2025-08-18 16:52:13,558 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 16:52:13,558 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 16:52:13,606 - WARNING:  * Debugger is active!
+2025-08-18 16:52:13,615 - INFO:  * Debugger PIN: 121-403-977
+2025-08-18 16:52:15,510 - INFO: 127.0.0.1 - - [18/Aug/2025 16:52:15] "GET /health HTTP/1.1" 200 -
+2025-08-18 16:55:58,059 - INFO: 127.0.0.1 - - [18/Aug/2025 16:55:58] "[33mOPTIONS /api/real-competitor-data HTTP/1.1[0m" 404 -
+2025-08-18 18:00:29,318 - INFO: Database initialized successfully
+2025-08-18 18:00:29,320 - INFO: Default dimensions inserted
+2025-08-18 18:00:29,321 - INFO: Company Sigma inserted/updated with ID 34
+2025-08-18 18:00:29,321 - INFO: Company Sigma inserted/updated with ID 35
+2025-08-18 18:00:29,323 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:00:29,323 - INFO: Company Sigma inserted/updated with ID 36
+2025-08-18 18:00:29,324 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:00:29,325 - INFO: Company Sigma inserted/updated with ID 37
+2025-08-18 18:00:29,325 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:00:29,326 - INFO: Company Sigma inserted/updated with ID 38
+2025-08-18 18:00:29,327 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:00:29,328 - INFO: Company Sigma inserted/updated with ID 39
+2025-08-18 18:00:29,329 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:00:29,329 - INFO: Company Sigma inserted/updated with ID 40
+2025-08-18 18:00:29,330 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:00:29,331 - INFO: Company Sigma inserted/updated with ID 41
+2025-08-18 18:00:29,332 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:00:29,333 - INFO: Company Sigma inserted/updated with ID 42
+2025-08-18 18:00:29,333 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:00:29,334 - INFO: Company Sigma inserted/updated with ID 43
+2025-08-18 18:00:29,335 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:00:29,336 - INFO: Company Sigma inserted/updated with ID 44
+2025-08-18 18:00:29,336 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:00:29,337 - INFO: Sigma data initialized in database
+2025-08-18 18:00:29,337 - INFO: Database initialized successfully
+2025-08-18 18:00:29,337 - INFO: Default dimensions inserted
+2025-08-18 18:00:29,340 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:00:29,340 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:00:29,624 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.117:5001
+2025-08-18 18:00:29,624 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-18 18:00:29,626 - INFO:  * Restarting with stat
+2025-08-18 18:00:30,104 - INFO: Database initialized successfully
+2025-08-18 18:00:30,104 - INFO: Default dimensions inserted
+2025-08-18 18:00:30,105 - INFO: Company Sigma inserted/updated with ID 45
+2025-08-18 18:00:30,106 - INFO: Company Sigma inserted/updated with ID 46
+2025-08-18 18:00:30,106 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:00:30,107 - INFO: Company Sigma inserted/updated with ID 47
+2025-08-18 18:00:30,108 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:00:30,109 - INFO: Company Sigma inserted/updated with ID 48
+2025-08-18 18:00:30,109 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:00:30,110 - INFO: Company Sigma inserted/updated with ID 49
+2025-08-18 18:00:30,111 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:00:30,112 - INFO: Company Sigma inserted/updated with ID 50
+2025-08-18 18:00:30,113 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:00:30,114 - INFO: Company Sigma inserted/updated with ID 51
+2025-08-18 18:00:30,114 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:00:30,119 - INFO: Company Sigma inserted/updated with ID 52
+2025-08-18 18:00:30,119 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:00:30,120 - INFO: Company Sigma inserted/updated with ID 53
+2025-08-18 18:00:30,121 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:00:30,122 - INFO: Company Sigma inserted/updated with ID 54
+2025-08-18 18:00:30,122 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:00:30,123 - INFO: Company Sigma inserted/updated with ID 55
+2025-08-18 18:00:30,124 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:00:30,124 - INFO: Sigma data initialized in database
+2025-08-18 18:00:30,124 - INFO: Database initialized successfully
+2025-08-18 18:00:30,124 - INFO: Default dimensions inserted
+2025-08-18 18:00:30,127 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:00:30,127 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:00:30,175 - WARNING:  * Debugger is active!
+2025-08-18 18:00:30,181 - INFO:  * Debugger PIN: 121-403-977
+2025-08-18 18:00:31,858 - INFO: 127.0.0.1 - - [18/Aug/2025 18:00:31] "GET /health HTTP/1.1" 200 -
+2025-08-18 18:10:11,739 - INFO: Database initialized successfully
+2025-08-18 18:10:11,740 - INFO: Default dimensions inserted
+2025-08-18 18:10:11,741 - INFO: Company Sigma inserted/updated with ID 56
+2025-08-18 18:10:11,742 - INFO: Company Sigma inserted/updated with ID 57
+2025-08-18 18:10:11,743 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:10:11,744 - INFO: Company Sigma inserted/updated with ID 58
+2025-08-18 18:10:11,745 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:10:11,749 - INFO: Company Sigma inserted/updated with ID 59
+2025-08-18 18:10:11,749 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:10:11,750 - INFO: Company Sigma inserted/updated with ID 60
+2025-08-18 18:10:11,750 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:10:11,752 - INFO: Company Sigma inserted/updated with ID 61
+2025-08-18 18:10:11,752 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:10:11,753 - INFO: Company Sigma inserted/updated with ID 62
+2025-08-18 18:10:11,753 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:10:11,754 - INFO: Company Sigma inserted/updated with ID 63
+2025-08-18 18:10:11,755 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:10:11,763 - INFO: Company Sigma inserted/updated with ID 64
+2025-08-18 18:10:11,764 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:10:11,765 - INFO: Company Sigma inserted/updated with ID 65
+2025-08-18 18:10:11,765 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:10:11,766 - INFO: Company Sigma inserted/updated with ID 66
+2025-08-18 18:10:11,767 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:10:11,767 - INFO: Sigma data initialized in database
+2025-08-18 18:10:11,767 - INFO: Database initialized successfully
+2025-08-18 18:10:11,767 - INFO: Default dimensions inserted
+2025-08-18 18:10:11,771 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:10:11,771 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:10:11,826 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.117:5001
+2025-08-18 18:10:11,826 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-18 18:10:11,827 - INFO:  * Restarting with stat
+2025-08-18 18:10:12,317 - INFO: Database initialized successfully
+2025-08-18 18:10:12,317 - INFO: Default dimensions inserted
+2025-08-18 18:10:12,318 - INFO: Company Sigma inserted/updated with ID 67
+2025-08-18 18:10:12,319 - INFO: Company Sigma inserted/updated with ID 68
+2025-08-18 18:10:12,319 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:10:12,320 - INFO: Company Sigma inserted/updated with ID 69
+2025-08-18 18:10:12,321 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:10:12,322 - INFO: Company Sigma inserted/updated with ID 70
+2025-08-18 18:10:12,322 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:10:12,323 - INFO: Company Sigma inserted/updated with ID 71
+2025-08-18 18:10:12,324 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:10:12,325 - INFO: Company Sigma inserted/updated with ID 72
+2025-08-18 18:10:12,325 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:10:12,326 - INFO: Company Sigma inserted/updated with ID 73
+2025-08-18 18:10:12,327 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:10:12,327 - INFO: Company Sigma inserted/updated with ID 74
+2025-08-18 18:10:12,328 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:10:12,329 - INFO: Company Sigma inserted/updated with ID 75
+2025-08-18 18:10:12,330 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:10:12,331 - INFO: Company Sigma inserted/updated with ID 76
+2025-08-18 18:10:12,331 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:10:12,332 - INFO: Company Sigma inserted/updated with ID 77
+2025-08-18 18:10:12,333 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:10:12,448 - INFO: Sigma data initialized in database
+2025-08-18 18:10:12,448 - INFO: Database initialized successfully
+2025-08-18 18:10:12,448 - INFO: Default dimensions inserted
+2025-08-18 18:10:12,451 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:10:12,451 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:10:12,499 - WARNING:  * Debugger is active!
+2025-08-18 18:10:12,505 - INFO:  * Debugger PIN: 121-403-977
+2025-08-18 18:10:14,277 - INFO: 127.0.0.1 - - [18/Aug/2025 18:10:14] "GET /health HTTP/1.1" 200 -
+2025-08-18 18:15:50,956 - INFO: Database initialized successfully
+2025-08-18 18:15:50,957 - INFO: Default dimensions inserted
+2025-08-18 18:15:50,958 - INFO: Company Sigma inserted/updated with ID 78
+2025-08-18 18:15:50,958 - INFO: Company Sigma inserted/updated with ID 79
+2025-08-18 18:15:50,960 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:15:50,960 - INFO: Company Sigma inserted/updated with ID 80
+2025-08-18 18:15:50,961 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:15:50,962 - INFO: Company Sigma inserted/updated with ID 81
+2025-08-18 18:15:50,963 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:15:50,963 - INFO: Company Sigma inserted/updated with ID 82
+2025-08-18 18:15:50,964 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:15:50,970 - INFO: Company Sigma inserted/updated with ID 83
+2025-08-18 18:15:50,971 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:15:50,976 - INFO: Company Sigma inserted/updated with ID 84
+2025-08-18 18:15:50,977 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:15:50,978 - INFO: Company Sigma inserted/updated with ID 85
+2025-08-18 18:15:50,979 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:15:50,980 - INFO: Company Sigma inserted/updated with ID 86
+2025-08-18 18:15:50,980 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:15:50,981 - INFO: Company Sigma inserted/updated with ID 87
+2025-08-18 18:15:50,981 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:15:50,982 - INFO: Company Sigma inserted/updated with ID 88
+2025-08-18 18:15:50,983 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:15:50,984 - INFO: Sigma data initialized in database
+2025-08-18 18:15:50,984 - INFO: Database initialized successfully
+2025-08-18 18:15:50,984 - INFO: Default dimensions inserted
+2025-08-18 18:15:50,988 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:15:50,988 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:15:51,044 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.117:5001
+2025-08-18 18:15:51,045 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-18 18:15:51,046 - INFO:  * Restarting with stat
+2025-08-18 18:15:51,510 - INFO: Database initialized successfully
+2025-08-18 18:15:51,510 - INFO: Default dimensions inserted
+2025-08-18 18:15:51,511 - INFO: Company Sigma inserted/updated with ID 89
+2025-08-18 18:15:51,512 - INFO: Company Sigma inserted/updated with ID 90
+2025-08-18 18:15:51,512 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:15:51,513 - INFO: Company Sigma inserted/updated with ID 91
+2025-08-18 18:15:51,514 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:15:51,515 - INFO: Company Sigma inserted/updated with ID 92
+2025-08-18 18:15:51,515 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:15:51,516 - INFO: Company Sigma inserted/updated with ID 93
+2025-08-18 18:15:51,517 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:15:51,518 - INFO: Company Sigma inserted/updated with ID 94
+2025-08-18 18:15:51,519 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:15:51,520 - INFO: Company Sigma inserted/updated with ID 95
+2025-08-18 18:15:51,520 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:15:51,521 - INFO: Company Sigma inserted/updated with ID 96
+2025-08-18 18:15:51,522 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:15:51,523 - INFO: Company Sigma inserted/updated with ID 97
+2025-08-18 18:15:51,523 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:15:51,524 - INFO: Company Sigma inserted/updated with ID 98
+2025-08-18 18:15:51,525 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:15:51,526 - INFO: Company Sigma inserted/updated with ID 99
+2025-08-18 18:15:51,526 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:15:51,527 - INFO: Sigma data initialized in database
+2025-08-18 18:15:51,527 - INFO: Database initialized successfully
+2025-08-18 18:15:51,527 - INFO: Default dimensions inserted
+2025-08-18 18:15:51,530 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:15:51,530 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:15:51,578 - WARNING:  * Debugger is active!
+2025-08-18 18:15:51,583 - INFO:  * Debugger PIN: 121-403-977
+2025-08-18 18:17:41,277 - INFO: Database initialized successfully
+2025-08-18 18:17:41,277 - INFO: Default dimensions inserted
+2025-08-18 18:17:41,278 - INFO: Company Sigma inserted/updated with ID 100
+2025-08-18 18:17:41,279 - INFO: Company Sigma inserted/updated with ID 101
+2025-08-18 18:17:41,280 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:17:41,281 - INFO: Company Sigma inserted/updated with ID 102
+2025-08-18 18:17:41,281 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:17:41,282 - INFO: Company Sigma inserted/updated with ID 103
+2025-08-18 18:17:41,286 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:17:41,287 - INFO: Company Sigma inserted/updated with ID 104
+2025-08-18 18:17:41,290 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:17:41,291 - INFO: Company Sigma inserted/updated with ID 105
+2025-08-18 18:17:41,292 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:17:41,292 - INFO: Company Sigma inserted/updated with ID 106
+2025-08-18 18:17:41,293 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:17:41,294 - INFO: Company Sigma inserted/updated with ID 107
+2025-08-18 18:17:41,295 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:17:41,296 - INFO: Company Sigma inserted/updated with ID 108
+2025-08-18 18:17:41,297 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:17:41,298 - INFO: Company Sigma inserted/updated with ID 109
+2025-08-18 18:17:41,298 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:17:41,299 - INFO: Company Sigma inserted/updated with ID 110
+2025-08-18 18:17:41,300 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:17:41,300 - INFO: Sigma data initialized in database
+2025-08-18 18:17:41,301 - INFO: Database initialized successfully
+2025-08-18 18:17:41,301 - INFO: Default dimensions inserted
+2025-08-18 18:17:41,304 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:17:41,304 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:17:41,525 - INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.10.8.117:5001
+2025-08-18 18:17:41,525 - INFO: [33mPress CTRL+C to quit[0m
+2025-08-18 18:17:41,528 - INFO:  * Restarting with stat
+2025-08-18 18:17:42,001 - INFO: Database initialized successfully
+2025-08-18 18:17:42,001 - INFO: Default dimensions inserted
+2025-08-18 18:17:42,002 - INFO: Company Sigma inserted/updated with ID 111
+2025-08-18 18:17:42,002 - INFO: Company Sigma inserted/updated with ID 112
+2025-08-18 18:17:42,003 - INFO: Inserted 1 competitive intelligence records for Sigma - spreadsheet_interface
+2025-08-18 18:17:42,004 - INFO: Company Sigma inserted/updated with ID 113
+2025-08-18 18:17:42,006 - INFO: Inserted 1 competitive intelligence records for Sigma - semantic_layer_integration
+2025-08-18 18:17:42,007 - INFO: Company Sigma inserted/updated with ID 114
+2025-08-18 18:17:42,008 - INFO: Inserted 1 competitive intelligence records for Sigma - data_app_development
+2025-08-18 18:17:42,008 - INFO: Company Sigma inserted/updated with ID 115
+2025-08-18 18:17:42,009 - INFO: Inserted 1 competitive intelligence records for Sigma - multi_modal_development
+2025-08-18 18:17:42,010 - INFO: Company Sigma inserted/updated with ID 116
+2025-08-18 18:17:42,010 - INFO: Inserted 1 competitive intelligence records for Sigma - writeback
+2025-08-18 18:17:42,011 - INFO: Company Sigma inserted/updated with ID 117
+2025-08-18 18:17:42,020 - INFO: Inserted 1 competitive intelligence records for Sigma - ai_model_flexibility
+2025-08-18 18:17:42,021 - INFO: Company Sigma inserted/updated with ID 118
+2025-08-18 18:17:42,022 - INFO: Inserted 1 competitive intelligence records for Sigma - unstructured_data_querying
+2025-08-18 18:17:42,023 - INFO: Company Sigma inserted/updated with ID 119
+2025-08-18 18:17:42,025 - INFO: Inserted 1 competitive intelligence records for Sigma - governed_collaboration
+2025-08-18 18:17:42,028 - INFO: Company Sigma inserted/updated with ID 120
+2025-08-18 18:17:42,028 - INFO: Inserted 1 competitive intelligence records for Sigma - materialization_controls
+2025-08-18 18:17:42,029 - INFO: Company Sigma inserted/updated with ID 121
+2025-08-18 18:17:42,030 - INFO: Inserted 1 competitive intelligence records for Sigma - lineage
+2025-08-18 18:17:42,031 - INFO: Sigma data initialized in database
+2025-08-18 18:17:42,031 - INFO: Database initialized successfully
+2025-08-18 18:17:42,031 - INFO: Default dimensions inserted
+2025-08-18 18:17:42,035 - INFO: Competitive Intelligence API initialized successfully
+2025-08-18 18:17:42,035 - INFO: New competitive intelligence system integrated successfully
+2025-08-18 18:17:42,079 - WARNING:  * Debugger is active!
+2025-08-18 18:17:42,087 - INFO:  * Debugger PIN: 121-403-977

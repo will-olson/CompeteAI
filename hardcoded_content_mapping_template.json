@@ -1,0 +1,1447 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "description": "Comprehensive hardcoded content mapping template for strategic competitor scraping across 14 BI/Cloud Data platforms",
+    "last_updated": "2025-08-17",
+    "total_companies": 14,
+    "content_dimensions": [
+      "api_documentation",
+      "architecture_guides", 
+      "pricing_pages",
+      "integration_docs",
+      "developer_portals",
+      "rss_feeds",
+      "reddit_sources",
+      "github_sources",
+      "blog_posts",
+      "product_updates",
+      "tutorials",
+      "code_examples"
+    ],
+    "strategic_focus": [
+      "API-first architecture and developer experience",
+      "Cloud-native features and scalability",
+      "Data integration and connector capabilities",
+      "Modern analytics stack and AI/ML features",
+      "Enterprise security and compliance",
+      "Performance and optimization capabilities"
+    ]
+  },
+  "companies": {
+    "Snowflake": {
+      "domain": "https://www.snowflake.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://docs.snowflake.com/en/developer-guide/sql-api/index.html",
+          "PLACEHOLDER: https://docs.snowflake.com/en/developer-guide/python-connector/index.html",
+          "PLACEHOLDER: https://docs.snowflake.com/en/developer-guide/nodejs-driver/index.html"
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://docs.snowflake.com/en/user-guide/intro-key-concepts.html",
+          "PLACEHOLDER: https://docs.snowflake.com/en/user-guide/security-overview.html"
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.snowflake.com/pricing/",
+          "PLACEHOLDER: https://docs.snowflake.com/en/user-guide/costs.html"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://docs.snowflake.com/en/user-guide/data-load-overview.html",
+          "PLACEHOLDER: https://docs.snowflake.com/en/user-guide/data-share-overview.html"
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://docs.snowflake.com/en/developer-guide/index.html"
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.snowflake.com/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.snowflake.com/product-updates/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/snowflake", "r/dataengineering"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/snowflake/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/dataengineering/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/snowflakedb/snowflake-connector-python"
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=snowflake+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.snowflake.com/blog/...",
+          "PLACEHOLDER: https://www.snowflake.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.snowflake.com/product-updates/...",
+          "PLACEHOLDER: https://www.snowflake.com/product-updates/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://docs.snowflake.com/en/quickstarts/...",
+          "PLACEHOLDER: https://docs.snowflake.com/en/quickstarts/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://docs.snowflake.com/en/developer-guide/...",
+          "PLACEHOLDER: https://docs.snowflake.com/en/developer-guide/..."
+        ]
+      }
+    },
+    "Databricks": {
+      "domain": "https://www.databricks.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://docs.databricks.com/dev-tools/api/...",
+          "PLACEHOLDER: https://docs.databricks.com/dev-tools/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://docs.databricks.com/architecture/...",
+          "PLACEHOLDER: https://docs.databricks.com/architecture/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.databricks.com/product/pricing",
+          "PLACEHOLDER: https://docs.databricks.com/administration-guide/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://docs.databricks.com/data/...",
+          "PLACEHOLDER: https://docs.databricks.com/data/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://docs.databricks.com/dev-tools/...",
+          "PLACEHOLDER: https://docs.databricks.com/dev-tools/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.databricks.com/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.databricks.com/product-updates/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/databricks", "r/apachespark"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/databricks/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/apachespark/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/databricks/databricks-cli",
+            "PLACEHOLDER: https://github.com/databricks/terraform-provider-databricks"
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=databricks+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.databricks.com/blog/...",
+          "PLACEHOLDER: https://www.databricks.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.databricks.com/product-updates/...",
+          "PLACEHOLDER: https://www.databricks.com/product-updates/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://docs.databricks.com/getting-started/...",
+          "PLACEHOLDER: https://docs.databricks.com/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://docs.databricks.com/dev-tools/...",
+          "PLACEHOLDER: https://docs.databricks.com/dev-tools/..."
+        ]
+      }
+    },
+    "PowerBI": {
+      "domain": "https://powerbi.microsoft.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/developer/...",
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/developer/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/enterprise/...",
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/enterprise/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://powerbi.microsoft.com/en-us/pricing/",
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/enterprise/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/connect-data/...",
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/connect-data/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/developer/...",
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/developer/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://powerbi.microsoft.com/en-us/blog/feed/",
+          "product_updates": "PLACEHOLDER: https://powerbi.microsoft.com/en-us/product-updates/feed/"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/PowerBI", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/PowerBI/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/microsoft/PowerBI-visuals",
+            "PLACEHOLDER: https://github.com/microsoft/powerbi-cli"
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=powerbi+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://powerbi.microsoft.com/en-us/blog/...",
+          "PLACEHOLDER: https://powerbi.microsoft.com/en-us/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://powerbi.microsoft.com/en-us/product-updates/...",
+          "PLACEHOLDER: https://powerbi.microsoft.com/en-us/product-updates/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/fundamentals/...",
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/fundamentals/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/developer/...",
+          "PLACEHOLDER: https://learn.microsoft.com/en-us/power-bi/developer/..."
+        ]
+      }
+    },
+    "Tableau": {
+      "domain": "https://www.tableau.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://help.tableau.com/developer/api_rest.htm",
+          "PLACEHOLDER: https://help.tableau.com/developer/api_rest.htm"
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://help.tableau.com/current/server/en-us/...",
+          "PLACEHOLDER: https://help.tableau.com/current/server/en-us/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.tableau.com/pricing",
+          "PLACEHOLDER: https://www.tableau.com/pricing"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://help.tableau.com/current/pro/desktop/...",
+          "PLACEHOLDER: https://help.tableau.com/current/pro/desktop/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://help.tableau.com/developer/...",
+          "PLACEHOLDER: https://help.tableau.com/developer/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.tableau.com/blog/feed",
+          "product_updates": "PLACEHOLDER: https://www.tableau.com/product-updates/feed"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/tableau", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/tableau/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/tableau/...",
+            "PLACEHOLDER: https://github.com/tableau/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=tableau+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.tableau.com/blog/...",
+          "PLACEHOLDER: https://www.tableau.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.tableau.com/product-updates/...",
+          "PLACEHOLDER: https://www.tableau.com/product-updates/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://help.tableau.com/current/pro/desktop/...",
+          "PLACEHOLDER: https://help.tableau.com/current/pro/desktop/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://help.tableau.com/developer/...",
+          "PLACEHOLDER: https://help.tableau.com/developer/..."
+        ]
+      }
+    },
+    "Omni": {
+      "domain": "https://www.omni.co/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://docs.omni.co/docs/api/...",
+          "PLACEHOLDER: https://docs.omni.co/docs/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://docs.omni.co/docs/architecture/...",
+          "PLACEHOLDER: https://docs.omni.co/docs/architecture/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.omni.co/pricing",
+          "PLACEHOLDER: https://docs.omni.co/docs/pricing/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://docs.omni.co/docs/integrations/...",
+          "PLACEHOLDER: https://docs.omni.co/docs/integrations/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://docs.omni.co/docs/developer/...",
+          "PLACEHOLDER: https://docs.omni.co/docs/developer/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.omni.co/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.omni.co/updates/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/omni", "r/dataengineering"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/omni/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/dataengineering/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/omni-co/...",
+            "PLACEHOLDER: https://github.com/omni-co/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=omni+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.omni.co/blog/...",
+          "PLACEHOLDER: https://www.omni.co/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.omni.co/updates/...",
+          "PLACEHOLDER: https://www.omni.co/updates/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://docs.omni.co/docs/tutorials/...",
+          "PLACEHOLDER: https://docs.omni.co/docs/tutorials/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://docs.omni.co/docs/examples/...",
+          "PLACEHOLDER: https://docs.omni.co/docs/examples/..."
+        ]
+      }
+    },
+    "Looker": {
+      "domain": "https://cloud.google.com/looker",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/reference/api/...",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/reference/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/admin/...",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/admin/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://cloud.google.com/looker/pricing",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/admin/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/integrate/...",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/integrate/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/developer/...",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/developer/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://cloud.google.com/blog/products/data-analytics/feed",
+          "product_updates": "PLACEHOLDER: https://cloud.google.com/looker/docs/releases/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/looker", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/looker/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/looker-open-source/...",
+            "PLACEHOLDER: https://github.com/looker-open-source/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=looker+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://cloud.google.com/blog/products/data-analytics/...",
+          "PLACEHOLDER: https://cloud.google.com/blog/products/data-analytics/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/releases/...",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/releases/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/tutorials/...",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/tutorials/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/developer/...",
+          "PLACEHOLDER: https://cloud.google.com/looker/docs/developer/..."
+        ]
+      }
+    },
+    "Oracle": {
+      "domain": "https://www.oracle.com/business-analytics/business-intelligence/technologies/bi-enterprise-edition.html",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/api/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/rest-api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/architecture/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.oracle.com/corporate/pricing/...",
+          "PLACEHOLDER: https://www.oracle.com/cloud/cost-estimator.html"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/integration/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/developer/...",
+          "PLACEHOLDER: https://developer.oracle.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://blogs.oracle.com/feed/",
+          "product_updates": "PLACEHOLDER: https://www.oracle.com/news/feed/"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/oracle", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/oracle/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/oracle/...",
+            "PLACEHOLDER: https://github.com/oracle/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=oracle+bi+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://blogs.oracle.com/...",
+          "PLACEHOLDER: https://blogs.oracle.com/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.oracle.com/news/...",
+          "PLACEHOLDER: https://www.oracle.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/tutorials/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/examples/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/samples/..."
+        ]
+      }
+    },
+    "SAP BusinessObjects": {
+      "domain": "https://www.sap.com/products/data-cloud/bi-platform.html",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/api/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/rest/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/architecture/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.sap.com/products/pricing/...",
+          "PLACEHOLDER: https://www.sap.com/products/cloud-pricing/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/integration/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/developer/...",
+          "PLACEHOLDER: https://developers.sap.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://blogs.sap.com/feed/",
+          "product_updates": "PLACEHOLDER: https://www.sap.com/news/feed/"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/sap", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/sap/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/sap/...",
+            "PLACEHOLDER: https://github.com/sap/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=sap+businessobjects+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://blogs.sap.com/...",
+          "PLACEHOLDER: https://blogs.sap.com/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.sap.com/news/...",
+          "PLACEHOLDER: https://www.sap.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/tutorials/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/examples/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/samples/..."
+        ]
+      }
+    },
+    "Qlik": {
+      "domain": "https://www.qlik.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://help.qlik.com/en/developer/...",
+          "PLACEHOLDER: https://help.qlik.com/en/developer/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://help.qlik.com/en/enterprise/architecture/...",
+          "PLACEHOLDER: https://help.qlik.com/en/enterprise/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.qlik.com/us/pricing/",
+          "PLACEHOLDER: https://www.qlik.com/us/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://help.qlik.com/en/connectors/...",
+          "PLACEHOLDER: https://help.qlik.com/en/integration/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://help.qlik.com/en/developer/...",
+          "PLACEHOLDER: https://developer.qlik.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.qlik.com/blog/feed",
+          "product_updates": "PLACEHOLDER: https://www.qlik.com/news/feed"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/qlik", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/qlik/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/qlik/...",
+            "PLACEHOLDER: https://github.com/qlik/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=qlik+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.qlik.com/blog/...",
+          "PLACEHOLDER: https://www.qlik.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.qlik.com/news/...",
+          "PLACEHOLDER: https://www.qlik.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://help.qlik.com/en/tutorials/...",
+          "PLACEHOLDER: https://help.qlik.com/en/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://help.qlik.com/en/developer/examples/...",
+          "PLACEHOLDER: https://help.qlik.com/en/developer/samples/..."
+        ]
+      }
+    },
+    "MicroStrategy": {
+      "domain": "https://www.microstrategy.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/api/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/rest-api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/architecture/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.microstrategy.com/pricing/",
+          "PLACEHOLDER: https://www.microstrategy.com/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/integration/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/developer/...",
+          "PLACEHOLDER: https://developer.microstrategy.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.microstrategy.com/blog/feed",
+          "product_updates": "PLACEHOLDER: https://www.microstrategy.com/news/feed"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/microstrategy", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/microstrategy/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/microstrategy/...",
+            "PLACEHOLDER: https://github.com/microstrategy/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=microstrategy+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.microstrategy.com/blog/...",
+          "PLACEHOLDER: https://www.microstrategy.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.microstrategy.com/news/...",
+          "PLACEHOLDER: https://www.microstrategy.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/tutorials/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/examples/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/samples/..."
+        ]
+      }
+    },
+    "Hex": {
+      "domain": "https://hex.tech/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/api/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/architecture/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/architecture/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.hex.tech/pricing",
+          "PLACEHOLDER: https://www.hex.tech/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/integrations/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/integrations/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/developer/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/developer/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.hex.tech/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.hex.tech/updates/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/hex", "r/dataengineering"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/hex/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/dataengineering/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/hex-tech/hex",
+            "PLACEHOLDER: https://github.com/hex-tech/hex-python"
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=hex+data+science"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.hex.tech/blog/...",
+          "PLACEHOLDER: https://www.hex.tech/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.hex.tech/updates/...",
+          "PLACEHOLDER: https://www.hex.tech/updates/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/tutorials/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/tutorials/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/examples/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/examples/..."
+        ]
+      }
+    },
+    "Thoughtspot": {
+      "domain": "https://www.thoughtspot.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/api/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/architecture/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/architecture/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.thoughtspot.com/pricing/",
+          "PLACEHOLDER: https://www.thoughtspot.com/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/integration/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/integration/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/developer/...",
+          "PLACEHOLDER: https://developer.thoughtspot.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.thoughtspot.com/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.thoughtspot.com/news/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/thoughtspot", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/thoughtspot/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/thoughtspot/...",
+            "PLACEHOLDER: https://github.com/thoughtspot/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=thoughtspot+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.thoughtspot.com/blog/...",
+          "PLACEHOLDER: https://www.thoughtspot.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.thoughtspot.com/news/...",
+          "PLACEHOLDER: https://www.thoughtspot.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/tutorials/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/tutorials/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/examples/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/examples/..."
+        ]
+      }
+    },
+    "Domo": {
+      "domain": "https://www.domo.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://developer.domo.com/api/...",
+          "PLACEHOLDER: https://developer.domo.com/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://domo-support.domo.com/s/architecture/...",
+          "PLACEHOLDER: https://domo-support.domo.com/s/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.domo.com/pricing/",
+          "PLACEHOLDER: https://www.domo.com/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://domo-support.domo.com/s/integration/...",
+          "PLACEHOLDER: https://domo-support.domo.com/s/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://developer.domo.com/...",
+          "PLACEHOLDER: https://developer.domo.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.domo.com/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.domo.com/news/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/domo", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/domo/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/domo/...",
+            "PLACEHOLDER: https://github.com/domo/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=domo+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.domo.com/blog/...",
+          "PLACEHOLDER: https://www.domo.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.domo.com/news/...",
+          "PLACEHOLDER: https://www.domo.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://domo-support.domo.com/s/tutorials/...",
+          "PLACEHOLDER: https://domo-support.domo.com/s/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://developer.domo.com/examples/...",
+          "PLACEHOLDER: https://developer.domo.com/examples/..."
+        ]
+      }
+    },
+    "IBM Cognos": {
+      "domain": "https://www.ibm.com/products/cognos-analytics",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/api/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/rest-api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/architecture/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.ibm.com/products/pricing/...",
+          "PLACEHOLDER: https://www.ibm.com/products/cloud-pricing/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/integration/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/developer/...",
+          "PLACEHOLDER: https://developer.ibm.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.ibm.com/blogs/feed/",
+          "product_updates": "PLACEHOLDER: https://www.ibm.com/news/feed/"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/ibm", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/ibm/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/ibm/...",
+            "PLACEHOLDER: https://github.com/ibm/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=ibm+cognos+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.ibm.com/blogs/...",
+          "PLACEHOLDER: https://www.ibm.com/blogs/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.ibm.com/news/...",
+          "PLACEHOLDER: https://www.ibm.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/tutorials/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/examples/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/samples/..."
+        ]
+      }
+    },
+    "Oracle": {
+      "domain": "https://www.oracle.com/business-analytics/business-intelligence/technologies/bi-enterprise-edition.html",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/api/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/rest-api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/architecture/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.oracle.com/corporate/pricing/...",
+          "PLACEHOLDER: https://www.oracle.com/cloud/cost-estimator.html"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/integration/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/developer/...",
+          "PLACEHOLDER: https://developer.oracle.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://blogs.oracle.com/feed/",
+          "product_updates": "PLACEHOLDER: https://www.oracle.com/news/feed/"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/oracle", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/oracle/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/oracle/...",
+            "PLACEHOLDER: https://github.com/oracle/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=oracle+bi+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://blogs.oracle.com/...",
+          "PLACEHOLDER: https://blogs.oracle.com/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.oracle.com/news/...",
+          "PLACEHOLDER: https://www.oracle.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/tutorials/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/examples/...",
+          "PLACEHOLDER: https://docs.oracle.com/middleware/bi12214/biee/samples/..."
+        ]
+      }
+    },
+    "SAP BusinessObjects": {
+      "domain": "https://www.sap.com/products/data-cloud/bi-platform.html",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/api/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/rest/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/architecture/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.sap.com/products/pricing/...",
+          "PLACEHOLDER: https://www.sap.com/products/cloud-pricing/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/integration/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/developer/...",
+          "PLACEHOLDER: https://developers.sap.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://blogs.sap.com/feed/",
+          "product_updates": "PLACEHOLDER: https://www.sap.com/news/feed/"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/sap", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/sap/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/sap/...",
+            "PLACEHOLDER: https://github.com/sap/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=sap+businessobjects+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://blogs.sap.com/...",
+          "PLACEHOLDER: https://blogs.sap.com/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.sap.com/news/...",
+          "PLACEHOLDER: https://www.sap.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/tutorials/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/examples/...",
+          "PLACEHOLDER: https://help.sap.com/docs/SAP_BUSINESSOBJECTS_WEB_INTELLIGENCE/samples/..."
+        ]
+      }
+    },
+    "Qlik": {
+      "domain": "https://www.qlik.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://help.qlik.com/en/developer/...",
+          "PLACEHOLDER: https://help.qlik.com/en/developer/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://help.qlik.com/en/enterprise/architecture/...",
+          "PLACEHOLDER: https://help.qlik.com/en/enterprise/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.qlik.com/us/pricing/",
+          "PLACEHOLDER: https://www.qlik.com/us/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://help.qlik.com/en/connectors/...",
+          "PLACEHOLDER: https://help.qlik.com/en/integration/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://help.qlik.com/en/developer/...",
+          "PLACEHOLDER: https://developer.qlik.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.qlik.com/blog/feed",
+          "product_updates": "PLACEHOLDER: https://www.qlik.com/news/feed"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/qlik", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/qlik/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/qlik/...",
+            "PLACEHOLDER: https://github.com/qlik/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=qlik+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.qlik.com/blog/...",
+          "PLACEHOLDER: https://www.qlik.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.qlik.com/news/...",
+          "PLACEHOLDER: https://www.qlik.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://help.qlik.com/en/tutorials/...",
+          "PLACEHOLDER: https://help.qlik.com/en/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://help.qlik.com/en/developer/examples/...",
+          "PLACEHOLDER: https://help.qlik.com/en/developer/samples/..."
+        ]
+      }
+    },
+    "MicroStrategy": {
+      "domain": "https://www.microstrategy.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/api/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/rest-api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/architecture/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.microstrategy.com/pricing/",
+          "PLACEHOLDER: https://www.microstrategy.com/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/integration/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/developer/...",
+          "PLACEHOLDER: https://developer.microstrategy.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.microstrategy.com/blog/feed",
+          "product_updates": "PLACEHOLDER: https://www.microstrategy.com/news/feed"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/microstrategy", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/microstrategy/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/microstrategy/...",
+            "PLACEHOLDER: https://github.com/microstrategy/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=microstrategy+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.microstrategy.com/blog/...",
+          "PLACEHOLDER: https://www.microstrategy.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.microstrategy.com/news/...",
+          "PLACEHOLDER: https://www.microstrategy.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/tutorials/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/examples/...",
+          "PLACEHOLDER: https://community.microstrategy.com/s/documentation/samples/..."
+        ]
+      }
+    },
+    "Hex": {
+      "domain": "https://www.hex.tech/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/api/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/architecture/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/architecture/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.hex.tech/pricing",
+          "PLACEHOLDER: https://www.hex.tech/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/integrations/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/integrations/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/developer/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/developer/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.hex.tech/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.hex.tech/updates/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/hex", "r/dataengineering"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/hex/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/dataengineering/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/hex-tech/hex",
+            "PLACEHOLDER: https://github.com/hex-tech/hex-python"
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=hex+data+science"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.hex.tech/blog/...",
+          "PLACEHOLDER: https://www.hex.tech/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.hex.tech/updates/...",
+          "PLACEHOLDER: https://www.hex.tech/updates/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/tutorials/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/tutorials/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://learn.hex.tech/docs/examples/...",
+          "PLACEHOLDER: https://learn.hex.tech/docs/examples/..."
+        ]
+      }
+    },
+    "Thoughtspot": {
+      "domain": "https://www.thoughtspot.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/api/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/architecture/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/architecture/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.thoughtspot.com/pricing/",
+          "PLACEHOLDER: https://www.thoughtspot.com/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/integration/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/integration/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/developer/...",
+          "PLACEHOLDER: https://developer.thoughtspot.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.thoughtspot.com/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.thoughtspot.com/news/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/thoughtspot", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/thoughtspot/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/thoughtspot/...",
+            "PLACEHOLDER: https://github.com/thoughtspot/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=thoughtspot+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.thoughtspot.com/blog/...",
+          "PLACEHOLDER: https://www.thoughtspot.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.thoughtspot.com/news/...",
+          "PLACEHOLDER: https://www.thoughtspot.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/tutorials/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/tutorials/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://docs.thoughtspot.com/examples/...",
+          "PLACEHOLDER: https://docs.thoughtspot.com/examples/..."
+        ]
+      }
+    },
+    "Domo": {
+      "domain": "https://www.domo.com/",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://developer.domo.com/api/...",
+          "PLACEHOLDER: https://developer.domo.com/api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://domo-support.domo.com/s/architecture/...",
+          "PLACEHOLDER: https://domo-support.domo.com/s/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.domo.com/pricing/",
+          "PLACEHOLDER: https://www.domo.com/pricing/enterprise"
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://domo-support.domo.com/s/integration/...",
+          "PLACEHOLDER: https://domo-support.domo.com/s/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://developer.domo.com/...",
+          "PLACEHOLDER: https://developer.domo.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.domo.com/blog/feed.xml",
+          "product_updates": "PLACEHOLDER: https://www.domo.com/news/feed.xml"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/domo", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/domo/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/domo/...",
+            "PLACEHOLDER: https://github.com/domo/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=domo+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.domo.com/blog/...",
+          "PLACEHOLDER: https://www.domo.com/blog/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.domo.com/news/...",
+          "PLACEHOLDER: https://www.domo.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://domo-support.domo.com/s/tutorials/...",
+          "PLACEHOLDER: https://domo-support.domo.com/s/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://developer.domo.com/examples/...",
+          "PLACEHOLDER: https://developer.domo.com/examples/..."
+        ]
+      }
+    },
+    "IBM Cognos": {
+      "domain": "https://www.ibm.com/products/cognos-analytics",
+      "content_sources": {
+        "api_documentation": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/api/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/rest-api/..."
+        ],
+        "architecture_guides": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/architecture/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/deployment/..."
+        ],
+        "pricing_pages": [
+          "PLACEHOLDER: https://www.ibm.com/products/pricing/...",
+          "PLACEHOLDER: https://www.ibm.com/products/cloud-pricing/..."
+        ],
+        "integration_docs": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/integration/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/connectors/..."
+        ],
+        "developer_portals": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/developer/...",
+          "PLACEHOLDER: https://developer.ibm.com/..."
+        ],
+        "rss_feeds": {
+          "blog": "PLACEHOLDER: https://www.ibm.com/blogs/feed/",
+          "product_updates": "PLACEHOLDER: https://www.ibm.com/news/feed/"
+        },
+        "reddit_sources": {
+          "subreddits": ["r/ibm", "r/BusinessIntelligence"],
+          "key_threads": [
+            "PLACEHOLDER: https://reddit.com/r/ibm/comments/...",
+            "PLACEHOLDER: https://reddit.com/r/BusinessIntelligence/comments/..."
+          ]
+        },
+        "github_sources": {
+          "official_repos": [
+            "PLACEHOLDER: https://github.com/ibm/...",
+            "PLACEHOLDER: https://github.com/ibm/..."
+          ],
+          "community_projects": [
+            "PLACEHOLDER: https://github.com/search?q=ibm+cognos+connector"
+          ]
+        },
+        "blog_posts": [
+          "PLACEHOLDER: https://www.ibm.com/blogs/...",
+          "PLACEHOLDER: https://www.ibm.com/blogs/..."
+        ],
+        "product_updates": [
+          "PLACEHOLDER: https://www.ibm.com/news/...",
+          "PLACEHOLDER: https://www.ibm.com/news/..."
+        ],
+        "tutorials": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/tutorials/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/getting-started/..."
+        ],
+        "code_examples": [
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/examples/...",
+          "PLACEHOLDER: https://www.ibm.com/docs/en/cognos-analytics/samples/..."
+        ]
+      }
+    }
+  },
+  "content_dimension_definitions": {
+    "api_documentation": "API endpoints, SDK documentation, REST/GraphQL specs - Key for developer experience and integration capabilities",
+    "architecture_guides": "System architecture, deployment, scaling, security - Critical for enterprise adoption and cloud-native positioning",
+    "pricing_pages": "Pricing models, cost structures, feature comparisons - Essential for competitive positioning and market strategy",
+    "integration_docs": "Data connectors, ETL processes, third-party integrations - Demonstrates ecosystem strength and enterprise readiness",
+    "developer_portals": "Developer resources, getting started guides, community - Shows commitment to developer experience and API-first approach",
+    "rss_feeds": "Blog posts, product updates, documentation changes - Indicates product velocity and thought leadership",
+    "reddit_sources": "Community discussions, troubleshooting, use cases - Reveals real-world adoption challenges and user sentiment",
+    "github_sources": "Open source projects, code examples, community contributions - Demonstrates open ecosystem and developer community strength",
+    "blog_posts": "Technical articles, case studies, industry insights - Shows thought leadership and market positioning",
+    "product_updates": "Feature releases, changelogs, roadmap information - Indicates product velocity and innovation focus",
+    "tutorials": "Step-by-step guides, best practices, learning resources - Demonstrates commitment to user success and adoption",
+    "code_examples": "Sample code, snippets, implementation examples - Shows practical implementation and developer experience quality"
+  },
+  "scraping_priorities": {
+    "high_priority": ["api_documentation", "architecture_guides", "pricing_pages", "integration_docs"],
+    "medium_priority": ["developer_portals", "tutorials", "code_examples", "product_updates"],
+    "low_priority": ["blog_posts", "reddit_sources", "github_sources", "rss_feeds"]
+  },
+  "update_frequency": {
+    "api_documentation": "weekly",
+    "architecture_guides": "monthly", 
+    "pricing_pages": "monthly",
+    "integration_docs": "weekly",
+    "developer_portals": "weekly",
+    "rss_feeds": "daily",
+    "reddit_sources": "weekly",
+    "github_sources": "weekly",
+    "blog_posts": "weekly",
+    "product_updates": "weekly",
+    "tutorials": "monthly",
+    "code_examples": "weekly"
+  },
+  "strategic_analysis_framework": {
+    "competitive_dimensions": {
+      "api_first_architecture": {
+        "description": "API-first design and developer experience",
+        "key_indicators": ["API documentation quality", "SDK availability", "Developer portal sophistication", "Integration examples"],
+        "competitive_advantage": "Developer adoption, ecosystem growth, integration capabilities"
+      },
+      "cloud_native_features": {
+        "description": "Cloud-native architecture and deployment",
+        "key_indicators": ["Auto-scaling capabilities", "Multi-cloud support", "Container deployment", "Serverless options"],
+        "competitive_advantage": "Scalability, cost efficiency, modern enterprise adoption"
+      },
+      "data_integration": {
+        "description": "Data integration and pipeline capabilities",
+        "key_indicators": ["Connector library size", "ETL tool sophistication", "Real-time processing", "Data source variety"],
+        "competitive_advantage": "Enterprise data ecosystem, time-to-value, operational efficiency"
+      },
+      "developer_experience": {
+        "description": "Developer tools and experience quality",
+        "key_indicators": ["Documentation clarity", "Getting started guides", "Community support", "Code examples"],
+        "competitive_advantage": "Developer adoption, ecosystem growth, implementation speed"
+      },
+      "modern_analytics_stack": {
+        "description": "Modern analytics and AI capabilities",
+        "key_indicators": ["AI/ML features", "Natural language query", "Predictive analytics", "Real-time insights"],
+        "competitive_advantage": "Analytical sophistication, user experience, competitive differentiation"
+      },
+      "enterprise_readiness": {
+        "description": "Enterprise security and compliance",
+        "key_indicators": ["Security certifications", "Compliance features", "Enterprise pricing", "Support quality"],
+        "competitive_advantage": "Large enterprise adoption, compliance requirements, risk mitigation"
+      }
+    },
+    "content_mapping_strategy": {
+      "purpose": "Enable comprehensive strategic competitive analysis across 14 BI/Cloud Data platforms",
+      "coverage": "All major competitors in business intelligence, cloud data, and AI/ML enterprise software",
+      "analysis_depth": "Multi-dimensional competitive positioning with technical and strategic insights",
+      "update_frequency": "Continuous monitoring with strategic refresh cycles",
+      "expected_outcomes": "Data-driven competitive intelligence for strategic decision making and market positioning"
+    }
+  }
+}

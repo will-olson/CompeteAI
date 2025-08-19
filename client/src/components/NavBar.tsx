@@ -16,6 +16,7 @@ export const NavBar = () => {
         <div className="flex items-center gap-1">
           {link('/scrape', 'Scrape')}
           {link('/technical-intelligence', 'Tech Intelligence')}
+          {link('/competitive-intelligence', 'Competitive Intel')}
           {link('/analysis', 'AI Analysis')}
           {link('/battlecards', 'Battlecards')}
         </div>
